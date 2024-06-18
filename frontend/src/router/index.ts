@@ -35,6 +35,11 @@ const router = createRouter({
       path: '/category',
       name: 'category',
       component: () => import('../views/Web/Category/ListView.vue')
+    },
+    {
+      path: '/aboutus',
+      name: 'aboutus',
+      component: () => import('../views/Web/AboutUs/ListView.vue')
     }
   ]
 })

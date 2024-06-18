@@ -3,7 +3,6 @@
     <div class="row flex-nowrap">
       <side-bar-vue/>
       <food-card-vue/>
-      
     </div>
   </div>
 </template>
