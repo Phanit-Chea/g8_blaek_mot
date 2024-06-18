@@ -2,19 +2,21 @@
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <side-bar-vue/>
-      <div class="col py-3">
-        Content area...
-        </div>
+      <food-card-vue/>
+      
     </div>
   </div>
 </template>
 
 <script>
+import FoodCardVue from '../../../Components/FoodCard.vue'
 import SideBarVue from '../../../Components/Layouts/SideBar.vue'
+
 
 export default {
     components:{
-        SideBarVue
+        SideBarVue,
+        FoodCardVue
     }
 }
 </script>
