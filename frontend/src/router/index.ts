@@ -30,6 +30,11 @@ const router = createRouter({
       path: '/post',
       name: 'post',
       component: () => import('../views/Web/Post/ListView.vue')
+    },
+    {
+      path: '/category',
+      name: 'category',
+      component: () => import('../views/Web/Category/ListView.vue')
     }
   ]
 })
