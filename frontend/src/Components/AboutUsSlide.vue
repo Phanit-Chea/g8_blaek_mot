@@ -1,12 +1,32 @@
 <template>
-  <div>
-    <transition-group name="fade" tag="div">
-      <div v-for="(img, index) in images" :key="index" v-show="index === currentIndex">
-        <img :src="img" />
+  <div class="slide-carousel">
+    <div class="slide-container">
+      <div
+        v-for="(img, index) in images"
+        :key="index"
+        :class="['slide-item', { 'active': index === currentIndex }]"
+      >
+        <img :src="img" class="slide-image" />
       </div>
-    </transition-group>
-    <a class="prev" @click="prevImage" href="#">&#10094; Previous</a>
-    <a class="next" @click="nextImage" href="#">Next &#10095; </a>
+    </div>
+    <div class="controls">
+      <button class="prev" @click="prevImage">
+        &#10094; 
+      </button>
+      <button class="next" @click="nextImage">
+        &#10095; 
+      </button>
+    </div>
+    <div class="pagination">
+      <button
+        v-for="(_, index) in images"
+        :key="index"
+        :class="['pagination-item', { 'active': index === currentIndex }]"
+        @click="currentIndex = index"
+      >
+        {{ index + 1 }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -20,8 +40,8 @@ export default {
         "https://grantourismotravels.com/wp-content/uploads/2021/02/Authentic-Nom-Banh-Chok-Recipe-Cambodian-Khmer-Noodles-Copyright-2021-Terence-Carter-Grantourismo.jpg",
         "https://hilltopcambodia.com/wp-content/uploads/2020/09/FRIED-MIXED-VEGETABLE.webp"
       ],
-      timer: null,
-      currentIndex: 0
+      currentIndex: 0,
+      timer: null
     };
   },
   mounted() {
@@ -42,54 +62,80 @@ export default {
 </script>
 
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.9s ease;
-  overflow: hidden;
-  visibility: visible;
-  position: absolute;
+.slide-carousel {
+  position: relative;
   width: 100%;
+  height: 450px;
+  overflow: hidden;
+}
+
+.slide-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.slide-item.active {
   opacity: 1;
 }
 
-.fade-enter,
-.fade-leave-to {
-  visibility: hidden;
+.slide-image {
   width: 100%;
-  opacity: 0;
+  height: 100%;
+  object-fit: cover;
 }
 
-img {
-  height: 500px;
-  width: 100%;
-}
-
-.prev,
-.next {
-  cursor: pointer;
+.controls {
   position: absolute;
   top: 40%;
-  width: auto;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.controls button {
+  padding: 5px 15px;
+  background: none;
+  color: #000;
+  border: none;
+
   font-size: 18px;
-  transition: 0.7s ease;
-  border-radius: 0 4px 4px 0;
-  text-decoration: none;
-  user-select: none;
+  cursor: pointer;
 }
 
-.next {
-  right: 0;
+.pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 1;
 }
 
-.prev {
-  left: 0;
+.pagination-item {
+  background: none;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-.prev:hover,
-.next:hover {
-  background-color: rgba(0, 0, 0, 0.9);
+.pagination-item.active {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #000;
 }
 </style>
