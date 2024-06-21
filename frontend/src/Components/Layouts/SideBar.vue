@@ -3,7 +3,7 @@
     class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 "
     style="background-color: #54983c; width: 160px"
   >
-    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar">
+    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 text-white min-vh-100 sticky-top sidebar">
       <a
         href=""
         class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
@@ -21,20 +21,20 @@
           </a>
         </li>
 
-        <li>
+        <li class="nav-item">
           <a href="#" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-table"></i>
             <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a
           >
         </li>
 
-        <li>
+        <li class="nav-item">
           <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-grid"></i>
             <span class="ms-1 d-none d-sm-inline text-white">Dinner</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
+        <li >
           <a
             class="nav-link dropdown-toggle px-0 align-middle text-white"
             href="#"
@@ -85,9 +85,81 @@ export default {}
   width: auto;
 }
 
-.dropdown-item:hover,
-.dropdown-item:focus {
-  background-color: #3e7329;
+
+/* Hover effect for bottom line of nav-link */
+.sidebar .nav-item .nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 5px 15px;
+  transition: color 0.3s ease-in-out;
+}
+
+.sidebar .nav-item .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar .nav-item .nav-link:hover {
   color: #fff;
+}
+
+.sidebar .nav-item .nav-link:hover::after {
+  width: 100%;
+}
+/* Hover effect for H3 */
+h3 {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease-in-out;
+}
+
+h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+h3:hover {
+  color: #fff;
+}
+
+h3:hover::after {
+  width: 100%;
+}
+/* Hover effect for others element */
+.dropdown-menu.dropdown-item {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease-in-out;
+}
+
+.dropdown-menu.dropdown-item ::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+.dropdown-menu.dropdown-item :hover {
+  color: #fff;
+}
+
+.dropdown-menu.dropdown-item :hover::after {
+  width: 100%;
 }
 </style>
