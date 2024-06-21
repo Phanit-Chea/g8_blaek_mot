@@ -1,48 +1,44 @@
-<template>
-  <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0" style="background-color: #54983c; width: 200px">
-    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar">
-      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-        <li class="nav-item mt-3">
-          <a href="#" class="nav-link align-middle px-0">
-            <i class="fs-4 text-white align-middle material-icons">person</i>
-            <span class="ms-2 d-none d-sm-inline text-white">Profile</span>
-          </a>
-        </li>
+<template> 
+<div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0" style="background-color: #54983c; width: 200px"> 
+  <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar"> 
+    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+      <li class="nav-item mt-3"> <router-link to="/user" class="nav-link align-middle px-0"> 
+        <i class="fs-4 text-white align-middle material-icons">person</i> 
+        <span class="ms-2 d-none d-sm-inline text-white">Profile</span> 
+        </router-link> </li>
+      <li class="nav-item mt-2">
+        <router-link to="/user/save" class="nav-link px-0 align-middle">
+          <i class="fs-4 text-white align-middle material-icons">bookmark</i>
+          <span class="ms-1 d-none d-sm-inline text-white">Saved Recipes</span>
+        </router-link>
+      </li>
 
-        <li class="nav-item mt-2">
-          <a href="#" class="nav-link px-0 align-middle">
-            <i class="fs-4 text-white align-middle material-icons">bookmark</i>
-            <span class="ms-1 d-none d-sm-inline text-white">Saved Recipes</span>
+      <li class="nav-item mt-2">
+        <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-4">
+          <i class="fs-4 text-white align-middle material-icons">schedule</i>
+          <span class="ms-1 d-none d-sm-inline text-white">Recently Viewed</span>
+        </a>
+      </li>
+      <li>
+        <i class="fs-5 material-icons"><span class="folder ms-1 d-none d-sm-inline text-white">YOUR FOLDERS</span></i>
+        <li>
+          <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link align-middle px-3 mt-3">
+            <i class="fs-4 text-white align-middle material-icons">add</i>
+            <span class="ms-1 d-none d-sm-inline text-white">New Folder</span>
           </a>
         </li>
-
-        <li class="nav-item mt-2">
-          <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-4">
-            <i class="fs-4 text-white align-middle material-icons">schedule</i>
-            <span class="ms-1 d-none d-sm-inline text-white">Recently Viewed</span>
-          </a>
-        </li>
-        <li >
-          <i class="fs-5 material-icons"><span class="folder ms-1 d-none d-sm-inline text-white">YOUR FOLDERS</span></i>
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
           <li>
-            <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link align-middle px-3 mt-3 ">
-              <i class="fs-4 text-white align-middle material-icons">add</i>
-              <span class="ms-1 d-none d-sm-inline text-white">New Folder</span>
+            <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link px-3 align-middle">
+              <i class="fs-4 text-white align-middle material-icons">folder</i>
+              <span class="ms-1 d-none d-sm-inline text-white">Folder 1</span>
             </a>
           </li>
-          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
-            <li>
-              <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link px-3 align-middle">
-                <i class="fs-4 text-white align-middle material-icons">folder</i>
-                <span class="ms-1 d-none d-sm-inline text-white">Folder 1</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <hr />
-    </div>
+        </ul>
+      </li>
+    </ul>
   </div>
+</div>
 </template>
 
 <script>
@@ -90,7 +86,7 @@ export default {}
 }
 
 .sidebar .nav-item .nav-link::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -108,10 +104,8 @@ export default {}
   width: 100%;
 }
 
-
-
 /* Hover effect for sidebar elements */
-.link-folder{
+.link-folder {
   position: relative;
   overflow: hidden;
   padding: 10px 20px;
@@ -119,7 +113,7 @@ export default {}
 }
 
 .link-folder::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

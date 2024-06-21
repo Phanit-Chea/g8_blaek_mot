@@ -16,7 +16,7 @@
                         class="rounded-circle img-fluid"
                         style="width: 170px; height:170px"
                       />
-                      <h5 class="my-3">John Smith</h5>
+                      <h5 class="text-muted my-3">John Smith</h5>
                       <p class="text-muted mb-1">example@example.com</p>
                     </div>
                   </div>
@@ -26,7 +26,7 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="mb-0">Full Name</p>
+                          <p class="text-muted mb-0">Full Name</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">Johnatan Smith</p>
@@ -35,7 +35,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="mb-0">Email</p>
+                          <p class="text-muted mb-0">Email</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">example@example.com</p>
@@ -44,7 +44,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="mb-0">Phone</p>
+                          <p class="text-muted mb-0">Phone</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">(097) 234-5678</p>
@@ -53,7 +53,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="mb-0">Gender</p>
+                          <p class="text-muted mb-0">Gender</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">Male</p>
@@ -62,7 +62,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="mb-0">Address</p>
+                          <p class="text-muted mb-0">Address</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
@@ -96,7 +96,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .edit-btn {
   background-color: #66b64a;
 }

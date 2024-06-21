@@ -63,7 +63,13 @@ img{
     padding-top: 10px;
 }
 
+.card {
+    transition: box-shadow 0.3s ease-in-out;
+  }
 
+  .card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
 
 
 </style>
