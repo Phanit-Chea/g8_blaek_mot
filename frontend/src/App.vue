@@ -4,10 +4,5 @@
 
 <template>
   <RouterView />
-<<<<<<< HEAD
-
-=======
-  <!-- <FoodDetail /> -->
->>>>>>> foodDetail
 </template>
 
