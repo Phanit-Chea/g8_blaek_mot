@@ -81,43 +81,48 @@
       <div class="container">
         <h1 class="text-green mt-5 text-align-center">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
       </div>
-      <div class="container card mt-4 " style="height: 100%;">
-        <div class="row">
-          <div
-            class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+      <div class="row">
+        <div
+          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+          <div class="card-content">
             <h2>អាហារពេលព្រឹក</h2>
             <p>មុីនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
-          <div class="col-md-3">
-            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
-          </div>
-          <div
-            class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+        </div>
+        <div
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+          <div class="card-content">
             <h2>អាហារថ្ងៃត្រង់</h2>
             <p>មុីនុយដ៏ពិសស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
-          <div class="col-md-3">
-            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
-          </div>
         </div>
-        <div class="row">
-          <div class="col-md-3">
-            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
-          </div>
-          <div
-            class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+        <div class="col-md-3 d-flex align-items-center">
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-3 d-flex align-items-center">
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+        </div>
+        <div
+          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+          <div class="card-content">
             <h2>អាហារពេលល្ងាច</h2>
             <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
-          <div class="col-md-3">
-            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
-          </div>
-          <div
-            class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+        </div>
+        <div
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+          <div class="card-content">
             <h2>បង្អែម</h2>
             <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
-
         </div>
       </div>
       <!--======================= list all foods ================= -->
