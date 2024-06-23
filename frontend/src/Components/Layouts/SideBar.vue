@@ -16,21 +16,18 @@
       >
         <li class="nav-item">
           <a href="#" class="nav-link align-middle px-0">
-            <i class="fs-4 bi-house"></i>
             <span class="ms-1 d-none d-sm-inline text-white">Breakfast</span>
           </a>
         </li>
 
         <li>
           <a href="#" class="nav-link px-0 align-middle">
-            <i class="fs-4 bi-table"></i>
             <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a
           >
         </li>
 
         <li>
           <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-            <i class="fs-4 bi-grid"></i>
             <span class="ms-1 d-none d-sm-inline text-white">Dinner</span>
           </a>
         </li>
@@ -43,7 +40,6 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">Others</span>
           </a>
           <ul
