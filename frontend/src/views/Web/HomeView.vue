@@ -3,26 +3,16 @@
     <NavbarView></NavbarView>
     <main class="container" style="margin-top: 14%">
       <div class="containerTop">
-        <img
-          src="../../assets/ContainerImages/homePoster.png"
-          alt="homeImage"
-          width="100%"
-          height="600px"
-        />
+        <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
       </div>
       <div class="row categories mt-5">
-        <div class="col-md-3 col-lg w-100">
-          <div class="card shadow" style="height: 300px">
-            <img
-              src="../../assets/CategoryImages/breakfast.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Breakfast"
-            />
+        <div class="col-md-3 col-lg w-100 cardCategory">
+          <div class="card shadow" style="height: auto">
+            <img src="../../assets/CategoryImages/breakfast.png" width="100%" height="180px" class="card-img-top"
+              alt="Breakfast" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
-              <p class="d-flex justify-content-start">Breakfast is the most important</p>
+              <p class="d-flex justify-content-start">អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។</p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00AM - 9:00AM</p>
                 <i class="material-icons">access_time</i>
@@ -30,18 +20,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-lg w-100">
-          <div class="card shadow" style="height: 300px">
-            <img
-              src="../../assets/CategoryImages/lunch.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Lunch"
-            />
+        <div class="col-md-3 col-lg w-100 cardCategory">
+          <div class="card shadow" style="height: auto">
+            <img src="../../assets/CategoryImages/lunch.png" width="100%" height="180px" class="card-img-top"
+              alt="Lunch" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
-              <p class="d-flex justify-content-start">Lunch is the best food</p>
+              <p class="d-flex justify-content-start">រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។</p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>11:00AM - 12:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -49,18 +34,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-lg w-100">
-          <div class="card shadow" style="height: 300px">
-            <img
-              src="../../assets/CategoryImages/dinner.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dinner"
-            />
+        <div class="col-md-3 col-lg w-100 cardCategory">
+          <div class="card shadow" style="height: auto">
+            <img src="../../assets/CategoryImages/dinner.png" width="100%" height="180px" class="card-img-top"
+              alt="Dinner" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
-              <p class="d-flex justify-content-start">Dinner is the best</p>
+              <p class="d-flex justify-content-start">អាហារពេលល្ងាច ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។</p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>5:00PM - 7:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -68,18 +48,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-lg w-100">
-          <div class="card shadow" style="height: 300px">
-            <img
-              src="../../assets/CategoryImages/dessert.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dessert"
-            />
+        <div class="col-md-3 col-lg w-100 cardCategory">
+          <div class="card shadow" style="height: auto">
+            <img src="../../assets/CategoryImages/dessert.png" width="100%" height="180px" class="card-img-top"
+              alt="Dessert" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
-              <p class="d-flex justify-content-start">Dessert is not important too much</p>
+              <p class="d-flex justify-content-start">បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។</p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -87,18 +62,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-lg w-100">
-          <div class="card shadow" style="height: 300px">
-            <img
-              src="../../assets/CategoryImages/drink.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Drinks"
-            />
+        <div class="col-md-3 col-lg w-100 cardCategory">
+          <div class="card shadow" style="height: auto">
+            <img src="../../assets/CategoryImages/drink.png" width="100%" height="180px" class="card-img-top"
+              alt="Drinks" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
-              <p class="d-flex justify-content-start">Drinks is not important</p>
+              <p class="d-flex justify-content-start">លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។</p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -107,10 +77,51 @@
           </div>
         </div>
       </div>
+      <!--======================= specia menu for today ================= -->
+      <div class="container">
+        <h1 class="text-green mt-5 text-align-center">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
+      </div>
+      <div class="container card mt-4 " style="height: 100%;">
+        <div class="row">
+          <div
+            class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+            <h2>អាហារពេលព្រឹក</h2>
+            <p>មុីនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+          </div>
+          <div class="col-md-3">
+            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+          </div>
+          <div
+            class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+            <h2>អាហារថ្ងៃត្រង់</h2>
+            <p>មុីនុយដ៏ពិសស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+          </div>
+          <div class="col-md-3">
+            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+          </div>
+          <div
+            class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+            <h2>អាហារពេលល្ងាច</h2>
+            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+          </div>
+          <div class="col-md-3">
+            <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
+          </div>
+          <div
+            class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+            <h2>បង្អែម</h2>
+            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+          </div>
 
-      <div
-        class="containerMid text-center my-5 text-green"
-        style="
+        </div>
+      </div>
+      <!--======================= list all foods ================= -->
+      <div class="containerMid text-center my-5 text-green" style="
           font-family:
             system-ui,
             -apple-system,
@@ -123,20 +134,14 @@
             'Open Sans',
             'Helvetica Neue',
             sans-serif;
-        "
-      >
-        <h1>FOODS LIST</h1>
+        ">
+        <h1>បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh">
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/beefSoup.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/beefSoup.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -153,9 +158,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -163,13 +166,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/buggur.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -186,9 +184,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -196,13 +192,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/fryChicken.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -219,9 +210,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -229,13 +218,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/fryFish.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/fryFish.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -252,9 +236,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -262,13 +244,7 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/nhom.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/nhom.png" width="100%" height="200px" class="card-img-top" alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -285,9 +261,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -295,13 +269,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/noodle.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/noodle.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -318,9 +287,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -328,13 +295,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/pizza.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/pizza.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -351,9 +313,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -361,13 +321,7 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/pork.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/pork.png" width="100%" height="200px" class="card-img-top" alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -384,9 +338,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -394,13 +346,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/salmon.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/salmon.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -417,9 +364,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -427,13 +372,7 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/rice.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/rice.png" width="100%" height="200px" class="card-img-top" alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -450,9 +389,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -460,13 +397,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/buggur.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -483,9 +415,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -493,13 +423,8 @@
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <div class="card shadow" style="height: 100%">
-            <img
-              src="../../assets/ContainerImages/fryChicken.png"
-              width="100%"
-              height="200px"
-              class="card-img-top"
-              alt="#"
-            />
+            <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+              alt="#" />
             <div class="card-body text-center">
               <h5 class="card-title">Card title</h5>
               <p class="card-text d-flex justify-content-start text-left">
@@ -516,9 +441,7 @@
                 </div>
                 <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
                 <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px"
-                    >favoturned_in_not</i
-                  >
+                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
                 </a>
               </div>
             </div>
@@ -540,3 +463,21 @@ export default {
   }
 }
 </script>
+<style scoped>
+.cardCategory,
+.col-md-4 {
+  transition: transform 0.3s ease;
+}
+
+.cardCategory:hover,
+.col-md-4:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.responsive-img {
+  width: 100%;
+  /* Make the image take up the full width of its parent */
+  height: 50vh;
+}
+</style>
