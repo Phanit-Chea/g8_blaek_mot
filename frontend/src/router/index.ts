@@ -26,11 +26,23 @@ const router = createRouter({
       name: 'home',
       component: () => import('../views/Web/HomeView.vue')
     },
+    
     {
       path: '/post',
       name: 'post',
       component: () => import('../views/Web/Post/ListView.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Admin/Auth/RegisterView.vue')
+    },
+    {
+      path: '/resetpassword',
+      name: 'resetpassword',
+      component: () => import('../views/Admin/Auth/ResetPasswordView.vue')
     }
+    
   ]
 })
 
