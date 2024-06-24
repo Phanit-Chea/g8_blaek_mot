@@ -1,6 +1,5 @@
 <template>
   <div class="container h-100">
-    <NavbarView></NavbarView>
     <main class="container" style="margin-top: 14%">
       <div class="containerTop">
         <img
@@ -526,17 +525,5 @@
         </div>
       </div>
     </main>
-    <FooterView></FooterView>
   </div>
 </template>
-
-<script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
-export default {
-  components: {
-    NavbarView,
-    FooterView,
-  }
-}
-</script>
