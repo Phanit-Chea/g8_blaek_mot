@@ -2,62 +2,70 @@
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
-      <div class="row d-flex my-5">
-        <div class="card ms-4" style="width: 300px; height: 290px;">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-            class="card-img"
-            alt="..."
-          />
-          <div class="card-body d-flex justify-content-between">
-            <h4 class="card-title text-dark mt-1">Card title</h4>
-            <a href="#" class="btn mt-1" style="background-color: #54983c"
-              ><i class="fas fa-link"></i> Detail</a
-            >
-          </div>
-        </div>
-        <div class="card ms-4" style="width: 300px; height: 290px;">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-            class="card-img"
-            alt="..."
-          />
-          <div class="card-body d-flex justify-content-between">
-            <h4 class="card-title text-dark mt-1">Card title</h4>
-            <a href="#" class="btn mt-1" style="background-color: #54983c"
-              ><i class="fas fa-link"></i> Detail</a
-            >
+      <div class="col py-3">
+        <div class="container mx-auto mt-4">
+          <div class="row d-flex">
+            <div class="card ms-4" style="width: 22.5%">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img"
+                alt="..."
+              />
+              <div class="card-body d-flex justify-content-between px-0">
+                <h4 class="card-title text-dark">Card title</h4>
+                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+              </div>
+            </div>
+            <div class="card ms-4" style="width: 22.5%">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img"
+                alt="..."
+              />
+              <div class="card-body d-flex justify-content-between px-0">
+                <h4 class="card-title text-dark">Card title</h4>
+                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+              </div>
+            </div>
+            <div class="card ms-4" style="width: 22.5%">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img"
+                alt="..."
+              />
+              <div class="card-body d-flex justify-content-between px-0">
+                <h4 class="card-title text-dark">Card title</h4>
+                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+              </div>
+            </div>
+            <div class="card ms-4" style="width: 22.5%">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img"
+                alt="..."
+              />
+              <div class="card-body d-flex justify-content-between px-0">
+                <h4 class="card-title text-dark">Card title</h4>
+                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+              </div>
+            </div>
+            <div class="card ms-4" style="width: 22.5%">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img"
+                alt="..."
+              />
+              <div class="card-body d-flex justify-content-between px-0">
+                <h4 class="card-title text-dark">Card title</h4>
+                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <Transition name="modal">
-    <div v-if="show" class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
-            <slot name="header">default header</slot>
-          </div>
-
-          <div class="modal-body">
-            <slot name="body">default body</slot>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              default footer
-              <button
-                class="modal-default-button"
-                @click="$emit('close')"
-              >OK</button>
-            </slot>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Transition>
 </template>
 
 <script>
@@ -66,17 +74,8 @@ import userProfileSidebarVue from '../../../Components/Layouts/userProfileSideba
 export default {
   components: {
     userProfileSidebarVue
-  },
-  data() {
-    return {
-      show: true
-    }
-  },
-  props: {
-    show: Boolean
   }
 }
-
 </script>
 
 <style scoped>
@@ -92,12 +91,12 @@ img {
 }
 
 .card {
-    transition: box-shadow 0.3s ease-in-out;
-  }
+  transition: box-shadow 0.3s ease-in-out;
+}
 
-  .card:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  }
+.card:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
 
 .modal-mask {
   position: fixed;
