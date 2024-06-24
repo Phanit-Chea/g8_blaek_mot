@@ -23,16 +23,16 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="text-muted mb-0">Full Name</p>
+                          <p class="text-muted mb-0 siemreap" >ឈ្មោះពេញ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">Johnatan Smith</p>
+                          <p class="text-muted mb-0 siemreap">Johnatan Smith</p>
                         </div>
                       </div>
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="text-muted mb-0">Email</p>
+                          <p class="text-muted mb-0 siemreap">អ៊ីមែល</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">example@example.com</p>
@@ -41,7 +41,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="text-muted mb-0">Phone</p>
+                          <p class="text-muted mb-0 siemreap">លេខទូរស័ព្ទ</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">(097) 234-5678</p>
@@ -50,16 +50,16 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="text-muted mb-0">Gender</p>
+                          <p class="text-muted mb-0 siemreap">ភេទ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">Male</p>
+                          <p class="text-muted mb-0 siemreap">ប្រុស</p>
                         </div>
                       </div>
                       <hr />
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="text-muted mb-0">Address</p>
+                          <p class="text-muted mb-0 siemreap">ទីកន្លែង</p>
                         </div>
                         <div class="col-sm-9">
                           <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
@@ -68,7 +68,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-9">
-                          <button class="edit-btn px-3 border-0 rounded">Edit</button>
+                          <button class="edit-btn px-3 border-0 rounded siemreap">កែសម្រួល</button>
                         </div>
                       </div>
                     </div>
@@ -94,6 +94,7 @@ export default {
 </script>
 
 <style scoped>
+
 .edit-btn {
   background-color: #66b64a;
 }
@@ -115,5 +116,8 @@ export default {
 .edit-btn:hover {
   background-color: white;
   color: #66b64a;
+}
+.siemreap {
+  font-family: 'Siemreap', cursive;
 }
 </style>
