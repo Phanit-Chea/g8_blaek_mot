@@ -1,5 +1,5 @@
 <template>
-  <nav class="row bg-white p-3 fixed-top">
+  <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
       <img
         src="../../../assets/ContainerImages/logo.png"
@@ -11,7 +11,7 @@
     </div>
     <div
       class="navCenter col-md d-flex align-items-center"
-      style="width: 100%; margin-left:2%; margin-top: 10px; margin-bottom: 10px"
+      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
     >
       <div class="input-group w-250">
         <button class="input-group-text border border-success border-end-0">
