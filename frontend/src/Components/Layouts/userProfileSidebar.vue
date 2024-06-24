@@ -15,10 +15,10 @@
         </li>
 
         <li class="nav-item mt-2">
-          <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-4">
+            <router-link to="" class="nav-link px-0 align-middle mb-4">
             <i class="fs-4 text-white align-middle material-icons">schedule</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap">បានមើលថ្មីៗ</span>
-          </a>
+            </router-link>
         </li>
         <li>
           <i class="fs-5 material-icons"><span class="folder ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសាររបស់អ្នក</span></i>
@@ -30,10 +30,10 @@
         </li>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
           <li>
-            <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link px-3 align-middle">
+              <router-link to="/user/folder"  class=" link-folder nav-link px-3 align-middle">
               <i class="fs-4 text-white align-middle material-icons">folder</i>
               <span class=" d-none d-sm-inline text-white siemreap">ថតឯកសារទី១</span>
-            </a>
+              </router-link>
           </li>
         </ul>
         </li>
@@ -49,7 +49,7 @@
             <h2 class="text-center pt-5 text-bold text-white siemreap">សូមស្វាគមន៍</h2>
             <p class="text-center text-white siemreap">បង្កើតថតឯកសារផ្ទាល់ខ្លួនរបស់អ្នក ដើម្បីងាយស្រួលគ្រប់គ្រងអាហារដែលអ្នកបានរក្សាទុក</p>
           </div>
-          <div class="div2 py-4" style="background-color: rgba(255, 255, 255, 0.5);">
+          <div class="div2 py-4 w-50" style="background-color: rgba(255, 255, 255, 0.5);">
             <div class="px-3 pt-3">
               <h3 class="text-center text-dark siemreap" id="exampleModalLabel">បង្កើតថតឯកសារ</h3>
             </div>

@@ -50,6 +50,11 @@ const router = createRouter({
       path: '/user/save',
       name: 'user/save',
       component: () => import('../views/Web/User/SaveRecipes.vue')
+    },
+    {
+      path: '/user/folder',
+      name: 'user/folder',
+      component: () => import('../views/Web/User/Folder.vue')
     }
   ]
 })
