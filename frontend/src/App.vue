@@ -2,6 +2,7 @@
 
 <template>
   <RouterView />
+  <NotificationView/>
 
 </template>
 
