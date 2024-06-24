@@ -1,54 +1,39 @@
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
-      <img
-        src="../../../assets/ContainerImages/logo.png"
-        alt="homeImage"
-        width="100%"
-        height="100px"
-      />
+      <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" width="100%" height="100px" />
       <!-- <h1 class="logo" style="font-family: 'Moul', serif; margin-left: 20px">ប្លែកមាត់</h1> -->
     </div>
-    <div
-      class="navCenter col-md d-flex align-items-center"
-      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
-    >
+    <div class="navCenter col-md d-flex align-items-center"
+      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
       <div class="input-group w-250">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
         </button>
-        <input
-          type="text"
-          class="form-control p-3 border border-success border-end-0 shadow-none"
-          placeholder="What would like to eat?"
-          aria-label="Search"
-        />
+        <input type="text" class="form-control p-3 border border-success border-end-0 shadow-none"
+          placeholder="What would like to eat?" aria-label="Search" />
         <button class="text-light input-group-text border border-success bg-green border-start-0">
           Search
         </button>
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <a
-        href="#"
-        class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-        style="border: 3px solid rgb(43, 212, 145)"
-      >
-        <i class="material-icons text-green fs-1">account_circle</i>
-      </a>
-      <a
-        href="#"
-        class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-        style="border: 3px solid rgb(43, 212, 145)"
-      >
+
+      <a href="#"
+        class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none notification-container"
+        style="border: 3px solid rgb(43, 212, 145);">
         <i class="material-icons text-green fs-1">notifications</i>
+        <span class="notification-badge">1</span>
       </a>
-      <a
-        href="#"
+      <a href="#"
         class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-        style="border: 3px solid rgb(43, 212, 145)"
-      >
+        style="border: 3px solid rgb(43, 212, 145)">
         <i class="material-icons text-green fs-1">turned_in_not</i>
+      </a>
+      <a href="#"
+        class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
+        style="border: 3px solid rgb(43, 212, 145)">
+        <i class="material-icons text-green fs-1">account_circle</i>
       </a>
     </div>
     <div class="navPages row text-warning mt-3">
@@ -62,7 +47,25 @@
   </nav>
 </template>
 <script>
-    export default{
-        name: 'NavbarView',
-    }
+export default {
+  name: 'NavbarView',
+}
 </script>
+<style>
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0.2em 0.4em;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.notification-container {
+  position: relative;
+}
+</style>

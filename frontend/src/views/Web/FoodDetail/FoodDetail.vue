@@ -1,5 +1,5 @@
 <template>
-    <div class="flex">
+    <div class="d-flex">
         <div class="col-2 ">
             <SideBar  style="width: 240px;height: 100%"/>
         </div>
