@@ -1,7 +1,7 @@
 <template>
     <div class="FoodDetail p-2">
         <div class="d-flex align-center">
-            <a href="" class="list-unstyled text-decoration-none text-danger">Back to list</a>
+            <a href="/" class="list-unstyled text-decoration-none text-danger">Back to list</a>
             <span class="material-symbols-outlined fs-3 text-danger">
                 keyboard_arrow_right
             </span>

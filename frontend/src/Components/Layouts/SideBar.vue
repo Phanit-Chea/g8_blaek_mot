@@ -6,7 +6,7 @@
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar">
       <a
         href=""
-        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none nav-link"
       >
         <h3 class="d-none d-sm-inline">Category</h3>
       </a>
@@ -20,13 +20,13 @@
           </a>
         </li>
 
-        <li>
-          <a href="#" class="nav-link px-0 align-middle">
+        <li class="nav-item">
+          <a href="#" class="nav-link px-0 align-middle nav-link">
             <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a
           >
         </li>
 
-        <li>
+        <li class="nav-item">
           <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
             <span class="ms-1 d-none d-sm-inline text-white">Dinner</span>
           </a>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 export default {}
 </script>
@@ -80,7 +80,34 @@ export default {}
   max-width: 100px;
   width: auto;
 }
+.nav-link{
+  transition: transform 0.3s ease;
+}
+.sidebar .nav-item .nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 5px 15px;
+  transition: color 0.3s ease-in-out;
+}
 
+.sidebar .nav-item .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar .nav-item .nav-link:hover {
+  color: #fff;
+}
+
+.sidebar .nav-item .nav-link:hover::after {
+  width: 100%;
+}
 .dropdown-item:hover,
 .dropdown-item:focus {
   background-color: #3e7329;
