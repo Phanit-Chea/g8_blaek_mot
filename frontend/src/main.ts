@@ -17,6 +17,7 @@ import 'uno.css'
 import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
 
+
 const app = createApp(App)
 
 configure({

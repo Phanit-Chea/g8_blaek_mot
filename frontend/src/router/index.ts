@@ -52,7 +52,31 @@ const router = createRouter({
     {
       path: '/category',
       name: 'category',
+<<<<<<< HEAD
       component: () => import('../views/Web/Category/Category.vue')
+=======
+      component: () => import('../views/Web/Category/ListView.vue')
+    },
+    {
+      path: '/aboutus',
+      name: 'aboutus',
+      component: () => import('../views/Web/AboutUs/ListView.vue')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('../views/Web/User/Profile.vue')
+    },
+    {
+      path: '/user/save',
+      name: 'user/save',
+      component: () => import('../views/Web/User/SaveRecipes.vue')
+    },
+    {
+      path: '/user/folder',
+      name: 'user/folder',
+      component: () => import('../views/Web/User/Folder.vue')
+>>>>>>> userProfile
     }
   ]
 })

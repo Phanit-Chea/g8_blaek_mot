@@ -2,6 +2,7 @@
   <div class="col py-3">
     <div class="container mx-auto mt-4">
       <div class="row d-flex">
+<<<<<<< HEAD
         <div class="card ms-4" style=" width:22.5%">
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
             class="card-img" alt="..." />
@@ -40,6 +41,56 @@
           <div class="card-body d-flex justify-content-between px-0">
             <h4 class="card-title text-dark ">Card title</h4>
             <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+=======
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+          </div>
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+          </div>
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+          </div>
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+          </div>
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+          </div>
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+          </div>
+          <div class="card ms-4" style=" width:22.5%">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s" class="card-img" alt="..." />
+            <div class="card-body d-flex justify-content-between px-0">
+              <h4 class="card-title text-dark ">Card title</h4>
+              <a href="#" class="btn " style="background-color: #54983c">Detail</a>
+            </div>
+>>>>>>> userProfile
           </div>
         </div>
         <div class="card ms-4" style=" width:22.5%">
@@ -77,11 +128,21 @@ export default {}
   transition: transform 0.3s ease;
 }
 
+<<<<<<< HEAD
 .card:hover {
   transform: scale(1.05);
 
   z-index: 10;
 }
+=======
+.card {
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+>>>>>>> userProfile
 
 img {
   height: 220px;

@@ -1,9 +1,14 @@
 <template>
   <div class="container-fluid">
     <div class="row flex-nowrap">
+<<<<<<< HEAD:frontend/src/views/Web/Category/Category.vue
       <side-bar-vue />
       <food-card-vue />
 
+=======
+      <side-bar-vue/>
+      <food-card-vue/>
+>>>>>>> userProfile:frontend/src/views/Web/Category/ListView.vue
     </div>
   </div>
 </template>
