@@ -12,7 +12,7 @@
           <el-input placeholder="Password" v-model="password" size="large" type="password" />
         </el-form-item>
         <div>
-        <span>Forgot Password?</span>
+       <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
           <el-button
