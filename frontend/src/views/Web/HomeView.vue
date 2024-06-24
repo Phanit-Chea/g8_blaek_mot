@@ -1,6 +1,5 @@
 <template>
   <div class="container h-100">
-    <NavbarView></NavbarView>
     <main class="container" style="margin-top: 14%">
       <div class="containerTop">
         <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
@@ -86,7 +85,7 @@
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលព្រឹក</h2>
-            <p>មុីនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p class="categoryTitle"> មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -96,7 +95,7 @@
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារថ្ងៃត្រង់</h2>
-            <p>មុីនុយដ៏ពិសស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p class="categoryTitle"> មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ​ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -111,7 +110,7 @@
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលល្ងាច</h2>
-            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p class="categoryTitle"> មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ​ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -121,7 +120,7 @@
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>បង្អែម</h2>
-            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p class="categoryTitle"> មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ​ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
           </div>
         </div>
       </div>
@@ -454,20 +453,8 @@
         </div>
       </div>
     </main>
-    <FooterView></FooterView>
   </div>
 </template>
-
-<script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
-export default {
-  components: {
-    NavbarView,
-    FooterView,
-  }
-}
-</script>
 <style scoped>
 .cardCategory,
 .col-md-4 {
@@ -484,5 +471,9 @@ export default {
   width: 100%;
   /* Make the image take up the full width of its parent */
   height: 50vh;
+}
+.categoryTitle{
+  /* display: flex; */
+  font-family: sans-serif;
 }
 </style>
