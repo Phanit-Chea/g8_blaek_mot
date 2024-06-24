@@ -1,8 +1,5 @@
 <template>
   <div class="container h-100">
-<<<<<<< HEAD
-    <NavbarView></NavbarView>
-=======
     <header class="row bg-white p-2 fixed-top">
       <div class="col-md-auto d-flex align-items-center text-green">
         <img
@@ -58,19 +55,30 @@
         </div>
       </nav>
     </header>
->>>>>>> userProfile
     <main class="container" style="margin-top: 14%">
       <div class="containerTop">
-        <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
+        <img
+          src="../../assets/ContainerImages/homePoster.png"
+          alt="homeImage"
+          width="100%"
+          height="600px"
+        />
       </div>
       <div class="row categories mt-5">
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img src="../../assets/CategoryImages/breakfast.png" width="100%" height="180px" class="card-img-top"
-              alt="Breakfast" />
+            <img
+              src="../../assets/CategoryImages/breakfast.png"
+              width="100%"
+              height="180px"
+              class="card-img-top"
+              alt="Breakfast"
+            />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
-              <p class="d-flex justify-content-start">អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។</p>
+              <p class="d-flex justify-content-start">
+                អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00AM - 9:00AM</p>
                 <i class="material-icons">access_time</i>
@@ -80,11 +88,18 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img src="../../assets/CategoryImages/lunch.png" width="100%" height="180px" class="card-img-top"
-              alt="Lunch" />
+            <img
+              src="../../assets/CategoryImages/lunch.png"
+              width="100%"
+              height="180px"
+              class="card-img-top"
+              alt="Lunch"
+            />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
-              <p class="d-flex justify-content-start">រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។</p>
+              <p class="d-flex justify-content-start">
+                រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>11:00AM - 12:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -94,11 +109,18 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img src="../../assets/CategoryImages/dinner.png" width="100%" height="180px" class="card-img-top"
-              alt="Dinner" />
+            <img
+              src="../../assets/CategoryImages/dinner.png"
+              width="100%"
+              height="180px"
+              class="card-img-top"
+              alt="Dinner"
+            />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
-              <p class="d-flex justify-content-start">អាហារពេលល្ងាច ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។</p>
+              <p class="d-flex justify-content-start">
+                អាហារពេលល្ងាច ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>5:00PM - 7:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -108,11 +130,18 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img src="../../assets/CategoryImages/dessert.png" width="100%" height="180px" class="card-img-top"
-              alt="Dessert" />
+            <img
+              src="../../assets/CategoryImages/dessert.png"
+              width="100%"
+              height="180px"
+              class="card-img-top"
+              alt="Dessert"
+            />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
-              <p class="d-flex justify-content-start">បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។</p>
+              <p class="d-flex justify-content-start">
+                បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -122,11 +151,18 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img src="../../assets/CategoryImages/drink.png" width="100%" height="180px" class="card-img-top"
-              alt="Drinks" />
+            <img
+              src="../../assets/CategoryImages/drink.png"
+              width="100%"
+              height="180px"
+              class="card-img-top"
+              alt="Drinks"
+            />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
-              <p class="d-flex justify-content-start">លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។</p>
+              <p class="d-flex justify-content-start">
+                លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -144,7 +180,10 @@
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលព្រឹក</h2>
-            <p>មុីនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេសជាប់ចិត្តក្នុងព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ
+              ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -154,7 +193,10 @@
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>អាហារថ្ងៃត្រង់</h2>
-            <p>មុីនុយដ៏ពិសស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃរសៀលនេះកាន់តែពិសេសបែបលំហែរពេលចេញពីការងារ
+              ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -169,7 +211,10 @@
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលល្ងាច</h2>
-            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃនេះពេលកាន់តែពិសេសបែបធម្មជាតិ
+              ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -179,12 +224,17 @@
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>បង្អែម</h2>
-            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃនេះមានបង្អែមកាន់តែពិសេសបែបអ៊ឺរ៉ុប
+              ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
       </div>
       <!--======================= list all foods ================= -->
-      <div class="containerMid text-center my-5 text-green" style="
+      <div
+        class="containerMid text-center my-5 text-green"
+        style="
           font-family:
             system-ui,
             -apple-system,
@@ -197,7 +247,8 @@
             'Open Sans',
             'Helvetica Neue',
             sans-serif;
-        ">
+        "
+      >
         <h1>បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh">
@@ -539,20 +590,8 @@
         </div>
       </div>
     </main>
-    <FooterView></FooterView>
   </div>
 </template>
-
-<script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
-export default {
-  components: {
-    NavbarView,
-    FooterView,
-  }
-}
-</script>
 <style scoped>
 .cardCategory,
 .col-md-4 {
@@ -567,7 +606,6 @@ export default {
 
 .responsive-img {
   width: 100%;
-  /* Make the image take up the full width of its parent */
   height: 50vh;
 }
 </style>
