@@ -26,10 +26,33 @@ const router = createRouter({
       name: 'home',
       component: () => import('../views/Web/HomeView.vue')
     },
+
     {
       path: '/post',
       name: 'post',
       component: () => import('../views/Web/Post/ListView.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Admin/Auth/RegisterView.vue')
+    },
+    {
+      path: '/resetpassword',
+      name: 'resetpassword',
+      component: () => import('../views/Admin/Auth/ResetPasswordView.vue')
+    }
+
+    ,
+    {
+      path: '/detail',
+      name: 'detail',
+      component: () => import('../views/Web/FoodDetail/FoodDetail.vue')
+    },
+    {
+      path: '/category',
+      name: 'category',
+      component: () => import('../views/Web/Category/Category.vue')
     }
   ]
 })

@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap CSS
 import './assets/main.css'
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -11,6 +13,7 @@ import 'element-plus/dist/index.css'
 import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
+import 'leaflet/dist/leaflet.css'; 
 
 const app = createApp(App)
 
