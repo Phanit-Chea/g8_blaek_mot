@@ -93,7 +93,7 @@
           <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
         </div>
         <div
-          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>អាហារថ្ងៃត្រង់</h2>
             <p>មុីនុយដ៏ពិសស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
@@ -118,7 +118,7 @@
           <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
         </div>
         <div
-          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center">
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>បង្អែម</h2>
             <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
@@ -144,313 +144,340 @@
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh">
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/beefSoup.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/beefSoup.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%;">
+              <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+                alt="Card image" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card </h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none ml-auto">
+                    <i class="material-icons text-primary">turned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/fryFish.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/fryFish.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/nhom.png" width="100%" height="200px" class="card-img-top" alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/nhom.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/noodle.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/noodle.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/pizza.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/pizza.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/pork.png" width="100%" height="200px" class="card-img-top" alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/pork.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/salmon.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/salmon.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/rice.png" width="100%" height="200px" class="card-img-top" alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/rice.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+         </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card shadow" style="height: 100%">
-            <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
-              alt="#" />
-            <div class="card-body text-center">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text d-flex justify-content-start text-left">
-                Some quick example text to build on the card title and make up the bulk of the
-                card's content.
-              </p>
-              <div class="cardFooter d-flex">
-                <div class="iconStar text-warning">
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
-                  <i class="material-icons">star</i>
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text d-flex justify-content-start text-left">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="cardFooter d-flex">
+                  <div class="iconStar text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
+                  <a href="#" class="text-decoration-none">
+                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  </a>
                 </div>
-                <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                <a href="#" class="text-decoration-none">
-                  <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
-                </a>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </main>
