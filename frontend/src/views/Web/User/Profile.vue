@@ -12,10 +12,7 @@
                     <div class="card-body text-center">
                       <img
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUUxO6ABH3xaw4UibQhS3A0wYRyq7w7a4Vgg&s"
-                        alt="avatar"
-                        class="rounded-circle img-fluid"
-                        style="width: 170px; height:170px"
-                      />
+                        alt="avatar" class="rounded-circle img-fluid" style="width: 170px; height:170px" />
                       <h5 class="text-muted my-3">John Smith</h5>
                       <p class="text-muted mb-1">example@example.com</p>
                     </div>
@@ -100,6 +97,7 @@ export default {
 .edit-btn {
   background-color: #66b64a;
 }
+
 .card {
   transition: border 0.3s ease-in-out;
 }

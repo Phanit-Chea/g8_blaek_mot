@@ -1,28 +1,29 @@
-<template> 
-<div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0" style="background-color: #54983c; width: 200px"> 
-  <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar"> 
-    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-      <li class="nav-item mt-3"> <router-link to="/user" class="nav-link align-middle px-0"> 
-        <i class="fs-4 text-white align-middle material-icons">person</i> 
-        <span class="ms-2 d-none d-sm-inline text-white">Profile</span> 
-        </router-link> </li>
-      <li class="nav-item mt-2">
-        <router-link to="/user/save" class="nav-link px-0 align-middle">
-          <i class="fs-4 text-white align-middle material-icons">bookmark</i>
-          <span class="ms-1 d-none d-sm-inline text-white">Saved Recipes</span>
-        </router-link>
-      </li>
+<template>
+  <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0" style="background-color: #54983c; width: 200px">
+    <div
+      class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar">
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        <li class="nav-item mt-3"> <router-link to="/user" class="nav-link align-middle px-0">
+            <i class="fs-4 text-white align-middle material-icons">person</i>
+            <span class="ms-2 d-none d-sm-inline text-white">Profile</span>
+          </router-link> </li>
+        <li class="nav-item mt-2">
+          <router-link to="/user/save" class="nav-link px-0 align-middle">
+            <i class="fs-4 text-white align-middle material-icons">bookmark</i>
+            <span class="ms-1 d-none d-sm-inline text-white">Saved Recipes</span>
+          </router-link>
+        </li>
 
-      <li class="nav-item mt-2">
-        <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-4">
-          <i class="fs-4 text-white align-middle material-icons">schedule</i>
-          <span class="ms-1 d-none d-sm-inline text-white">Recently Viewed</span>
-        </a>
-      </li>
-      <li>
-        <i class="fs-5 material-icons"><span class="folder ms-1 d-none d-sm-inline text-white">YOUR FOLDERS</span></i>
+        <li class="nav-item mt-2">
+          <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle mb-4">
+            <i class="fs-4 text-white align-middle material-icons">schedule</i>
+            <span class="ms-1 d-none d-sm-inline text-white">Recently Viewed</span>
+          </a>
+        </li>
         <li>
-          <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link align-middle px-3 mt-3">
+          <i class="fs-5 material-icons"><span class="folder ms-1 d-none d-sm-inline text-white">YOUR FOLDERS</span></i>
+        <li data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <a href="#" data-bs-toggle="collapse" class=" link-folder nav-link align-middle px-3 mt-3" >
             <i class="fs-4 text-white align-middle material-icons">add</i>
             <span class="ms-1 d-none d-sm-inline text-white">New Folder</span>
           </a>
@@ -35,10 +36,27 @@
             </a>
           </li>
         </ul>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
