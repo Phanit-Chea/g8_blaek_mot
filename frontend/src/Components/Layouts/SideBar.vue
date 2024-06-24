@@ -1,20 +1,8 @@
 <template>
-<<<<<<< HEAD
-  <div
-    class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 "
-    style="background-color: #54983c; width: 160px"
-  >
-    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar">
-      <a
-        href=""
-        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none nav-link"
-      >
-=======
   <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color: #54983c; width: 160px">
     <div
       class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 text-white min-vh-100 sticky-top sidebar">
       <a href="" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
->>>>>>> userProfile
         <h3 class="d-none d-sm-inline">Category</h3>
       </a>
       <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
@@ -25,15 +13,9 @@
         </li>
 
         <li class="nav-item">
-<<<<<<< HEAD
-          <a href="#" class="nav-link px-0 align-middle nav-link">
-            <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a
-          >
-=======
           <a href="#" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-table"></i>
             <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a>
->>>>>>> userProfile
         </li>
 
         <li class="nav-item">
@@ -41,22 +23,10 @@
             <span class="ms-1 d-none d-sm-inline text-white">Dinner</span>
           </a>
         </li>
-<<<<<<< HEAD
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle px-0 align-middle text-white"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-=======
         <li>
           <a class="nav-link dropdown-toggle px-0 align-middle text-white" href="#" id="navbarDropdown" role="button"
             data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fs-4 bi-people"></i>
->>>>>>> userProfile
             <span class="ms-1 d-none d-sm-inline">Others</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end p-0" aria-labelledby="navbarDropdown">
@@ -107,8 +77,6 @@ export default {}
   transition: color 0.3s ease-in-out;
 }
 
-<<<<<<< HEAD
-=======
 
 /* Hover effect for bottom line of nav-link */
 .sidebar .nav-item .nav-link {
@@ -118,7 +86,6 @@ export default {}
   transition: color 0.3s ease-in-out;
 }
 
->>>>>>> userProfile
 .sidebar .nav-item .nav-link::after {
   content: "";
   position: absolute;
@@ -131,18 +98,6 @@ export default {}
 }
 
 .sidebar .nav-item .nav-link:hover {
-<<<<<<< HEAD
-  color: #fff;
-}
-
-.sidebar .nav-item .nav-link:hover::after {
-  width: 100%;
-}
-.dropdown-item:hover,
-.dropdown-item:focus {
-  background-color: #3e7329;
-=======
->>>>>>> userProfile
   color: #fff;
 }
 

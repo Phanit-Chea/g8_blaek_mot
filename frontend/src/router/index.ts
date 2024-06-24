@@ -52,10 +52,7 @@ const router = createRouter({
     {
       path: '/category',
       name: 'category',
-<<<<<<< HEAD
       component: () => import('../views/Web/Category/Category.vue')
-=======
-      component: () => import('../views/Web/Category/ListView.vue')
     },
     {
       path: '/aboutus',
@@ -76,7 +73,6 @@ const router = createRouter({
       path: '/user/folder',
       name: 'user/folder',
       component: () => import('../views/Web/User/Folder.vue')
->>>>>>> userProfile
     }
   ]
 })
