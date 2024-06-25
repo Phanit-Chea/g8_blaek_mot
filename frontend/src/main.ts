@@ -1,15 +1,12 @@
-<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 import './assets/main.css'
-import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
-=======
+
 import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.js'
->>>>>>> chat
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
