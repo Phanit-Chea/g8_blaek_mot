@@ -86,7 +86,7 @@
               បោះបង់
             </button>
             <button
-              type="button"
+              type="submit"
               class="btn text-white ms-2 text-bold siemreap"
               style="background-color: #238400"
             >
