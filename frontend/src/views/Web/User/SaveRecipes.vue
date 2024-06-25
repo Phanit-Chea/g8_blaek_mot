@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top:11.03%">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
       <div class="col py-3">
