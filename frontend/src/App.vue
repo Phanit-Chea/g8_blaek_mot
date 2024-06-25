@@ -14,4 +14,4 @@ export default {
     FooterView,
   },
 }
-</script>
+
