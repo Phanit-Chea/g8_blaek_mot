@@ -34,6 +34,7 @@ const router = createRouter({
       component: () => import('../views/Web/Post/ListView.vue')
     },
     {
+      path: '/register',
       name: 'register',
       component: () => import('../views/Admin/Auth/RegisterView.vue')
     },
@@ -78,10 +79,16 @@ const router = createRouter({
       path: '/user/edit',
       name: 'user/edit',
       component: () => import('../views/Web/User/EditProfile.vue')
+    }
+    ,
+    {
       path: '/chat',
+      name: 'chat',
       component: ChatVue,
     }
-
+    
+   
+  ]
 })
 
 // router.beforeEach(async (to, from, next) => {
