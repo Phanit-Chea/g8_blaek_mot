@@ -53,7 +53,13 @@ const router = createRouter({
       path: '/category',
       name: 'category',
       component: () => import('../views/Web/Category/Category.vue')
+    },
+    {
+      path: '/createfood',
+      name: 'createfood',
+      component: () => import('../views/Web/CreateFood/CreateFood.vue')
     }
+    
   ]
 })
 
