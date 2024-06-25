@@ -1,24 +1,16 @@
 <template>
   <div class="container h-100">
     <main class="container" style="margin-top: 14%">
+      <!--========================= banner image ============================ -->
       <div class="containerTop">
-        <img
-          src="../../assets/ContainerImages/homePoster.png"
-          alt="homeImage"
-          width="100%"
-          height="600px"
-        />
+        <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
       </div>
+      <!-- =========================categories ========================================= -->
       <div class="row categories mt-5">
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/breakfast.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Breakfast"
-            />
+            <img src="../../assets/CategoryImages/breakfast.png" width="100%" height="180px" class="card-img-top"
+              alt="Breakfast" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
               <p class="d-flex justify-content-start">
@@ -33,13 +25,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/lunch.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Lunch"
-            />
+            <img src="../../assets/CategoryImages/lunch.png" width="100%" height="180px" class="card-img-top"
+              alt="Lunch" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
               <p class="d-flex justify-content-start">
@@ -54,13 +41,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/dinner.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dinner"
-            />
+            <img src="../../assets/CategoryImages/dinner.png" width="100%" height="180px" class="card-img-top"
+              alt="Dinner" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
               <p class="d-flex justify-content-start">
@@ -75,13 +57,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/dessert.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dessert"
-            />
+            <img src="../../assets/CategoryImages/dessert.png" width="100%" height="180px" class="card-img-top"
+              alt="Dessert" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
               <p class="d-flex justify-content-start">
@@ -96,13 +73,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/drink.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Drinks"
-            />
+            <img src="../../assets/CategoryImages/drink.png" width="100%" height="180px" class="card-img-top"
+              alt="Drinks" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
               <p class="d-flex justify-content-start">
@@ -177,9 +149,7 @@
         </div>
       </div>
       <!--======================= list all foods ================= -->
-      <div
-        class="containerMid text-center my-5 text-green"
-        style="
+      <div class="containerMid text-center my-5 text-green" style="
           font-family:
             system-ui,
             -apple-system,
@@ -192,8 +162,7 @@
             'Open Sans',
             'Helvetica Neue',
             sans-serif;
-        "
-      >
+        ">
         <h1>បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh">
@@ -503,7 +472,7 @@
                 </div>
               </div>
             </div>
-         </a>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
@@ -534,6 +503,7 @@
           </a>
         </div>
       </div>
+
     </main>
   </div>
 </template>

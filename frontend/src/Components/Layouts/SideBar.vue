@@ -6,9 +6,9 @@
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sticky-top sidebar">
       <a
         href=""
-        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none nav-link"
+        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
       >
-        <h3 class="d-none d-sm-inline">Category</h3>
+        <h3 class="d-none d-sm-inline mt-3">Category</h3>
       </a>
       <ul
         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -16,22 +16,25 @@
       >
         <li class="nav-item">
           <a href="#" class="nav-link align-middle px-0">
+            
             <span class="ms-1 d-none d-sm-inline text-white">Breakfast</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link px-0 align-middle nav-link">
+          <a href="#" class=" nav-link px-0 align-middle">
+       
             <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a
           >
         </li>
 
         <li class="nav-item">
           <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+          
             <span class="ms-1 d-none d-sm-inline text-white">Dinner</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
+        <li class=" dropdown">
           <a
             class="nav-link dropdown-toggle px-0 align-middle text-white"
             href="#"
@@ -58,7 +61,7 @@
 </template>
 
 <script>
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 export default {}
 </script>
@@ -80,9 +83,13 @@ export default {}
   max-width: 100px;
   width: auto;
 }
-.nav-link{
-  transition: transform 0.3s ease;
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #3e7329;
+  color: #fff;
 }
+/* Hover effect for bottom line of nav-link */
 .sidebar .nav-item .nav-link {
   position: relative;
   display: inline-block;
@@ -107,10 +114,5 @@ export default {}
 
 .sidebar .nav-item .nav-link:hover::after {
   width: 100%;
-}
-.dropdown-item:hover,
-.dropdown-item:focus {
-  background-color: #3e7329;
-  color: #fff;
 }
 </style>
