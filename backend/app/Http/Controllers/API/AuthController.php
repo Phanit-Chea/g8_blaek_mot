@@ -55,7 +55,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'phone_number' => 'required|string',
             'gender' => 'required|string',
-            'province' => 'required|string',
+            'address' => 'required|string',
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
@@ -80,7 +80,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'gender' => $request->gender,
-            'province' => $request->province,
+            'address' => $request->address,
             'password' => Hash::make($request->password),
             'profile' => $imageName
         ]);
