@@ -47,7 +47,7 @@
         <img
           src="../../../assets/login.png"
           alt="login"
-          width="40px"
+          width="38px"
           data-bs-toggle="modal"
           data-bs-target="#loginForm"
         />
