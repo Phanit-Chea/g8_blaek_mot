@@ -1,68 +1,11 @@
 <template>
   <div class="container h-100">
-<<<<<<< HEAD
-    <NavbarView></NavbarView>
-=======
-    <header class="row bg-white p-2 fixed-top">
-      <div class="col-md-auto d-flex align-items-center text-green">
-        <img
-          src="../../assets/ContainerImages/logo.png"
-          alt="homeImage"
-          width="100%"
-          height="100px"
-        />
-        <!-- <h1 class="logo" style="font-family: 'Moul', serif; margin-left: 20px">ប្លែកមាត់</h1> -->
-      </div>
-      <div
-        class="col-md d-flex align-items-center"
-        style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
-      >
-        <div class="input-group w-250">
-          <button class="input-group-text border border-success border-end-0">
-            <i class="material-icons">search</i>
-          </button>
-          <input
-            type="text"
-            class="form-control p-3 border border-success border-end-0 shadow-none"
-            placeholder="What would like to eat?"
-            aria-label="Search"
-          />
-          <button class="text-light input-group-text border border-success bg-green border-start-0">
-            Search
-          </button>
-        </div>
-      </div>
-      <div class="col-md d-flex justify-content-end align-items-center gap-4 m-2">
-        <router-link to="/user" class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none" style="border: 3px solid rgb(43, 212, 145)">
-          <i class="material-icons text-green fs-1">account_circle</i>
-        </router-link>
-        <a
-          href="#"
-          class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none" style="border: 3px solid rgb(43, 212, 145)"
-        >
-          <i class="material-icons text-green fs-1">notifications</i>
-        </a>
-        <a
-          href="#"
-          class="me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none" style="border: 3px solid rgb(43, 212, 145)"
-        >
-          <i class="material-icons text-green fs-1">turned_in_not</i>
-        </a>
-      </div>
-      <nav class="row text-warning mt-3">
-        <div class="col d-flex" style="gap: 20px; margin-left: 20px">
-          <a href="#" class="text-green text-decoration-none nav-link">Home</a>
-          <router-link to="/category" class="text-green text-decoration-none nav-link">Category</router-link>
-          <router-link to="/aboutus" class="text-green text-decoration-none nav-link">About Us</router-link>
-          <a href="#" class="text-green text-decoration-none nav-link">Join With Us</a>
-        </div>
-      </nav>
-    </header>
->>>>>>> userProfile
     <main class="container" style="margin-top: 14%">
+      <!--========================= banner image ============================ -->
       <div class="containerTop">
         <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
       </div>
+      <!-- =========================categories ========================================= -->
       <div class="row categories mt-5">
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
@@ -70,7 +13,9 @@
               alt="Breakfast" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
-              <p class="d-flex justify-content-start">អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។</p>
+              <p class="d-flex justify-content-start">
+                អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00AM - 9:00AM</p>
                 <i class="material-icons">access_time</i>
@@ -84,7 +29,9 @@
               alt="Lunch" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
-              <p class="d-flex justify-content-start">រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។</p>
+              <p class="d-flex justify-content-start">
+                រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>11:00AM - 12:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -98,7 +45,9 @@
               alt="Dinner" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
-              <p class="d-flex justify-content-start">អាហារពេលល្ងាច ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។</p>
+              <p class="d-flex justify-content-start">
+                អាហារពេលល្ងាច ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>5:00PM - 7:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -112,7 +61,9 @@
               alt="Dessert" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
-              <p class="d-flex justify-content-start">បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។</p>
+              <p class="d-flex justify-content-start">
+                បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -126,7 +77,9 @@
               alt="Drinks" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
-              <p class="d-flex justify-content-start">លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។</p>
+              <p class="d-flex justify-content-start">
+                លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។
+              </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
                 <p>7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
@@ -144,7 +97,10 @@
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលព្រឹក</h2>
-            <p>មុីនុយដ៏ពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេសជាប់ចិត្តក្នុងព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ
+              ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -154,7 +110,10 @@
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>អាហារថ្ងៃត្រង់</h2>
-            <p>មុីនុយដ៏ពិសស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃរសៀលនេះកាន់តែពិសេសបែបលំហែរពេលចេញពីការងារ
+              ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -169,7 +128,10 @@
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលល្ងាច</h2>
-            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃនេះពេលកាន់តែពិសេសបែបធម្មជាតិ
+              ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
@@ -179,7 +141,10 @@
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>បង្អែម</h2>
-            <p>មុីនុយដ៏េពិសេស​សម្រាប់ព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត</p>
+            <p>
+              មុីនុយពិសេសសម្រាប់ថ្ងៃនេះមានបង្អែមកាន់តែពិសេសបែបអ៊ឺរ៉ុប
+              ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
+            </p>
           </div>
         </div>
       </div>
@@ -507,7 +472,7 @@
                 </div>
               </div>
             </div>
-         </a>
+          </a>
         </div>
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
@@ -538,21 +503,10 @@
           </a>
         </div>
       </div>
+
     </main>
-    <FooterView></FooterView>
   </div>
 </template>
-
-<script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
-export default {
-  components: {
-    NavbarView,
-    FooterView,
-  }
-}
-</script>
 <style scoped>
 .cardCategory,
 .col-md-4 {
@@ -567,7 +521,6 @@ export default {
 
 .responsive-img {
   width: 100%;
-  /* Make the image take up the full width of its parent */
   height: 50vh;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container m-2.8" style="background-color: #2a581a">
+  <div class="container" style="background-color: #2a581a; margin-top: 20px; width: 100%">
     <footer class="text-light py-5">
       <div class="col-md-auto d-flex align-items-center text-green">
         <img src="../../../assets/FooterImages/logo.png" alt="homeImage" width="16%" height="100px" />

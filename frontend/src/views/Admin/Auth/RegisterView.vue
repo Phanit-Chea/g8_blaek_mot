@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Button trigger modal -->
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationModal">Registration</button>
+        <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationModal">Registration</button> -->
 
         <!-- Modal -->
         <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel"
