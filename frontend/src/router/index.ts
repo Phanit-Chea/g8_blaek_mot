@@ -78,7 +78,12 @@ const router = createRouter({
       path: '/user/edit',
       name: 'user/edit',
       component: () => import('../views/Web/User/EditProfile.vue')
-    }
+    },
+    {
+      path: '/admin/user',
+      name: 'admin/user',
+      component: () => import('../views/Admin/User/ListView.vue')
+    },
   ]
 })
 
