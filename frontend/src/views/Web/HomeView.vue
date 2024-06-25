@@ -185,9 +185,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -213,9 +213,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none ml-auto">
-                    <i class="material-icons text-primary">turned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -241,9 +241,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -269,9 +269,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -297,9 +297,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -325,9 +325,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -353,9 +353,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -381,9 +381,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -409,9 +409,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -437,9 +437,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -465,9 +465,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
@@ -493,9 +493,9 @@
                     <i class="material-icons">star</i>
                     <i class="material-icons">star</i>
                   </div>
-                  <span class="d-flex justify-content-center ml-3 mt-0.5">100k</span>
-                  <a href="#" class="text-decoration-none">
-                    <i class="material-icons text-primary d-flex" style="margin-left: 20px">favoturned_in_not</i>
+                  <a href="#" class=" d-flex text-decoration-none ml-3">
+                    <span class="d-flex justify-content-center text-dark rateCount">100k</span>
+                    <i class="material-icons text-primary d-flex" style="margin-left: 10%">favoturned_in_not</i>
                   </a>
                 </div>
               </div>
