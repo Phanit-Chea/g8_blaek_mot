@@ -47,7 +47,7 @@
         <div class="div0 d-flex justify-content-between ">
           <div class=" div1 w-50 p-3 py-4 " >
             <h2 class="text-center pt-5 text-bold text-white siemreap">សូមស្វាគមន៍</h2>
-            <p class="text-center text-white siemreap">បង្កើតថតឯកសារផ្ទាល់ខ្លួនរបស់អ្នក ដើម្បីងាយស្រួលគ្រប់គ្រងអាហារដែលអ្នកបានរក្សាទុក</p>
+            <p class="text-center text-white  siemreap">បង្កើតថតឯកសារផ្ទាល់ខ្លួនរបស់អ្នក ដើម្បីងាយស្រួលគ្រប់គ្រងអាហារដែលអ្នកបានរក្សាទុក</p>
           </div>
           <div class="div2 py-4 w-50" style="background-color: rgba(255, 255, 255, 0.5);">
             <div class="px-3 pt-3">
