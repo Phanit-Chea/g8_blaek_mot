@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top:11.03%">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
       <div class="col ">
@@ -68,7 +68,7 @@
                       <hr />
                       <div class="row">
                         <div class="col-sm-9">
-                          <button class="edit-btn px-3 border-0 rounded siemreap">កែសម្រួល</button>
+                          <router-link to="/user/edit" class="edit-btn px-3 border-0 rounded siemreap">កែសម្រួល</router-link>
                         </div>
                       </div>
                     </div>
@@ -110,12 +110,15 @@ export default {
 .edit-btn {
   background-color: #66b64a;
   border: 1px solid #66b64a;
+  color: white;
+  text-decoration: none;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .edit-btn:hover {
   background-color: white;
   color: #66b64a;
+  cursor: pointer;
 }
 .siemreap {
   font-family: 'Siemreap', cursive;
