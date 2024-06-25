@@ -16,7 +16,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email'     => 'required|string|max:255',
             'password'  => 'required|string'
-          ]);
+        ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors());
@@ -39,7 +39,7 @@ class AuthController extends Controller
             'token_type'    => 'Bearer'
         ]);
     }
-    
+
     public function index(Request $request)
     {
         $user = $request->user();
@@ -48,15 +48,8 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login success',
             'data' =>$user,
-
-
-
-
-
-
-
-
-            
         ]);
     }
+
+
 }
