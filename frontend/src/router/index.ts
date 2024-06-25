@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axiosInstance from '@/plugins/axios'
 import { useAuthStore } from '@/stores/auth-store'
 import { createAcl, defineAclRules } from 'vue-simple-acl'
-
+import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+import ChatVue from '@/views/chat/ChatVue.vue'
 const simpleAcl = createAcl({})
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +31,13 @@ const router = createRouter({
       path: '/post',
       name: 'post',
       component: () => import('../views/Web/Post/ListView.vue')
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: ChatVue,
     }
+
   ]
 })
 
