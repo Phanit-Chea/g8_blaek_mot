@@ -1,56 +1,35 @@
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
-      <img
-        src="../../../assets/ContainerImages/logo.png"
-        alt="homeImage"
-        width="100%"
-        height="100px"
-      />
+      <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" width="100%" height="100px" />
     </div>
-    <div
-      class="navCenter col-md d-flex align-items-center"
-      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
-    >
+    <div class="navCenter col-md d-flex align-items-center"
+      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
       <div class="input-group w-240">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
         </button>
-        <input
-          type="text"
-          class="form-control p-3 border border-success border-end-0 shadow-none"
-          placeholder="What would you like to eat?"
-          aria-label="Search"
-        />
-        <button class="text-light input-group-text border border-success border-start-0" style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center;"> 
+        <input type="text" class="form-control p-3 border border-success border-end-0 shadow-none"
+          placeholder="What would you like to eat?" aria-label="Search" />
+        <button class="text-light input-group-text border border-success border-start-0"
+          style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center;">
           Search
         </button>
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <a
-        href="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <a href="#"
+        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
       </a>
-      <a
-        href="#"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <a href="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
       </a>
-      <a
-        href="#"
-        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
-        <img
-          src="../../../assets/login.png"
-          alt="login"
-          width="38px"
-          data-bs-toggle="modal"
-          data-bs-target="#loginForm"
-        />
+      <a href="#"
+        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <img src="../../../assets/login.png" alt="login" width="38px" data-bs-toggle="modal"
+          data-bs-target="#loginForm" />
       </a>
     </div>
     <div class="navPages row text-warning mt-3">
@@ -64,24 +43,13 @@
   </nav>
 
   <!-- Login Form Modal -->
-  <div
-    class="modal fade"
-    id="loginForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="loginFormLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="loginFormLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-green">Login</h5>
-          <button
-            type="button"
-            class="btn-close text-danger"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
@@ -119,25 +87,14 @@
   </div>
 
   <!-- Register Form Modal -->
-  <div
-    class="modal fade"
-    id="registerForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="registerFormLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerFormLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-body">
           <div class="d-flex justify-content-between align-items-center border-b p-2">
             <h3 class="text-success m-0">Registration</h3>
-            <button
-              type="button"
-              class="btn btn-link text-success"
-              data-bs-toggle="modal"
-              data-bs-target="#loginForm"
-            >
+            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm">
               Login now
             </button>
           </div>
@@ -217,24 +174,13 @@
   </div>
 
   <!-- Reset Password Modal -->
-  <div
-    class="modal fade"
-    id="resetForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="resetFormLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="resetForm" tabindex="-1" role="dialog" aria-labelledby="resetFormLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-green">Reset Password</h5>
-          <button
-            type="button"
-            class="btn-close text-danger"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
