@@ -65,7 +65,7 @@
                 password now</a></span>
           </div>
           <div class="text-center">
-            <span>Don’t have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#registerForm"
+            <span>Don't have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#registerForm"
                 data-bs-dismiss="modal">Register now</a></span>
           </div>
         </div>
@@ -83,8 +83,7 @@
         <div class="modal-body">
           <div class="d-flex justify-content-between align-items-center border-b p-2">
             <h3 class="text-success m-0">Registration</h3>
-            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm"
-              >Login now</button>
+            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm">Login now</button>
           </div>
           <div class="p-3">
             <form>
@@ -163,7 +162,26 @@
 
 <script>
 export default {
-  name: 'NavbarView'
+  name: 'NavbarView',
+  mounted() {
+    this.registerModalEventListeners();
+  },
+  methods: {
+    registerModalEventListeners() {
+      const modals = ['loginForm', 'registerForm', 'resetForm'];
+      modals.forEach(modalId => {
+        const modalElement = document.getElementById(modalId);
+        modalElement.addEventListener('hidden.bs.modal', this.handleModalClose);
+      });
+    },
+    handleModalClose() {
+      document.body.classList.remove('modal-open');
+      const modalBackdrop = document.querySelector('.modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.parentNode.removeChild(modalBackdrop);
+      }
+    }
+  }
 }
 </script>
 

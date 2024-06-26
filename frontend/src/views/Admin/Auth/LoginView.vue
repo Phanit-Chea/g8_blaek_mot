@@ -25,7 +25,7 @@
          
         </div>
         <div class="text-center">
-        <span>Don’t have an account?<a href="#">Register now</a> </span>
+        <span>Don't have an account?<a href="#">Register now</a></span>
         </div>
       </el-form>
     </el-card>
