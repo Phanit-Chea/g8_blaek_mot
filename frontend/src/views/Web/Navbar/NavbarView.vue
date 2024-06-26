@@ -1,56 +1,35 @@
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
-      <img
-        src="../../../assets/ContainerImages/logo.png"
-        alt="homeImage"
-        width="100%"
-        height="100px"
-      />
+      <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" width="100%" height="100px" />
     </div>
-    <div
-      class="navCenter col-md d-flex align-items-center"
-      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
-    >
+    <div class="navCenter col-md d-flex align-items-center"
+      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
       <div class="input-group w-240">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
         </button>
-        <input
-          type="text"
-          class="form-control p-3 border border-success border-end-0 shadow-none"
-          placeholder="What would you like to eat?"
-          aria-label="Search"
-        />
-        <button class="text-light input-group-text border border-success border-start-0" style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center;"> 
+        <input type="text" class="form-control p-3 border border-success border-end-0 shadow-none"
+          placeholder="What would you like to eat?" aria-label="Search" />
+        <button class="text-light input-group-text border border-success border-start-0"
+          style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center;">
           Search
         </button>
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <a
-        href="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <a href="#"
+        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
       </a>
-      <a
-        href="#"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <a href="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
       </a>
-      <a
-        href="#"
-        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
-        <img
-          src="../../../assets/login.png"
-          alt="login"
-          width="38px"
-          data-bs-toggle="modal"
-          data-bs-target="#loginForm"
-        />
+      <a href="#"
+        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <img src="../../../assets/login.png" alt="login" width="38px" data-bs-toggle="modal"
+          data-bs-target="#loginForm" />
       </a>
     </div>
     <div class="navPages row text-warning mt-3">
@@ -64,24 +43,13 @@
   </nav>
 
   <!-- Login Form Modal -->
-  <div
-    class="modal fade"
-    id="loginForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="loginFormLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="loginFormLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-green">Login</h5>
-          <button
-            type="button"
-            class="btn-close text-danger"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
@@ -119,25 +87,14 @@
   </div>
 
   <!-- Register Form Modal -->
-  <div
-    class="modal fade"
-    id="registerForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="registerFormLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerFormLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-body">
           <div class="d-flex justify-content-between align-items-center border-b p-2">
             <h3 class="text-success m-0">Registration</h3>
-            <button
-              type="button"
-              class="btn btn-link text-success"
-              data-bs-toggle="modal"
-              data-bs-target="#loginForm"
-            >
+            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm">
               Login now
             </button>
           </div>
@@ -172,35 +129,9 @@
                 <input type="number" id="age" class="form-control" />
               </div>
               <div class="mb-2">
-                <label for="province" class="block text-sm font-medium text-success">Province</label>
-                <select id="province" class="form-control">
-                  <option value="" selected disabled>Select Province</option>
-                  <option value="banteayMeanchey">Banteay Meanchey</option>
-                  <option value="battambang">Battambang</option>
-                  <option value="kampongCham">Kampong cham</option>
-                  <option value="kampongChhnamg">Kampong Chhnamg</option>
-                  <option value="kampongSpeu">Kampong Speu</option>
-                  <option value="kampongThom">Kampong Thom</option>
-                  <option value="kampot">Kampot</option>
-                  <option value="kandal">Kandal</option>
-                  <option value="kep">Kep</option>
-                  <option value="kohKong">Koh Kong</option>
-                  <option value="kratie">Kratie</option>
-                  <option value="mondulkiri">Mondulkiri</option>
-                  <option value="oddarMeanchey">Oddar Meanchey</option>
-                  <option value="pailin">Pailin</option>
-                  <option value="phnomPenh">Phnom Penh</option>
-                  <option value="preahSihanouk">Preah Sihanouk</option>
-                  <option value="preahVihear">Preah Vihear</option>
-                  <option value="preyVeng">Prey Veng</option>
-                  <option value="pursat">Pursat</option>
-                  <option value="ratanakiri">Ratanakiri</option>
-                  <option value="siemReap">Siem Reap</option>
-                  <option value="stungTreng">Stung Treng</option>
-                  <option value="svayRieng">Svay Rieng</option>
-                  <option value="takeo">Takeo</option>
-                  <option value="tboungKhmum">Tboung Khmum</option>
-                </select>
+                <label for="province" class="block text-sm font-medium text-success">Address</label>
+                <input type="text" id="address" class="form-control" />
+
               </div>
               <div class="mb-2 form-check">
                 <input type="checkbox" id="terms" class="form-check-input" />
@@ -208,6 +139,8 @@
                   Accept all terms & conditions
                 </label>
               </div>
+              <button type="submit" class="btn btn-danger mr-2" data-bs-dismiss="modal"
+                aria-label="Close">Cancel</button>
               <button type="submit" class="btn btn-success">Sign Up</button>
             </form>
           </div>
@@ -217,24 +150,13 @@
   </div>
 
   <!-- Reset Password Modal -->
-  <div
-    class="modal fade"
-    id="resetForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="resetFormLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="resetForm" tabindex="-1" role="dialog" aria-labelledby="resetFormLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-green">Reset Password</h5>
-          <button
-            type="button"
-            class="btn-close text-danger"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
