@@ -22,7 +22,7 @@
             </router-link>
         </li>
         <li class="nav-item mt-2">
-            <router-link to="" class="nav-link px-0 align-middle">
+            <router-link to="/admin/partnership" class="nav-link px-0 align-middle">
             <i class="fs-4 text-white align-middle material-icons">swap_horiz</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap pe-5">ដៃគូសហការ</span>
             </router-link>
