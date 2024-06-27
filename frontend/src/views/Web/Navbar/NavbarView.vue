@@ -43,13 +43,12 @@
   </nav>
 
   <!-- Login Form Modal -->
-  <div class="modal fade" id="loginForm" tabindex="-1" role="dialog" aria-labelledby="loginFormLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="loginFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title text-green">Login</h5>
-          <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title text-green" id="loginFormLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
@@ -87,16 +86,14 @@
   </div>
 
   <!-- Register Form Modal -->
-  <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerFormLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="registerForm" tabindex="-1" aria-labelledby="registerFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-body">
           <div class="d-flex justify-content-between align-items-center border-b p-2">
             <h3 class="text-success m-0">Registration</h3>
-            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm">
-              Login now
-            </button>
+            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm"
+              >Login now</button>
           </div>
           <div class="p-3">
             <form>
@@ -169,8 +166,10 @@
               <input type="password" class="form-control" id="confirmPassword" />
             </div>
             <div class="d-flex gap-3">
+              <button type="submit" class="btn btn-danger mr-2" data-bs-dismiss="modal"
+              aria-label="Close">Cancel</button>
               <button type="submit" class="btn btn-success">Reset Password</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            
             </div>
           </form>
         </div>
