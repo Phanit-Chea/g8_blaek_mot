@@ -5,8 +5,8 @@ import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <header-menu />
-      <div class="container px-4" style="width: 86.8%">
-        <div class="row mt-4">
+      <div class="container" style="width: 86.8%">
+        <div class="row mt-4 px-4">
           <div class="col-md-12">
             <h2 class="mb-3 siemreap">បញ្ចីអ្នកប្រើប្រាស់ទាំងអស់</h2>
             <div class="table-responsive">

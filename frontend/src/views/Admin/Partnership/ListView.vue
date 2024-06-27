@@ -15,17 +15,10 @@ import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
             <div class="d-flex w-50 py-2 lign-items-center" >
               <p class=" ms-5 me-3 p-0 fw-bold text-center siemreap ">បង្ហាញ</p>
               <select id="number" class="w-25 form-control py-2 text-center">
-                <option class="siemreap" value="" selected>ទាំងអស់</option>
-                <option class="siemreap" value="10-20">10-20</option>
-                <option class="siemreap" value="20-30">20-30</option>
-                <option class="siemreap" value="20-30">30-40</option>
-                <option class="siemreap" value="20-30">40-50</option>
-                <option class="siemreap" value="20-30">50-60</option>
-                <option class="siemreap" value="20-30">50-60</option>
-                <option class="siemreap" value="20-30">60-70</option>
-                <option class="siemreap" value="20-30">70-80</option>
-                <option class="siemreap" value="20-30">80-90</option>
-                <option class="siemreap" value="20-30">90-100</option>
+                <option class="siemreap " value="" selected>ទាំងអស់</option>
+                <option class="siemreap text-primary" value="accept">បានទទួល</option>
+                <option class="siemreap text-danger" value="unaccept">មិនបានទទួល</option>
+                
               </select>
             </div>
             <form class="form-inline d-flex justify-content-end pe-4 w-50 align-items-center" style="margin-left:20%">
@@ -52,7 +45,7 @@ import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
                 <td class="siemreap text-center"> <a href=" https://www.thedvigroup.com/video-production-blog/best-video-ads-examples/">video ads</a></td>
                 <td class="siemreap text-center">27/6/2024</td>
                 <th class="siemreap text-center position-relative ">
-                    <span class="bg-danger py-2 rounded position-absolute top-50 start-50 translate-middle w-75">មិនទាន់ទទួល</span>
+                    <span class="bg-danger text-white py-2 rounded position-absolute top-50 start-50 translate-middle w-75">មិនទាន់ទទួល</span>
                 </th>
 
                 <td class="d-flex justify-content-evenly ">
@@ -77,7 +70,7 @@ import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
                 <td class="siemreap text-center">27/6/2024</td>
                 <td class=" text-center position-relative ">
                     
-                    <span class="bg-success siemreap  py-2 rounded  position-absolute top-50 start-50 translate-middle w-75" >បានទទួល</span>
+                    <span class="bg-success text-white siemreap  py-2 rounded  position-absolute top-50 start-50 translate-middle w-75" >បានទទួល</span>
                 </td>
 
                 <td class="d-flex justify-content-evenly ">
@@ -101,7 +94,7 @@ import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
                 <td class="siemreap text-center">27/6/2024</td>
                 <td class=" text-center position-relative ">
                     
-                    <span class="bg-success siemreap  py-2 rounded  position-absolute top-50 start-50 translate-middle w-75" >បានទទួល</span>
+                    <span class="bg-success text-white siemreap  py-2 rounded  position-absolute top-50 start-50 translate-middle w-75" >បានទទួល</span>
                 </td>
 
                 <td class="d-flex justify-content-evenly ">

@@ -94,6 +94,11 @@ const router = createRouter({
       name: 'admin/partnership',
       component: () => import('../views/Admin/Partnership/ListView.vue')
     },
+    {
+      path: '/admin/setting',
+      name: 'admin/setting',
+      component: () => import('../views/Admin/Setting/ListView.vue')
+    },
   ]
 })
 
