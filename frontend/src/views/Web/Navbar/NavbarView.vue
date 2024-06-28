@@ -34,15 +34,16 @@
       >
         <i class="material-icons fs-1">turned_in</i>
       </a>
-      <a
-        href="#"
-        class="notification me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
+      
+      <router-link
+        to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <i class="material-icons fs-1">notifications</i>
-      </a>
-      <a
-        href="#"
-        class="account me-3 rounded-circle d-flex p-0.8 justify-content-center align-items-center bg-white text-decoration-none"
+      </router-link>
+      <router-link
+        to="#"
+        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <img
           src="../../../assets/login.png"
@@ -51,7 +52,7 @@
           data-bs-toggle="modal"
           data-bs-target="#loginForm"
         />
-      </a>
+      </router-link>
     </div>
     <div class="navPages row text-warning mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
@@ -97,7 +98,7 @@
           <div class="text-center">
             <span>
               Forgot
-              <a href="#" data-bs-toggle="modal" data-bs-target="#resetForm">
+              <a to="#" data-bs-toggle="modal" data-bs-target="#resetForm">
                 reset password now
               </a>
             </span>
@@ -105,7 +106,7 @@
           <div class="text-center">
             <span>
               Don’t have an account?
-              <a href="#" data-bs-toggle="modal" data-bs-target="#registerForm">
+              <a to="#" data-bs-toggle="modal" data-bs-target="#registerForm">
                 Register now
               </a>
             </span>
