@@ -1,6 +1,6 @@
 <template>
   <div class="container h-100">
-    <main class="container" style="margin-top: 14%">
+    <main class="container" style="margin-top: 11%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
         <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
@@ -508,6 +508,12 @@
 
   </div>
 </template>
+<script>
+export default {
+  name: "homePage",
+}
+</script>
+
 <style scoped>
 .cardCategory,
 .col-md-4 {
