@@ -90,4 +90,30 @@ class AuthController extends Controller
             'user' => $user
         ], 200);
     }
+    public function resetPassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' =>'required|email',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6|same:password'
+        ]);
+        if ($validator->fails()) {
+            return response([
+               'message' => $validator->errors(),
+               'success' => false
+            ], 400);
+        }
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response([
+               'message' => 'User not found',
+               'success' => false
+            ], 400);
+        }
+        $user->password =  Hash::make($request->password);
+        $user->save();
+        return response([
+           'message' => 'Password reset successfully',
+           'success' => true
+        ], 200);
+    }
 }

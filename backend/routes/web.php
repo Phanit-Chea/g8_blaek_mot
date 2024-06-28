@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\{
-    ProfileController,
-    MailSettingController,
-};
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\MailSettingController;
+use App\Http\Controllers\SendMailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,51 +17,52 @@ use App\Http\Controllers\Admin\{
 |
 */
 
+// Route to the login view
 Route::get('/', function () {
     return view('auth.login');
 });
 
-
-Route::get('/test-mail',function(){
-
-    $message = "Testing mail";
-
-    \Mail::raw('Hi, welcome!', function ($message) {
-      $message->to('ajayydavex@gmail.com')
-        ->subject('Testing mail');
+// Route to test mail sending
+Route::get('/test-mail', function() {
+    Mail::raw('Hi, welcome!', function ($message) {
+        $message->to('ajayydavex@gmail.com')
+                ->subject('Testing mail');
     });
-
-    dd('sent');
-
+    dd('Email sent');
 });
 
-
+// Route to the dashboard view, only accessible to authenticated users with 'front' middleware
 Route::get('/dashboard', function () {
     return view('front.dashboard');
 })->middleware(['front'])->name('dashboard');
 
-
+// Including front_auth routes
 require __DIR__.'/front_auth.php';
 
-// Admin routes
+// Admin dashboard route, only accessible to authenticated users
 Route::get('/admin/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('admin.dashboard');
 
+// Including auth routes
 require __DIR__.'/auth.php';
 
+// Admin routes namespace and prefix
+Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')->group(function(){
+    Route::resource('roles', 'RoleController');
+    Route::resource('permissions', 'PermissionController');
+    Route::resource('users', 'UserController');
+    Route::resource('posts', 'PostController');
 
-
-
-Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')
-    ->group(function(){
-        Route::resource('roles','RoleController');
-        Route::resource('permissions','PermissionController');
-        Route::resource('users','UserController');
-        Route::resource('posts','PostController');
-
-        Route::get('/profile',[ProfileController::class,'index'])->name('profile');
-        Route::put('/profile-update',[ProfileController::class,'update'])->name('profile.update');
-        Route::get('/mail',[MailSettingController::class,'index'])->name('mail.index');
-        Route::put('/mail-update/{mailsetting}',[MailSettingController::class,'update'])->name('mail.update');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/mail', [MailSettingController::class, 'index'])->name('mail.index');
+    Route::put('/mail-update/{mailsetting}', [MailSettingController::class, 'update'])->name('mail.update');
 });
+
+// Routes for SendMailController
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/form', [SendMailController::class, 'loadForm']);
+Route::post('/send/email', [SendMailController::class, 'send'])->name('send');
