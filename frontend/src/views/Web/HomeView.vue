@@ -1,6 +1,6 @@
 <template>
-  <NavbarView></NavbarView>
   <div class="container h-100">
+    <NavbarView></NavbarView>
     <main class="container" style="margin-top: 11%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
@@ -627,19 +627,18 @@
         ></a
       >
     </main>
-    <FooterView></FooterView>
   </div>
+  <FooterView></FooterView>
 </template>
 <script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
-
-export default {
-  name: 'App',
+  import NavbarView from './Navbar/NavbarView'
+  import FooterView from './Footer/FooterView'
+export default { 
+  name: "HomeView",
   components: {
-    NavbarView,
-    FooterView
-  }
+    NavbarView:
+    FooterView,
+  },
 }
 </script>
 

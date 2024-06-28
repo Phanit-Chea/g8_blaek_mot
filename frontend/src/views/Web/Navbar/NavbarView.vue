@@ -52,7 +52,7 @@
           data-bs-toggle="modal"
           data-bs-target="#loginForm"
         />
-      </router-link>
+    </router-link>
     </div>
     <div class="navPages row text-warning mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
@@ -98,7 +98,7 @@
           <div class="text-center">
             <span>
               Forgot
-              <a to="#" data-bs-toggle="modal" data-bs-target="#resetForm">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#resetForm">
                 reset password now
               </a>
             </span>
@@ -106,7 +106,7 @@
           <div class="text-center">
             <span>
               Don’t have an account?
-              <a to="#" data-bs-toggle="modal" data-bs-target="#registerForm">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#registerForm">
                 Register now
               </a>
             </span>
