@@ -1,5 +1,4 @@
 <template>
-  <navbar-view-vue/>
   <div class="container h-100">
     <main class="container" style="margin-top: 11%">
       <!--========================= banner image ============================ -->
@@ -508,21 +507,10 @@
     </main>
 
   </div>
-  <footer-view-vue />
 </template>
 <script>
-
-import FooterViewVue from './Footer/FooterViewVue'
-import NavbarViewVue from './Navbar/NavbarView.vue'
-
-
-
 export default {
-  
-  components: {
-     FooterViewVue,
-    NavbarViewVue
-  },
+  name: "homePage",
 }
 </script>
 
