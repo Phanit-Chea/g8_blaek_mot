@@ -85,6 +85,11 @@ const router = createRouter({
       path: '/chat',
       name: 'chat',
       component: ChatVue,
+    },
+    {
+      path: '/weather',
+      name: 'weather',
+      component: () => import('../views/Web/Weather/ListView.vue')
     }
     
    
