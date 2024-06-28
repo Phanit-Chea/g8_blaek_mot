@@ -2,11 +2,15 @@
   <div class="container" style="background-color: #2a581a; margin-top: 20px; width: 100%">
     <footer class="text-light">
       <div class="pt-3">
-        <img src="../../../assets/FooterImages/logo.png" alt="homeImage" width="16%" height="100px" />
-        <!-- <h1 class="logo" style="font-family: 'Moul', serif; margin-left: 20px">ប្លែកមាត់</h1> -->
+        <img
+          src="../../../assets/FooterImages/logo.png"
+          alt="homeImage"
+          width="16%"
+          height="80px"
+        />
       </div>
       <hr />
-      <div class="container mt-3">
+      <div class="container mt-3 ">
         <div class="row text-center text-md-start">
           <div class="col-md mb-5">
             <h3>About Us</h3>
@@ -90,7 +94,7 @@
   </div>
 </template>
 <script>
-  export default {
-    name: "FooterView",
-  };
+export default {
+  name: 'FooterView'
+}
 </script>

@@ -4,21 +4,21 @@
       <img
         src="../../../assets/ContainerImages/logo.png"
         alt="homeImage"
-        width="100%"
-        height="100px"
+        width="90%"
+        height="90px"
       />
     </div>
     <div
       class="navCenter col-md d-flex align-items-center"
-      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
-    >
+      style="width:55%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
+       >
       <div class="input-group w-240">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
         </button>
         <input
           type="text"
-          class="form-control p-3 border border-success border-end-0 shadow-none"
+          class="form-control p-2 border border-success border-end-0 shadow-none"
           placeholder="What would you like to eat?"
           aria-label="Search"
         />
@@ -28,37 +28,37 @@
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <router-link
-        to="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
+      <a
+        href="#"
+        class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <i class="material-icons fs-1">turned_in</i>
-      </router-link>
-      <router-link
-        to="#"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
+      </a>
+      <a
+        href="#"
+        class="notification me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <i class="material-icons fs-1">notifications</i>
-      </router-link>
-      <router-link
-        to="#"
-        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
+      </a>
+      <a
+        href="#"
+        class="account me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <img
           src="../../../assets/login.png"
           alt="login"
-          width="38px"
+          width="36px"
           data-bs-toggle="modal"
           data-bs-target="#loginForm"
         />
-      </router-link>
+      </a>
     </div>
     <div class="navPages row text-warning mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-        <router-link to="/" class="pagesLink text-green fs-4 text-decoration-none nav-link">Home</router-link>
-        <router-link to="/category" class="pagesLink text-green fs-4 text-decoration-none nav-link">Category</router-link>
-        <router-link to="/aboutus" class="pagesLink text-green fs-4 text-decoration-none nav-link">About Us</router-link>
-        <router-link to="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Join With Us</router-link>
+        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Home</a>
+        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Category</a>
+        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">About Us</a>
+        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Join With Us</a>
       </div>
     </div>
   </nav>
@@ -97,7 +97,7 @@
           <div class="text-center">
             <span>
               Forgot
-              <a to="#" data-bs-toggle="modal" data-bs-target="#resetForm">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#resetForm">
                 reset password now
               </a>
             </span>
@@ -105,7 +105,7 @@
           <div class="text-center">
             <span>
               Don’t have an account?
-              <a to="#" data-bs-toggle="modal" data-bs-target="#registerForm">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#registerForm">
                 Register now
               </a>
             </span>
@@ -268,7 +268,7 @@ export default {
 .notification,
 .account {
   transition: transform 0.3s ease, border 0.3s ease;
-  border: 3px solid rgba(62, 160, 9, 0.942);
+  border: 2px solid rgba(62, 160, 9, 0.942);
   color: rgba(62, 160, 9, 0.942);
 }
 
