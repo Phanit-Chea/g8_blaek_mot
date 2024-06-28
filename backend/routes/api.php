@@ -32,6 +32,8 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 
-Route::prefix("food")->group(function(){
+Route::prefix('food')->group(function(){
     Route::post('/create',[FoodController::class,'store'])->name('food.create');
+    Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
+    
 });

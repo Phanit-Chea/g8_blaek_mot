@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class FoodController extends Controller
@@ -77,8 +78,31 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function __construct()
     {
-        //
+        $this->middleware('auth:api');
+    }
+    public function destroy(Request $request, $id)
+    {
+        $food = Food::find($id);
+
+        // Check if food exists
+        if (!$food) {
+            return response()->json(['message' => 'Food not found'], 404);
+        }
+
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Check if the authenticated user is the owner of the food item
+        if ($food->user_id !== $user->id) {
+            return response()->json(['message' => 'You cannot delete this food'], 403);
+        }
+
+        // Delete the food item
+        $food->delete();
+
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Food deleted successfully'], 200);
     }
 }
