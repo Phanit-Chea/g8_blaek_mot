@@ -642,10 +642,6 @@ export default {
   }
 }
 </script>
-export default {
-  name: "homePage",
-}
-</script>
 
 <style scoped>
 .cardCategory,
