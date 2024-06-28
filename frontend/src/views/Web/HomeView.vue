@@ -1,7 +1,7 @@
 <template>
   <NavbarView></NavbarView>
   <div class="container h-100">
-    <main class="container" style="margin-top: 14%">
+    <main class="container" style="margin-top: 11%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
         <img
@@ -642,6 +642,11 @@ export default {
   }
 }
 </script>
+export default {
+  name: "homePage",
+}
+</script>
+
 <style scoped>
 .cardCategory,
 .col-md-4 {

@@ -1,14 +1,15 @@
 <template>
   <div
-    class="col-auto col-md-2 col-xl-2 px-sm-2 px-0"
-    style="background-color: #54983c; width: 200px"
+    class="col-auto col-md-2 col-xl-2 px-sm-0 px-0" 
+    
   >
     <div
-      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 sticky-top sidebar"
+      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed  sidebar" style="background-color: #54983c; width:200px "
     >
       <ul
         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-        id="menu">
+        id="menu"
+      >
         <li class="nav-item mt-3">
           <router-link to="/user" class="nav-link align-middle px-0">
             <i class="fs-4 text-white align-middle material-icons">person</i>
@@ -29,7 +30,11 @@
           </router-link>
         </li>
         <li>
-          <i class="fs-5 material-icons"><span class="folder ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសាររបស់អ្នក</span></i>
+          <i class="fs-5 material-icons"
+            ><span class="folder ms-1 d-none d-sm-inline text-white siemreap"
+              >ថតឯកសាររបស់អ្នក</span
+            ></i
+          >
         </li>
 
         <li data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -40,7 +45,8 @@
         </li>
         <ul
           class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
-          id="menu">
+          id="menu"
+        >
           <li>
             <router-link to="/user/folder" class="link-folder nav-link px-3 align-middle">
               <i class="fs-4 text-white align-middle material-icons">folder</i>
