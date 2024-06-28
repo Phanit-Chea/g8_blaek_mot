@@ -512,7 +512,7 @@
 </template>
 <script>
 
-import FooterViewVue from './Footer/FooterView.vue'
+import FooterViewVue from './Footer/FooterViewVue'
 import NavbarViewVue from './Navbar/NavbarView.vue'
 
 
