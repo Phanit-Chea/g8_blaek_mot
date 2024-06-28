@@ -1,7 +1,7 @@
 <template>
   <RouterView />
-  <NavbarView></NavbarView>
-  <FooterView></FooterView>
+  <!-- <NavbarView></NavbarView>
+  <FooterView></FooterView> -->
 </template>
 <script>
 import NavbarView from "./views/Web/Navbar/NavbarView.vue"
@@ -14,4 +14,5 @@ export default {
     FooterView,
   },
 }
+</script>
 

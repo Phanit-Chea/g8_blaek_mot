@@ -1,5 +1,5 @@
 <template>
-  <div class="slide-carousel">
+  <div class="slide-carousel" style="margin-top:11.05%">
     <div class="slide-container">
       <div
         v-for="(img, index) in images"
