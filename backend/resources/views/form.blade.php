@@ -11,7 +11,6 @@
 </head>
 
 <body>
-    {{-- create a form here --}}
     <div class="m-5 justify-content-center conatiner">
         <h1 class="text-center card-title">Send Mail Form</h1>
         @if (Session::has('success'))

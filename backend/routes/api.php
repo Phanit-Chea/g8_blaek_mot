@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController as ApiAuthController;
+use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -24,5 +25,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
 
+Route::post('/register', [AuthController::class, 'register']);
+
+
 Route::post('/register', [ApiAuthController::class, 'register']);
-Route::post('/resetPassword', [ApiAuthController::class, 'resetPassword']);
+
+///=============create food=========//
+
+Route::prefix("food")->group(function(){
+    Route::post('/create',[FoodController::class,'store'])->name('food.create');
+});
