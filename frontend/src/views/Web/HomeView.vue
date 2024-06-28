@@ -1,6 +1,7 @@
 <template>
+  <navbar-view-vue/>
   <div class="container h-100">
-    <main class="container" style="margin-top: 14%">
+    <main class="container" style="margin-top: 11%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
         <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
@@ -507,7 +508,24 @@
     </main>
 
   </div>
+  <footer-view-vue />
 </template>
+<script>
+
+import FooterViewVue from './Footer/FooterView.vue'
+import NavbarViewVue from './Navbar/NavbarView.vue'
+
+
+
+export default {
+  
+  components: {
+     FooterViewVue,
+    NavbarViewVue
+  },
+}
+</script>
+
 <style scoped>
 .cardCategory,
 .col-md-4 {

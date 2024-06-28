@@ -1,4 +1,5 @@
 <template>
+<navbar-view-vue/>
   <about-us-slide-vue/>
   <!-- About us -->
   <div class="about-container d-flex mt-4 p-5">
@@ -26,13 +27,19 @@
       <img src="https://www.theinternationalkitchen.com/wp-content/uploads/2018/09/TIK_CambodiaVacations_amok.jpg" alt="food img" style="height: 300px; width: 100%;">
     </div>
   </div>
+  <footer-view-vue/>
 </template>
 
 <script>
 import AboutUsSlideVue from '../../../Components/AboutUsSlide.vue'
+import FooterViewVue from '../Footer/FooterView.vue';
+import NavbarViewVue from '../Navbar/NavbarView.vue';
+
 export default {
   components: {
-    AboutUsSlideVue
+    AboutUsSlideVue,
+    NavbarViewVue,
+    FooterViewVue
   },
   data() {
     return {
