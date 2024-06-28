@@ -92,7 +92,7 @@
       <div class="container">
         <h1 class="text-green mt-5 text-align-center">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
       </div>
-      <div class="row">
+      <div class="row mt-4 pl-3">
         <div
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
@@ -120,7 +120,7 @@
           <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
         </div>
       </div>
-      <div class="row mt-4">
+      <div class="row mt-4 pr-2">
         <div class="col-md-3 d-flex align-items-center">
           <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img">
         </div>
@@ -545,3 +545,4 @@ export default {
     color: #62cd3c;
   }
 </style>
+
