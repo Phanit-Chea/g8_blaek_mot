@@ -34,15 +34,16 @@
       >
         <i class="material-icons fs-1">turned_in</i>
       </a>
-      <a
-        href="#"
-        class="notification me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
+      
+      <router-link
+        to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <i class="material-icons fs-1">notifications</i>
-      </a>
-      <a
-        href="#"
-        class="account me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
+      </router-link>
+      <router-link
+        to="#"
+        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <img
           src="../../../assets/login.png"
@@ -51,14 +52,14 @@
           data-bs-toggle="modal"
           data-bs-target="#loginForm"
         />
-      </a>
+    </router-link>
     </div>
     <div class="navPages row text-warning mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Home</a>
-        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Category</a>
-        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">About Us</a>
-        <a href="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Join With Us</a>
+        <a href="#" class="pagesLink text-green fs-5 text-decoration-none nav-link">Home</a>
+        <a href="#" class="pagesLink text-green fs-5 text-decoration-none nav-link">Category</a>
+        <a href="#" class="pagesLink text-green fs-5 text-decoration-none nav-link">About Us</a>
+        <a href="#" class="pagesLink text-green fs-5 text-decoration-none nav-link">Join With Us</a>
       </div>
     </div>
   </nav>
