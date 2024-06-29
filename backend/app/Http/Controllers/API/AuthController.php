@@ -70,10 +70,17 @@ class AuthController extends Controller
         }
 
 
-        $img = $request->profile;
-        $ext = $img->getClientOriginalExtension();
-        $imageName = time() . '.' . $ext;
-        $img->move(public_path('/images/'), $imageName);
+        // $img = $request->profile;
+        // $ext = $img->getClientOriginalExtension();
+        // $imageName = time() . '.' . $ext;
+        // $img->move(public_path('/images/'), $imageName);
+        // Handle the file upload for shop_profile
+    if ($request->hasFile('profile')) {
+        $path = $request->file('profile')->store('public/StoreImages');
+        $ProfileUrl = Storage::url($path);
+    } else {
+        $ProfileUrl = null;
+    }
 
         $user = User::create([
             'name' => $request->name,
@@ -82,7 +89,7 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'address' => $request->address,
             'password' => Hash::make($request->password),
-            'profile' => $imageName
+            'profile' => $ProfileUrl
         ]);
         return response([
             'message' => 'User created successfully',

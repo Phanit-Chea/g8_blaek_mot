@@ -1,5 +1,6 @@
+<!-- src/components/HeaderMenu.vue -->
 <template>
-  <div class="container-fluid" style="margin-top:11.03%">
+    <div class="container-fluid" style="margin-top:11.03%">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
       <div class="col ">
@@ -11,10 +12,10 @@
                   <div class="card mb-4 shadow rounded py-5">
                     <div class="card-body text-center">
                       <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUUxO6ABH3xaw4UibQhS3A0wYRyq7w7a4Vgg&s"
+                        :src="`http://127.0.0.1:8000${useAuth.user.profile}`"
                         alt="avatar" class="rounded-circle img-fluid" style="width: 170px; height:170px" />
-                      <h5 class="text-muted my-3">John Smith</h5>
-                      <p class="text-muted mb-1">example@example.com</p>
+                      <h5 class="text-muted my-3">{{ useAuth.user.name }}</h5>
+                      <p class="text-muted mb-1">{{ useAuth.user.email }}</p>
                     </div>
                   </div>
                 </div>
@@ -26,7 +27,7 @@
                           <p class="text-muted mb-0 siemreap" >ឈ្មោះពេញ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0 siemreap">Johnatan Smith</p>
+                          <p class="text-muted mb-0 siemreap">{{useAuth.user.name}}</p>
                         </div>
                       </div>
                       <hr />
@@ -35,7 +36,7 @@
                           <p class="text-muted mb-0 siemreap">អ៊ីមែល</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">example@example.com</p>
+                          <p class="text-muted mb-0">{{useAuth.user.email}}</p>
                         </div>
                       </div>
                       <hr />
@@ -44,7 +45,7 @@
                           <p class="text-muted mb-0 siemreap">លេខទូរស័ព្ទ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">(097) 234-5678</p>
+                          <p class="text-muted mb-0">(+855) {{ useAuth.user.phone_number }}</p>
                         </div>
                       </div>
                       <hr />
@@ -53,7 +54,7 @@
                           <p class="text-muted mb-0 siemreap">ភេទ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0 siemreap">ប្រុស</p>
+                          <p class="text-muted mb-0 siemreap">{{ useAuth.user.gender }}</p>
                         </div>
                       </div>
                       <hr />
@@ -62,7 +63,7 @@
                           <p class="text-muted mb-0 siemreap">ទីកន្លែង</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                          <p class="text-muted mb-0">{{useAuth.user.address}}</p>
                         </div>
                       </div>
                       <hr />
@@ -83,14 +84,12 @@
   </div>
 </template>
 
-<script>
-import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
+<script setup lang="ts">
+import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'// Adjusted import path
+import { useAuthStore } from '@/stores/auth-store.ts';
 
-export default {
-  components: {
-    userProfileSidebarVue
-  }
-}
+const useAuth = useAuthStore();
+
 </script>
 
 <style scoped>
