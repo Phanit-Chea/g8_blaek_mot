@@ -1,7 +1,7 @@
 <template>
   <NavbarView></NavbarView>
   <div class="container h-100">
-    <main class="container" style="margin-top: 11%">
+    <main class="container" style="margin-top: 14%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
         <img
@@ -644,6 +644,9 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  background-color: rgb(239, 235, 235);
+}
 .cardCategory,
 .col-md-4 {
   transition: transform 0.3s ease;
