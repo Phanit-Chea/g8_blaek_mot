@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\{
     ProfileController,
     MailSettingController,
 };
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::get('/test-mail',function(){
 
     $message = "Testing mail";
 
-    \Mail::raw('Hi, welcome!', function ($message) {
+    Mail::raw('Hi, welcome!', function ($message) {
       $message->to('ajayydavex@gmail.com')
         ->subject('Testing mail');
     });
