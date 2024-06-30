@@ -1,4 +1,5 @@
 <template>
+<navbar-view-vue/>
   <div class="container-fluid" style="margin-top:11.03%">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
@@ -27,10 +28,12 @@
 
 <script>
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
+import NavbarViewVue from '../Navbar/NavbarView.vue'
 
 export default {
   components: {
-    userProfileSidebarVue
+    userProfileSidebarVue,
+    NavbarViewVue
   }
 }
 </script>

@@ -7,7 +7,12 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json'
   }
 })
-
+const getImage = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api/image',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
 axiosInstance.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
 
 // Add a request interceptor

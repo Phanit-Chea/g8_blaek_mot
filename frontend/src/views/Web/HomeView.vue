@@ -1,5 +1,6 @@
-<template>
-  <div class="container h-100">
+<template> 
+<NavbarView></NavbarView>
+<div class="container h-100">
     <main class="container" style="margin-top: 14%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
@@ -507,9 +508,13 @@
             class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
               class="visually-hidden">unread messages</span></span></i></a>
     </main>
-
   </div>
+  <Footer></Footer>
 </template>
+<script setup lang="ts">
+import NavbarView from '../Web/Navbar/NavbarView.vue';
+import Footer from '../Web/Footer/FooterView.vue';
+</script>
 <style scoped>
 .cardCategory,
 .col-md-4 {

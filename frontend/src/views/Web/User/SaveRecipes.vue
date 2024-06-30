@@ -1,5 +1,6 @@
 <template>
-  <div class="container-fluid" style="margin-top:11.03%">
+<navbar-view-vue/>
+  <div class="container-fluid" style="margin-top:10.8%" >
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
       <div class="col py-3">
@@ -70,10 +71,12 @@
 
 <script>
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
+import NavbarViewVue from '../Navbar/NavbarView.vue'
 
 export default {
   components: {
-    userProfileSidebarVue
+    userProfileSidebarVue,
+    NavbarViewVue
   }
 }
 </script>
