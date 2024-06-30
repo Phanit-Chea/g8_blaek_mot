@@ -1,4 +1,5 @@
 <template>
+<NavbarView></NavbarView>
   <div class="container h-100">
     <main class="container" style="margin-top: 14%">
       <!--========================= banner image ============================ -->
@@ -503,11 +504,29 @@
           </a>
         </div>
       </div>
-      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span class="visually-hidden">unread messages</span></span></i></a>
+      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
+              class="visually-hidden">unread messages</span></span></i></a>
     </main>
 
   </div>
+
+  <FooterView></FooterView>
 </template>
+<script>
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
+import FooterView from '@/views/Web/Footer/FooterView.vue';
+
+export default {
+  name: 'HomePage',
+  components: {
+    NavbarView,
+    FooterView
+  }
+};
+</script>
+
+
 <style scoped>
 .cardCategory,
 .col-md-4 {
@@ -526,16 +545,17 @@
 }
 
 .chat {
-    font-size: 3rem;
-    position: fixed;
-    bottom: 20px;
-    right: 40px;
-    color: #66B64A;
-    cursor: pointer;
-    transition: transform 0.5s;
-  }
-  .chat:hover{
-    transform: scale(1.05) rotate(-5deg);
-    color: #62cd3c;
-  }
+  font-size: 3rem;
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  color: #66B64A;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.chat:hover {
+  transform: scale(1.05) rotate(-5deg);
+  color: #62cd3c;
+}
 </style>

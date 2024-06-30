@@ -48,17 +48,17 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-green" id="loginFormLabel">Login</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter email" />
+              <input type="email" class="form-control" placeholder="Enter email" />
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password" />
+              <input type="password" class="form-control" placeholder="Password" />
             </div>
           </form>
           <div class="text-center">
@@ -72,9 +72,7 @@
           <div class="text-center">
             <span>
               Don’t have an account?
-              <a href="#" data-bs-toggle="modal" data-bs-target="#registerForm">
-                Register now
-              </a>
+              <router-link class="nav-link" to="/register">register now</router-link>
             </span>
           </div>
         </div>
@@ -86,57 +84,56 @@
   </div>
 
   <!-- Register Form Modal -->
-  <div class="modal fade" id="registerForm" tabindex="-1" aria-labelledby="registerFormLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="registerForm" tabindex="-1" aria-labelledby="registerFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-body">
           <div class="d-flex justify-content-between align-items-center border-b p-2">
             <h3 class="text-success m-0">Registration</h3>
-            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal" data-bs-target="#loginForm"
-              >Login now</button>
+            <button type="button" class="btn btn-link text-success" data-bs-toggle="modal"
+              data-bs-target="#loginForm">Login now</button>
           </div>
           <div class="p-3">
-            <form>
+            <form @submit.prevent="userRegister">
               <div class="mb-2">
                 <label for="fullName" class="block text-sm font-medium text-success">Full Name</label>
-                <input type="text" id="fullName" class="form-control" />
+                <input type="text" class="form-control" v-model="user.name" />
               </div>
               <div class="mb-2">
                 <label for="email" class="block text-sm font-medium text-success">Email address</label>
-                <input type="email" id="email" class="form-control" />
+                <input type="email" class="form-control" v-model="user.email" />
               </div>
               <div class="mb-2">
                 <label for="password" class="block text-sm font-medium text-success">Password</label>
-                <input type="password" id="password" class="form-control" />
+                <input type="password" class="form-control" v-model="user.password" />
               </div>
               <div class="mb-2">
                 <label for="phone" class="block text-sm font-medium text-success">Phone</label>
-                <input type="number" id="phone" class="form-control" />
+                <input type="text" class="form-control" v-model="user.phone_number" />
               </div>
               <div class="mb-2">
                 <label for="gender" class="block text-sm font-medium text-success">Gender</label>
-                <select id="gender" class="form-control">
+                <select id="gender" class="form-control" v-model="user.gender">
                   <option value="">Select Gender</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
                 </select>
               </div>
               <div class="mb-2">
-                <label for="age" class="block text-sm font-medium text-success">Age</label>
-                <input type="number" id="age" class="form-control" />
+                <label for="profile" class="block text-sm font-medium text-success">Profile</label>
+                <input type="file" class="form-control" @change="handleFileUpload" />
               </div>
               <div class="mb-2">
                 <label for="province" class="block text-sm font-medium text-success">Address</label>
-                <input type="text" id="address" class="form-control" />
-
+                <input type="text" class="form-control" v-model="user.address" />
               </div>
               <div class="mb-2 form-check">
-                <input type="checkbox" id="terms" class="form-check-input" />
+                <input type="checkbox" id="terms" class="form-check-input" v-model="user.terms" />
                 <label for="terms" class="form-check-label text-sm">
                   Accept all terms & conditions
                 </label>
               </div>
-              <button type="submit" class="btn btn-danger mr-2" data-bs-dismiss="modal"
+              <button type="button" class="btn btn-danger mr-2" data-bs-dismiss="modal"
                 aria-label="Close">Cancel</button>
               <button type="submit" class="btn btn-success">Sign Up</button>
             </form>
@@ -144,7 +141,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- Reset Password Modal -->
   <div class="modal fade" id="resetForm" tabindex="-1" role="dialog" aria-labelledby="resetFormLabel"
@@ -153,23 +150,22 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-green">Reset Password</h5>
-          <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+          <!-- <button type="button" class="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button> -->
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
               <label for="newPassword" class="form-label">New Password</label>
-              <input type="password" class="form-control" id="newPassword" />
+              <input type="password" class="form-control" />
             </div>
             <div class="mb-3">
               <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="confirmPassword" />
+              <input type="password" class="form-control" />
             </div>
             <div class="d-flex gap-3">
-              <button type="submit" class="btn btn-danger mr-2" data-bs-dismiss="modal"
-              aria-label="Close">Cancel</button>
               <button type="submit" class="btn btn-success">Reset Password</button>
-            
+              <button type="submit" class="btn btn-danger mr-2" data-bs-dismiss="modal"
+                aria-label="Close">Cancel</button>
             </div>
           </form>
         </div>
@@ -179,9 +175,72 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'NavbarView'
-}
+  name: 'Navbar_view',
+  data() {
+    return {
+      user: {
+        name: '',
+        email: '',
+        password: '',
+        phone_number: '',
+        gender: '',
+        profile: null,
+        address: '',
+        terms: false
+      }
+    };
+  },
+  methods: {
+    goToRegister() {
+      this.$router.push({ path: '/register' });
+    }
+    ,
+    handleFileUpload(event) {
+      const files = event.target.files;
+      if (files.length > 0) {
+        this.user.profile = files[0];
+      } else {
+        this.user.profile = null;
+      }
+    },
+    async userRegister() {
+      if (!this.user.terms) {
+        // alert('You must accept the terms and conditions.');
+        // <div class="alert alert-primary" role="alert">
+        //   Register successful<a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+        // </div>
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('name', this.user.name);
+      formData.append('email', this.user.email);
+      formData.append('password', this.user.password);
+      formData.append('phone_number', this.user.phone_number);
+      formData.append('gender', this.user.gender);
+      if (this.user.profile) {
+        formData.append('profile', this.user.profile);
+      }
+      formData.append('address', this.user.address);
+
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log(response.data);
+        alert('Registration successful');
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred. Please try again.');
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>

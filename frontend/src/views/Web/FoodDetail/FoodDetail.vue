@@ -30,57 +30,28 @@
           </div>
           <div class="col-md">
             <h4>Follow Us</h4>
-            <input
-              type="text"
-              class="form-control p-1 w-80"
-              placeholder="What would like to eat?"
-              aria-label="Search"
-            />
+            <input type="text" class="form-control p-1 w-80" placeholder="What would like to eat?"
+              aria-label="Search" />
             <ul class="list-unstyled d-flex justify-content-md-start mt-3 gap-2">
               <li class="ms-3">
-                <a href="#" class="socialIcon"
-                  ><img
-                    src="../../../assets/FooterImages/facebook.png"
-                    alt="Facebook"
-                    class="img-fluid"
-                    style="width: 35px; height: 35px; border-radius: 100%"
-                /></a>
+                <a href="#" class="socialIcon"><img src="../../../assets/FooterImages/facebook.png" alt="Facebook"
+                    class="img-fluid" style="width: 35px; height: 35px; border-radius: 100%" /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
-                  ><img
-                    src="../../../assets/FooterImages/twitter.png"
-                    alt="Twitter"
-                    class="img-fluid"
-                    style="width: 35px; height: 35px; border-radius: 100%"
-                /></a>
+                <a href="#" class="socialIcon"><img src="../../../assets/FooterImages/twitter.png" alt="Twitter"
+                    class="img-fluid" style="width: 35px; height: 35px; border-radius: 100%" /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
-                  ><img
-                    src="../../../assets/FooterImages/instagram.png"
-                    alt="Instagram"
-                    class="img-fluid"
-                    style="width: 35px; height: 35px; border-radius: 100%"
-                /></a>
+                <a href="#" class="socialIcon"><img src="../../../assets/FooterImages/instagram.png" alt="Instagram"
+                    class="img-fluid" style="width: 35px; height: 35px; border-radius: 100%" /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
-                  ><img
-                    src="../../../assets/FooterImages/linkedIn.png"
-                    alt="LinkedIn"
-                    class="img-fluid"
-                    style="width: 35px; height: 35px; border-radius: 100%"
-                /></a>
+                <a href="#" class="socialIcon"><img src="../../../assets/FooterImages/linkedIn.png" alt="LinkedIn"
+                    class="img-fluid" style="width: 35px; height: 35px; border-radius: 100%" /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
-                  ><img
-                    src="../../../assets/FooterImages/youtube.png"
-                    alt="YouTube"
-                    class="img-fluid"
-                    style="width: 35px; height: 35px; border-radius: 100%"
-                /></a>
+                <a href="#" class="socialIcon"><img src="../../../assets/FooterImages/youtube.png" alt="YouTube"
+                    class="img-fluid" style="width: 35px; height: 35px; border-radius: 100%" /></a>
               </li>
             </ul>
           </div>
@@ -90,7 +61,7 @@
   </div>
 </template>
 <script>
-  export default {
-    name: "FooterView",
-  };
+export default {
+  name: "FooterView",
+};
 </script>

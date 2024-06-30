@@ -86,6 +86,12 @@ const router = createRouter({
       name: 'chat',
       component: ChatVue,
     }
+    ,
+    {
+      path: '/map',
+      name: 'map',
+      component: () => import('../views/Map/GoogleMap.vue')
+    }
     
    
   ]

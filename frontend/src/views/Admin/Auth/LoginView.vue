@@ -2,7 +2,7 @@
 <template>
   <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <el-card class="w-full max-w-md shadow-lg">
-   <span class="material-symbols-outlined">cancel</span>
+      <span class="material-symbols-outlined">cancel</span>
       <h3>Login </h3>
       <el-form @submit="onSubmit">
         <el-form-item :error="emailError">
@@ -12,20 +12,15 @@
           <el-input placeholder="Password" v-model="password" size="large" type="password" />
         </el-form-item>
         <div>
-       <span class="psw">Forgot <a href="#">password?</a></span>
+          <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="islogin"
-            type="success"
-            native-type="Sing in"
-            >Sign in→</el-button >
-         
+          <el-button size="large" class="mt-3 w-full" :disabled="islogin" type="success" native-type="Sing in">Sign
+            in→</el-button>
+
         </div>
         <div class="text-center">
-        <span>Don’t have an account?<a href="#">Register now</a> </span>
+          <span>Don’t have an account?<a href="#">Register now</a> </span>
         </div>
       </el-form>
     </el-card>
@@ -44,7 +39,7 @@ const formSchema = yup.object({
   email: yup.string().required().email().label('Email address')
 })
 
-const { handleSubmit, islogin} = useForm({
+const { handleSubmit, islogin } = useForm({
   initialValues: {
     password: '',
     email: ''
@@ -65,28 +60,31 @@ const { value: password, errorMessage: nameError } = useField('password')
 const { value: email, errorMessage: emailError } = useField('email')
 </script>
 <style scoped>
-h3{
-  color:rgb(65, 123, 7);
+h3 {
+  color: rgb(65, 123, 7);
 }
+
 .min-h-screen {
   min-height: 100vh;
 }
+
 span a {
- color: rgb(65, 123, 7);
+  color: rgb(65, 123, 7);
   justify-content: center;
   text-align: center;
 }
-button{
+
+button {
   background-color: rgb(65, 123, 7);
   color: white;
   border-radius: 30px;
   width: 30%;
 }
+
 .material-symbols-outlined {
   margin-left: 95%;
-  color:red;
+  color: red;
   font-variation-settings:
-  'opsz'100
+    'opsz' 100
 }
 </style>
-
