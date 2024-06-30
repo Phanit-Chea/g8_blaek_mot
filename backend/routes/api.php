@@ -3,9 +3,12 @@
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Expr\FuncCall;
+use Spatie\FlareClient\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [ApiAuthController::class,'register']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
 
-Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/register', [AuthController::class, 'register']);
 
 
 Route::post('/register', [ApiAuthController::class, 'register']);

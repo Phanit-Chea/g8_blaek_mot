@@ -5,9 +5,11 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -51,7 +53,6 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-        // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'phone_number' => 'required|string',
             'gender' => 'required|string',
@@ -70,10 +71,17 @@ class AuthController extends Controller
         }
 
 
-        $img = $request->profile;
-        $ext = $img->getClientOriginalExtension();
-        $imageName = time() . '.' . $ext;
-        $img->move(public_path('/images/'), $imageName);
+        // $img = $request->profile;
+        // $ext = $img->getClientOriginalExtension();
+        // $imageName = time() . '.' . $ext;
+        // $img->move(public_path('/images/'), $imageName);
+        // Handle the file upload for shop_profile
+    if ($request->hasFile('profile')) {
+        $path = $request->file('profile')->store('public/StoreImages');
+        $ProfileUrl = Storage::url($path);
+    } else {
+        $ProfileUrl = null;
+    }
 
         $user = User::create([
             'name' => $request->name,
@@ -82,7 +90,7 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'address' => $request->address,
             'password' => Hash::make($request->password),
-            'profile' => $imageName
+            'profile' => $ProfileUrl
         ]);
         return response([
             'message' => 'User created successfully',
@@ -90,4 +98,6 @@ class AuthController extends Controller
             'user' => $user
         ], 200);
     }
+
+    
 }
