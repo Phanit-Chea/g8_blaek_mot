@@ -1,126 +1,113 @@
 <template>
-    <NavbarView></NavbarView>
-    <div class="container mt-60 " style="height: 100%;">
-        <div class="sidebar">
-            <div class="illustration">
-                <img src="../../../assets/ContainerImages/homePoster.png" alt="Illustration" />
-            </div>
-        </div>
-        <div class="containerLeft d-flex ml-20 ">
-            <div class="formLeft">
-                <div class="heading">
-                    <h2>Add Your Profile</h2>
-                </div>
-                <div class="content">
-                    <div class="hours" @click="handleImageClick">
-                        <img ref="image" src="../../../assets/ContainerImages/phanit.jpg" alt="Edge Gallery Logo"
-                            height="250px" />
-                        <span class="material-symbols-outlined">photo_camera</span>
-                        <input type="file" ref="fileInput" style="display: none;" @change="handleImageChange"
-                            accept="image/*">
-                    </div>
-                    <div class="location">
-                        <h2>Add Your Address</h2>
-                        <form @submit.prevent="handleSubmit">
-                            <div class="input-group">
-                                <label for="username">House Number:</label>
-                                <input type="text" id="username" v-model="username" required />
-                            </div>
-                            <div class="input-group">
-                                <label for="Street">Street Number:</label>
-                                <input type="text" v-model="password" required />
-                            </div>
-                            <div class="input-group">
-                                <label for="street name">Street Name:</label>
-                                <input type="text" v-model="password" required />
-                            </div>
-                            <div class="input-group">
-                                <label for="password">Sangkat/Commune:</label>
-                                <input type="password" v-model="password" required />
-                            </div>
-                            <div class="input-group">
-                                <label for="password">Khan/District:</label>
-                                <input type="password" v-model="password" required />
-                            </div>
-                            <div class="input-group">
-                                <label for="password">City/Province:</label>
-                                <input type="password" v-model="password" required />
-                            </div>
-                            <button class=" btn btn-danger">Pin on map</button>
-                        </form>
-
-                    </div>
+    <div>
+        <NavbarView></NavbarView>
+        <div class="container mt-60" style="height: 100%;">
+            <div class="sidebar">
+                <div class="illustration">
+                    <img src="../../../assets/ContainerImages/homePoster.png" alt="Illustration" />
                 </div>
             </div>
-            <div class="login-box" style="height: 160vh;">
-                <h2>Register New Account</h2>
-                <form>
-                    <div class="input-group">
-                        <label for="username">Username </label>
-                        <input type="text" id="username" v-model="username" required />
+            <div class="containerLeft d-flex ml-20">
+                <div class="formLeft">
+                    <div class="heading">
+                        <h2>Add Your Profile</h2>
                     </div>
-                    <div class="input-group">
-                        <label for="email">Email </label>
-                        <input type="email" id="email" v-model="email" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" v-model="password" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Confirm Password</label>
-                        <input type="password" v-model="password" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="captcha">Date of birth</label>
-                        <input type="date" id="date" v-model="date" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="gender">Gender:</label><br>
-                        <div class="input-group ">
-                            <div class="gender">
-                                <input type="radio" id="male" name="gender" value="male">
-                                <label for="male">Female</label>
-
-                            </div>
-                            <div class="gender " style="margin-left: 40px;">
-                                <input type="radio" id="male" name="gender" value="male">
-                                <label for="male">Male</label>
-
-                            </div>
+                    <div class="content">
+                        <div class="hours">
+                            <img v-if="form.profilePreview" :src="form.profilePreview" alt="Selected Image"
+                                height="250px" />
+                            <label for="fileInput" class="material-symbols-outlined">photo_camera</label>
+                            <input type="file" id="fileInput" ref="fileInput" style="display: none;"
+                                @change="handleProfileChange" accept="image/*">
+                        </div>
+                        <div class="location">
+                            <h2>Add Your Address</h2>
+                            <form @submit.prevent="registerAccount">
+                                <div class="input-group">
+                                    <label for="houseNumber">House Number:</label>
+                                    <input type="text" id="houseNumber" v-model="form.houseNumber" required />
+                                </div>
+                                <div class="input-group">
+                                    <label for="streetNumber">Street Number:</label>
+                                    <input type="text" id="streetNumber" v-model="form.streetNumber" required />
+                                </div>
+                                <div class="input-group">
+                                    <label for="streetName">Street Name:</label>
+                                    <input type="text" id="streetName" v-model="form.streetName" required />
+                                </div>
+                                <div class="input-group">
+                                    <label for="commune">Sangkat/Commune:</label>
+                                    <input type="text" id="commune" v-model="form.commune" required />
+                                </div>
+                                <div class="input-group">
+                                    <label for="district">Khan/District:</label>
+                                    <input type="text" id="district" v-model="form.district" required />
+                                </div>
+                                <div class="input-group">
+                                    <label for="province">City/Province:</label>
+                                    <input type="text" id="province" v-model="form.province" required />
+                                </div>
+                                <button type="submit" class="btn btn-danger">Register</button>
+                            </form>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label for="captcha">Phone number</label>
-                        <input type="text" id="date" v-model="date" required />
-                    </div>
-
-
-                    <button type="submit">Log In</button>
-                    <div class="links">
-                        <a href="/register">Free Registration</a>
-                        <a href="/forgot-password">Forgot password?</a>
-                    </div>
-                </form>
-
-                <div class="googleMap">
-                    <div class="map-container">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2072142.8891111037!2d104.49797514186897!3d12.565679435349416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31095137e50f30b1%3A0x8c46a30fd8f40a27!2sCambodia!5e0!3m2!1sen!2sus!4v1624942392507!5m2!1sen!2sus"
-                            width="100%" style="border: 0" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
+                </div>
+                <div class="login-box" style="height: 160vh;">
+                    <h2>Register New Account</h2>
+                    <form @submit.prevent="registerAccount">
+                        <div class="input-group">
+                            <label for="name">Username:</label>
+                            <input type="text" id="name" v-model="form.name" required />
+                        </div>
+                        <div class="input-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" v-model="form.email" required />
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" v-model="form.password" required />
+                        </div>
+                        <div class="input-group">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" v-model="form.confirmPassword" required />
+                        </div>
+                        <div class="input-group">
+                            <label for="dateOfBirth">Date of Birth:</label>
+                            <input type="date" id="dateOfBirth" v-model="form.dateOfBirth" required />
+                        </div>
+                        <div class="input-group">
+                            <label for="gender">Gender:</label>
+                            <div class="gender">
+                                <input type="radio" id="female" name="gender" value="female" v-model="form.gender">
+                                <label for="female">Female</label>
+                            </div>
+                            <div class="gender" style="margin-left: 40px;">
+                                <input type="radio" id="male" name="gender" value="male" v-model="form.gender">
+                                <label for="male">Male</label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="phoneNumber">Phone number:</label>
+                            <input type="text" id="phoneNumber" v-model="form.phoneNumber" required />
+                        </div>
+                        <button type="submit">Register</button>
+                        <div class="links">
+                            <a href="/register">Free Registration</a>
+                            <a href="/forgot-password">Forgot password?</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
+        <FooterView></FooterView>
     </div>
-    <FooterView></FooterView>
 </template>
 
 <script>
 import NavbarView from '../../Web/Navbar/NavbarView.vue';
 import FooterView from '../../Web/Footer/FooterView.vue';
 import axios from 'axios';
+import { useUserStore } from '../../../stores/userStore';
 
 export default {
     name: "FormView",
@@ -131,15 +118,15 @@ export default {
     data() {
         return {
             form: {
-                username: '',
+                name: '',
                 email: '',
                 password: '',
                 confirmPassword: '',
                 dateOfBirth: '',
                 gender: '',
-                phoneNumber: ''
-            },
-            address: {
+                phoneNumber: '',
+                profile: null,
+                profilePreview: null,
                 houseNumber: '',
                 streetNumber: '',
                 streetName: '',
@@ -150,39 +137,54 @@ export default {
         };
     },
     methods: {
-        handleImageClick() {
-            // Trigger the file input dialog
-            this.$refs.fileInput.click();
-        },
-        handleImageChange(event) {
+        handleProfileChange(event) {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    // Update the image src with the selected file's data URL
-                    this.$refs.image.src = reader.result;
-                };
-                reader.readAsDataURL(file);
+                this.form.profile = file;
+                this.form.profilePreview = URL.createObjectURL(file);
             }
         },
-        handlePinOnMap() {
-            // Handle the logic for pinning the address on the map
-            // You can use the collected address data here
-            console.log(this.address);
-        },
         async registerAccount() {
+
+            const userStore = useUserStore();
+
+            userStore.setUser(this.form);
+
+            console.log(userStore.user);
+
+            const formData = new FormData();
+            formData.append('name', this.form.name);
+            formData.append('email', this.form.email);
+            formData.append('password', this.form.password);
+            formData.append('confirmPassword', this.form.confirmPassword);
+            formData.append('dateOfBirth', this.form.dateOfBirth);
+            formData.append('gender', this.form.gender);
+            formData.append('phoneNumber', this.form.phoneNumber);
+            formData.append('profile', this.form.profile);
+            formData.append('houseNumber', this.form.houseNumber);
+            formData.append('streetNumber', this.form.streetNumber);
+            formData.append('streetName', this.form.streetName);
+            formData.append('commune', this.form.commune);
+            formData.append('district', this.form.district);
+            formData.append('province', this.form.province);
             try {
-                const response = await axios.post('http://localhost:8000/api/register', this.form);
-                // Handle successful registration (e.g., navigate to a different page or show a success message)
+                const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
                 console.log(response.data);
+                alert('Registration successful! You can now log in.');
+                this.$router.push('/');
             } catch (error) {
-                // Handle errors (e.g., show an error message)
                 console.error(error);
             }
         }
     }
 }
 </script>
+
+
 
 <style scoped>
 body {
