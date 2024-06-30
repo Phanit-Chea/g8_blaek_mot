@@ -5,7 +5,7 @@
         src="../../../assets/ContainerImages/logo.png"
         alt="homeImage"
         width="90%"
-        height="90px"
+        height="80px"
       />
     </div>
     <div
@@ -30,7 +30,7 @@
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
       <a
         href="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
+        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
       >
         <i class="material-icons fs-1">turned_in</i>
       </a>
