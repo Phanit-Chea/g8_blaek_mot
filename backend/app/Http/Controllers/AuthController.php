@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function getuserList()
+    {
+        $user = Auth::user();
+        return response()->json(['data'=>$user,'message' => 'Hello World'], 200);
+    }
+
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [

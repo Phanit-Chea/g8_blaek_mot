@@ -26,11 +26,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class,'register']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/user/list', [AuthController::class, 'getuserList']);
 
 // Route::post('/register', [AuthController::class, 'register']);
 
-
-Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 

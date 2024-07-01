@@ -16,7 +16,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        dd(1);
+        return response()->json(['data'=>User::all(),'message' => 'Hello World'], 200);
     }
 
     /**
@@ -40,7 +40,45 @@ class AuthController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Invalid image format or size',
+                'success' => false
+            ], 400);
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+                'success' => false
+            ], 404);
+        }
+
+        if ($request->hasFile('profile')) {
+            $path = $request->file('profile')->store('public/StoreImages');
+            $profileUrl = Storage::url($path);
+
+            // Update the user's profile image URL in the database
+            $user->update(['profile' => $profileUrl]);
+
+            return response()->json([
+                'message' => 'Profile image updated successfully',
+                'success' => true,
+                'user' => $user
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'No image provided for update',
+            'success' => false
+        ], 400);
     }
 
     /**
@@ -69,18 +107,12 @@ class AuthController extends Controller
             ], 400);
         }
 
-
-        // $img = $request->profile;
-        // $ext = $img->getClientOriginalExtension();
-        // $imageName = time() . '.' . $ext;
-        // $img->move(public_path('/images/'), $imageName);
-        // Handle the file upload for shop_profile
-    if ($request->hasFile('profile')) {
-        $path = $request->file('profile')->store('public/StoreImages');
-        $ProfileUrl = Storage::url($path);
-    } else {
-        $ProfileUrl = null;
-    }
+        if ($request->hasFile('profile')) {
+            $path = $request->file('profile')->store('public/StoreImages');
+            $ProfileUrl = Storage::url($path);
+        } else {
+            $ProfileUrl = null;
+        }
 
         $user = User::create([
             'name' => $request->name,
