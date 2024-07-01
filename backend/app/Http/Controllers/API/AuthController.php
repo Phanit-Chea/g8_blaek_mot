@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\userRegisterResource;
@@ -14,33 +14,33 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
-    // /
-    //  * Display a listing of the resource.
-    //  */
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         dd(1);
     }
 
-    // /
-    //  * Store a newly created resource in storage.
-    //  */
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         //
     }
 
-    // /
-    //  * Display the specified resource.
-    //  */
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         //
     }
 
-    // /
-    //  * Update the specified resource in storage.
-    //  */
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, string $id)
     {
         //
@@ -51,9 +51,13 @@ class AuthController extends Controller
      */
     public function destroy(string $id)
     {
+        //
     }
+
     public function register(Request $request)
     {
+        \Log::info('Register request data: ', $request->all());
+    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -61,13 +65,8 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
+            'address' => 'required|string',
             'phoneNumber' => 'required|string',
-            'houseNumber' => 'required|string',
-            'streetNumber' => 'required|string',
-            'streetName' => 'required|string',
-            'commune' => 'required|string',
-            'district' => 'required|string',
-            'province' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
     
@@ -93,14 +92,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
-            'phoneNumber' => $request->phoneNumber,
-            'houseNumber' => $request->houseNumber,
-            'streetNumber' => $request->streetNumber,
-            'streetName' => $request->streetName,
-            'commune' => $request->commune,
-            'district' => $request->district,
-            'province' => $request->province,
-            'profile' => $profile
+            'address' => $request->address,
+            'profile' => $profile,
+            'phoneNumber' => $request->phoneNumber
         ]);
     
         return response()->json([
@@ -108,31 +102,5 @@ class AuthController extends Controller
             'success' => true,
             'user' => new userRegisterResource($user)
         ], 201);
-    }
-    public function resetPassword(Request $request){
-        $validator = Validator::make($request->all(), [
-            'email' =>'required|email',
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required|string|min:6|same:password'
-        ]);
-        if ($validator->fails()) {
-            return response([
-               'message' => $validator->errors(),
-               'success' => false
-            ], 400);
-        }
-        $user = User::where('email', $request->email)->first();
-        if (!$user) {
-            return response([
-               'message' => 'User not found',
-               'success' => false
-            ], 400);
-        }
-        $user->password =  Hash::make($request->password);
-        $user->save();
-        return response([
-           'message' => 'Password reset successfully',
-           'success' => true
-        ], 200);
     }
 }
