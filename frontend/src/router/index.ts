@@ -79,17 +79,6 @@ const router = createRouter({
       path: '/user/edit',
       name: 'user/edit',
       component: () => import('../views/Web/User/EditProfile.vue')
-<<<<<<< HEAD
-    }
-    ,
-    {
-      path: '/chat',
-      name: 'chat',
-      component: ChatVue,
-    }
-    
-   
-=======
     },
     {
       path: '/admin/user',
@@ -111,7 +100,11 @@ const router = createRouter({
       name: 'admin/setting',
       component: () => import('../views/Admin/Setting/ListView.vue')
     },
->>>>>>> admin
+    {
+      path: '/form',
+      name: 'form',
+      component: () => import('../views/Admin/Food/FormAddFoodView.vue')
+    },
   ]
 })
 
