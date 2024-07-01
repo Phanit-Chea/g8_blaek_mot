@@ -19,6 +19,7 @@
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@popperjs/core": "^2.11.8",
     "@syncfusion/ej2-vue-popups": "^26.1.38",
+    "@vee-validate/rules": "^4.5.8",
     "axios": "^1.7.2",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
@@ -31,12 +32,13 @@
     "pinia": "^2.1.7",
     "popper.js": "^1.16.1",
     "vee-validate": "^4.12.8",
-    "vue": "^3.4.29",
+    "vue": "^3.4.30",
     "vue-gates": "^2.1.2",
     "vue-router": "^4.3.0",
     "vue-simple-acl": "^2.0.2",
     "vue2-google-maps": "^0.10.7",
     "vue3-leaflet": "^1.0.48",
+    "x": "^0.1.2",
     "yup": "^1.4.0"
   },
   "devDependencies": {
