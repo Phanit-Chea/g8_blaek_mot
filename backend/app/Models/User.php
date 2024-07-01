@@ -25,12 +25,7 @@ class User extends Authenticatable
         'dateOfBirth',
         'gender',
         'phoneNumber',
-        'houseNumber',
-        'streetNumber',
-        'streetName',
-        'commune',
-        'district',
-        'province',
+        'address',
         'profile',
     ];
 

@@ -17,18 +17,11 @@ class userRegisterResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
-            'phone_number' => $this->phoneNumber,
+            'phoneNumber' => $this->phoneNumber,
             'gender' => $this->gender,
             'dateOfBirth' => $this->dateOfBirth,
             'profile' => $this->profile,
-            'address' => [
-                'houseNumber' => $this->houseNumber,
-                'streetNumber' => $this->streetNumber,
-                'streetName' => $this->streetName,
-                'commune' => $this->commune,
-                'district' => $this->district,
-                'province' => $this->province,
-            ],
+            'address' => $this->address
         ];
-    }
+}
 }
