@@ -31,48 +31,19 @@
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <a
-        href="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <a href="#"
+        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
       </a>
-      
-      <router-link
-        to="#"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <a href="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
-      </router-link>
-      <router-link v-if="useAuth.isAuthenticated"
-        to="/user"
-        class="account me-3 rounded-circle d-flex justify-content-center align-items-center bg-white text-decoration-none"
-        data-bs-toggle="modal"
-        data-bs-target="#loginForm"
-      >
-        <img
-          :src="`http://127.0.0.1:8000${useAuth.user.profile}`"
-          alt="login"
-          width="45px"
-          class="rounded-circle rounded"
-          data-bs-toggle="modal"
-          data-bs-target="#loginForm"
-        />
-    </router-link>
-      <router-link v-else
-        to="#"
-        class="account me-3 rounded-circle d-flex justify-content-center align-items-center bg-white text-decoration-none"
-        data-bs-toggle="modal"
-        data-bs-target="#loginForm"
-      >
-        <img
-          src="../../../assets/login.png"
-          alt="login"
-          width="45px"
-          data-bs-toggle="modal"
-          data-bs-target="#loginForm"
-        />
-    </router-link>
+      </a>
+      <a href="#"
+        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <img src="../../../assets/login.png" alt="login" width="38px" data-bs-toggle="modal"
+          data-bs-target="#loginForm" />
+      </a>
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">

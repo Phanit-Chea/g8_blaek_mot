@@ -509,12 +509,23 @@
               class="visually-hidden">unread messages</span></span></i></a>
     </main>
   </div>
-  <Footer></Footer>
+
+  <FooterView></FooterView>
 </template>
-<script setup lang="ts">
-import NavbarView from '../Web/Navbar/NavbarView.vue';
-import Footer from '../Web/Footer/FooterView.vue';
+<script>
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
+import FooterView from '@/views/Web/Footer/FooterView.vue';
+
+export default {
+  name: 'HomePage',
+  components: {
+    NavbarView,
+    FooterView
+  }
+};
 </script>
+
+
 <style scoped>
 .cardCategory,
 .col-md-4 {

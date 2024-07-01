@@ -24,5 +24,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->middleware('auth')
         ->name('logout');
-    Route::post('/register', [AuthController::class, 'register'])->middleware('auth')->name('register');
+    // Route::post('/register', [AuthController::class, 'register'])->middleware('auth')->name('register');
 });
