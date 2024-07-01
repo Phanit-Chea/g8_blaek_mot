@@ -627,10 +627,7 @@
         ></a
       >
     </main>
-    <FooterView></FooterView>
   </div>
-<<<<<<< HEAD
-
   <FooterView></FooterView>
 </template>
 <script>
@@ -639,15 +636,6 @@ import FooterView from '@/views/Web/Footer/FooterView.vue';
 
 export default {
   name: 'HomePage',
-=======
-</template>
-<script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
-
-export default {
-  name: 'App',
->>>>>>> 22b8b0c6ba9e05de113f5e72a1c7e8e12b79daa7
   components: {
     NavbarView,
     FooterView
