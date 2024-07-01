@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import App from 'src/App.vue'
+import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
