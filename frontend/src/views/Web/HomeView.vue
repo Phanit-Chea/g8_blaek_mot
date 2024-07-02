@@ -4,24 +4,14 @@
     <main class="container" style="margin-top: 14%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
-        <img
-          src="../../assets/ContainerImages/homePoster.png"
-          alt="homeImage"
-          width="100%"
-          height="600px"
-        />
+        <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
       </div>
       <!-- =========================categories ========================================= -->
       <div class="row categories mt-5">
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/breakfast.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Breakfast"
-            />
+            <img src="../../assets/CategoryImages/breakfast.png" width="100%" height="180px" class="card-img-top"
+              alt="Breakfast" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
               <p class="d-flex justify-content-start">
@@ -36,13 +26,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/lunch.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Lunch"
-            />
+            <img src="../../assets/CategoryImages/lunch.png" width="100%" height="180px" class="card-img-top"
+              alt="Lunch" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
               <p class="d-flex justify-content-start">
@@ -57,13 +42,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/dinner.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dinner"
-            />
+            <img src="../../assets/CategoryImages/dinner.png" width="100%" height="180px" class="card-img-top"
+              alt="Dinner" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
               <p class="d-flex justify-content-start">
@@ -78,13 +58,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/dessert.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dessert"
-            />
+            <img src="../../assets/CategoryImages/dessert.png" width="100%" height="180px" class="card-img-top"
+              alt="Dessert" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
               <p class="d-flex justify-content-start">
@@ -99,13 +74,8 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/drink.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Drinks"
-            />
+            <img src="../../assets/CategoryImages/drink.png" width="100%" height="180px" class="card-img-top"
+              alt="Drinks" />
             <div class="card-body text-center">
               <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
               <p class="d-flex justify-content-start">
@@ -125,8 +95,7 @@
       </div>
       <div class="row mt-4 pl-3">
         <div
-          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center"
-        >
+          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលព្រឹក</h2>
             <p>
@@ -136,15 +105,10 @@
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
         <div
-          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white"
-        >
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>អាហារថ្ងៃត្រង់</h2>
             <p>
@@ -154,24 +118,15 @@
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
       </div>
       <div class="row mt-4 pr-2">
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
         <div
-          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center"
-        >
+          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
             <h2>អាហារពេលល្ងាច</h2>
             <p>
@@ -181,15 +136,10 @@
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
         <div
-          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white"
-        >
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
             <h2>បង្អែម</h2>
             <p>
@@ -200,9 +150,7 @@
         </div>
       </div>
       <!--======================= list all foods ================= -->
-      <div
-        class="containerMid text-center my-5 text-green"
-        style="
+      <div class="containerMid text-center my-5 text-green" style="
           font-family:
             system-ui,
             -apple-system,
@@ -215,21 +163,15 @@
             'Open Sans',
             'Helvetica Neue',
             sans-serif;
-        "
-      >
-        <h1>បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
+        ">
+        <h1 class="siemreap">បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh">
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/beefSoup.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/beefSoup.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -246,7 +188,9 @@
                   </div>
                   <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
                     <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
+                    <div @click="handleIconClick">
+                      <i class="material-icons text-success">turned_in</i>
+                    </div>
                   </a>
                 </div>
               </div>
@@ -256,13 +200,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/buggur.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Card image"
-              />
+              <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+                alt="Card image" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -289,13 +228,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow h-100">
-              <img
-                src="../../assets/ContainerImages/fryChicken.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Fried Chicken"
-              />
+              <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+                alt="Fried Chicken" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -323,13 +257,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/fryFish.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/fryFish.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -356,13 +285,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/nhom.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/nhom.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -389,13 +313,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/noodle.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/noodle.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -422,13 +341,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/pizza.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/pizza.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -455,13 +369,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/pork.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/pork.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -488,13 +397,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/salmon.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/salmon.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -521,13 +425,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/rice.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/rice.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -554,13 +453,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/buggur.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -587,13 +481,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow h-100">
-              <img
-                src="../../assets/ContainerImages/fryChicken.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Fried Chicken"
-              />
+              <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+                alt="Fried Chicken" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -618,36 +507,58 @@
           </a>
         </div>
       </div>
-      <a href="/chat"
-        ><i class="bi bi-chat-dots-fill chat"
-          ><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
-            ><span class="visually-hidden">unread messages</span></span
-          ></i
-        ></a
-      >
+      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
+              class="visually-hidden">unread messages</span></span></i></a>
     </main>
   </div>
   <FooterView></FooterView>
 </template>
-<script>
+<script setup lang="ts">
 import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
 import FooterView from '@/views/Web/Footer/FooterView.vue';
+import { useAuthStore } from '@/stores/auth-store';
+import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
-export default {
-  name: 'HomePage',
-  components: {
-    NavbarView,
-    FooterView
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleIconClick = async () => {
+  if (authStore.isAuthenticated) {
+    await router.push('/user');
+  } else {
+    const result = await Swal.fire({
+      title: 'You need to have an account first',
+      text: 'Do you want to go to the registration page?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Go to Registration',
+      cancelButtonText: 'Cancel',
+    });
+
+    console.log('Swal result:', result); // Add this line for debugging
+
+    if (result.isConfirmed) {
+      try {
+        await router.push('/register');
+        console.log('Navigated to /register'); // Add this line for debugging
+      } catch (error) {
+        console.error('Failed to navigate to /register:', error); // Add this line for debugging
+      }
+    }
   }
 };
 </script>
 
 
+
+
 <style scoped>
-.container{
+.container {
   background-color: rgb(239, 235, 235);
 }
+
 .cardCategory,
 .col-md-4 {
   transition: transform 0.3s ease;
@@ -673,10 +584,12 @@ export default {
   cursor: pointer;
   transition: transform 0.5s;
 }
+
 .chat:hover {
   transform: scale(1.05) rotate(-5deg);
   color: #62cd3c;
 }
+
 .cardFooter {
   width: 80%;
   display: flex;
@@ -684,6 +597,7 @@ export default {
   margin-left: -15px;
   padding-left: 0px;
 }
+
 .cardFooterRight {
   display: flex;
   justify-content: space-between;
@@ -693,9 +607,14 @@ export default {
   gap: 0;
   width: 40%;
 }
-.cardFooterRight > i {
+
+.cardFooterRight>i {
   display: flex;
   margin-right: 3%;
-  color:#66b64a;
+  color: #66b64a;
+}
+
+.siemreap {
+  font-family: 'Siemreap', cursive;
 }
 </style>
