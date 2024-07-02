@@ -57,6 +57,7 @@
         </nav-link>
       </div>
     </div>
+    <!-- {{ useAuth }} -->
   </nav>
 
 </template>
