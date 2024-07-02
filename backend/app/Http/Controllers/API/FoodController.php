@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\FoodRequest;
+use Exception;
 
 class FoodController extends Controller
 {
@@ -22,44 +24,35 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    // FoodController.php
+    public function store(FoodRequest $request)
     {
-         // Ensure the request comes from an authenticated user
-         $user = Auth::user()->id;
-         if (!$user) {
-             return response()->json(['error' => 'Unauthorized'], 401);
-         }
- 
-         // Validate the request data
-         $validator = Validator::make($request->all(), [
-             'name' => 'required|string|max:255',
-             'cooking_time' => 'required|string|max:255',
-             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-             'video_url' => 'nullable|url',
-             'nutrition' => 'nullable|array',
-             'ingredients' => 'nullable|array',
-         ]);
- 
-         if ($validator->fails()) {
-             return response()->json($validator->errors(), 422);
-         }
- 
-         // Store the image file
-         $imagePath = $request->file('image_path')->store('images', 'public');
- 
-         // Create the food record
-         $food = Food::create([
-             'user_id' => $user, // Use the authenticated user's ID
-             'name' => $request->name,
-             'cooking_time' => $request->cooking_time,
-             'image_path' => $imagePath,
-             'video_url' => $request->video_url,
-             'nutrition' => $request->nutrition,
-             'ingredients' => $request->ingredients,
-         ]);
- 
-         return response()->json($food, 201);
+        // Ensure the request comes from an authenticated user
+        $userID = 1;
+        try {
+            $imagePath = null;
+            if ($request->hasFile('image_path')) {
+                $img = $request->file('image_path');
+                $ext = $img->getClientOriginalExtension();
+                $imageName = time() . '.' . $ext;
+                $profilePath = 'storage/images';
+                $img->move(public_path($profilePath), $imageName);
+                $imagePath = $profilePath . '/' . $imageName;
+            }
 
+            $food = Food::create([
+                'user_id' => $userID,
+                'name' => $request->input('name'),
+                'image' => $imagePath,
+                'video_url' => $request->input('video_url'),
+                'cooking_time' => $request->input('cooking_time'),
+                'nutrition' => $request->input('nutrition'),
+                'ingredients' => $request->input('ingredients'),
+            ]);
+            return response()->json($food, 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
