@@ -21,13 +21,21 @@ class AdminSeeder extends Seeder
             'name'=>'Admin',
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('password'),
-            'profile' => 'user.avif'
+            // 'profile' => 'user.avif',
+            'phoneNumber' => '0715654111',
+            'dateOfBirth' => '2002-2-2',
+            'address' => 'Phnom Penh',
+            'gender' => 'Male'
         ]);
 
         $writer = User::create([
             'name'=>'User',
             'email'=>'user@gmail.com',
-            'password'=>bcrypt('password')
+            'password'=>bcrypt('password'),
+            'phoneNumber' => '0715654112',
+            'dateOfBirth' => '2002-2-3',
+            'address' => 'Phnom Penh',
+            'gender' => 'Male'
         ]);
         
 

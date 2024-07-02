@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController as ApiAuthController;
-use App\Http\Controllers\Api\FoodController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\AuthController;
@@ -37,9 +37,11 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 
-Route::prefix("food")->group(function(){
-    Route::post('/create',[FoodController::class,'store'])->name('food.create');
-});
+// Route::prefix("food")->group(function(){
+//     Route::post('/create',[FoodController::class,'store'])->name('food.create');
+// });
+Route::post('/food/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum')
+
 Route::prefix("chat")->group(function(){
     Route::post('/create/{to_user}',[ChatController::class,'store'])->name('chat.create')->middleware('auth:sanctum');
     Route::get('/list',[ChatController::class,'index'])->name('chat.list');
