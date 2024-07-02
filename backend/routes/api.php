@@ -32,6 +32,5 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 
-Route::prefix("food")->group(function(){
-    Route::post('/create',[FoodController::class,'store'])->name('food.create');
-});
+// Route::post('/food', [FoodController::class, 'store'])->name('food.Create');
+Route::post('/food', [FoodController::class, 'store'])->name('food.create')->middleware('auth:sanctum');

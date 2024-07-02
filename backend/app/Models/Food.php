@@ -8,29 +8,52 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
-    use HasFactory ,SoftDeletes;
-    protected $fillable = [
-        "user_id", 
-        "food_name",
-        "upload_image",
-        "video_url", 
-        "cooking_time", 
-        "ingredient", 
-        "how_to_cook"
-    ];
-    public static function list(){
-        return self::all();
+    use HasFactory, SoftDeletes;
 
-    }
+    // protected $table = 'foods';
+
+    protected $fillable = [
+        'user_id',
+        'name',
+        'image_path',
+        'video_url',
+        'cooking_time',
+        'nutrition',
+        'ingredients',
+    ];
+
+    protected $casts = [
+        'nutrition' => 'array',
+        'ingredients' => 'array',
+    ];
+
+    /**
+     * Define the relationship to the User model.
+     */
+    // Food.php
+
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public static function store($request, $id = null)
-    {
-        $data = $request->only("user_id", "food_name","upload_image", "video_url",  "cooking_time","ingredient","how_to_cook");
-        $data = self::updateOrCreate(['id' => $id], $data);
-        return $data;
-    }
+    
+
+
+    /**
+     * Get all foods (consider renaming method to avoid conflicts).
+     */
+    // public static function allFoods()
+    // {
+    //     return self::all();
+    // }
+
+    /**
+     * Store or update food data.
+     */
+    // public function store($requestData, $id = null)
+    // {
+    //     $data = $requestData->only(["user_id", "name", "image_path", "video_url", "cooking_time", "nutrition", "ingredients"]);
+    //     return self::updateOrCreate(['id' => $id], $data);
+    // }
 }

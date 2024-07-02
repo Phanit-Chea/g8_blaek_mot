@@ -90,4 +90,6 @@ class AuthController extends Controller
             'user' => $user
         ], 200);
     }
+    // UserController.php
+
 }

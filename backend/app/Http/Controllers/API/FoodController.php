@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -22,45 +24,48 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request data using the Validator facade
-        $validator = Validator::make($request->all(), [
-            'food_name' => 'required|string',
-            'upload_image' => 'required|string',
-            'video_url' => 'nullable|url',
-            'cooking_time' => 'required|string',
-            'ingredient' => 'required|string',
-            'how_to_cook' => 'required|string',
-        ]);
+         // Ensure the request comes from an authenticated user
+         $user = Auth::user()->id;
+         if (!$user) {
+             return response()->json(['error' => 'Unauthorized'], 401);
+         }
+ 
+         // Validate the request data
+         $validator = Validator::make($request->all(), [
+             'name' => 'required|string|max:255',
+             'cooking_time' => 'required|string|max:255',
+             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+             'video_url' => 'nullable|url',
+             'nutrition' => 'nullable|array',
+             'ingredients' => 'nullable|array',
+         ]);
+ 
+         if ($validator->fails()) {
+             return response()->json($validator->errors(), 422);
+         }
+ 
+         // Store the image file
+         $imagePath = $request->file('image_path')->store('images', 'public');
+ 
+         // Create the food record
+         $food = Food::create([
+             'user_id' => $user, // Use the authenticated user's ID
+             'name' => $request->name,
+             'cooking_time' => $request->cooking_time,
+             'image_path' => $imagePath,
+             'video_url' => $request->video_url,
+             'nutrition' => $request->nutrition,
+             'ingredients' => $request->ingredients,
+         ]);
+ 
+         return response()->json($food, 201);
 
-        // Check if validation fails
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Ensure the user is authenticated
-        $user = $request->user();
-        if (!$user) {
-            return response()->json(['error' => 'Unauthenticated'], 401);
-        }
-
-        // Create a new Food instance and save the data
-        $food = new Food();
-        $food->user_id = $user->id;
-        $food->food_name = $request->food_name;
-        $food->upload_image = $request->upload_image;
-        $food->video_url = $request->video_url;
-        $food->cooking_time = $request->cooking_time;
-        $food->ingredient = $request->ingredient;
-        $food->how_to_cook = $request->how_to_cook;
-        $food->save();
-
-        // Return a success response
-        return response()->json(['success' => true, 'message' => 'Created food successfully'], 201);
     }
 
     /**
      * Display the specified resource.
      */
+
     public function show(string $id)
     {
         //
