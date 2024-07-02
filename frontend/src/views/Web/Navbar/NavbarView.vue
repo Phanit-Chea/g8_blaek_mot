@@ -22,18 +22,16 @@
         class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
       </a>
+
       <router-link to="#"
         class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
       </router-link>
       <router-link v-if="useAuth.isAuthenticated" to="/user"
         class="account me-3 rounded-circle d-flex justify-content-center align-items-center bg-white text-decoration-none"
-        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        data-bs-toggle="modal" data-bs-target="#loginForm">
         <img :src="`http://127.0.0.1:8000${useAuth.user.profile}`" alt="login" width="45px"
-          class="rounded-circle rounded" />
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" @click.prevent="logout">Logout</a>
-        </div>
+          class="rounded-circle rounded" data-bs-toggle="modal" data-bs-target="#loginForm" />
       </router-link>
       <router-link v-else to="#"
         class="account me-3 rounded-circle d-flex justify-content-center align-items-center bg-white text-decoration-none"
@@ -54,6 +52,7 @@
           <a href="#" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">About Us</a>
         </nav-link>
         <nav-link>
+
           <a href="#" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Join With Us</a>
         </nav-link>
       </div>
@@ -62,24 +61,11 @@
 
 </template>
 
- <script setup lang="ts">
- import { useAuthStore } from '@/stores/auth-store.ts';
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth-store.ts';
 
 const useAuth = useAuthStore();
-const logout = () => {
-      useAuth.logout();
-      
-      this.$router.push({ name: 'login' });
-    };
-
-    return {
-      useAuth,
-      logout,
-    };
 </script>
-
-
-
 
 <style scoped>
 .favoriteIcon,
