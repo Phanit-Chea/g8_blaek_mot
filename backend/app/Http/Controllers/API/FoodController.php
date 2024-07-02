@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ShowFoodResource;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -38,7 +40,7 @@ class FoodController extends Controller
         }
 
         // Ensure the user is authenticated
-        $user = $request->user();
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
@@ -56,6 +58,8 @@ class FoodController extends Controller
 
         // Return a success response
         return response()->json(['success' => true, 'message' => 'Created food successfully'], 201);
+
+        // return $request->user();
     }
 
     /**
@@ -63,7 +67,9 @@ class FoodController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $food = Food::find($id);
+        $food= new ShowFoodResource($food);
+        return ["success" => true, "data" =>$food];
     }
 
     /**
