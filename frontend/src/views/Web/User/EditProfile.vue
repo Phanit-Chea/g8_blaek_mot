@@ -1,9 +1,6 @@
 <template>
   <NavbarView></NavbarView>
-  <div
-    class="container d-flex justify-content-center align-items-center"
-    style="height: 100vh; margin-top: 2%"
-  >
+  <div class="container d-flex justify-content-center align-items-center" style="height: 100vh; margin-top: 6%">
     <div class="registration-form bg-white shadow" style="width: 65%; border-radius: 20px">
       <form @submit.prevent="submitForm" class="d-flex justify-content-between" enctype="multipart/form-data">
         <div class="card w-50" style="background-color: #66b64a">
@@ -11,13 +8,9 @@
             <div>
               <div class="card-body">
                 <div>
-                  <img
-                    :src="previewImage || '../assets/default-avatar.png'"
-                    @click="selectImage"
-                    alt="avatar"
+                  <img :src="previewImage || '../assets/default-avatar.png'" @click="selectImage" alt="avatar"
                     class="rounded-circle img-fluid border border-5"
-                    style="width: 130px; height: 130px; margin-left:22.5%"
-                  />
+                    style="width: 130px; height: 130px; margin-left:22.5%" />
                 </div>
                 <div class="d-flex mt-4">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">person</i>
@@ -31,7 +24,7 @@
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">phone</i>
-                  <p class="text-muted ms-2 mb-0">(+855) {{ useAuth.user.phone_number }}</p>
+                  <p class="text-muted ms-2 mb-0">(+855) {{ useAuth.user.phoneNumber }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
@@ -55,40 +48,33 @@
             <input type="file" id="file-input" class="file-input" accept="image/*" @change="pickFile" />
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" v-model="useAuth.user.name" id="username" placeholder="ឈ្មោះពេញ" />
+            <input type="text" class="form-control siemreap" v-model="useAuth.user.name" id="username"
+              placeholder="ឈ្មោះពេញ" />
           </div>
           <div class="form-group mt-2">
-            <input type="email" class="form-control siemreap" id="email" v-model="useAuth.user.email" placeholder="អ៊ីមែល" />
+            <input type="email" class="form-control siemreap" id="email" v-model="useAuth.user.email"
+              placeholder="អ៊ីមែល" />
           </div>
           <div class="form-group mt-2">
-            <input
-              type="tel"
-              class="form-control siemreap"
-              id="phone-number"
-              v-model="useAuth.user.phone_number"
-              placeholder="លេខទូរស័ព្ទ"
-            />
+            <input type="tel" class="form-control siemreap" id="phone-number" v-model="useAuth.user.phoneNumber"
+              placeholder="លេខទូរស័ព្ទ" />
           </div>
           <div class="form-group mt-2">
             <select v-model="useAuth.user.gender" id="sex" class="form-control">
-              <option class="siemreap" value="" selected>សូមជ្រើសរើសភេទរបស់អ្នក</option>
-              <option class="siemreap" value="male">ប្រុស</option>
-              <option class="siemreap" value="female">ស្រី</option>
+              <option class="siemreap" value="" :selected="useAuth.user.gender === ''">សូមជ្រើសរើសភេទរបស់អ្នក</option>
+              <option class="siemreap" value="male" :selected="useAuth.user.gender === 'male'">ប្រុស</option>
+              <option class="siemreap" value="female" :selected="useAuth.user.gender === 'female'">ស្រី</option>
             </select>
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" id="address" v-model="useAuth.user.address" placeholder="ទីកន្លែង" />
+            <input type="text" class="form-control siemreap" id="address" v-model="useAuth.user.address"
+              placeholder="ទីកន្លែង" />
           </div>
           <div class="px-3 mt-4 d-flex justify-content-end">
             <a href="/user"><button type="button" class="btn btn-danger siemreap">
-              បោះបង់
-            </button></a>
-            <button
-              type="submit"
-              class="btn text-white ms-2 text-bold siemreap"
-
-              style="background-color: #238400"
-            >
+                បោះបង់
+              </button></a>
+            <button type="submit" class="btn text-white ms-2 text-bold siemreap" style="background-color: #238400">
               ផ្លាស់ប្ដូរ
             </button>
           </div>
@@ -105,14 +91,14 @@ import { useAuthStore } from '../../../stores/auth-store';
 import axios from 'axios';
 
 const useAuth = useAuthStore();
-const profileImageUrl = ref(`http://127.0.0.1:8000${useAuth.user.profile}`);
+const profileImageUrl = ref(`http://127.0.0.1:8000/${useAuth.user.profile}`);
 const previewImage = ref(profileImageUrl.value);
 
 const file = ref(null);
 const success = ref(false);
 
 watch(() => useAuth.user.profile, (newValue) => {
-  profileImageUrl.value = `http://127.0.0.1:8000${newValue}`;
+  profileImageUrl.value = `http://127.0.0.1:8000/${newValue}`;
   previewImage.value = profileImageUrl.value;
 });
 
@@ -141,7 +127,8 @@ const submitForm = () => {
   };
   let data = new FormData();
   data.append('file', file.value);
-  axios.post('storage/StoreImage/', data, config)
+  axios.post('storage/images/', data, config)
+  axios.post('/user/update/{id}', data, config)
     .then((res) => {
       if (res.data.success) {
         success.value = true;
@@ -151,8 +138,9 @@ const submitForm = () => {
     .catch((err) => {
       console.log(err);
     });
-  
+
 };
+
 </script>
 
 <style>

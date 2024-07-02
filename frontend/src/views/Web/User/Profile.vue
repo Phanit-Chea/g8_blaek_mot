@@ -1,7 +1,7 @@
 <!-- src/components/HeaderMenu.vue -->
 <template>
   <NavbarView></NavbarView>
-    <div class="container-fluid " style="padding-top:9.73%">
+    <div class="container-fluid " style="padding-top:9.73%; margin-top: 17px;">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
       <div class="col py-5">
@@ -13,7 +13,7 @@
                   <div class="card mb-4 shadow rounded py-5">
                     <div class="card-body text-center">
                       <img
-                        :src="`http://127.0.0.1:8000${useAuth.user.profile}`"
+                        :src="`http://127.0.0.1:8000/${useAuth.user.profile}`"
                         alt="avatar" class="rounded-circle img-fluid" style="width: 170px; height:170px" />
                       <h5 class="text-muted my-3">{{ useAuth.user.name }}</h5>
                       <p class="text-muted mb-1">{{ useAuth.user.email }}</p>
@@ -46,7 +46,7 @@
                           <p class="text-muted mb-0 siemreap">លេខទូរស័ព្ទ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">(+855) {{ useAuth.user.phone_number }}</p>
+                          <p class="text-muted mb-0">(+855) {{ useAuth.user.phoneNumber }}</p>
                         </div>
                       </div>
                       <hr />
