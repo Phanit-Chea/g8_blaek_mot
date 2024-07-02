@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -21,11 +22,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone_number',
-        'gender',
-        'address',
         'password',
-        'profile'
+        'dateOfBirth',
+        'gender',
+        'phoneNumber',
+        'address',
+        'profile',
     ];
 
     /**
@@ -46,4 +48,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function chat(): HasMany
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

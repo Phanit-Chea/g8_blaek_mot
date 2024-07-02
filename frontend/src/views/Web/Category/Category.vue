@@ -1,12 +1,12 @@
 <template>
-  <navbar-view-vue/>
+  <NavbarViewVue/>
   <div class="container-fluid">
     <div class="row flex-nowrap">
-      <side-bar-vue/>
-      <food-card-vue/>
+      <side-bar-vue />
+      <food-card-vue />
     </div>
   </div>
- 
+ <FooterViewVue></FooterViewVue>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ import NavbarViewVue from '../Navbar/NavbarView.vue'
 
 
 export default {
-  name:'category-view',
+  name: 'category-view',
   components: {
     SideBarVue,
     FoodCardVue,

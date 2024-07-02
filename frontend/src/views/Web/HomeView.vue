@@ -1,7 +1,7 @@
 <template>
   <NavbarView></NavbarView>
   <div class="container h-100">
-    <main class="container" style="margin-top: 11%">
+    <main class="container" style="margin-top: 14%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
         <img
@@ -627,23 +627,27 @@
         ></a
       >
     </main>
-    <FooterView></FooterView>
   </div>
+  <FooterView></FooterView>
 </template>
 <script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
+import FooterView from '@/views/Web/Footer/FooterView.vue';
 
 export default {
-  name: 'App',
+  name: 'HomePage',
   components: {
     NavbarView,
     FooterView
   }
-}
+};
 </script>
 
+
 <style scoped>
+.container{
+  background-color: rgb(239, 235, 235);
+}
 .cardCategory,
 .col-md-4 {
   transition: transform 0.3s ease;
