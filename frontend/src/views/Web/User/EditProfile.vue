@@ -5,14 +5,15 @@
     style="height: 100vh; margin-top: 2%"
   >
     <div class="registration-form bg-white shadow" style="width: 65%; border-radius: 20px">
-      <form action="/user" class="d-flex justify-content-between" enctype="multipart/form-data">
+      <form @submit.prevent="submitForm" class="d-flex justify-content-between" enctype="multipart/form-data">
         <div class="card w-50" style="background-color: #66b64a">
           <div class="card p-4" style="background-color: #66b64a">
             <div>
               <div class="card-body">
-                <div >
+                <div>
                   <img
-                    :src="`http://127.0.0.1:8000${useAuth.user.profile}`"
+                    :src="previewImage || '../assets/default-avatar.png'"
+                    @click="selectImage"
                     alt="avatar"
                     class="rounded-circle img-fluid border border-5"
                     style="width: 130px; height: 130px; margin-left:22.5%"
@@ -20,31 +21,26 @@
                 </div>
                 <div class="d-flex mt-4">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">person</i>
-
                   <p class="text-muted ms-2 mb-0 siemreap">{{ useAuth.user.name }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">mail</i>
-
                   <p class="text-muted ms-2 mb-0">{{ useAuth.user.email }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">phone</i>
-
                   <p class="text-muted ms-2 mb-0">(+855) {{ useAuth.user.phone_number }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">male</i>
-
                   <p class="text-muted ms-2 mb-0 siemreap">{{ useAuth.user.gender }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">location_on</i>
-
                   <p class="text-muted ms-2 mb-0">{{ useAuth.user.address }}</p>
                 </div>
               </div>
@@ -56,7 +52,7 @@
             <label for="file-input" class="file-input-label">
               <i class="fs-4 text-dark align-middle material-icons">add</i>
             </label>
-            <input type="file" id="file-input" class="file-input" accept="image/*" @change="submitForm" />
+            <input type="file" id="file-input" class="file-input" accept="image/*" @change="pickFile" />
           </div>
           <div class="form-group mt-2">
             <input type="text" class="form-control siemreap" v-model="useAuth.user.name" id="username" placeholder="ឈ្មោះពេញ" />
@@ -87,15 +83,14 @@
             <a href="/user"><button type="button" class="btn btn-danger siemreap">
               បោះបង់
             </button></a>
-           <a href="/user">
             <button
               type="submit"
               class="btn text-white ms-2 text-bold siemreap"
+
               style="background-color: #238400"
             >
               ផ្លាស់ប្ដូរ
             </button>
-           </a>
           </div>
         </div>
       </form>
@@ -105,12 +100,59 @@
 
 <script setup lang="ts">
 import NavbarView from '../Navbar/NavbarView.vue';
+import { ref, watch } from 'vue';
 import { useAuthStore } from '../../../stores/auth-store';
-
+import axios from 'axios';
 
 const useAuth = useAuthStore();
+const profileImageUrl = ref(`http://127.0.0.1:8000${useAuth.user.profile}`);
+const previewImage = ref(profileImageUrl.value);
 
+const file = ref(null);
+const success = ref(false);
 
+watch(() => useAuth.user.profile, (newValue) => {
+  profileImageUrl.value = `http://127.0.0.1:8000${newValue}`;
+  previewImage.value = profileImageUrl.value;
+});
+
+const selectImage = () => {
+  const fileInput = document.getElementById('file-input');
+  fileInput.click();
+};
+
+const pickFile = (e) => {
+  const selectedFile = e.target.files[0];
+  if (selectedFile) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      previewImage.value = event.target.result;
+    };
+    reader.readAsDataURL(selectedFile);
+    file.value = selectedFile;
+  }
+};
+
+const submitForm = () => {
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  };
+  let data = new FormData();
+  data.append('file', file.value);
+  axios.post('storage/StoreImage/', data, config)
+    .then((res) => {
+      if (res.data.success) {
+        success.value = true;
+        useAuth.user.profile = res.data.profileUrl;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  
+};
 </script>
 
 <style>
@@ -122,11 +164,13 @@ const useAuth = useAuthStore();
   border: none;
   border-radius: 20px 0px 0px 20px;
 }
+
 .form-control {
   height: 20%;
   border: none;
   background-color: rgba(73, 73, 73, 0.066);
 }
+
 .file-input-label {
   display: inline-block;
   padding: 18px 32px;

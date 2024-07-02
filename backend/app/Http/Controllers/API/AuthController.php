@@ -52,8 +52,11 @@ class AuthController extends Controller
     public function destroy(string $id)
     {
     }
+
     public function register(Request $request)
     {
+        \Log::info('Register request data: ', $request->all());
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -61,16 +64,11 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
+            'address' => 'required|string',
             'phoneNumber' => 'required|string',
-            'houseNumber' => 'required|string',
-            'streetNumber' => 'required|string',
-            'streetName' => 'required|string',
-            'commune' => 'required|string',
-            'district' => 'required|string',
-            'province' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation errors',
@@ -78,14 +76,14 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-    
+
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-    
+
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -93,21 +91,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
-            'phoneNumber' => $request->phoneNumber,
-            'houseNumber' => $request->houseNumber,
-            'streetNumber' => $request->streetNumber,
-            'streetName' => $request->streetName,
-            'commune' => $request->commune,
-            'district' => $request->district,
-            'province' => $request->province,
-            'profile' => $profile
+            'address' => $request->address,
+            'profile' => $profile,
+            'phoneNumber' => $request->phoneNumber // Corrected key
         ]);
-    
+
         return response()->json([
             'message' => 'User created successfully',
             'success' => true,
             'user' => new userRegisterResource($user)
         ], 201);
     }
-    
 }
