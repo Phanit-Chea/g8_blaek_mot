@@ -23,8 +23,8 @@ class FoodRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'video_url' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+            'video_url' => 'nullable|url',
             'cooking_time' => 'nullable|string|max:255',
             'nutrition' => 'nullable|string',
             'ingredients' => 'nullable|string',

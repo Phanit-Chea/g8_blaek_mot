@@ -18,7 +18,9 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::id();
+        // Use the $userId to perform actions related to the authenticated user
+        return view('my-view', ['userId' => $userId]);
     }
 
     /**
@@ -28,11 +30,11 @@ class FoodController extends Controller
     public function store(FoodRequest $request)
     {
         // Ensure the request comes from an authenticated user
-        $userID = 1;
+        $userID = Auth::id();
         try {
             $imagePath = null;
-            if ($request->hasFile('image_path')) {
-                $img = $request->file('image_path');
+            if ($request->hasFile('image')) {
+                $img = $request->file('image');
                 $ext = $img->getClientOriginalExtension();
                 $imageName = time() . '.' . $ext;
                 $profilePath = 'storage/images';
