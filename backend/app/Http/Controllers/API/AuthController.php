@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\userRegisterResource;
@@ -14,33 +14,33 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
-    // /
-    //  * Display a listing of the resource.
-    //  */
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         dd(1);
     }
 
-    // /
-    //  * Store a newly created resource in storage.
-    //  */
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         //
     }
 
-    // /
-    //  * Display the specified resource.
-    //  */
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         //
     }
 
-    // /
-    //  * Update the specified resource in storage.
-    //  */
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, string $id)
     {
         //
@@ -51,12 +51,13 @@ class AuthController extends Controller
      */
     public function destroy(string $id)
     {
+        //
     }
 
     public function register(Request $request)
     {
         \Log::info('Register request data: ', $request->all());
-
+    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -68,7 +69,7 @@ class AuthController extends Controller
             'phoneNumber' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation errors',
@@ -76,14 +77,14 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-
+    
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-
+    
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -93,9 +94,9 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'address' => $request->address,
             'profile' => $profile,
-            'phoneNumber' => $request->phoneNumber // Corrected key
+            'phoneNumber' => $request->phoneNumber
         ]);
-
+    
         return response()->json([
             'message' => 'User created successfully',
             'success' => true,

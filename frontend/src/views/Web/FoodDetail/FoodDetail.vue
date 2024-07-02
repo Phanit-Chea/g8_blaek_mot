@@ -1,4 +1,5 @@
 <template>
+  <NavbarView></NavbarView>
   <div class="d-flex" style="margin-top: 158px ;">
     <div class="col-2 ">
       <SideBar style="width: 240px;height: 100%" />
@@ -384,18 +385,22 @@
       <!-- </div> -->
     </div>
   </div>
+  <FooterView></FooterView>
 
 
 </template>
 <script>
-
+import NavbarView from '../Navbar/NavbarView.vue';
+import FooterView from '../Footer/FooterView.vue';
 import MapView from '../../../Components/Map/GoogleMapVue.vue';
 import SideBar from '@/Components/Layouts/SideBar.vue';
 export default {
   name: 'FoodDetail',
   components: {
     MapView,
-    SideBar
+    SideBar,
+    NavbarView,
+    FooterView,
 
   },
 };
