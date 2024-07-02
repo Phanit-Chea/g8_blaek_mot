@@ -14,6 +14,9 @@ class ShowFoodResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'from_user' => $this->from_user,
+            'description' => $this->description
+        ];
     }
 }

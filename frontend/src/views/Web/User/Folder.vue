@@ -1,4 +1,5 @@
 <template>
+  <navbar-view-vue />
   <div class="container-fluid" style="margin-top:11.03%">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
@@ -6,18 +7,15 @@
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
             <div class="card ms-4" style="width: 22.5%">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img"
-                alt="..."
-              />
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img" alt="..." />
               <div class="card-body d-flex justify-content-between px-0">
                 <h4 class="card-title text-dark">Card title</h4>
                 <a href="#" class="btn" style="background-color: #54983c">Detail</a>
               </div>
             </div>
-            
-            
+
+
           </div>
         </div>
       </div>
@@ -27,10 +25,12 @@
 
 <script>
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
+import NavbarViewVue from '../Navbar/NavbarView.vue'
 
 export default {
   components: {
-    userProfileSidebarVue
+    userProfileSidebarVue,
+    NavbarViewVue
   }
 }
 </script>
@@ -42,6 +42,7 @@ export default {
   color: rgba(250, 250, 250, 0.8);
   margin-bottom: 2rem;
 }
+
 img {
   height: 220px;
   padding-top: 10px;

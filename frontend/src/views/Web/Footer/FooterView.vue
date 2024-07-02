@@ -1,12 +1,16 @@
 <template>
-  <div class="container" style="background-color: #2a581a; margin-top: 20px; width: 100%">
-    <footer class="text-light py-5">
-      <div class="col-md-auto d-flex align-items-center text-green">
-        <img src="../../../assets/FooterImages/logo.png" alt="homeImage" width="16%" height="100px" />
-        <!-- <h1 class="logo" style="font-family: 'Moul', serif; margin-left: 20px">ប្លែកមាត់</h1> -->
+  <div class="container" style="background-color: #2a581a; margin-top: 20px; width: 100%;">
+    <footer class="text-light">
+      <div class="pt-3">
+        <img
+          src="../../../assets/FooterImages/logo.png"
+          alt="homeImage"
+          width="16%"
+          height="80px"
+        />
       </div>
       <hr />
-      <div class="container mt-3" style="margin-left: 20px">
+      <div class="container mt-3">
         <div class="row text-center text-md-start">
           <div class="col-md mb-5">
             <h3>About Us</h3>
@@ -33,12 +37,12 @@
             <input
               type="text"
               class="form-control p-1 w-80"
-              placeholder="What would like to eat?"
+              placeholder="What would you like to eat?"
               aria-label="Search"
             />
             <ul class="list-unstyled d-flex justify-content-md-start mt-3 gap-2">
               <li class="ms-3">
-                <a href="#" class="socialIcon"
+                <a href="https://www.facebook.com/yourpage" class="socialIcon"
                   ><img
                     src="../../../assets/FooterImages/facebook.png"
                     alt="Facebook"
@@ -47,7 +51,7 @@
                 /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
+                <a href="https://x.com/home" class="socialIcon"
                   ><img
                     src="../../../assets/FooterImages/twitter.png"
                     alt="Twitter"
@@ -56,7 +60,7 @@
                 /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
+                <a href="https://www.instagram.com" class="socialIcon"
                   ><img
                     src="../../../assets/FooterImages/instagram.png"
                     alt="Instagram"
@@ -65,7 +69,7 @@
                 /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
+                <a href="https://www.linkedin.com/feed/" class="socialIcon"
                   ><img
                     src="../../../assets/FooterImages/linkedIn.png"
                     alt="LinkedIn"
@@ -74,7 +78,7 @@
                 /></a>
               </li>
               <li class="ms-3">
-                <a href="#" class="socialIcon"
+                <a href="https://www.youtube.com" class="socialIcon"
                   ><img
                     src="../../../assets/FooterImages/youtube.png"
                     alt="YouTube"
@@ -90,7 +94,7 @@
   </div>
 </template>
 <script>
-  export default {
-    name: "FooterView",
-  };
+export default {
+  name: 'FooterView'
+}
 </script>
