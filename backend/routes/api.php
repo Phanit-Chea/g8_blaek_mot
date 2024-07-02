@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController as ApiAuthController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\AuthController;
@@ -26,6 +27,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class,'register']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/category/create', [CategoryController::class, 'store'])->middleware('auth:sanctum');
 
 //user profile
 Route::get('/user/list', [AuthController::class, 'getuserList']);
