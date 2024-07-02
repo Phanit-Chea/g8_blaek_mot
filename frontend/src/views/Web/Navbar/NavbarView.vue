@@ -62,8 +62,8 @@
 
 </template>
 
-<!-- <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth-store.ts';
+ <script setup lang="ts">
+ import { useAuthStore } from '@/stores/auth-store.ts';
 
 const useAuth = useAuthStore();
 const logout = () => {
@@ -76,22 +76,10 @@ const logout = () => {
       useAuth,
       logout,
     };
-</script> -->
-
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth-store';
-
-const router = useRouter();
-const useAuth = useAuthStore();
-
-const logout = () => {
-  useAuth.logout();
-  // Redirect the user to the login page or any other desired location
-  router.push({ name: 'login' });
-};
-
 </script>
+
+
+
 
 <style scoped>
 .favoriteIcon,
