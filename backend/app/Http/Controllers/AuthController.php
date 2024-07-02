@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function getuserList()
+    {
+        $user = User::all();
+        return response()->json(['success' => true, 'data'=>$user,], 200);
+    }
+
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -49,5 +55,11 @@ class AuthController extends Controller
             'message' => 'Login success',
             'data' =>$user,
         ]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        User::store($request, $id);
+        return ['success' => true, 'Message' => 'User Was updated successfully'];
     }
 }

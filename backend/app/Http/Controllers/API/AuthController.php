@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        dd(1);
+        return response()->json(['data'=>User::all(),'message' => 'Hello World'], 200);
     }
 
     /**
@@ -77,20 +77,19 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-    
-        $img = $request->file('profile');
-        $ext = $img->getClientOriginalExtension();
-        $imageName = time() . '.' . $ext;
-        $profilePath = 'storage/images';
-        $img->move(public_path($profilePath), $imageName);
-        $profile = $profilePath . '/' . $imageName;
-    
-        // Create user record
+
+        if ($request->hasFile('profile')) {
+            $path = $request->file('profile')->store('public/StoreImages');
+            $ProfileUrl = Storage::url($path);
+        } else {
+            $ProfileUrl = null;
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'dateOfBirth' => $request->dateOfBirth,
+            'phone_number' => $request->phone_number,
+            'age' => $request->age,
             'gender' => $request->gender,
             'address' => $request->address,
             'profile' => $profile,

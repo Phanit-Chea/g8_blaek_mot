@@ -22,6 +22,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone_number',
+        'age',
+        'gender',
+        'address',
         'password',
         'dateOfBirth',
         'gender',
@@ -48,8 +52,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+<<<<<<< HEAD
     public function chat(): HasMany
     {
         return $this->hasMany(Chat::class);
+=======
+
+    public static function store($request, $id = null){
+        $data = $request->only(
+        'name',
+        'email',
+        'phone_number',
+        'age',
+        'gender',
+        'address',
+        'password',
+        'profile');
+        $data = self::updateOrCreate(['id' => $id], $data);
+        return $data;
+>>>>>>> update_profile
     }
 }
+
