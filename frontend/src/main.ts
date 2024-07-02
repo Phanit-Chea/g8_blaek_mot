@@ -21,6 +21,8 @@ import 'leaflet/dist/leaflet.css';
 
 
 const app = createApp(App)
+const pinia = createPinia();
+
 
 configure({
   validateOnInput: true
@@ -30,6 +32,7 @@ app.use(createPinia())
 app.use(router.router)
 app.use(ElementPlus)
 app.use(router.simpleAcl)
+app.use(pinia);
 
 app.config.globalProperties.$axios = axios
 

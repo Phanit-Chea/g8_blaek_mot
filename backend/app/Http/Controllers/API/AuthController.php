@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\userRegisterResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -48,28 +51,31 @@ class AuthController extends Controller
      */
     public function destroy(string $id)
     {
+        //
     }
+
     public function register(Request $request)
     {
-        // Validate the incoming request data
+        \Log::info('Register request data: ', $request->all());
+    
         $validator = Validator::make($request->all(), [
-            'phone_number' => 'required|string',
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'confirmPassword' => 'required|same:password',
+            'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
             'address' => 'required|string',
-            'name' => 'required',
-            'email' => 'required',
-            'age' => 'required|string',
-            'password' => 'required',
+            'phoneNumber' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
-        //Get Image
-        $user_exist = User::where('email', $request->email)->first();
-        if ($user_exist) {
-            return response([
-                'message' => 'User already exist !',
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation errors',
+                'errors' => $validator->errors(),
                 'success' => false
-            ], 400);
+            ], 422);
         }
 
         if ($request->hasFile('profile')) {
@@ -86,13 +92,14 @@ class AuthController extends Controller
             'age' => $request->age,
             'gender' => $request->gender,
             'address' => $request->address,
-            'password' => Hash::make($request->password),
-            'profile' => $ProfileUrl
+            'profile' => $profile,
+            'phoneNumber' => $request->phoneNumber
         ]);
-        return response([
+    
+        return response()->json([
             'message' => 'User created successfully',
             'success' => true,
-            'user' => $user
-        ], 200);
+            'user' => new userRegisterResource($user)
+        ], 201);
     }
 }

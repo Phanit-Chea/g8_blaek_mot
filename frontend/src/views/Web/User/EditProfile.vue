@@ -86,6 +86,7 @@
             <button
               type="submit"
               class="btn text-white ms-2 text-bold siemreap"
+
               style="background-color: #238400"
             >
               ផ្លាស់ប្ដូរ
@@ -140,7 +141,7 @@ const submitForm = () => {
   };
   let data = new FormData();
   data.append('file', file.value);
-  axios.post('/user/update/{id}', data, config)
+  axios.post('storage/StoreImage/', data, config)
     .then((res) => {
       if (res.data.success) {
         success.value = true;
