@@ -140,7 +140,7 @@ const submitForm = () => {
   };
   let data = new FormData();
   data.append('file', file.value);
-  axios.post('storage/StoreImage/', data, config)
+  axios.post('/user/update/{id}', data, config)
     .then((res) => {
       if (res.data.success) {
         success.value = true;

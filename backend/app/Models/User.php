@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'phone_number',
+        'age',
         'gender',
         'address',
         'password',
@@ -46,4 +47,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function store($request, $id = null){
+        $data = $request->only(
+        'name',
+        'email',
+        'phone_number',
+        'age',
+        'gender',
+        'address',
+        'password',
+        'profile');
+        $data = self::updateOrCreate(['id' => $id], $data);
+        return $data;
+    }
 }
+

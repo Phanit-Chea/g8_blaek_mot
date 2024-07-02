@@ -40,45 +40,7 @@ class AuthController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validate the incoming request data
-        $validator = Validator::make($request->all(), [
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Invalid image format or size',
-                'success' => false
-            ], 400);
-        }
-
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'User not found',
-                'success' => false
-            ], 404);
-        }
-
-        if ($request->hasFile('profile')) {
-            $path = $request->file('profile')->store('public/StoreImages');
-            $profileUrl = Storage::url($path);
-
-            // Update the user's profile image URL in the database
-            $user->update(['profile' => $profileUrl]);
-
-            return response()->json([
-                'message' => 'Profile image updated successfully',
-                'success' => true,
-                'user' => $user
-            ], 200);
-        }
-
-        return response()->json([
-            'message' => 'No image provided for update',
-            'success' => false
-        ], 400);
+        //
     }
 
     /**
@@ -96,9 +58,12 @@ class AuthController extends Controller
             'address' => 'required|string',
             'name' => 'required',
             'email' => 'required',
+            'age' => 'required|string',
             'password' => 'required',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        //Get Image
         $user_exist = User::where('email', $request->email)->first();
         if ($user_exist) {
             return response([
@@ -118,6 +83,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
+            'age' => $request->age,
             'gender' => $request->gender,
             'address' => $request->address,
             'password' => Hash::make($request->password),
