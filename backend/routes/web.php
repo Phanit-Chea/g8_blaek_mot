@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\{
     ProfileController,
     MailSettingController,
 };
+use App\Http\Controllers\SendMailController;
 use Illuminate\Support\Facades\Mail;
 
 /*
