@@ -103,10 +103,4 @@ class AuthController extends Controller
             'user' => new userRegisterResource($user)
         ], 201);
     }
-<<<<<<< HEAD
-    // UserController.php
-
 }
-=======
-}
->>>>>>> develop

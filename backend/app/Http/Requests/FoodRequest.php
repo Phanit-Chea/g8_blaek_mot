@@ -22,12 +22,12 @@ class FoodRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'category_id' => 'required|integer',
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'video_url' => 'nullable|url',
-            'cooking_time' => 'nullable|string|max:255',
-            'nutrition' => 'nullable|string',
-            'ingredients' => 'nullable|string',
+            'image' => 'required|image|max:2048',
+            'video_url' => 'required|url',
+            'cooking_time' => 'required|string|max:255',
+            'ingredients' => 'required|string',
         ];
     }
 }
