@@ -19,6 +19,13 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+    // User.php
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
