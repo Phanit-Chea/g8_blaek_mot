@@ -28,10 +28,10 @@
         <i class="material-icons fs-1">notifications</i>
       </router-link>
       <router-link v-if="useAuth.isAuthenticated" to="/user"
-        class="account me-3 rounded-circle d-flex justify-content-center align-items-center bg-white text-decoration-none"
+        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
         data-bs-toggle="modal" data-bs-target="#loginForm">
-        <img :src="`http://127.0.0.1:8000${useAuth.user.profile}`" alt="login" width="45px"
-          class="rounded-circle rounded" data-bs-toggle="modal" data-bs-target="#loginForm" />
+        <img :src="`http://127.0.0.1:8000/${useAuth.user.profile}`" alt="login" width="38px" height="38px"
+          class="rounded-circle rounded " data-bs-toggle="modal" data-bs-target="#loginForm" />
       </router-link>
       <router-link v-else to="#"
         class="account me-3 rounded-circle d-flex justify-content-center align-items-center bg-white text-decoration-none"
