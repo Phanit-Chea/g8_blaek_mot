@@ -26,11 +26,20 @@ use Spatie\FlareClient\Api;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class,'register']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
-Route::post('/category/create', [CategoryController::class, 'store'])->middleware('auth:sanctum');
+
+//category
+Route::post('/category/create', [CategoryController::class, 'store'])->name('category.create'); // ->middleware('auth:sanctum');
+Route::get('category/list', [CategoryController::class, 'index'])->name('categiry.list');
+Route::get('category/show/{id}', [CategoryController::class, 'show'])->name('categiry.show');
+Route::post('category/update/{id}', [CategoryController::class, 'update'])->name('categiry.update');
+Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->name('categiry.destroy');
+
+//mediaImage
 
 // Remove or merge the following line if it was part of the conflict
 // Route::post('/register', [AuthController::class, 'register']);
