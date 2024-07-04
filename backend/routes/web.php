@@ -5,7 +5,10 @@ use App\Http\Controllers\Admin\{
     ProfileController,
     MailSettingController,
 };
+use App\Http\Controllers\SendMailController;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\AboutUsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,5 +71,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
 Route::get('/form', [SendMailController::class, 'loadForm']);
 Route::post('/send/email', [SendMailController::class, 'send'])->name('send');
+
+

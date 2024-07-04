@@ -47,7 +47,7 @@
 
             <li>
               <nav-link>
-                <a href="/profile">
+                <a href="/user">
                   <button>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
                       stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@
           <ul>
             <li>
               <nav-link>
-                <a href="/login">
+                <a href="/user/login">
                   <button>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
                       stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +128,7 @@
 
       </div>
     </div>
-    <!-- {{ useAuth }} -->
+    <!-- {{ useAuth.data }} -->
   </nav>
 
 </template>
