@@ -43,7 +43,6 @@ Route::prefix("food")->group(function(){
     Route::get('category/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
 });
 
-<<<<<<< HEAD
 Route::prefix("chat")->group(function(){
     Route::post('/create/{to_user}',[ChatController::class,'store'])->name('chat.create')->middleware('auth:sanctum');
     Route::get('/list',[ChatController::class,'index'])->name('chat.list');
@@ -51,6 +50,3 @@ Route::prefix("chat")->group(function(){
     Route::put('/update/{id}',[ChatController::class,'update'])->name('chat.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}',[ChatController::class,'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
 });
-=======
-Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
->>>>>>> aboutUs
