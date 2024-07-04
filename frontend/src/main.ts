@@ -18,6 +18,7 @@ import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
+import { useAuthStore } from './stores/auth-store';
 
 
 const app = createApp(App)
@@ -33,6 +34,9 @@ app.use(router.router)
 app.use(ElementPlus)
 app.use(router.simpleAcl)
 app.use(pinia);
+
+const authStore = useAuthStore();
+authStore.loadAuthState();
 
 app.config.globalProperties.$axios = axios
 

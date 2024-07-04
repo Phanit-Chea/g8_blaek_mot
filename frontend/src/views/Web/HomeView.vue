@@ -13,12 +13,12 @@
             <img src="../../assets/CategoryImages/breakfast.png" width="100%" height="180px" class="card-img-top"
               alt="Breakfast" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">អាហារពេលព្រឹក</a>
+              <p class="d-flex justify-content-start siemreap">
                 អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>7:00AM - 9:00AM</p>
+                <p class="siemreap">7:00AM - 9:00AM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -29,12 +29,12 @@
             <img src="../../assets/CategoryImages/lunch.png" width="100%" height="180px" class="card-img-top"
               alt="Lunch" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">អាហារថ្ងៃត្រង់</a>
+              <p class="d-flex justify-content-start siemreap">
                 រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>11:00AM - 12:00PM</p>
+                <p class="siemreap">11:00AM - 12:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -45,12 +45,12 @@
             <img src="../../assets/CategoryImages/dinner.png" width="100%" height="180px" class="card-img-top"
               alt="Dinner" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">អាហារពេលល្ងាច</a>
+              <p class="d-flex justify-content-start siemreap">
                 អាហារពេលល្ងាចដែលពិសេស ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>5:00PM - 7:00PM</p>
+                <p class="siemreap">0PM - 7:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -61,12 +61,12 @@
             <img src="../../assets/CategoryImages/dessert.png" width="100%" height="180px" class="card-img-top"
               alt="Dessert" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">បង្អែម</a>
+              <p class="d-flex justify-content-start siemreap">
                 បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>7:00PM - 9:00PM</p>
+                <p class="siemreap">7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -77,12 +77,12 @@
             <img src="../../assets/CategoryImages/drink.png" width="100%" height="180px" class="card-img-top"
               alt="Drinks" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">ភេសជ្ជៈកំប៉ុង</a>
+              <p class="d-flex justify-content-start siemreap">
                 លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>7:00PM - 9:00PM</p>
+                <p class="siemreap">7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -91,14 +91,14 @@
       </div>
       <!--======================= specia menu for today ================= -->
       <div class="container">
-        <h1 class="text-green mt-5 text-align-center">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
+        <h1 class="text-green mt-5 text-align-center siemreap">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
       </div>
       <div class="row mt-4 pl-3">
         <div
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
-            <h2>អាហារពេលព្រឹក</h2>
-            <p>
+            <h2 class="siemreap">អាហារពេលព្រឹក</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេសជាប់ចិត្តក្នុងព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ
               ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
@@ -110,8 +110,8 @@
         <div
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
-            <h2>អាហារថ្ងៃត្រង់</h2>
-            <p>
+            <h2 class="siemreap">អាហារថ្ងៃត្រង់</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃរសៀលនេះកាន់តែពិសេសបែបលំហែរពេលចេញពីការងារ
               ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
@@ -128,8 +128,8 @@
         <div
           class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
-            <h2>អាហារពេលល្ងាច</h2>
-            <p>
+            <h2 class="siemreap">អាហារពេលល្ងាច</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃនេះពេលកាន់តែពិសេសបែបធម្មជាតិដែលមិនធ្លាប់មាន
               ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
@@ -141,8 +141,8 @@
         <div
           class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
-            <h2>បង្អែម</h2>
-            <p>
+            <h2 class="siemreap">បង្អែម</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃនេះមានបង្អែមកាន់តែពិសេសបែបអ៊ឺរ៉ុប ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ
               ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
@@ -173,8 +173,8 @@
               <img src="../../assets/ContainerImages/beefSoup.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -188,7 +188,7 @@
                   </div>
                   <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
                     <span class="rate-count text-dark">100k</span>
-                    <div @click="handleIconClick">
+                    <div @click="handleClick">
                       <i class="material-icons text-success">turned_in</i>
                     </div>
                   </a>
@@ -203,8 +203,8 @@
               <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
                 alt="Card image" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -231,8 +231,8 @@
               <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
                 alt="Fried Chicken" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -260,8 +260,8 @@
               <img src="../../assets/ContainerImages/fryFish.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -288,8 +288,8 @@
               <img src="../../assets/ContainerImages/nhom.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -316,8 +316,8 @@
               <img src="../../assets/ContainerImages/noodle.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -344,8 +344,8 @@
               <img src="../../assets/ContainerImages/pizza.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -371,8 +371,8 @@
             <div class="card shadow" style="height: 100%">
               <img src="../../assets/ContainerImages/pork.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
+              <div class="card-body text-center siemreap">
+                <h5 class="card-title siemreap">Card title</h5>
                 <p class="card-text text-start">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
@@ -400,8 +400,8 @@
               <img src="../../assets/ContainerImages/salmon.png" width="100%" height="200px" class="card-img-top"
                 alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -521,34 +521,29 @@ import { useAuthStore } from '@/stores/auth-store';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
 
+// Import the store and router
 const authStore = useAuthStore();
 const router = useRouter();
 
-const handleIconClick = async () => {
-  if (authStore.isAuthenticated) {
-    await router.push('/user');
-  } else {
-    const result = await Swal.fire({
-      title: 'You need to have an account first',
-      text: 'Do you want to go to the registration page?',
+const handleClick = () => {
+  if (!authStore.isAuthenticated) {
+    Swal.fire({
+      title: 'Account Required',
+      text: 'You need to have an account first. Would you like to register?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Go to Registration',
+      confirmButtonText: 'Okay, Register',
       cancelButtonText: 'Cancel',
-    });
-
-    console.log('Swal result:', result); // Add this line for debugging
-
-    if (result.isConfirmed) {
-      try {
-        await router.push('/register');
-        console.log('Navigated to /register'); // Add this line for debugging
-      } catch (error) {
-        console.error('Failed to navigate to /register:', error); // Add this line for debugging
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push('/register');
       }
-    }
+    });
+  } else {
+    router.push('/profile');
   }
 };
+
 </script>
 
 
