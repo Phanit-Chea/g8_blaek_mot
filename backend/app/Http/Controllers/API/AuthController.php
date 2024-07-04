@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
@@ -19,7 +20,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        dd(1);
+        return response()->json(['data'=>User::all(),'message' => 'Hello World'], 200);
     }
 
     /**
@@ -57,7 +58,6 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         \Log::info('Register request data: ', $request->all());
-    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',

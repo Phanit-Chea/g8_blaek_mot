@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('profile')->nullable();
             $table->string('phoneNumber')->nullable();
             $table->date('dateOfBirth')->nullable();
             $table->string('address')->nullable();
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->dropColumn('dateOfBirth');
             $table->dropColumn('gender');
             $table->dropColumn('address');
+            $table->dropColumn('profile');
         });
     }
 };
