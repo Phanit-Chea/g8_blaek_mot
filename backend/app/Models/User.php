@@ -52,11 +52,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-<<<<<<< HEAD
-    public function chat(): HasMany
-    {
-        return $this->hasMany(Chat::class);
-=======
 
     public static function store($request, $id = null){
         $data = $request->only(
@@ -70,7 +65,6 @@ class User extends Authenticatable
         'profile');
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
->>>>>>> update_profile
     }
 }
 
