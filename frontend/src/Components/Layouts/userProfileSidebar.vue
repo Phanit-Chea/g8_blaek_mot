@@ -1,15 +1,9 @@
 <template>
-  <div
-    class="col-auto col-md-2 col-xl-2 px-sm-0 px-0" 
-    
-  >
+  <div class="col-auto col-md-2 col-xl-2 px-sm-0 px-0">
     <div
-      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed  sidebar" style="background-color: #54983c; width:200px "
-    >
-      <ul
-        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-        id="menu"
-      >
+      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed  sidebar"
+      style="background-color: #54983c; width:200px ">
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
         <li class="nav-item mt-3">
           <router-link to="/user" class="nav-link align-middle px-0">
             <i class="fs-4 text-white align-middle material-icons">person</i>
@@ -30,11 +24,8 @@
           </router-link>
         </li>
         <li>
-          <i class="fs-5 material-icons"
-            ><span class="folder ms-1 d-none d-sm-inline text-white siemreap"
-              >ថតឯកសាររបស់អ្នក</span
-            ></i
-          >
+          <i class="fs-5 material-icons"><span
+              class="folder ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសាររបស់អ្នក</span></i>
         </li>
 
         <li data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -43,14 +34,12 @@
             <span class="ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសារថ្មី</span>
           </a>
         </li>
-        <ul
-          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
-          id="menu"
-        >
-          <li>
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
+          <li @click.prevent="createFolderName">
             <router-link to="/user/folder" class="link-folder nav-link px-3 align-middle">
               <i class="fs-4 text-white align-middle material-icons">folder</i>
-              <span class="d-none d-sm-inline text-white siemreap">ថតឯកសារទី១</span>
+              <span v-for="folder in folders" :key="folder.id"
+              class="d-none d-sm-inline text-white siemreap">{{ folder.name }}</span>
             </router-link>
           </li>
         </ul>
@@ -58,13 +47,8 @@
     </div>
   </div>
   <!-- Popup form  -->
-  <div
-    class="modal fade rounded"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade rounded" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog rounded">
       <div class="modal-content rounded">
         <div class="div0 d-flex justify-content-between">
@@ -82,13 +66,8 @@
               <form action="">
                 <div class="form-group">
                   <label class="text-dark siemreap">ឈ្មោះថតឯកសារ*</label>
-                  <input
-                    type="text"
-                    class="form-control my-3 px-3 siemreap"
-                    id="name"
-                    aria-describedby="name"
-                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ"
-                  />
+                  <input type="text" class="form-control my-3 px-3 siemreap" id="name" aria-describedby="name"
+                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ" v-model="folder_name" />
                 </div>
               </form>
             </div>
@@ -96,14 +75,11 @@
               <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
                 បោះបង់
               </button>
-              <button
-                type="button"
-                class="btn ms-2 text-bold siemreap"
-                style="background-color: #238400"
-              >
+              <button type="button" class="btn ms-2 text-bold siemreap" @click="createFolderName" style="background-color: #238400">
                 បង្កើត
               </button>
             </div>
+
           </div>
         </div>
       </div>
@@ -112,9 +88,45 @@
 </template>
 
 <script>
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import axios from "axios";
 
-export default {}
+export default {
+  name: 'FolderName',
+  data() {
+    return {
+      folder_name: "",
+      folders: [],
+    };
+  },
+  mounted() {
+    this.fetchFolders();
+  },
+  methods: {
+    async fetchFolders() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/folder");
+        this.folders = response.data;
+      } catch (error) {
+        console.error("Error fetching folders:", error);
+      }
+    },
+    async createFolderName() {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/api/folder/create", {
+          name: this.folder_name,
+        });
+        if (response.data.success) {
+          this.folders.push(response.data.folder);
+          this.folder_name = "";
+          this.$router.push({ name: "folder_name" });
+        }
+      } catch (error) {
+        console.error("Error creating folder:", error);
+      }
+    },
+  },
+};
 </script>
 
 <style>
@@ -201,20 +213,25 @@ export default {}
 .link-folder:hover::before {
   transform: translateX(0);
 }
+
 .modal-content {
   background-color: rgb(0, 0, 0, 0);
 }
+
 .form-control {
   border-radius: 50px;
   background-color: rgb(255, 255, 255, 0.5);
 }
+
 .div1 {
   border-radius: 5px 0px 0px 5px;
   background-color: #238400;
 }
+
 .div2 {
   border-radius: 0px 5px 5px 0px;
 }
+
 .siemreap {
   font-family: 'Siemreap', cursive;
 }
