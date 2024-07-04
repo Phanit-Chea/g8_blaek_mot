@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ShowFoodResource;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
 use App\Http\Resources\FoodResource;
 use Exception;
 
+=======
+use Illuminate\Support\Facades\Auth;
+>>>>>>> show_food
 
 class FoodController extends Controller
 {
@@ -57,6 +62,31 @@ class FoodController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+<<<<<<< HEAD
+=======
+
+        // Ensure the user is authenticated
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        // Create a new Food instance and save the data
+        $food = new Food();
+        $food->user_id = $user->id;
+        $food->food_name = $request->food_name;
+        $food->upload_image = $request->upload_image;
+        $food->video_url = $request->video_url;
+        $food->cooking_time = $request->cooking_time;
+        $food->ingredient = $request->ingredient;
+        $food->how_to_cook = $request->how_to_cook;
+        $food->save();
+
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Created food successfully'], 201);
+
+        // return $request->user();
+>>>>>>> show_food
     }
 
     /**
@@ -76,6 +106,7 @@ class FoodController extends Controller
 
     public function show(string $id)
     {
+<<<<<<< HEAD
         $food = Food::findOrFail($id);
 
         // Split the ingredients string into an array
@@ -90,6 +121,11 @@ class FoodController extends Controller
             'description' => $food->description,
             'ingredients' => $ingredients,
         ]);
+=======
+        $food = Food::find($id);
+        $food= new ShowFoodResource($food);
+        return ["success" => true, "data" =>$food];
+>>>>>>> show_food
     }
 
     /**
