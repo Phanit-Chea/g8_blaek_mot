@@ -25,22 +25,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
-
-Route::post('/register', [AuthController::class, 'register']);
-
+Route::post('/updateProfile', [ApiAuthController::class, 'update'])->middleware('auth:sanctum');
+// Remove or merge the following line if it was part of the conflict
+// Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 
-
 Route::prefix("food")->group(function(){
-    Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');
-    Route::get('/list',[FoodController::class,'index'])->name('food.list');
-    Route::get('/detail/{id}',[FoodController::class,'show'])->name('food.detail');
-    Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
-    Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
-    Route::get('category/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::post('/create',[FoodController::class,'store'])->name('food.create');
 });
 
 Route::prefix("chat")->group(function(){
@@ -50,3 +44,6 @@ Route::prefix("chat")->group(function(){
     Route::put('/update/{id}',[ChatController::class,'update'])->name('chat.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}',[ChatController::class,'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
 });
+
+Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
+

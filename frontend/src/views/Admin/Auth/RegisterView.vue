@@ -211,7 +211,7 @@ import NavbarView from '../../Web/Navbar/NavbarView.vue';
 import FooterView from '../../Web/Footer/FooterView.vue';
 import axios from 'axios';
 import { useAuthStore } from '../../../stores/auth-store';
-import {useUserStore} from '../../../stores/userStore';
+import { useUserStore } from '../../../stores/userStore';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -229,7 +229,7 @@ export default {
                 dateOfBirth: '',
                 gender: '',
                 phoneNumber: '',
-                profile: null,
+                profile: '',
                 address: ''
             }
         };
@@ -237,16 +237,14 @@ export default {
     methods: {
         handleFileUpload(event) {
             const file = event.target.files[0];
+            // this.form.profile = file.name;
             this.form.profile = file;
+
         },
 
         async registerAccount() {
             const userStore = useUserStore();
-            userStore.setUser(this.form);
             const authStore = useAuthStore();
-            // const router = useRouter();
-
-            console.log(userStore.user);
 
             const formData = new FormData();
             formData.append('name', this.form.name);
@@ -268,14 +266,15 @@ export default {
 
                 console.log(response.data);
 
-                // Assuming the response contains the user data and profile image URL
+                // Assuming the response contains the user data and access token
                 const user = response.data.user;
                 const profileImage = user.profile;
+                const accessToken = response.data.access_token; // Get access token from response
 
-                // Store the profile image in Pinia
-                authStore.login(profileImage);
+                // Store the profile image and access token in Pinia
+                authStore.login(profileImage, accessToken);
+                userStore.setUser(user);
 
-                alert('Registration successful! You can now log in.');
                 this.$router.push('/');
             } catch (error) {
                 console.error(error);

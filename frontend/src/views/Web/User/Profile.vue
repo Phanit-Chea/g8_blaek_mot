@@ -1,6 +1,7 @@
 <!-- src/components/HeaderMenu.vue -->
 <template>
   <NavbarView></NavbarView>
+
   <div class="container-fluid " style="padding-top:9.73%; margin-top: 17px;">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
@@ -12,11 +13,11 @@
                 <div class="col-lg-4 ">
                   <div class="card mb-4 shadow rounded py-5 ">
                     <div class="card-body text-center ">
-                      <img :src="`http://127.0.0.1:8000/${useAuth.user.profile}`" alt="avatar"
+                      <img :src="`http://127.0.0.1:8000/${useAuth.user.user.profile}`" alt="avatar"
                         class="rounded-circle img-fluid border border-success border-3"
                         style="width: 170px; height:170px" />
-                      <h5 class="text-muted my-3">{{ useAuth.user.name }}</h5>
-                      <p class="text-muted mb-1">{{ useAuth.user.email }}</p>
+                      <h4 class="text-muted my-3 text-success">{{ useAuth.user.user.name }}</h4>
+                      <p class="text-muted mb-1">{{ useAuth.user.user.email }}</p>
                     </div>
                   </div>
                 </div>
@@ -28,7 +29,7 @@
                           <p class="text-muted mb-0 siemreap">ឈ្មោះ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0 siemreap">{{ useAuth.user.name }}</p>
+                          <p class="text-muted mb-0 siemreap">{{ useAuth.user.user.name }}</p>
                         </div>
                       </div>
                       <hr />
@@ -37,7 +38,7 @@
                           <p class="text-muted mb-0 siemreap">អ៊ីមែល</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">{{ useAuth.user.email }}</p>
+                          <p class="text-muted mb-0">{{ useAuth.user.user.email }}</p>
                         </div>
                       </div>
                       <hr />
@@ -46,7 +47,7 @@
                           <p class="text-muted mb-0 siemreap">លេខទូរស័ព្ទ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">(+855) {{ useAuth.user.phoneNumber }}</p>
+                          <p class="text-muted mb-0">(+855) {{ useAuth.user.user.phoneNumber }}</p>
                         </div>
                       </div>
                       <hr />
@@ -55,7 +56,7 @@
                           <p class="text-muted mb-0 siemreap">ភេទ</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0 siemreap">{{ useAuth.user.gender }}</p>
+                          <p class="text-muted mb-0 siemreap">{{ useAuth.user.user.gender }}</p>
                         </div>
                       </div>
                       <hr />
@@ -64,7 +65,7 @@
                           <p class="text-muted mb-0 siemreap">ទីកន្លែង</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">{{ useAuth.user.address }}</p>
+                          <p class="text-muted mb-0">{{ useAuth.user.user.address }}</p>
                         </div>
                       </div>
                       <hr />
@@ -83,16 +84,20 @@
         </div>
       </div>
     </div>
-    {{ useAuth }}
+    <!-- {{ useAuth }} -->
+    <!-- {{user}} -->
+ 
   </div>
 </template>
 
 <script setup lang="ts">
 import NavbarView from '../Navbar/NavbarView.vue';
-import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue';
+import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
 import { useAuthStore } from '@/stores/auth-store';
+import { useUserStore } from '@/stores/userStore';
 
-const useAuth = useAuthStore();
+const user = useAuthStore();
+const useAuth = useUserStore();
 
 // Components are automatically registered when imported in <script setup>
 </script>
