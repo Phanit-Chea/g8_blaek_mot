@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <!-- {{ useAuth }} -->
+    {{ useAuth }}
     <!-- {{user}} -->
  
   </div>

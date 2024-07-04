@@ -26,7 +26,7 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
         setUser(user) {
-            this.user = user;
+            this.user = (...user);
         },
         loadUserState() {
             const state = loadUserState('user');
