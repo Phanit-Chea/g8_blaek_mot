@@ -13,12 +13,8 @@ export const useUserStore = defineStore('user', {
             phoneNumber: '',
             profile: null,
             profilePreview: null,
-            houseNumber: '',
-            streetNumber: '',
-            streetName: '',
-            commune: '',
-            district: '',
-            province: ''
+            address: '',
+        
         }
     }),
     actions: {

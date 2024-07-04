@@ -7,34 +7,34 @@
           <div class="card p-4" style="background-color: #66b64a">
             <div>
               <div class="card-body">
-                <div>
+                <div class="">
                   <img :src="previewImage || '../assets/default-avatar.png'" @click="selectImage" alt="avatar"
-                    class="rounded-circle img-fluid border border-5"
-                    style="width: 130px; height: 130px; margin-left:22.5%" />
+                    class="rounded-circle img-fluid border border-5  border-white"
+                    style="width: 130px; height: 130px; margin-left:16%" />
                 </div>
                 <div class="d-flex mt-4">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">person</i>
-                  <p class="text-muted ms-2 mb-0 siemreap">{{ useAuth.user.name }}</p>
+                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.name }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">mail</i>
-                  <p class="text-muted ms-2 mb-0">{{ useAuth.user.email }}</p>
+                  <p class="text-white ms-2 mb-0">{{ useAuth.user.email }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">phone</i>
-                  <p class="text-muted ms-2 mb-0">(+855) {{ useAuth.user.phoneNumber }}</p>
+                  <p class="text-white ms-2 mb-0">(+855) {{ useAuth.user.phoneNumber }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">male</i>
-                  <p class="text-muted ms-2 mb-0 siemreap">{{ useAuth.user.gender }}</p>
+                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.gender }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">location_on</i>
-                  <p class="text-muted ms-2 mb-0">{{ useAuth.user.address }}</p>
+                  <p class="text-white ms-2 mb-0">{{ useAuth.user.address }}</p>
                 </div>
               </div>
             </div>
