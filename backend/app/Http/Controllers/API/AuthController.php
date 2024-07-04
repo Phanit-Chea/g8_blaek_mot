@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UpdateProfileResource;
 use App\Http\Resources\userRegisterResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,15 +21,36 @@ class AuthController extends Controller
      */
     public function index()
     {
-        return response()->json(['data'=>User::all(),'message' => 'Hello World'], 200);
+        return response()->json(['data' => User::all(), 'message' => 'Hello World'], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        //
+        $user = Auth::user();
+    
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+            'profile' => 'sometimes|string|max:255',
+            'address' => 'sometimes|string|max:255',
+            'gender' => 'sometimes|in:Male,Female,Other',
+            'dateOfBirth' => 'sometimes|date',
+            'phoneNumber' => 'sometimes|string|max:20',
+            // Add validation for other fields as necessary
+        ]);
+    
+        // Update the user's profile
+        $user->update($validatedData);
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully',
+            'data' => new UpdateProfileResource($user)
+        ]);
     }
 
     /**
@@ -42,10 +64,7 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+  
 
     /**
      * Remove the specified resource from storage.
@@ -69,7 +88,7 @@ class AuthController extends Controller
             'phoneNumber' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation errors',
@@ -77,14 +96,14 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-    
+
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-    
+
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -96,7 +115,7 @@ class AuthController extends Controller
             'profile' => $profile,
             'phoneNumber' => $request->phoneNumber
         ]);
-    
+
         return response()->json([
             'message' => 'User created successfully',
             'success' => true,
