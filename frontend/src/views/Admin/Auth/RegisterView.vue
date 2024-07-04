@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="register">
         <NavbarView></NavbarView>
         <div class="container d-flex" style="margin-top: 180px;">
@@ -138,116 +138,277 @@ export default {
 }
 </script>
 
-<style scoped>
-.register {
-    background-color: rgb(239, 236, 236);
+</template> -->
+<template>
+    <NavbarView></NavbarView>
+
+
+    <div class="container d-flex justify-content-center align-items-center mt-40 siemreap">
+        <section class="registerForm">
+            <header class="fw-bold text-success fs-3">បង្កើតគណនីថ្មី</header>
+            <form class="form" @submit.prevent="registerAccount">
+                <div class="input-box">
+                    <label>ឈ្មោះ</label>
+                    <input placeholder="សូមបញ្ចូលឈ្មោះរបស់អ្នក" type="text" v-model="form.name">
+                </div>
+                <div class="input-box">
+                    <label>លេខកូដសម្ងាត់</label>
+                    <input placeholder="សូមបញ្ចូលលេខកូដសម្ងាត់របស់អ្នក" type="password" v-model="form.password">
+                </div>
+                <div class="input-box">
+                    <label>បញ្ជាក់លេខកូដសម្ងាត់</label>
+                    <input placeholder="សូមបញ្ជាក់លេខកូដរបស់អ្នក" type="password" v-model="form.confirmPassword">
+                </div>
+                <div class="column">
+                    <div class="input-box">
+                        <label>អុីមែល</label>
+                        <input placeholder="សូមបញ្ចូលអុីមែលរបស់អ្នក" type="email" v-model="form.email">
+                    </div>
+                    <div class="input-box">
+                        <label>រូបភាពផ្ទាល់ខ្លួន</label>
+                        <input type="file" @change="handleFileUpload">
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="input-box">
+                        <label>លេខទូរស័ព្ទ</label>
+                        <input placeholder="Enter phone number" type="tel" v-model="form.phoneNumber">
+                    </div>
+                    <div class="input-box">
+                        <label>ថ្ងៃខែកំណើត</label>
+                        <input placeholder="Enter birth date" type="date" v-model="form.dateOfBirth">
+                    </div>
+                </div>
+                <div class="gender-box">
+                    <label>ភេទ</label>
+                    <div class="gender-option">
+                        <div class="gender">
+                            <input name="gender" id="check-female" type="radio" v-model="form.gender" value="female">
+                            <label for="check-female">ស្រី</label>
+                        </div>
+                        <div class="gender">
+                            <input name="gender" id="check-male" type="radio" v-model="form.gender" value="male">
+                            <label for="check-male">ប្រុស</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-box address">
+                    <label>អាស័យដ្ធាន</label>
+                    <input placeholder="សូមបញ្ចូលអាស័យដ្ធានរបស់អ្នក" type="text" v-model="form.address">
+                </div>
+                <button type="submit">បង្កើតអាខោន</button>
+            </form>
+        </section>
+    </div>
+
+
+
+
+    <FooterView></FooterView>
+</template>
+<script lang="ts">
+import NavbarView from '../../Web/Navbar/NavbarView.vue';
+import FooterView from '../../Web/Footer/FooterView.vue';
+import axios from 'axios';
+import { useAuthStore } from '../../../stores/auth-store';
+import {useUserStore} from '../../../stores/userStore';
+import { useRouter } from 'vue-router';
+
+export default {
+    components: {
+        NavbarView,
+        FooterView,
+    },
+    data() {
+        return {
+            form: {
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                dateOfBirth: '',
+                gender: '',
+                phoneNumber: '',
+                profile: null,
+                address: ''
+            }
+        };
+    },
+    methods: {
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            this.form.profile = file;
+        },
+
+        async registerAccount() {
+            const userStore = useUserStore();
+            userStore.setUser(this.form);
+            const authStore = useAuthStore();
+            // const router = useRouter();
+
+            console.log(userStore.user);
+
+            const formData = new FormData();
+            formData.append('name', this.form.name);
+            formData.append('email', this.form.email);
+            formData.append('password', this.form.password);
+            formData.append('confirmPassword', this.form.confirmPassword);
+            formData.append('dateOfBirth', this.form.dateOfBirth);
+            formData.append('gender', this.form.gender);
+            formData.append('phoneNumber', this.form.phoneNumber);
+            formData.append('profile', this.form.profile);
+            formData.append('address', this.form.address);
+
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                console.log(response.data);
+
+                // Assuming the response contains the user data and profile image URL
+                const user = response.data.user;
+                const profileImage = user.profile;
+
+                // Store the profile image in Pinia
+                authStore.login(profileImage);
+
+                alert('Registration successful! You can now log in.');
+                this.$router.push('/');
+            } catch (error) {
+                console.error(error);
+                alert('Registration failed. Please try again.');
+            }
+        }
+    }
+
 }
 
-.banner {
-    width: 50%;
-    height: 100%;
-    /* background-image: url('../../../assets/CategoryImages/7caf80c5e8b93f5a5307b4a089777047.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; */
-    background-color: teal;
+</script>
+<style>
+.siemreap {
+    font-family: 'Siemreap', cursive;
 }
 
-.container {
-    display: flex;
-    width: 70%;
-    height: 100%;
-    /* background-color: rgb(220, 217, 217); */
-    box-shadow: 0 0 20px rgba(66, 30, 91, 0.463);
-}
-
-.login-box {
+.registerForm {
+    position: relative;
+    max-width: 700px;
     width: 100%;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(66, 30, 91, 0.463);
-    background-color: #fff;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+
 }
 
-h2 {
-    margin-bottom: 20px;
-    color: #4b2e83;
+.registerFormheader {
+    font-size: 1.2rem;
+    color: #000;
+    font-weight: 600;
+    text-align: center;
 }
 
-.input-group {
-    margin-bottom: 10px;
-    text-align: left;
+.registerForm.form {
+    margin-top: 15px;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"] {
-    width: calc(100% - 20px);
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-input[type="file"] {
-    padding: 3px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
+.form .input-box {
     width: 100%;
-    padding: 10px;
-    background-color: #4b2e83;
-    border: none;
-    border-radius: 100px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
     margin-top: 10px;
 }
 
-button:hover {
-    background-color: #3a2267;
+.input-box label {
+    color: #000;
 }
 
-.links {
-    margin-top: 20px;
+.form :where(.input-box input, .select-box) {
+    position: relative;
+    height: 35px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+    color: #808080;
+    margin-top: 5px;
+    border: px solid green;
+    border-radius: 6px;
+    padding: 0 15px;
+    background: white;
 }
 
-.links a {
-    color: #4b2e83;
-    text-decoration: none;
-    margin: 0 10px;
+.input-box input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 
-.links a:hover {
-    text-decoration: underline;
+.form .column {
+    display: flex;
+    column-gap: 15px;
 }
 
-.gender {
+.form .gender-box {
+    margin-top: 10px;
+}
+
+.form :where(.gender-option, .gender) {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    column-gap: 50px;
+    flex-wrap: wrap;
+}
+
+.form .gender {
+    column-gap: 5px;
+}
+
+.gender input {
+    accent-color: #EE4E34;
+}
+
+.form :where(.gender input, .gender label) {
+    cursor: pointer;
 }
 
 .gender label {
-    margin-left: 5px;
+    color: #000;
 }
 
-.profile-preview {
+.address :where(input, .select-box) {
     margin-top: 10px;
-    max-width: 100%;
-    max-height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+}
+
+.select-box select {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    color: #808080;
+    font-size: 1rem;
+    background: #FCEDDA;
+}
+
+.form button {
+    height: 40px;
+    width: 100%;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    border: 2px solid green;
+}
+
+.form button:hover {
+    box-shadow: 2px 1px 1px 2px green;
+    background-color: green;
+    color: white;
 }
 </style>

@@ -1,5 +1,13 @@
 import { defineStore } from 'pinia'
+
 // import { ref } from 'vue'
+function saveState(key: string, state: any) {
+  localStorage.setItem(key, JSON.stringify(state));
+}
+function loadState(key: string) {
+  const state = localStorage.getItem(key);
+  return state ? JSON.parse(state) : null;
+}
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
@@ -11,10 +19,18 @@ export const useAuthStore = defineStore('auth', {
     login(userProfileImage: string) {
       this.isAuthenticated = true;
       this.user.profileImage = userProfileImage;
+      saveState('auth', this.$state);
     },
     logout() {
       this.isAuthenticated = false;
       this.user.profileImage = '';
+      saveState('auth', this.$state);
+    },
+    loadAuthState() {
+      const state = loadState('auth');
+      if (state) {
+        this.$patch(state);
+      }
     }
   }
 
