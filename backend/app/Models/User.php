@@ -19,6 +19,13 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+    // User.php
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
@@ -65,6 +72,10 @@ class User extends Authenticatable
         'profile');
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
+    }
+    public function chat(): HasMany
+    {
+        return $this->hasMany(Chat::class);
     }
 }
 
