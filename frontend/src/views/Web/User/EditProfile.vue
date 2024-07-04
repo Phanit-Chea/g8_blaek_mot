@@ -14,27 +14,27 @@
                 </div>
                 <div class="d-flex mt-4">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">person</i>
-                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.name }}</p>
+                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.user.name }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">mail</i>
-                  <p class="text-white ms-2 mb-0">{{ useAuth.user.email }}</p>
+                  <p class="text-white ms-2 mb-0">{{ useAuth.user.user.email }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">phone</i>
-                  <p class="text-white ms-2 mb-0">(+855) {{ useAuth.user.phoneNumber }}</p>
+                  <p class="text-white ms-2 mb-0">(+855) {{ useAuth.user.user.phoneNumber }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">male</i>
-                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.gender }}</p>
+                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.user.gender }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">location_on</i>
-                  <p class="text-white ms-2 mb-0">{{ useAuth.user.address }}</p>
+                  <p class="text-white ms-2 mb-0">{{ useAuth.user.user.address }}</p>
                 </div>
               </div>
             </div>
@@ -48,26 +48,26 @@
             <input type="file" id="file-input" class="file-input" accept="image/*" @change="pickFile" />
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" v-model="useAuth.user.name" id="username"
+            <input type="text" class="form-control siemreap" v-model="useAuth.user.user.name" id="username"
               placeholder="ឈ្មោះពេញ" />
           </div>
           <div class="form-group mt-2">
-            <input type="email" class="form-control siemreap" id="email" v-model="useAuth.user.email"
+            <input type="email" class="form-control siemreap" id="email" v-model="useAuth.user.user.email"
               placeholder="អ៊ីមែល" />
           </div>
           <div class="form-group mt-2">
-            <input type="tel" class="form-control siemreap" id="phone-number" v-model="useAuth.user.phoneNumber"
+            <input type="tel" class="form-control siemreap" id="phone-number" v-model="useAuth.user.user.phoneNumber"
               placeholder="លេខទូរស័ព្ទ" />
           </div>
           <div class="form-group mt-2">
-            <select v-model="useAuth.user.gender" id="sex" class="form-control">
+            <select v-model="useAuth.user.user.gender" id="sex" class="form-control">
               <option class="siemreap" value="" :selected="useAuth.user.gender === ''">សូមជ្រើសរើសភេទរបស់អ្នក</option>
               <option class="siemreap" value="male" :selected="useAuth.user.gender === 'male'">ប្រុស</option>
               <option class="siemreap" value="female" :selected="useAuth.user.gender === 'female'">ស្រី</option>
             </select>
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" id="address" v-model="useAuth.user.address"
+            <input type="text" class="form-control siemreap" id="address" v-model="useAuth.user.user.address"
               placeholder="ទីកន្លែង" />
           </div>
           <div class="px-3 mt-4 d-flex justify-content-end">
@@ -87,17 +87,17 @@
 <script setup lang="ts">
 import NavbarView from '../Navbar/NavbarView.vue';
 import { ref, watch } from 'vue';
-import { useAuthStore } from '../../../stores/auth-store';
+import { useUserStore } from '@/stores/userStore';
 import axios from 'axios';
 
-const useAuth = useAuthStore();
-const profileImageUrl = ref(`http://127.0.0.1:8000/${useAuth.user.profile}`);
+const useAuth = useUserStore();
+const profileImageUrl = ref(`http://127.0.0.1:8000/${useAuth.user.user.profile}`);
 const previewImage = ref(profileImageUrl.value);
 
 const file = ref(null);
 const success = ref(false);
 
-watch(() => useAuth.user.profile, (newValue) => {
+watch(() => useAuth.user.user.profile, (newValue) => {
   profileImageUrl.value = `http://127.0.0.1:8000/${newValue}`;
   previewImage.value = profileImageUrl.value;
 });
@@ -132,7 +132,7 @@ const submitForm = () => {
     .then((res) => {
       if (res.data.success) {
         success.value = true;
-        useAuth.user.profile = res.data.profileUrl;
+        useAuth.user.user.profile = res.data.profileUrl;
       }
     })
     .catch((err) => {
