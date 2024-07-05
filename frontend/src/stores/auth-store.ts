@@ -7,7 +7,7 @@ function saveState(key: string, state: any) {
 function loadState(key: string) {
   const state = localStorage.getItem(key);
   return state ? JSON.parse(state) : null;
-}
+}``
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', {
     }
   }),
   actions: {
-    login(userProfileImage: string) {
+    login(userProfileImage: string, token: string) {
       this.isAuthenticated = true;
       this.user.profileImage = userProfileImage;
       saveState('auth', this.$state);

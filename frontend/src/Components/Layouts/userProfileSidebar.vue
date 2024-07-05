@@ -1,8 +1,7 @@
 <template>
   <div class="col-auto col-md-2 col-xl-2 px-sm-0 px-0">
-    <div
-      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed  sidebar"
-      style="background-color: #54983c; width:200px ">
+    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed sidebar"
+      style="background-color: #54983c; width: 200px;">
       <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
         <li class="nav-item mt-3">
           <router-link to="/user" class="nav-link align-middle px-0">
@@ -29,17 +28,16 @@
         </li>
 
         <li data-bs-toggle="modal" data-bs-target="#exampleModal">
-          <a href="#" data-bs-toggle="collapse" class="link-folder nav-link align-middle px-3 mt-3">
+          <a href="#" class="link-folder nav-link align-middle px-3 mt-3">
             <i class="fs-4 text-white align-middle material-icons">add</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសារថ្មី</span>
           </a>
         </li>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
-          <li @click.prevent="createFolderName">
-            <router-link to="/user/folder" class="link-folder nav-link px-3 align-middle">
+          <li v-for="folder in folders" :key="folder">
+            <router-link :to="`/user/folder/${folder.id}`" class="link-folder nav-link px-3 align-middle">
               <i class="fs-4 text-white align-middle material-icons">folder</i>
-              <span v-for="folder in folders" :key="folder.id"
-              class="d-none d-sm-inline text-white siemreap">{{ folder.name }}</span>
+              <span class="d-none d-sm-inline text-white siemreap">{{ folder_name }}</span>
             </router-link>
           </li>
         </ul>
@@ -63,23 +61,28 @@
               <h3 class="text-center text-dark siemreap" id="exampleModalLabel">បង្កើតថតឯកសារ</h3>
             </div>
             <div class="modal-body">
-              <form action="">
-                <div class="form-group">
-                  <label class="text-dark siemreap">ឈ្មោះថតឯកសារ*</label>
-                  <input type="text" class="form-control my-3 px-3 siemreap" id="name" aria-describedby="name"
-                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ" v-model="folder_name" />
-                </div>
-              </form>
-            </div>
-            <div class="px-3 pb-3 d-flex justify-content-end">
-              <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
-                បោះបង់
-              </button>
-              <button type="button" class="btn ms-2 text-bold siemreap" @click="createFolderName" style="background-color: #238400">
-                បង្កើត
-              </button>
-            </div>
-
+  <form @submit.prevent="createFolder">
+    <div class="form-group">
+      <label class="text-dark siemreap">ឈ្មោះថតឯកសារ*</label>
+      <input 
+        type="text" 
+        class="form-control my-3 px-3 siemreap" 
+        id="name" 
+        aria-describedby="name" 
+        placeholder="បញ្ចូលឈ្មោះថតឯកសារ" 
+        v-model="folder_name" 
+      />
+    </div>
+    <div class="px-3 pb-3 d-flex justify-content-end">
+      <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
+        បោះបង់
+      </button>
+      <button type="submit" class="btn ms-2 text-bold siemreap" style="background-color: #238400">
+        បង្កើត
+      </button>
+    </div>
+  </form>
+</div>
           </div>
         </div>
       </div>
@@ -87,48 +90,54 @@
   </div>
 </template>
 
-<script>
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import axios from "axios";
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
-export default {
-  name: 'FolderName',
-  data() {
-    return {
-      folder_name: "",
-      folders: [],
-    };
-  },
-  mounted() {
-    this.fetchFolders();
-  },
-  methods: {
-    async fetchFolders() {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/folder");
-        this.folders = response.data;
-      } catch (error) {
-        console.error("Error fetching folders:", error);
-      }
-    },
-    async createFolderName() {
-      try {
-        const response = await axios.post("http://127.0.0.1:8000/api/folder/create", {
-          name: this.folder_name,
-        });
-        if (response.data.success) {
-          this.folders.push(response.data.folder);
-          this.folder_name = "";
-          this.$router.push({ name: "folder_name" });
+const folder_name = ref<string>('');
+const folders = ref<any[]>([]);
+const router = useRouter();
+
+const createFolder = async () => {
+  try {
+    // Retrieve the access token from local storage
+    const state = localStorage.getItem('auth');
+    const token = state ? JSON.parse(state).accessToken : null;
+
+    if (!token) {
+      alert('No access token found');
+      return;
+    }
+
+    const response = await axios.post(
+      'http://127.0.0.1:8000/api/folder/create',
+      { folder_name: folder_name.value },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-      } catch (error) {
-        console.error("Error creating folder:", error);
       }
-    },
-  },
-};
-</script>
+    );
 
+    if (response.data.success) {
+      alert('Folder created successfully');
+      // Optionally, redirect or update the folders list
+      // router.push('/some-route');  // Uncomment and set the route if needed
+      // folders.value.push(response.data.folder);  // Add the new folder to the list
+    } else {
+      alert('Failed to create folder');
+    }
+  } catch (error) {
+    console.error('Error creating folder:', error);
+    alert('An error occurred while creating the folder');
+  }
+};
+
+onMounted(() => {
+  // You may skip loading auth state if you directly access the token from local storage
+});
+</script>
 <style>
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
