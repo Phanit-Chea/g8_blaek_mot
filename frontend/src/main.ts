@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
+
 import './assets/main.css'
 
 
@@ -19,6 +20,10 @@ import 'uno.css'
 import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
 
+import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net';
+
+DataTable.use(DataTablesCore);
 
 const app = createApp(App)
 const pinia = createPinia();

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ShowCategoryResource;
 use App\Models\Category;
+use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -49,13 +51,58 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $category = Category::createOrUpdate($request, $id);
+        $category = Category::findOrFail($id);
+        $category->title = $request->input('title');
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+
+        // Handle the image upload if present
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($category->image) {
+                Storage::delete('public/CategoryImage/' . $category->image);
+            }
+            $path = $request->file('image')->store('public/CategoryImage');
+            $category->image = basename($path);
+        }
+
+        $category->save();
+
         return response()->json([
-            "success" => true, 
-            "data" => new ShowCategoryResource($category), 
-            "Message" => "The Category was updated successfully!"
+            "success" => true,
+            "data" => new ShowCategoryResource($category),
+            "message" => "The Category was updated successfully!"
         ], 200);
     }
+
+    //     public function update(Request $request, string $id)
+    // {
+    //     // Find the category by ID
+    //     $category = Category::findOrFail($id);
+
+    //     // Check if a file is present in the request
+    //     if ($request->hasFile('image')) {
+    //         // Store the new file and update the media_id
+    //         $file = $request->file('image');
+    //         $path = $file->store('images', 'public'); // Adjust the path and disk as needed
+    //         $request['image'] = $path;
+    //         $media = Media::create($request['image']);
+    //         $request['media_id'] = $media->id;
+    //     } else {
+    //         // Keep existing media_id if no new file is uploaded
+    //         $request['media_id'] = $category->media_id;
+    //     }
+
+    //     // Update the category with the provided data
+    //     $category->update($request->only(['title', 'name', 'description', 'media_id']));
+
+    //     return response()->json([
+    //         "success" => true,
+    //         "data" => new ShowCategoryResource($category),
+    //         "message" => "The Category was updated successfully!"
+    //     ], 200);
+    // }
+
 
     /**
      * Remove the specified resource from storage.
@@ -63,7 +110,7 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $categories = Category::find($id);
-        $categories -> delete();
+        $categories->delete();
         return ["success" => true, "Message" => "The Category was deleted successfully!"];
     }
 }

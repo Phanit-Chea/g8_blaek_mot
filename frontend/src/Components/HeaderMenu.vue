@@ -22,8 +22,8 @@
             </router-link>
         </li>
         <li class="nav-item mt-2">
-            <router-link to="/admin/food" class="nav-link px-0 align-middle">
-            <i class="fs-4 text-white align-middle material-icons">fastfood</i>
+            <router-link to="/admin/category" class="nav-link px-0 align-middle">
+            <i class="fs-4 text-white align-middle material-icons">category</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap pe-5">ប្រភេទម្ហូប</span>
             </router-link>
         </li>

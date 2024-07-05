@@ -19,9 +19,13 @@ class Media extends Model {
         $filenameWithoutExtension = pathinfo($filename, PATHINFO_FILENAME);
         $fileExtension = $file->getClientOriginalExtension();
         $newFileName = time() . '_' . str_replace(' ', '_', $filenameWithoutExtension) . '.' . $fileExtension;
-        $img_path = $file->storeAs('public/CategoryImage/', $newFileName);
+        $img_path = $file->storeAs('public/CategoryImage', $newFileName);
         // $file->storeAs('public/images/posts', $newFileName);
         return $newFileName;
+
+        // $filename = time() . '_' . $file->getClientOriginalName();
+        // $path = $file->storeAs('public/CategoryImage', $filename);
+        // return $filename;
     }
 
     public static function createOrUpdate($request, $id = null) {

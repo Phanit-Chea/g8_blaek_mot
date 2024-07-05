@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Category extends Model {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'media_id'];
+    protected $fillable = ['title', 'name', 'description', 'media_id'];
 
     public function media(): BelongsTo {
         return $this->belongsTo(Media::class);
@@ -21,6 +21,7 @@ class Category extends Model {
         $media_id = Media::createOrUpdate($request);
         $category = [
             'title' => $request->title,
+            'name' => $request->name,
             'description' => $request->description,
             'media_id' => $media_id,
         ];
