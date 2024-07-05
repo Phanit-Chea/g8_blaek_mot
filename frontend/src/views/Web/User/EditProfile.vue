@@ -14,27 +14,27 @@
                 </div>
                 <div class="d-flex mt-4">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">person</i>
-                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.user.name }}</p>
+                  <p class="text-white ms-2 mb-0 siemreap">{{ userStore.user.name }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">mail</i>
-                  <p class="text-white ms-2 mb-0">{{ useAuth.user.user.email }}</p>
+                  <p class="text-white ms-2 mb-0">{{ userStore.user.email }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">phone</i>
-                  <p class="text-white ms-2 mb-0">(+855) {{ useAuth.user.user.phoneNumber }}</p>
+                  <p class="text-white ms-2 mb-0">(+855) {{ userStore.user.phoneNumber }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">male</i>
-                  <p class="text-white ms-2 mb-0 siemreap">{{ useAuth.user.user.gender }}</p>
+                  <p class="text-white ms-2 mb-0 siemreap">{{ userStore.user.gender }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">location_on</i>
-                  <p class="text-white ms-2 mb-0">{{ useAuth.user.user.address }}</p>
+                  <p class="text-white ms-2 mb-0">{{ userStore.user.address }}</p>
                 </div>
               </div>
             </div>
@@ -48,26 +48,26 @@
             <input type="file" id="file-input" class="file-input" accept="image/*" @change="pickFile" />
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" v-model="useAuth.user.user.name" id="username"
+            <input type="text" class="form-control siemreap" v-model="userStore.user.name" id="username"
               placeholder="ឈ្មោះពេញ" />
           </div>
           <div class="form-group mt-2">
-            <input type="email" class="form-control siemreap" id="email" v-model="useAuth.user.user.email"
+            <input type="email" class="form-control siemreap" id="email" v-model="userStore.user.email"
               placeholder="អ៊ីមែល" />
           </div>
           <div class="form-group mt-2">
-            <input type="tel" class="form-control siemreap" id="phone-number" v-model="useAuth.user.user.phoneNumber"
+            <input type="tel" class="form-control siemreap" id="phone-number" v-model="userStore.user.phoneNumber"
               placeholder="លេខទូរស័ព្ទ" />
           </div>
           <div class="form-group mt-2">
-            <select v-model="useAuth.user.user.gender" id="sex" class="form-control">
-              <option class="siemreap" value="" :selected="useAuth.user.gender === ''">សូមជ្រើសរើសភេទរបស់អ្នក</option>
-              <option class="siemreap" value="male" :selected="useAuth.user.gender === 'male'">ប្រុស</option>
-              <option class="siemreap" value="female" :selected="useAuth.user.gender === 'female'">ស្រី</option>
+            <select v-model="userStore.user.gender" id="sex" class="form-control">
+              <option class="siemreap" value="">សូមជ្រើសរើសភេទរបស់អ្នក</option>
+              <option class="siemreap" value="male">ប្រុស</option>
+              <option class="siemreap" value="female">ស្រី</option>
             </select>
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" id="address" v-model="useAuth.user.user.address"
+            <input type="text" class="form-control siemreap" id="address" v-model="userStore.user.address"
               placeholder="ទីកន្លែង" />
           </div>
           <div class="px-3 mt-4 d-flex justify-content-end">
@@ -82,22 +82,23 @@
       </form>
     </div>
   </div>
+  {{ userStore }}
 </template>
 
 <script setup lang="ts">
 import NavbarView from '../Navbar/NavbarView.vue';
 import { ref, watch } from 'vue';
 import { useUserStore } from '@/stores/userStore';
-import axios from 'axios';
 
-const useAuth = useUserStore();
-const profileImageUrl = ref(`http://127.0.0.1:8000/${useAuth.user.user.profile}`);
+
+const userStore = useUserStore();
+const profileImageUrl = ref(`http://127.0.0.1:8000/${userStore.user.profile}`);
 const previewImage = ref(profileImageUrl.value);
 
 const file = ref(null);
 const success = ref(false);
 
-watch(() => useAuth.user.user.profile, (newValue) => {
+watch(() => userStore.user.profile, (newValue) => {
   profileImageUrl.value = `http://127.0.0.1:8000/${newValue}`;
   previewImage.value = profileImageUrl.value;
 });
@@ -119,26 +120,37 @@ const pickFile = (e) => {
   }
 };
 
-const submitForm = () => {
-  const config = {
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-  };
-  let data = new FormData();
-  data.append('file', file.value);
-  axios.post('storage/images/', data, config)
-  axios.post('/user/update/{id}', data, config)
-    .then((res) => {
-      if (res.data.success) {
-        success.value = true;
-        useAuth.user.user.profile = res.data.profileUrl;
+const submitForm = async () => {
+  try {
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    const data = new FormData();
+    data.append('file', file.value);
+    if (file.value) {
+      const uploadResponse = await axios.post('storage/images/', data, config);
+      if (uploadResponse.data.success) {
+        userStore.user.profile = uploadResponse.data.profileUrl;
       }
-    })
-    .catch((err) => {
-      console.log(err);
+    }
+
+    const updateResponse = await axios.post(`/updateProfile/${userStore.user.id}`, {
+      name: userStore.user.name,
+      email: userStore.user.email,
+      phoneNumber: userStore.user.phoneNumber,
+      gender: userStore.user.gender,
+      address: userStore.user.address,
+      profile: userStore.user.profile,
     });
 
+    if (updateResponse.data.success) {
+      success.value = true;
+    }
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 </script>
