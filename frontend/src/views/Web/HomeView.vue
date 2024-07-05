@@ -1,34 +1,24 @@
 <template>
   <NavbarView></NavbarView>
   <div class="container h-100">
-    <main class="container" style="margin-top: 11%">
+    <main class="container" style="margin-top: 14%">
       <!--========================= banner image ============================ -->
       <div class="containerTop">
-        <img
-          src="../../assets/ContainerImages/homePoster.png"
-          alt="homeImage"
-          width="100%"
-          height="600px"
-        />
+        <img src="../../assets/ContainerImages/homePoster.png" alt="homeImage" width="100%" height="600px" />
       </div>
       <!-- =========================categories ========================================= -->
       <div class="row categories mt-5">
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/breakfast.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Breakfast"
-            />
+            <img src="../../assets/CategoryImages/breakfast.png" width="100%" height="180px" class="card-img-top"
+              alt="Breakfast" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលព្រឹក</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">អាហារពេលព្រឹក</a>
+              <p class="d-flex justify-content-start siemreap">
                 អាហារពេលព្រឹក ជាអារហារដ៏សំខាន់បំផុតដែលគ្រប់គ្នាមិនគួរមើលរំលង។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>7:00AM - 9:00AM</p>
+                <p class="siemreap">7:00AM - 9:00AM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -36,20 +26,15 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/lunch.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Lunch"
-            />
+            <img src="../../assets/CategoryImages/lunch.png" width="100%" height="180px" class="card-img-top"
+              alt="Lunch" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារថ្ងៃត្រង់</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">អាហារថ្ងៃត្រង់</a>
+              <p class="d-flex justify-content-start siemreap">
                 រីករាយជាមួយអាហារថ្ងៃត្រង់បន្ទាប់ពីការចំណាយពេលមួយព្រឹកមកនេះ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>11:00AM - 12:00PM</p>
+                <p class="siemreap">11:00AM - 12:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -57,20 +42,15 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/dinner.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dinner"
-            />
+            <img src="../../assets/CategoryImages/dinner.png" width="100%" height="180px" class="card-img-top"
+              alt="Dinner" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">អាហារពេលល្ងាច</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">អាហារពេលល្ងាច</a>
+              <p class="d-flex justify-content-start siemreap">
                 អាហារពេលល្ងាចដែលពិសេស ដ៏ល្អបំផុតសម្រាប់លោកអ្នកនៅទីនេះ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>5:00PM - 7:00PM</p>
+                <p class="siemreap">0PM - 7:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -78,20 +58,15 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/dessert.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Dessert"
-            />
+            <img src="../../assets/CategoryImages/dessert.png" width="100%" height="180px" class="card-img-top"
+              alt="Dessert" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">បង្អែម</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">បង្អែម</a>
+              <p class="d-flex justify-content-start siemreap">
                 បង្អែម ច្រើនមុខមានសម្រាប់លោកអ្នកទាំងអស់គ្នាក៏មានដែរនៅទីនេះ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>7:00PM - 9:00PM</p>
+                <p class="siemreap">7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -99,20 +74,15 @@
         </div>
         <div class="col-md-3 col-lg w-100 cardCategory">
           <div class="card shadow" style="height: auto">
-            <img
-              src="../../assets/CategoryImages/drink.png"
-              width="100%"
-              height="180px"
-              class="card-img-top"
-              alt="Drinks"
-            />
+            <img src="../../assets/CategoryImages/drink.png" width="100%" height="180px" class="card-img-top"
+              alt="Drinks" />
             <div class="card-body text-center">
-              <a href="#" class="text-green text-decoration-none d-block fs-4">ភេសជ្ជៈកំប៉ុង</a>
-              <p class="d-flex justify-content-start">
+              <a href="#" class="text-green text-decoration-none d-block fs-4 siemreap">ភេសជ្ជៈកំប៉ុង</a>
+              <p class="d-flex justify-content-start siemreap">
                 លោកអ្នកក៏អាចស្វែងរកភេសជ្ជផ្សេងៗនៅទីនេះបានផងដែរ។
               </p>
               <div class="text-warning timeSuggest d-flex justify-content-between">
-                <p>7:00PM - 9:00PM</p>
+                <p class="siemreap">7:00PM - 9:00PM</p>
                 <i class="material-icons">access_time</i>
               </div>
             </div>
@@ -121,78 +91,58 @@
       </div>
       <!--======================= specia menu for today ================= -->
       <div class="container">
-        <h1 class="text-green mt-5 text-align-center">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
+        <h1 class="text-green mt-5 text-align-center siemreap">មុីនុយពិសេសសម្រាប់ថ្ងៃនេះ</h1>
       </div>
       <div class="row mt-4 pl-3">
         <div
-          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center"
-        >
+          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
-            <h2>អាហារពេលព្រឹក</h2>
-            <p>
+            <h2 class="siemreap">អាហារពេលព្រឹក</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃនេះនុយដ៏ពិសេសជាប់ចិត្តក្នុងព្រឹកនេះកាន់តែពិសេសបែបស្រស់ស្រាយ
               ជាមួយអាហារដ៏មានរសជាតិឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
         <div
-          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white"
-        >
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
-            <h2>អាហារថ្ងៃត្រង់</h2>
-            <p>
+            <h2 class="siemreap">អាហារថ្ងៃត្រង់</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃរសៀលនេះកាន់តែពិសេសបែបលំហែរពេលចេញពីការងារ
               ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
       </div>
       <div class="row mt-4 pr-2">
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
         <div
-          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center"
-        >
+          class="col-md-3 bg-green card border rounded text-center d-flex flex-column justify-content-center align-items-center">
           <div class="card-content">
-            <h2>អាហារពេលល្ងាច</h2>
-            <p>
+            <h2 class="siemreap">អាហារពេលល្ងាច</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃនេះពេលកាន់តែពិសេសបែបធម្មជាតិដែលមិនធ្លាប់មាន
               ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
           </div>
         </div>
         <div class="col-md-3 d-flex align-items-center">
-          <img
-            src="../../../src/assets/CategoryImages/dessert.png"
-            alt="Dessert Image"
-            class="responsive-img"
-          />
+          <img src="../../../src/assets/CategoryImages/dessert.png" alt="Dessert Image" class="responsive-img" />
         </div>
         <div
-          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white"
-        >
+          class="col-md-3 bg-success card border rounded text-center d-flex flex-column justify-content-center align-items-center text-white">
           <div class="card-content">
-            <h2>បង្អែម</h2>
-            <p>
+            <h2 class="siemreap">បង្អែម</h2>
+            <p class="siemreap">
               មុីនុយពិសេសសម្រាប់ថ្ងៃនេះមានបង្អែមកាន់តែពិសេសបែបអ៊ឺរ៉ុប ជាមួយអាហារដ៏មានឩជារសឈ្ងុយ
               ឆ្ងាញ៉ជាប់ចិត្ត
             </p>
@@ -200,9 +150,7 @@
         </div>
       </div>
       <!--======================= list all foods ================= -->
-      <div
-        class="containerMid text-center my-5 text-green"
-        style="
+      <div class="containerMid text-center my-5 text-green" style="
           font-family:
             system-ui,
             -apple-system,
@@ -215,24 +163,18 @@
             'Open Sans',
             'Helvetica Neue',
             sans-serif;
-        "
-      >
-        <h1>បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
+        ">
+        <h1 class="siemreap">បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh">
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/beefSoup.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/beefSoup.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -246,7 +188,9 @@
                   </div>
                   <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
                     <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
+                    <div @click="handleClick">
+                      <i class="material-icons text-success">turned_in</i>
+                    </div>
                   </a>
                 </div>
               </div>
@@ -256,16 +200,11 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/buggur.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Card image"
-              />
+              <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+                alt="Card image" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -289,16 +228,11 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow h-100">
-              <img
-                src="../../assets/ContainerImages/fryChicken.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Fried Chicken"
-              />
+              <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+                alt="Fried Chicken" />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
                 </p>
@@ -323,13 +257,176 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/fryFish.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/fryFish.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="card-footer d-flex justify-content-between">
+                  <div class="cardFooter rating text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
+                    <span class="rate-count text-dark">100k</span>
+                    <i class="material-icons">turned_in</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/nhom.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="card-footer d-flex justify-content-between">
+                  <div class="cardFooter rating text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
+                    <span class="rate-count text-dark">100k</span>
+                    <i class="material-icons">turned_in</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/noodle.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="card-footer d-flex justify-content-between">
+                  <div class="cardFooter rating text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
+                    <span class="rate-count text-dark">100k</span>
+                    <i class="material-icons">turned_in</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/pizza.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="card-footer d-flex justify-content-between">
+                  <div class="cardFooter rating text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
+                    <span class="rate-count text-dark">100k</span>
+                    <i class="material-icons">turned_in</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/pork.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center siemreap">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="card-footer d-flex justify-content-between">
+                  <div class="cardFooter rating text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
+                    <span class="rate-count text-dark">100k</span>
+                    <i class="material-icons">turned_in</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/salmon.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
+              <div class="card-body text-center">
+                <h5 class="card-title siemreap">Card title</h5>
+                <p class="card-text text-start siemreap">
+                  Some quick example text to build on the card title and make up the bulk of the
+                  card's content.
+                </p>
+                <div class="card-footer d-flex justify-content-between">
+                  <div class="cardFooter rating text-warning">
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                    <i class="material-icons">star</i>
+                  </div>
+                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
+                    <span class="rate-count text-dark">100k</span>
+                    <i class="material-icons">turned_in</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <a href="/detail" class="nav-link">
+            <div class="card shadow" style="height: 100%">
+              <img src="../../assets/ContainerImages/rice.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -356,211 +453,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/nhom.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/noodle.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/pizza.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/pork.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/salmon.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/rice.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/buggur.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
+              <img src="../../assets/ContainerImages/buggur.png" width="100%" height="200px" class="card-img-top"
+                alt="#" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -587,13 +481,8 @@
         <div class="col-md-4 col-lg-3 mb-4">
           <a href="/detail" class="nav-link">
             <div class="card shadow h-100">
-              <img
-                src="../../assets/ContainerImages/fryChicken.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Fried Chicken"
-              />
+              <img src="../../assets/ContainerImages/fryChicken.png" width="100%" height="200px" class="card-img-top"
+                alt="Fried Chicken" />
               <div class="card-body text-center">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text text-start">
@@ -618,32 +507,53 @@
           </a>
         </div>
       </div>
-      <a href="/chat"
-        ><i class="bi bi-chat-dots-fill chat"
-          ><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
-            ><span class="visually-hidden">unread messages</span></span
-          ></i
-        ></a
-      >
+      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
+              class="visually-hidden">unread messages</span></span></i></a>
     </main>
-    <FooterView></FooterView>
   </div>
+  <FooterView></FooterView>
 </template>
-<script>
-import NavbarView from './Navbar/NavbarView.vue'
-import FooterView from './Footer/FooterView.vue'
+<script setup lang="ts">
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
+import FooterView from '@/views/Web/Footer/FooterView.vue';
+import { useAuthStore } from '@/stores/auth-store';
+import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
-export default {
-  name: 'App',
-  components: {
-    NavbarView,
-    FooterView
+// Import the store and router
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleClick = () => {
+  if (!authStore.isAuthenticated) {
+    Swal.fire({
+      title: 'Account Required',
+      text: 'You need to have an account first. Would you like to register?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Okay, Register',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push('/register');
+      }
+    });
+  } else {
+    router.push('/profile');
   }
-}
+};
+
 </script>
 
+
+
+
 <style scoped>
+.container {
+  background-color: rgb(239, 235, 235);
+}
+
 .cardCategory,
 .col-md-4 {
   transition: transform 0.3s ease;
@@ -669,10 +579,12 @@ export default {
   cursor: pointer;
   transition: transform 0.5s;
 }
+
 .chat:hover {
   transform: scale(1.05) rotate(-5deg);
   color: #62cd3c;
 }
+
 .cardFooter {
   width: 80%;
   display: flex;
@@ -680,6 +592,7 @@ export default {
   margin-left: -15px;
   padding-left: 0px;
 }
+
 .cardFooterRight {
   display: flex;
   justify-content: space-between;
@@ -689,9 +602,14 @@ export default {
   gap: 0;
   width: 40%;
 }
-.cardFooterRight > i {
+
+.cardFooterRight>i {
   display: flex;
   margin-right: 3%;
-  color:#66b64a;
+  color: #66b64a;
+}
+
+.siemreap {
+  font-family: 'Siemreap', cursive;
 }
 </style>
