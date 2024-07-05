@@ -182,7 +182,7 @@
                 <form @submit.prevent="searchAddress">
                   <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Your address" aria-label="Your address"
-                      aria-describedby="button-addon2">
+                      aria-describedby="button-addon2" >
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
                   </div>
                 </form>
@@ -191,7 +191,7 @@
 
             <!-- Map view -->
             <div class="mt-3 mb-3">
-              <MapView :address="selectedAddress"></MapView>
+              <MapView ></MapView>
             </div>
           </div>
         </div>
@@ -219,9 +219,7 @@ export default {
   },
   methods: {
     searchAddress() {
-      // Implement your search logic here
-      console.log('Searching for address:', this.address);
-      // You can perform further actions like fetching data or displaying results
+      console.log(this.selectedAddress);
     }
   }
 };
