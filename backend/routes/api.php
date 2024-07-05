@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController as ApiAuthController;
+use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\ProfileController;
@@ -36,7 +37,7 @@ Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:san
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
-
+Route::post('/folder/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
 
 Route::prefix("food")->group(function(){
     Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');

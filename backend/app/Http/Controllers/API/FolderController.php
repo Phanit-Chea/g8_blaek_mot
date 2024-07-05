@@ -33,6 +33,7 @@ class FolderController extends Controller
         }
     
         $user = $request->user();
+
         if (!$user) {
             // Log the error
             Log::error('Unauthenticated request', [
@@ -81,5 +82,9 @@ class FolderController extends Controller
         $folder->delete();
     
         return response()->json(['success' => true, 'message' => 'Folder deleted successfully']);
+
+
+
+        
     }
 }
