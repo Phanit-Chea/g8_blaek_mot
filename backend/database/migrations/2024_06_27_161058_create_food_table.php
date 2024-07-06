@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->integer('category_id');
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('video_url');
             $table->string('cooking_time');
             $table->text('ingredients');
