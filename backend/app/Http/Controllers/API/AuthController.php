@@ -30,26 +30,36 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-    
+
         // Validate the request data
         $validatedData = $request->validate([
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
-            'profile' => 'sometimes|string|max:255',
+            'profile' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'address' => 'sometimes|string|max:255',
             'gender' => 'sometimes|in:Male,Female,Other',
             'dateOfBirth' => 'sometimes|date',
             'phoneNumber' => 'sometimes|string|max:20',
             // Add validation for other fields as necessary
         ]);
-    
-        // Update the user's profile
+
+        if ($request->hasFile('profile')) {
+            $img = $request->file('profile');
+            $ext = $img->getClientOriginalExtension();
+            $imageName = time() . '.' . $ext;
+            $profilePath = 'storage/images';
+            $img->move(public_path($profilePath), $imageName);
+            $validatedData['profile'] = $profilePath . '/' . $imageName;
+        }
+
         $user->update($validatedData);
-    
+        $user = User::find($user->id);
+        $userData = $user->toArray();
+        $userData['remember_token'] = $user->remember_token;
         return response()->json([
             'success' => true,
             'message' => 'Profile updated successfully',
-            'data' => new UpdateProfileResource($user)
+            'data' =>  $userData
         ]);
     }
 
@@ -64,7 +74,7 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-  
+
 
     /**
      * Remove the specified resource from storage.
@@ -115,6 +125,9 @@ class AuthController extends Controller
             'profile' => $profile,
             'phoneNumber' => $request->phoneNumber
         ]);
+        $token  = $user->createToken('auth_token')->plainTextToken;
+        $user->remember_token = $token;
+        $user->save();
 
         return response()->json([
             'message' => 'User created successfully',

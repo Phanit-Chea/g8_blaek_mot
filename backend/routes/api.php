@@ -26,9 +26,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/updateProfile', [ApiAuthController::class, 'update'])->middleware('auth:sanctum');
+
 // Remove or merge the following line if it was part of the conflict
 // Route::post('/register', [AuthController::class, 'register']);
-
+// 
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
