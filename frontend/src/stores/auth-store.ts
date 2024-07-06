@@ -15,14 +15,14 @@ export const useAuthStore = defineStore('auth', {
         user: {
             profileImage: ''
         },
-        access_token: ''
+        remember_token: ''
     }),
     actions: {
       login(profileImage, access_token) {
         console.log('Logging in:', profileImage, access_token); // Log the login action
         this.isAuthenticated = true;
         this.user.profileImage = profileImage;
-        this.access_token = access_token;
+        this.remember_token = access_token;
         saveState('auth', this.$state);
     },
         logout() {

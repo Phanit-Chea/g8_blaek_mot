@@ -2,7 +2,7 @@
   <NavbarView></NavbarView>
   <div class="container d-flex justify-content-center align-items-center" style="height: 100vh; margin-top: 6%">
     <div class="registration-form bg-white shadow" style="width: 65%; border-radius: 20px">
-      <form @submit.prevent="submitForm" class="d-flex justify-content-between" enctype="multipart/form-data">
+      <form @submit.prevent="updateProfile" class="d-flex justify-content-between" enctype="multipart/form-data">
         <div class="card w-50" style="background-color: #66b64a">
           <div class="card p-4" style="background-color: #66b64a">
             <div>
@@ -48,27 +48,27 @@
             <input type="file" id="file-input" class="file-input" accept="image/*" @change="pickFile" />
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" v-model="userStore.user.name" id="username"
-              placeholder="ឈ្មោះពេញ" />
+            <input type="text" class="form-control siemreap" v-model="form.name" id="username"
+              :placeholder="userStore.user.name" />
           </div>
           <div class="form-group mt-2">
-            <input type="email" class="form-control siemreap" id="email" v-model="userStore.user.email"
-              placeholder="អ៊ីមែល" />
+            <input type="email" class="form-control siemreap" id="email" v-model="form.email"
+              :placeholder="userStore.user.email" />
           </div>
           <div class="form-group mt-2">
-            <input type="tel" class="form-control siemreap" id="phone-number" v-model="userStore.user.phoneNumber"
-              placeholder="លេខទូរស័ព្ទ" />
+            <input type="tel" class="form-control siemreap" id="phone-number" v-model="form.phoneNumber"
+              :placeholder="userStore.user.phoneNumber" />
           </div>
           <div class="form-group mt-2">
-            <select v-model="userStore.user.gender" id="sex" class="form-control">
-              <option class="siemreap" value="">សូមជ្រើសរើសភេទរបស់អ្នក</option>
-              <option class="siemreap" value="male">ប្រុស</option>
-              <option class="siemreap" value="female">ស្រី</option>
+            <select v-model="form.gender" id="sex" class="form-control">
+              <option value="">សូមជ្រើសរើសភេទរបស់អ្នក</option>
+              <option value="Male" :selected="userStore.user.gender === 'Male'">ប្រុស</option>
+              <option value="Female" :selected="userStore.user.gender === 'Female'">ស្រី</option>
             </select>
           </div>
           <div class="form-group mt-2">
-            <input type="text" class="form-control siemreap" id="address" v-model="userStore.user.address"
-              placeholder="ទីកន្លែង" />
+            <input type="text" class="form-control siemreap" id="address" v-model="form.address"
+              :placeholder="userStore.user.address" />
           </div>
           <div class="px-3 mt-4 d-flex justify-content-end">
             <a href="/user"><button type="button" class="btn btn-danger siemreap">
@@ -82,79 +82,107 @@
       </form>
     </div>
   </div>
-  {{ userStore }}
+  <FooterView></FooterView>
 </template>
 
 <script setup lang="ts">
 import NavbarView from '../Navbar/NavbarView.vue';
+import FooterView from '../Footer/FooterView.vue';
 import { ref, watch } from 'vue';
 import { useUserStore } from '@/stores/userStore';
-
+import axiosInstance from '@/plugins/axios';
 
 const userStore = useUserStore();
+
+// Reactive references
 const profileImageUrl = ref(`http://127.0.0.1:8000/${userStore.user.profile}`);
 const previewImage = ref(profileImageUrl.value);
-
-const file = ref(null);
+const file = ref<File | null>(null);
 const success = ref(false);
 
+// Reactive form data
+const form = ref({
+  name: userStore.user.name,
+  email: userStore.user.email,
+  phoneNumber: userStore.user.phoneNumber,
+  gender: userStore.user.gender || '', // Ensure default value is set correctly
+  address: userStore.user.address,
+  dateOfBirth: userStore.user.dateOfBirth,
+  password: '',
+  confirmPassword: '',
+  profile: userStore.user.profile,
+});
+
+// Watch for changes in user profile and update image URLs
 watch(() => userStore.user.profile, (newValue) => {
   profileImageUrl.value = `http://127.0.0.1:8000/${newValue}`;
   previewImage.value = profileImageUrl.value;
 });
-
+watch(() => userStore.user.gender, (newValue) => {
+  form.value.gender = newValue;
+});
+// Function to open file dialog
 const selectImage = () => {
-  const fileInput = document.getElementById('file-input');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
   fileInput.click();
 };
 
-const pickFile = (e) => {
-  const selectedFile = e.target.files[0];
+// Function to handle file selection
+const pickFile = (e: Event) => {
+  const selectedFile = (e.target as HTMLInputElement).files?.[0];
   if (selectedFile) {
     const reader = new FileReader();
     reader.onload = (event) => {
-      previewImage.value = event.target.result;
+      previewImage.value = event.target?.result as string;
     };
     reader.readAsDataURL(selectedFile);
     file.value = selectedFile;
   }
 };
 
-const submitForm = async () => {
+// Function to update profile
+const updateProfile = async () => {
   try {
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
-    const data = new FormData();
-    data.append('file', file.value);
+    const formData = new FormData();
+    formData.append('name', form.value.name);
+    formData.append('email', form.value.email);
+    formData.append('phoneNumber', form.value.phoneNumber);
+    formData.append('gender', form.value.gender); // Ensure gender is sent correctly
+    formData.append('address', form.value.address);
+    formData.append('dateOfBirth', form.value.dateOfBirth);
     if (file.value) {
-      const uploadResponse = await axios.post('storage/images/', data, config);
-      if (uploadResponse.data.success) {
-        userStore.user.profile = uploadResponse.data.profileUrl;
-      }
+      formData.append('profile', file.value);
     }
 
-    const updateResponse = await axios.post(`/updateProfile/${userStore.user.id}`, {
-      name: userStore.user.name,
-      email: userStore.user.email,
-      phoneNumber: userStore.user.phoneNumber,
-      gender: userStore.user.gender,
-      address: userStore.user.address,
-      profile: userStore.user.profile,
+    console.log('Gender being sent:', form.value.gender); // Log the gender value being sent
+
+    const token = userStore.user.remember_token; // Replace with the actual token field in your user store
+    const response = await axiosInstance.post('/updateProfile', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data', // Ensure correct content type for file uploads
+      },
     });
+    // userStore.setUser(response.data.data);
 
-    if (updateResponse.data.success) {
+    console.log(response.data.data);
+    
+    if (response.data.success) {
+      userStore.user.profile = response.data.data.profile; // Assuming profile field returned from backend
+      console.log('Profile updated successfully:', response.data.data);
       success.value = true;
+      // Handle success feedback to the user if needed
+
     }
-  } catch (err) {
-    console.error(err);
+    userStore.setUser(response.data.data);
+  } catch (error) {
+    console.error('Profile update error:', error.response?.data);
+    // Handle error scenarios, e.g., show error message to the user
+    success.value = false;
   }
 };
 
 </script>
-
 <style>
 .siemreap {
   font-family: 'Siemreap', cursive;

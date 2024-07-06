@@ -1,4 +1,6 @@
+
 import ChatVue from '@/views/chat/ChatVue.vue'
+
 const routes = [
     {
         path: '/admin/dashboard',
