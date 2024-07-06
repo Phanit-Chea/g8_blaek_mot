@@ -1,3 +1,38 @@
+<script>
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
+import FooterView from '@/views/Web/Footer/FooterView.vue'
+import axios from 'axios'
+
+export default {
+  name: 'HomePage',
+  components: {
+    NavbarView,
+    FooterView
+  },
+  data() {
+    return {
+      foods: []
+    }
+  },
+  mounted() {
+    this.fetchFood()
+  },
+  methods: {
+    async fetchFood() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/food/list')
+        if (response.data.success) {
+          this.foods = response.data.data
+          console.log(foods)
+        }
+      } catch (error) {
+        console.error('Error fetching student:', error)
+      }
+    },
+    
+  }
+};
+</script>
 <template>
   <NavbarView></NavbarView>
   <div class="container h-100">
@@ -219,19 +254,19 @@
       >
         <h1>បញ្ជីមុខម្ហូបសម្រាប់អ្នកទាំងអស់គ្នា</h1>
       </div>
-      <div class="containerBottom row overflow-auto" style="height: 60vh">
-        <div class="col-md-4 col-lg-3 mb-4">
+      <div class="containerBottom row overflow-auto" style="height: 60vh" >
+        <div class="col-md-4 col-lg-3 mb-4" v-for="food in foods" :key="food.id">
           <a href="/detail" class="nav-link">
             <div class="card shadow" style="height: 100%">
               <img
-                src="../../assets/ContainerImages/beefSoup.png"
+                :src="`http://127.0.0.1:8000/${food.image}`"
                 width="100%"
                 height="200px"
                 class="card-img-top"
                 alt="#"
               />
               <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">{{food.name}}</h5>
                 <p class="card-text text-start">
                   Some quick example text to build on the card title and make up the bulk of the
                   card's content.
@@ -253,370 +288,7 @@
             </div>
           </a>
         </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/buggur.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Card image"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow h-100">
-              <img
-                src="../../assets/ContainerImages/fryChicken.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Fried Chicken"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/fryFish.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/nhom.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/noodle.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/pizza.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/pork.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/salmon.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/rice.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow" style="height: 100%">
-              <img
-                src="../../assets/ContainerImages/buggur.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="#"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="/detail" class="nav-link">
-            <div class="card shadow h-100">
-              <img
-                src="../../assets/ContainerImages/fryChicken.png"
-                width="100%"
-                height="200px"
-                class="card-img-top"
-                alt="Fried Chicken"
-              />
-              <div class="card-body text-center">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text text-start">
-                  Some quick example text to build on the card title and make up the bulk of the
-                  card's content.
-                </p>
-                <div class="card-footer d-flex justify-content-between">
-                  <div class="cardFooter rating text-warning">
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                    <i class="material-icons">star</i>
-                  </div>
-                  <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
-                    <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+        
       </div>
       <a href="/chat"
         ><i class="bi bi-chat-dots-fill chat"
@@ -630,18 +302,6 @@
   </div>
   <FooterView></FooterView>
 </template>
-<script>
-import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
-import FooterView from '@/views/Web/Footer/FooterView.vue';
-
-export default {
-  name: 'HomePage',
-  components: {
-    NavbarView,
-    FooterView
-  }
-};
-</script>
 
 
 <style scoped>

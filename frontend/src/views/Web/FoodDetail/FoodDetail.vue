@@ -1,4 +1,41 @@
+<script>
+import axiosInstance from '@/plugins/axios'
+import NavbarView from '../Navbar/NavbarView.vue'
+import FooterView from '../Footer/FooterView.vue'
+import SideBar from '@/Components/Layouts/SideBar.vue'
+
+export default {
+  name: 'food-detail',
+  props: ['id'],
+  components: {
+    NavbarView,
+    FooterView,
+    SideBar
+  },
+  data() {
+    return {
+      food: {}
+    };
+  },
+  async created() {
+    await this.fetchFoodDetail();
+  },
+  methods: {
+    async fetchFoodDetail() {
+      try {
+        const response = await axiosInstance.get(`/food/show/${this.$route.params.id}`);
+        this.food = response.data;
+      } catch (error) {
+        console.error('Error fetching food details:', error);
+        alert(error);
+      }
+    }
+  }
+};
+
+</script>
 <template>
+
   <NavbarView></NavbarView>
   <div class="d-flex" style="margin-top: 158px">
     <div class="col-2">
@@ -11,7 +48,10 @@
         <a href="" class="list-unstyled text-decoration-none text-danger">food name</a>
       </div>
 
-      <h1 class="text-success mt-2 mb-3">{{ food.name }}</h1>
+      <div>
+    <h1 v-if="food.name" class="text-success mt-2 mb-3">{{ food.name }}</h1>
+    <p v-else>Loading...</p>
+  </div>
       <div class="col col-lg-2 d-flex mt-3 mb-3">
         <div class="small-ratings d-flex">
           <i class="fa fa-star rating-color mx-1"></i>
@@ -66,7 +106,7 @@
         >
           <span class="material-symbols-outlined mt-1"> timer </span>
           <p class="mx-2 fs-5 mb-0">Time Spending:</p>
-          <span class="fw-bold fs-5 mb-0">2h</span>
+          <span class="fw-bold fs-5 mb-0">{{food.cooking_time}}</span>
         </div>
         <div
           class="d-flex align-items-center justify-content-center rounded"
@@ -77,21 +117,7 @@
           <p class="mx-2 fs-5 mb-0">Number of Ingredient:</p>
           <span class="fw-bold fs-5 mb-0">(20)</span>
         </div>
-        <div
-          class="d-flex align-items-center justify-content-center rounded"
-          id="nutrition"
-          style="width: 380px; height: 100px"
-        >
-          <p
-            class="m-0 fs-5"
-            data-toggle="collapse"
-            data-target="#nutritions"
-            aria-expanded="false"
-            aria-controls="nutritions"
-          >
-            Nutritions
-          </p>
-        </div>
+        
       </div>
       <!--=====================nutrtitions ================================= -->
       <div class="collapse mt-3 m-0" id="nutritions">
@@ -114,57 +140,7 @@
                 </ul>
               </div>
             </div>
-            <div class="col d-flex border-end border-success">
-              <div class="col">
-                <ul>
-                  <li>សាច់ជ្រួក</li>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="list-unstyled">
-                  <li>:</li>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="list-inline">
-                  <li>5kg</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col d-flex border-end border-success">
-              <div class="col">
-                <ul>
-                  <li>សាច់ជ្រួក</li>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="list-unstyled">
-                  <li>:</li>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="list-inline">
-                  <li>5kg</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col d-flex">
-              <div class="col">
-                <ul>
-                  <li>សាច់ជ្រួក</li>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="list-unstyled">
-                  <li>:</li>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="list-inline">
-                  <li>5kg</li>
-                </ul>
-              </div>
-            </div>
+            
           </div>
         </form>
       </div>
@@ -212,18 +188,14 @@
               <div class="row">
                 <div class="col">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item">សាច់ជ្រួក</li>
-                    <li class="list-group-item">សាច់ជ្រួក</li>
-                    <li class="list-group-item">សាច់ជ្រួក</li>
-                    <li class="list-group-item">សាច់ជ្រួក</li>
+                    <li class="list-group-item" v-for="ingredient in food.ingredients" :key="ingredient">{{ingredient}}</li>
+                    
                   </ul>
                 </div>
                 <div class="col">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">5kg</li>
-                    <li class="list-group-item">5kg</li>
-                    <li class="list-group-item">5kg</li>
-                    <li class="list-group-item">5kg</li>
+                    
                   </ul>
                 </div>
               </div>
@@ -416,42 +388,7 @@
   </div>
   <FooterView></FooterView>
 </template>
-<script>
-import axios from 'axios'
-import NavbarView from '../Navbar/NavbarView.vue'
-import FooterView from '../Footer/FooterView.vue'
-import SideBar from '@/Components/Layouts/SideBar.vue'
 
-export default {
-  name: 'show-food',
-  props: ['id'],
-  components: {
-    NavbarView,
-    FooterView,
-    SideBar
-  },
-  data() {
-    return {
-      food: null
-    }
-  },
-  mounted() {
-    this.fetchFoodDetails()
-  },
-  methods: {
-    async fetchFoodDetails() {
-      try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/food/detail/${this.id}`)
-        if (response.data.success) {
-          this.food = response.data.data
-        }
-      } catch (error) {
-        console.error('Error fetching food details:', error)
-      }
-    }
-  }
-}
-</script>
 
 <style scoped>
 #nutrition {

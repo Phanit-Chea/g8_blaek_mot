@@ -1,6 +1,8 @@
-<script >
+
+<script>
 import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
-import axios from 'axios'
+import axiosInstance from '@/plugins/axios'
+
 export default {
   name: 'list-food',
   components: {
@@ -17,18 +19,18 @@ export default {
   methods: {
     async fetchFood() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/food/list')
+        const response = await axiosInstance.get('/food/list')
         if (response.data.success) {
           this.foods = response.data.data
-          console.log(foods)
+          console.log(this.foods)
         }
       } catch (error) {
-        console.error('Error fetching student:', error)
+        console.error('Error fetching food:', error)
       }
     },
     async deleteFood(foodId) {
       try {
-        const response = await axios.delete(`http://127.0.0.1:8000/api/food/delete/${foodId}`)
+        const response = await axiosInstance.delete(`/food/delete/${foodId}`)
         if (response.data.success) {
           this.fetchFood()
         }
@@ -37,7 +39,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 <template>
   <div class="container-fluid">
@@ -153,9 +155,9 @@ export default {
               </div>
             </form>
             <div>
-              <button type="button" class="btn btn-primary btn-sm siemreap px-3 py-2 me-3">
+              <router-link to="/create/food" class="btn btn-primary btn-sm siemreap px-3 py-2 me-3">
                 បន្ថែមម្ហូប
-              </button>
+              </router-link>
             </div>
           </div>
           <!-- End Search Bar -->
@@ -179,7 +181,7 @@ export default {
                 <td class="d-flex justify-content-evenly">
                   <p data-placement="top" data-toggle="tooltip" title="detail">
                     <router-link
-                      to=""
+                      :to="{ name: 'food-detail', params: { id: food.id } }"
                       class="btn btn-primary btn-xs"
                       data-title="Detail"
                       data-toggle="modal"
@@ -189,14 +191,15 @@ export default {
                     </router-link>
                   </p>
                   <p data-placement="top" data-toggle="tooltip" title="edit">
-                    <button
+                    <router-link 
+                       :to="{ name: 'edit-food', params: { id: food.id } }"
                       class="btn btn-primary btn-xs"
                       data-title="Edit"
                       data-toggle="modal"
                       data-target="#edit"
                     >
                       <span class="glyphicon glyphicon-trash siemreap">កែសម្រួល</span>
-                    </button>
+                    </router-link >
                   </p>
                   <p data-placement="top" data-toggle="tooltip" title="Delete">
                     <button

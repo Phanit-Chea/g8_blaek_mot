@@ -4,17 +4,17 @@
       <div class="col-8 m-auto p-3">
         <div class="card mb-3">
           <img
-            :src="imagePreview || '../../../assets/FoodDetail/food3.jpg'"
+            :src="imagePreview || `http://127.0.0.1:8000/${food.image}`"
             class="card-img-top"
             alt="Food Image"
             style="height: 40vh; object-fit: cover"
           />
-          <form class="card-body" @submit="createFood">
-            <h3 class="card-title text-success m-2 siemreap">បន្ថែមម្ហូប</h3>
+          <form class="card-body" @submit="updateFood">
+            <h3 class="card-title text-success m-2 fw-bold mb-4 siemreap">បន្ថែមម្ហូប</h3>
             <div class="addFood" id="addForm" style="margin-left: 13px; margin-right: 13px">
               <div class="food-name row g-5" style="margin-bottom: 3px">
                 <div class="col-md-6">
-                  <label for="inputName" class="form-label siemreap">ឈ្មោះមុខម្ហូប</label>
+                  <label for="inputName" class="form-label fw-bold siemreap">ឈ្មោះមុខម្ហូប</label>
                   <input
                     type="text"
                     class="form-control"
@@ -25,7 +25,7 @@
                   />
                 </div>
                 <div class="col-md-6">
-                  <label for="inputCookingTime" class="form-label siemreap">រយះពេលចំអិន</label>
+                  <label for="inputCookingTime" class="form-label fw-bold siemreap">រយះពេលចំអិន</label>
                   <input
                     type="text"
                     class="form-control"
@@ -38,7 +38,7 @@
               </div>
               <div class="food-image row g-5" style="margin-bottom: 5px">
                 <div class="col-md-6">
-                  <label for="formFile" class="form-label siemreap">បញ្ចូលរូបម្ហូប</label>
+                  <label for="formFile" class="form-label fw-bold siemreap">បញ្ចូលរូបម្ហូប</label>
                   <input
                     class="form-control"
                     type="file"
@@ -48,7 +48,7 @@
                   />
                 </div>
                 <div class="col-md-6">
-                  <label for="videoUrl" class="form-label siemreap">វីដេអូលីង</label>
+                  <label for="videoUrl" class="form-label fw-bold siemreap">វីដេអូលីង</label>
                   <input
                     class="form-control"
                     type="url"
@@ -86,22 +86,22 @@
               </div>
 
               <div class="buttonAdd">
-                <button
-                  type="button"
+                <router-link
+                  to="/admin/food"
                   id="btn_cancel"
-                  class="btn btn-danger my-3 w-24"
+                  class="btn btn-danger my-3 w-24 siemreap"
                   title="Cancel"
                   @click="resetForm"
                 >
-                  Cancel
-                </button>
+                  បោះបង់
+                </router-link>
                 <button
                   type="submit"
                   id="btn_create"
-                  class="btn btn-success my-3"
+                  class="btn btn-success my-3 siemreap"
                   title="Create Food"
                 >
-                  Create Food
+                  ផ្លាស់ប្ដូរ
                 </button>
               </div>
             </div>
@@ -116,7 +116,7 @@
 import axiosInstance from '@/plugins/axios'
 
 export default {
-  name: 'create-food',
+  name: 'edit-food',
   data() {
     return {
       food: {
@@ -130,48 +130,51 @@ export default {
       imagePreview: null
     }
   },
+  async created() {
+    await this.fetchFoodDetail();
+  },
   methods: {
-    handleFileUpload(event) {
-      this.food.image = event.target.files[0]
-      this.imagePreview = URL.createObjectURL(event.target.files[0])
+    async fetchFoodDetail() {
+      try {
+        const response = await axiosInstance.get(`/food/show/${this.$route.params.id}`);
+        this.food = response.data;
+      } catch (error) {
+        console.error('Error fetching food details:', error);
+        alert(error);
+      }
     },
-    async createFood(event) {
-      event.preventDefault()
+    async updateFood(event) {
+      event.preventDefault();
 
-      const formData = new FormData()
-      formData.append('category_id', this.food.category_id)
-      formData.append('name', this.food.name)
-      formData.append('image', this.food.image)
-      formData.append('video_url', this.food.video_url)
-      formData.append('cooking_time', this.food.cooking_time)
-      formData.append('ingredients', this.food.ingredients)
+      const formData = new FormData();
+      formData.append('category_id', this.food.category_id);
+      formData.append('name', this.food.name);
+      if (this.food.image instanceof File) {
+        formData.append('image', this.food.image);
+      }
+      formData.append('video_url', this.food.video_url);
+      formData.append('cooking_time', this.food.cooking_time);
+      formData.append('ingredients', this.food.ingredients);
 
       try {
-        await axiosInstance.post('/food/create', formData, {
+        await axiosInstance.post(`/food/update/${this.$route.params.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        })
-        this.resetForm()
-        this.$router.push('/')
+        });
+        this.$router.push('/admin/food');
+        alert('Food updated successfully.');
       } catch (error) {
-        console.error('Error creating food:', error)
-        alert('Failed to create food. Please try again.')
+        console.error('Error updating food:', error);
+        alert('Failed to update food. Please try again.');
       }
     },
-    resetForm() {
-      this.food = {
-        category_id: '1',
-        name: '',
-        image: null,
-        video_url: '',
-        cooking_time: '',
-        ingredients: ''
-      }
-      this.imagePreview = null
+    handleFileUpload(event) {
+      this.food.image = event.target.files[0];
+      this.imagePreview = URL.createObjectURL(event.target.files[0]);
     }
   }
-}
+};
 </script>
 
 <style scoped>

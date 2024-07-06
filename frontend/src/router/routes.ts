@@ -38,9 +38,9 @@ const routes = [
 
     ,
     {
-        path: '/detail',
-        name: 'detail',
-        component: () => import('@/views/Web/FoodDetail/FoodDetail.vue')
+        path: '/detail/:id',
+        name: 'food-detail',
+        component: () => import('@/views/Web/FoodDetail/FoodDetail.vue'),
     },
     {
         path: '/category',
@@ -97,6 +97,16 @@ const routes = [
         path: '/admin/setting',
         name: '/admin/setting',
         component: () => import('@/views/Admin/Setting/ListView.vue')
+    },
+    {
+        path: '/create/food',
+        name: '/create/food',
+        component: () => import('@/views/Admin/Food/FormAddFoodView.vue')
+    },
+    {
+        path: '/food/edit/:id',
+        name: 'edit-food',
+        component: () => import('@/views/Admin/Food/Edit.vue')
     },
 
 
