@@ -4,7 +4,9 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\Api\SaveFoodController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +30,11 @@ Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:san
 Route::post('/updateProfile', [ApiAuthController::class, 'update'])->middleware('auth:sanctum');
 // Remove or merge the following line if it was part of the conflict
 // Route::post('/register', [AuthController::class, 'register']);
+
+//food
+
+Route::post('/saveFood/create/{id}', [SaveFoodController::class, 'store'])->name('saveFood.create')->middleware('auth:sanctum');
+Route::delete('/saveFood/delete/{id}', [SaveFoodController::class, 'destroy'])->name('saveFood.destroy')->middleware('auth:sanctum');
 
 Route::post('/register', [ApiAuthController::class, 'register']);
 
