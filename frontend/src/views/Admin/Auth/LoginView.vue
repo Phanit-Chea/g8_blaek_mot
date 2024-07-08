@@ -106,7 +106,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 /* html,
 body {
   height: 100%;
