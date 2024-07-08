@@ -77,8 +77,12 @@ const routes = [
         path: '/chat',
         name: 'chat',
         component: ChatVue,
+    },
+    {
+        path: '/aboutUsUpdateForm',
+        name: 'aboutUsUpdate',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
     }
-
 
 ]
 
