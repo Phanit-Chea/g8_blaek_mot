@@ -18,17 +18,17 @@ export const useAuthStore = defineStore('auth', {
         remember_token: ''
     }),
     actions: {
-      login(profileImage, access_token) {
-        console.log('Logging in:', profileImage, access_token); // Log the login action
-        this.isAuthenticated = true;
-        this.user.profileImage = profileImage;
-        this.remember_token = access_token;
-        saveState('auth', this.$state);
-    },
+        login(profileImage, access_token) {
+            console.log('Logging in:', profileImage, access_token); // Log the login action
+            this.isAuthenticated = true;
+            this.user.profileImage = profileImage;
+            this.remember_token = access_token;
+            saveState('auth', this.$state);
+        },
         logout() {
             this.isAuthenticated = false;
             this.user.profileImage = '';
-            this.access_token = '';
+            this.remember_token = '';
             saveState('auth', this.$state);
         },
         loadAuthState() {
@@ -39,3 +39,4 @@ export const useAuthStore = defineStore('auth', {
         }
     }
 });
+export default useAuthStore;

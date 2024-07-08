@@ -32,11 +32,11 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     // Handle error
-    if (error.response.status === 401) {
-      // Handle unauthorized access, e.g., redirect to login
+    if (error) {
+      return Response.json('ok')
     }
     return Promise.reject(error)
   }
 )
 
-export default axiosInstance
+export default axiosInstance;
