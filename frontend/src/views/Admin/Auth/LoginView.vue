@@ -1,71 +1,162 @@
-<!-- src/components/Login.vue -->
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <el-card class="w-full max-w-md shadow-lg">
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-      <el-form @submit="onSubmit">
-        <el-form-item :error="emailError">
-          <el-input placeholder="Email Address" v-model="email" size="large" />
-        </el-form-item>
+  <div class="container">
 
-        <el-form-item :error="nameError" class="mt-8">
-          <el-input placeholder="Password" v-model="password" size="large" type="password" />
-        </el-form-item>
-
-        <div>
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="isSubmitting"
-            type="primary"
-            native-type="submit"
-            >Submit</el-button
-          >
+    <div class="login-card">
+      <div class="card-header">
+        <div class="log">Login</div>
+      </div>
+      <form class="form" @submit.prevent="login">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input required="" name="email" id="email" type="text" v-model="formData.email">
         </div>
-      </el-form>
-    </el-card>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input required="" name="password" id="password" type="password" v-model="formData.password">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="submit">Sign in</button>
+        </div>
+        <p class="signup-link">
+          No account?
+          <a href="/register">Register your account?</a> <br>
+          <a href="/register">Forgot password?</a>
+        </p>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
+    </div>
   </div>
+
 </template>
 
-<script setup lang="ts">
-import { useAuthStore } from '@/stores/auth-store.ts'
-import axiosInstance from '@/plugins/axios'
-import { useField, useForm } from 'vee-validate'
-import * as yup from 'yup'
-import { useRouter } from 'vue-router'
+<script lang="ts">
+import { defineComponent } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '../../../stores/auth-store';
+import { useUserStore } from '../../../stores/userStore';
 
-const router = useRouter()
-const authStore = useAuthStore()
-
-const formSchema = yup.object({
-  password: yup.string().required().label('Password'),
-  email: yup.string().required().email().label('Email address')
-})
-
-const { handleSubmit, isSubmitting } = useForm({
-  initialValues: {
-    password: '',
-    email: ''
+export default defineComponent({
+  data() {
+    return {
+      formData: {
+        email: '',
+        password: ''
+      },
+      errorMessage: '' // To hold error message
+    };
   },
-  validationSchema: formSchema
-})
+  methods: {
+    async login() {
+      const useAuth = useAuthStore(); // Ensure to call the function
+      const userStore = useUserStore(); // Ensure to call the function
 
-const onSubmit = handleSubmit(async (values) => {
-  try {
-    const { data } = await axiosInstance.post('/login', values)
-    localStorage.setItem('access_token', data.access_token)
-    router.push('/')
-  } catch (error) {
-    console.warn('Error')
+      // Check if email and password are provided
+      if (!this.formData.email || !this.formData.password) {
+        this.errorMessage = 'Please enter both email and password.';
+        return;
+      }
+
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/login', {
+          email: this.formData.email,
+          password: this.formData.password
+        });
+
+        console.log(response.data.user);
+
+
+        const profileImage = response.data.user.profile;
+        const remember_token = response.data.user.remember_token;
+        useAuth.login(profileImage, remember_token);
+        userStore.setUser(response.data.user);
+        this.formData.email = '';
+        this.formData.password = '';
+        this.errorMessage = '';
+
+        this.$router.push('/');
+      } catch (error) {
+        if (error.response) {
+          this.errorMessage = error.response.data.message;
+        } else {
+          this.errorMessage = error.message;
+        }
+        console.error('Login failed:', this.errorMessage);
+      }
+    }
   }
-})
-
-const { value: password, errorMessage: nameError } = useField('password')
-const { value: email, errorMessage: emailError } = useField('email')
+});
 </script>
 
 <style scoped>
-.min-h-screen {
-  min-height: 100vh;
+/* html,
+body {
+  height: 100%;
+  margin: 0;
+} */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9fafb;
+  /* Light gray background for contrast */
+}
+
+.login-card {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #e8e8e8;
+  box-shadow: 2px 2px 10px #ccc;
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 20px
+}
+
+.card-header .log {
+  margin: 0;
+  font-size: 24px;
+  color: black;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #ccc;
+  color: black;
 }
 </style>
