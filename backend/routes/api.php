@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/updateProfile', [ApiAuthController::class, 'update']);
 });
 
-Route::post('logout', [ApiAuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->post('logout', [ApiAuthController::class, 'logout']);
 
 // Remove or merge the following line if it was part of the conflict
 // Route::post('/register', [AuthController::class, 'register']);

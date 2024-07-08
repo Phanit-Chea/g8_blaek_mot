@@ -76,3 +76,5 @@ Route::get('/form', [SendMailController::class, 'loadForm']);
 Route::post('/send/email', [SendMailController::class, 'send'])->name('send');
 
 
+
+
