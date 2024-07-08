@@ -4,7 +4,9 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,3 +49,8 @@ Route::prefix("chat")->group(function(){
 
 Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
 
+//==========CountStars===============//
+Route::prefix('ratings')->group(function () {
+    Route::post('/', [RatingController::class, 'store']);
+    Route::get('/statistics/{food_id}', [RatingController::class, 'getRatingStatistics']);
+});
