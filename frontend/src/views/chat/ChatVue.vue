@@ -1,174 +1,181 @@
 <template>
-  <WebHeaderMenu />
+  <NavbarView />
   <div class="container d-flex justify-content-between">
+    <!-- Left side: List of Users -->
     <div class="card card-l">
       <div class="card-header">
-        <div class="search w-100 my-3 d-flex justify-content-between" style="gap: 20px">
-          <div class="input-icons position-relative">
-            <i
-              class="bi bi-search position-absolute translate-middle-y ms-2 ps-1 text-secondary"
-            ></i>
-            <input class="form-control" id="search" placeholder="Search" type="text" />
+        <h5 class="card-title">Users</h5>
+      </div>
+      <div class="card-body c-body overflow-y-scroll">
+        <!-- List of Users -->
+        <div
+          v-for="(user, index) in users"
+          :key="index"
+          class="container_user"
+          @click="loadMessages(user.id)"
+        >
+          <div class="user c_user">
+            <div class="name">
+              <p>{{ user.name }}</p>
+            </div>
           </div>
-          <i class="bi bi-plus-circle-fill align-content-center fs-3 my-1"></i>
         </div>
       </div>
-      <div class="card_left card-body c-body overflow-y-scroll">
-        <blockquote class="blockquote mb-0">
-          <div class="container_user">
-            <div class="user d-flex justify-content-between">
-              <div class="c_user d-flex align-items-center">
-                <img
-                  src="@/assets/photo_2024-03-23_12-52-34.jpg"
-                  alt="user"
-                  class="rounded-circle"
-                  width="50px"
-                  height="50px"
-                />
-                <div class="name d-flex flex-column ms-2">
-                  <span class="text-15px fw-bold">John Doe</span>
-                  <p class="text-11px mb-0 text-secondary">Tos Date</p>
-                </div>
-              </div>
-              <div class="c_p d-flex align-items-center">
-                <p class="text-11px mb-0 text-secondary">Today/24/2024</p>
-              </div>
-            </div>
-          </div>
-        </blockquote>
-      </div>
     </div>
+
+    <!-- Right side: Message input and chat -->
     <div class="card card-r">
       <div class="card-header">
-        <div>
-          <div class="contain_pr d-flex align-items-center">
-            <i class="bi bi-arrow-bar-left fs-4 me-3"></i>
-            <div class="pr_text d-flex align-items-center">
-              <img
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
-                src="@/assets/photo_2024-03-23_12-52-34.jpg"
-                alt="user"
-                class="rounded-circle"
-                width="40px"
-                height="40px"
-              />
-              <div class="name d-flex flex-column ms-2">
-                <span class="text-15px fw-bold">John Doe</span>
-                <p class="text-11px mb-0 text-secondary">2 hours ago</p>
-              </div>
-            </div>
-          </div>
+        <div class="user-info">
+          <img
+            src="../../assets/login.png"
+            alt="User Avatar"
+            class="rounded-circle bg-secondary-subtle m-2"
+            width="40px"
+            height="40px"
+          />
+          <span class="user-name">John Doe</span>
         </div>
       </div>
       <div class="card-body overflow-y-scroll">
-        <blockquote class="blockquote mb-0">
-          <div class="page_dash page_dash_l d-flex justify-content-start my-2">
-            <div class="c_mess d-flex align-items-center justify-content-between w-20">
-              <img
-                src="@/assets/photo_2024-03-23_12-52-34.jpg"
-                alt="user"
-                class="rounded-circle"
-                width="20px"
-                height="20px"
-              />
-              <p class="text-13px mb-0">Hi np</p>
-            </div>
-          </div>
-        </blockquote>
+        <!-- Display Messages -->
+        <div class="chat-message d-flex flex-column align-items-end p-3 mb-2" v-for="(message, index) in messages" :key="index">
+          <div class="message-content">{{ message.content }}</div>
+          <div class="message-sender">{{ message.sender }}</div>
+        </div>
       </div>
-      <div class="foot mt-auto">
-        <div class="c_foot">
-          <div class="search w-100 my-3 d-flex justify-content-between" style="gap: 20px">
-            <i class="bi bi-image-fill align-content-center fs-3"></i>
-            <i class="bi bi-plus-circle-fill align-content-center fs-3"></i>
-            <div class="input-icons position-relative">
-              <i
-                class="bi bi-cursor-fill position-absolute translate-middle-y ms-2 ps-1 text-secondary"
-              ></i>
-              <input class="form-control" id="search" placeholder="Message" type="text" />
-            </div>
-            <i class="bi bi-arrow-up-circle-fill align-content-center fs-3"></i>
-          </div>
+      <div class="card-footer">
+        <!-- Message input and file upload -->
+        <div class="input-container bottom-25 d-flex justify-between gap-2">
+          <i class="bi bi-images fs-3 ms-2" @click="openFileUpload"></i>
+          <i class="bi bi-folder-plus fs-3 ms-2" @click="openFileUpload"></i>
+          <input
+            class="form-control"
+            id="message"
+            placeholder="Message"
+            type="text"
+            v-model="newMessage"
+          />
+          <input type="file" ref="fileInput" style="display: none" @change="handleFileUpload" />
+          <i class="bi bi-arrow-up-circle-fill align-content-center fs-3" @click="sendMessage"></i>
         </div>
       </div>
     </div>
   </div>
   <!-- Modal -->
   <div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">User Info</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex align-items-center mb-3">
-          <img
-            src="@/assets/photo_2024-03-23_12-52-34.jpg"
-            alt="user"
-            class="rounded-circle me-3"
-            width="70"
-            height="70"
-          />
-          <div>
-            <h6 class="mb-0">John Doe</h6>
-            <small class="text-muted">john.doe@example.com</small>
-          </div>
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">User Info</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
-        <div class="p-4 border rounded">
-          <div class="mb-3">
-            <div class="d-flex align-items-center gap-2">
-              <i class="bi bi-journals text-success"></i>
-              <div>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <small class="text-muted">Bio</small>
-              </div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="d-flex align-items-center gap-2">
-              <i class="bi bi-exclamation-circle text-danger"></i>
-              <div>
-                <p class="mb-0">+855 718 911 019</p>
-                <small class="text-muted">Mobile</small>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-person-circle text-info"></i>
+        <div class="modal-body">
+          <div class="d-flex align-items-center mb-3">
+            <img
+              src="@/assets/photo_2024-03-23_12-52-34.jpg"
+              alt="user"
+              class="rounded-circle me-3"
+              width="70"
+              height="70"
+            />
             <div>
-              <a href="#" class="text-decoration-none">@jonhdea_fat_cat</a>
-              <small class="text-muted d-block">Username</small>
+              <h6 class="mb-0">John Doe</h6>
+              <small class="text-muted">john.doe@example.com</small>
+            </div>
+          </div>
+          <div class="p-4 border rounded">
+            <div class="mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-journals text-success"></i>
+                <div>
+                  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <small class="text-muted">Bio</small>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-circle text-danger"></i>
+                <div>
+                  <p class="mb-0">+855 718 911 019</p>
+                  <small class="text-muted">Mobile</small>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-person-circle text-info"></i>
+              <div>
+                <a href="#" class="text-decoration-none">@jonhdea_fat_cat</a>
+                <small class="text-muted d-block">Username</small>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="btn btn-primary btn-sm">SEND MESSAGE</a>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-primary btn-sm">SEND MESSAGE</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
 </template>
 
 <script setup lang="ts">
-import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
+import { ref, computed } from 'vue'
+
+const messages = ref([])
+
+const newMessage = ref('')
+const file = ref<File | null>(null)
+
+// Simulate unread messages count for demonstration
+const unreadMessagesCount = ref(1) // Update this based on your actual logic
+
+const sendMessage = () => {
+  if (newMessage.value.trim() !== '') {
+    messages.value.push({ sender: 'John Doe', content: newMessage.value, type: 'text' })
+    newMessage.value = ''
+    // Simulate updating unread messages count
+    unreadMessagesCount.value++
+    console.log('Unread Messages Count:', unreadMessagesCount.value)
+  }
+}
+
+const openFileUpload = () => {
+  const fileInput = $refs.fileInput as HTMLInputElement
+  fileInput.click()
+}
+
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (target.files && target.files.length > 0) {
+    file.value = target.files[0]
+    // Handle file upload logic here
+    console.log('File selected:', file.value)
+  }
+}
+
+// Computed property to show the unread messages count
+const unreadMessagesBadge = computed(() => {  
+  return unreadMessagesCount.value > 0 ? unreadMessagesCount.value : ''
+})
+
+// Log unreadMessagesBadge to verify
+
 </script>
 
 <style scoped>
@@ -185,6 +192,7 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 }
 
 .container {
+  margin-top: 20%;
   padding: 20px;
   gap: 20px;
 }
@@ -201,6 +209,10 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 
 .card-l {
   width: 50%;
+}
+
+.c-body {
+  padding: 20px;
 }
 
 .card-r {
@@ -241,8 +253,8 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
   color: #62cd3c;
 }
 
-.c-body {
-  height: 10vh;
+.container {
+  margin-top: 10%;
 }
 
 .container_user {
@@ -346,7 +358,6 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
   width: auto;
 }
 
-
 /* Modal pop up  */
 .modal-header {
   border-bottom: 1px solid rgba(225, 225, 225, 0.6);
@@ -371,5 +382,14 @@ import WebHeaderMenu from '@/Components/WebHeaderMenu.vue'
 }
 .modal-footer .btn {
   font-size: 0.75rem;
+}
+
+.message-content {
+  background: #23b418;
+  color: white;
+  max-width: fit-content;
+  padding: 5px;
+  border-radius: 10%;
+  margin-bottom: 10px;
 }
 </style>

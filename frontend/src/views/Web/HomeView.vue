@@ -507,9 +507,7 @@
           </a>
         </div>
       </div>
-      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-              class="visually-hidden">unread messages</span></span></i></a>
+
     </main>
   </div>
   <FooterView></FooterView>
@@ -568,21 +566,6 @@ const handleClick = () => {
 .responsive-img {
   width: 100%;
   height: 50vh;
-}
-
-.chat {
-  font-size: 3rem;
-  position: fixed;
-  bottom: 20px;
-  right: 40px;
-  color: #66b64a;
-  cursor: pointer;
-  transition: transform 0.5s;
-}
-
-.chat:hover {
-  transform: scale(1.05) rotate(-5deg);
-  color: #62cd3c;
 }
 
 .cardFooter {

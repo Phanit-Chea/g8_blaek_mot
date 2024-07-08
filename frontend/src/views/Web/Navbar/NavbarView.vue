@@ -21,6 +21,16 @@
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
+      <a href="/chat">
+    <i class="bi bi-chat-dots-fill chat m-3">
+      <span 
+        v-if="unreadMessagesCount > 0" 
+        class="position-absolute top-10 start-335 translate-middle badge border border-light rounded-circle bg-danger p-2">
+        <span class="visually-hidden">unread messages</span>
+        {{ unreadMessagesBadge }}
+      </span>
+    </i>
+  </a>
       <a href="#"
         class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
@@ -137,6 +147,7 @@
 import { useAuthStore } from '@/stores/auth-store.ts';
 
 const useAuth = useAuthStore();
+
 </script>
 
 <style scoped>
@@ -146,6 +157,19 @@ const useAuth = useAuthStore();
   transition: transform 0.3s ease, border 0.3s ease;
   border: 2px solid rgba(62, 160, 9, 0.942);
   color: rgba(62, 160, 9, 0.942);
+}
+
+
+.chat {
+  font-size: 3rem;
+  color: #66b64a;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.chat:hover {
+  transform: scale(1.05) rotate(-5deg);
+  color: #62cd3c;
 }
 
 .login {
