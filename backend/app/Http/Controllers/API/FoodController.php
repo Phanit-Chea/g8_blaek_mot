@@ -37,7 +37,7 @@ class FoodController extends Controller
     public function store(FoodRequest $request)
     {
         // Ensure the request comes from an authenticated user
-        $userID = Auth::id();
+        $userID = 1;
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {

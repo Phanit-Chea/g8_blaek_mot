@@ -55,16 +55,12 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 ///=============create food=========//
 
 Route::prefix("food")->group(function(){
-<<<<<<< HEAD
-    Route::post('/create',[FoodController::class,'store'])->name('food.create');
-=======
     Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');
     Route::get('/list',[FoodController::class,'index'])->name('food.list');
     Route::get('/show/{id}',[FoodController::class,'show'])->name('food.show');
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('category/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
->>>>>>> CreateFoodNew
 });
 
 Route::prefix("chat")->group(function(){
