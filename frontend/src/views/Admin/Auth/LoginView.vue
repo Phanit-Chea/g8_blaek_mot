@@ -28,14 +28,17 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth-store.ts'
 import axiosInstance from '@/plugins/axios'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../../stores/auth-store'
+import {useUserStore} from '../../../stores/userStore'
 
 const router = useRouter()
-const authStore = useAuthStore()
+const authStore = useAuthStore();
+const userStore = useUserStore();
+
 
 const formSchema = yup.object({
   password: yup.string().required().label('Password'),
@@ -53,8 +56,12 @@ const { handleSubmit, isSubmitting } = useForm({
 const onSubmit = handleSubmit(async (values) => {
   try {
     const { data } = await axiosInstance.post('/login', values)
-    localStorage.setItem('access_token', data.access_token)
-    router.push('/')
+    localStorage.setItem('access_token', data.access_token);
+    authStore.login(data.user.profile, data.remember_token); 
+    userStore.setUser(data.user);// Call login action from auth store
+    router.push('/');
+    
+    
   } catch (error) {
     console.warn('Error')
   }

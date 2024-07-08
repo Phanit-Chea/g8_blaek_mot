@@ -31,6 +31,9 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
+        // Log incoming request data
+        \Log::info('Update profile request received', $request->all());
+
         // Validate the request data
         $validatedData = $request->validate([
             'name' => 'sometimes|string|max:255',
@@ -40,9 +43,9 @@ class AuthController extends Controller
             'gender' => 'sometimes|in:Male,Female,Other',
             'dateOfBirth' => 'sometimes|date',
             'phoneNumber' => 'sometimes|string|max:20',
-            // Add validation for other fields as necessary
         ]);
 
+        // Handle file upload
         if ($request->hasFile('profile')) {
             $img = $request->file('profile');
             $ext = $img->getClientOriginalExtension();
@@ -52,14 +55,18 @@ class AuthController extends Controller
             $validatedData['profile'] = $profilePath . '/' . $imageName;
         }
 
+        // Update user profile
         $user->update($validatedData);
         $user = User::find($user->id);
         $userData = $user->toArray();
         $userData['remember_token'] = $user->remember_token;
+
+        \Log::info('Profile updated successfully', $userData);
+
         return response()->json([
             'success' => true,
             'message' => 'Profile updated successfully',
-            'data' =>  $userData
+            'data' => $userData
         ]);
     }
 

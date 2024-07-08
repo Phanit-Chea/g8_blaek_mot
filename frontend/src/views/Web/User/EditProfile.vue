@@ -60,10 +60,10 @@
               :placeholder="userStore.user.phoneNumber" />
           </div>
           <div class="form-group mt-2">
-            <select v-model="form.gender" id="sex" class="form-control">
+            <select v-model="userStore.user.gender" id="sex" class="form-control custom-select">
               <option value="">សូមជ្រើសរើសភេទរបស់អ្នក</option>
-              <option value="Male" :selected="userStore.user.gender === 'Male'">ប្រុស</option>
-              <option value="Female" :selected="userStore.user.gender === 'Female'">ស្រី</option>
+              <option value="Male">ប្រុស</option>
+              <option value="Female">ស្រី</option>
             </select>
           </div>
           <div class="form-group mt-2">
@@ -91,6 +91,8 @@ import FooterView from '../Footer/FooterView.vue';
 import { ref, watch } from 'vue';
 import { useUserStore } from '@/stores/userStore';
 import axiosInstance from '@/plugins/axios';
+import Swal from 'sweetalert2';
+
 
 const userStore = useUserStore();
 
@@ -140,47 +142,69 @@ const pickFile = (e: Event) => {
   }
 };
 
-// Function to update profile
+
+
 const updateProfile = async () => {
   try {
     const formData = new FormData();
     formData.append('name', form.value.name);
     formData.append('email', form.value.email);
     formData.append('phoneNumber', form.value.phoneNumber);
-    formData.append('gender', form.value.gender); // Ensure gender is sent correctly
+    formData.append('gender', form.value.gender);
     formData.append('address', form.value.address);
     formData.append('dateOfBirth', form.value.dateOfBirth);
     if (file.value) {
       formData.append('profile', file.value);
     }
 
-    console.log('Gender being sent:', form.value.gender); // Log the gender value being sent
+    const token = userStore.user.remember_token; // Ensure this is the correct token
+    console.log('Token being sent:', token);
 
-    const token = userStore.user.remember_token; // Replace with the actual token field in your user store
-    const response = await axiosInstance.post('/updateProfile', formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data', // Ensure correct content type for file uploads
-      },
-    });
-    // userStore.setUser(response.data.data);
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`
+    };
 
-    console.log(response.data.data);
-    
+    console.log('Headers being sent:', headers);
+    console.log('FormData being sent:', formData);
+
+    const response = await axiosInstance.post('/updateProfile', formData, { headers });
+
+    console.log('Response received:', response);
+
     if (response.data.success) {
       userStore.user.profile = response.data.data.profile; // Assuming profile field returned from backend
       console.log('Profile updated successfully:', response.data.data);
       success.value = true;
-      // Handle success feedback to the user if needed
 
+      // Display SweetAlert success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Profile Updated',
+        text: 'Your profile has been updated successfully!',
+        confirmButtonText: 'OK'
+      });
+
+      // Also update the user data in the store
+      userStore.setUser(response.data.data);
+    } else {
+      throw new Error('Profile update failed');
     }
-    userStore.setUser(response.data.data);
   } catch (error) {
-    console.error('Profile update error:', error.response?.data);
-    // Handle error scenarios, e.g., show error message to the user
+    console.error('Profile update error:', error);
     success.value = false;
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Update Failed',
+      text: 'There was an error updating your profile. Please try again.',
+      confirmButtonText: 'OK'
+    });
   }
 };
+
+
+
 
 </script>
 <style>
