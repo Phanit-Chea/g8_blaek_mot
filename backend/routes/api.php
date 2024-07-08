@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,5 +66,6 @@ Route::prefix("chat")->group(function(){
     Route::delete('/delete/{id}',[ChatController::class,'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
 });
 
-Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
+Route::post('/aboutus/create', [AboutUsController::class, 'createAboutUs'])->name('aboutus.create');
+Route::get('/aboutus/latest', [AboutUsController::class, 'getLatest']);
 

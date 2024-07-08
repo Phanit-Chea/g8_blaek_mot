@@ -15,7 +15,6 @@ class aboutUsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'imageSlide' => $this->imageSlide,
             'imageDetail' => $this->imageDetail,
             'description' => $this->description,
             'recommentFood' => $this->commentFood,
