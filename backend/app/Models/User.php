@@ -29,12 +29,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phoneNumber',
+        'gender',
+        'address',
         'password',
         'dateOfBirth',
-        'gender',
-        'phoneNumber',
-        'address',
-        'profile',
+        'profile'
     ];
 
     /**
@@ -55,8 +55,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function chat(): HasMany
-    {
-        return $this->hasMany(Chat::class);
+
+    public static function store($request, $id = null){
+        $data = $request->only(
+        'name',
+        'email',
+        'phoneNumber',
+        'gender',
+        'address',
+        'password',
+        'dateOfBirth',
+        'profile');
+        $data = self::updateOrCreate(['id' => $id], $data);
+        return $data;
     }
 }
+

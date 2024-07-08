@@ -1,4 +1,6 @@
 import ChatVue from '@/views/chat/ChatVue.vue'
+import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
+import path from 'path';
 const routes = [
     {
         path: '/admin/dashboard',
@@ -7,7 +9,12 @@ const routes = [
         meta: {
             requiresAuth: true,
             role: 'admin'
-        }
+        },
+    },
+    {
+        path: '/admin/category',
+        name: '/admin/category',
+        component: () => import('@/views/Admin/CategoryAdmin/CategoryVue.vue')
     },
     {
         path: '/login',

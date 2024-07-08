@@ -146,10 +146,7 @@ export default {
 .banner {
     width: 50%;
     height: 100%;
-    /* background-image: url('../../../assets/CategoryImages/7caf80c5e8b93f5a5307b4a089777047.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; */
+
     background-color: teal;
 }
 
