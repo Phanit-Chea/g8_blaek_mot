@@ -55,7 +55,7 @@ Route::prefix("food")->group(function(){
     Route::get('/show/{id}',[FoodController::class,'show'])->name('food.show');
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
-    Route::get('category/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
 });
 
 Route::prefix("chat")->group(function(){

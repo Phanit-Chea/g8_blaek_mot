@@ -68,17 +68,6 @@ class FoodController extends Controller
      * Display the specified resource.
      */
 
-    // public function show(string $id)
-    // {
-
-    //     $food = Food::find($id);
-    //     if ($food) {
-    //         return new FoodResource($food);
-    //     } else {
-    //         return response()->json(['error' => 'Food not found'], 404);
-    //     }
-    // }
-
     public function show(string $id)
     {
         $food = Food::findOrFail($id);
