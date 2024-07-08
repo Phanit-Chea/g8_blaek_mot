@@ -116,18 +116,6 @@
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-<<<<<<< HEAD
-        <nav-link>
-          <router-link to="/" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Home</router-link>
-        </nav-link>
-        <nav-link>
-          <router-link to="/category" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Category</router-link>
-        </nav-link>
-        <nav-link>
-          <router-link to="/aboutus" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">About Us</router-link>
-        </nav-link>
-        
-=======
 
         <router-link to="/"
           class="pagesLink text-green-700 fs-5 text-decoration-none nav-link siemreap">ទំព័រដើម</router-link>
@@ -137,7 +125,6 @@
           អំពីពួកយើង
         </router-link>
 
->>>>>>> 5b7a9f5df079ad985a7e4622d1482e4cda24edbf
       </div>
     </div>
     {{ useAuth.data }}
