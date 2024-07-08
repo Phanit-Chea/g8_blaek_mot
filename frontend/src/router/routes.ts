@@ -55,6 +55,11 @@ const routes = [
         component: () => import('@/views/Web/Category/Category.vue')
     },
     {
+        path: '/category/:id',
+        name: 'category-list',
+        component: () => import('@/views/Web/Category/Category.vue')
+    },
+    {
         path: '/aboutus',
         name: 'aboutus',
         component: () => import('@/views/Web/AboutUs/ListView.vue')

@@ -43,18 +43,15 @@
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
         <nav-link>
-          <a href="/" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Home</a>
+          <router-link to="/" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Home</router-link>
         </nav-link>
         <nav-link>
-          <a href="#" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Category</a>
+          <router-link to="/category" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Category</router-link>
         </nav-link>
         <nav-link>
-          <a href="#" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">About Us</a>
+          <router-link to="/aboutus" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">About Us</router-link>
         </nav-link>
-        <nav-link>
-
-          <a href="#" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">Join With Us</a>
-        </nav-link>
+        
       </div>
     </div>
     <!-- {{ useAuth }} -->
