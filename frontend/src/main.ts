@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
+
 import './assets/main.css'
 
 
@@ -18,6 +19,7 @@ import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
+
 
 
 const app = createApp(App)

@@ -1,8 +1,8 @@
 <!-- src/components/HeaderMenu.vue -->
 <template>
-    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color:	#1d243c; width: 200px">
+    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color:	#1d243c; width: 170px">
     <div
-      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 sticky-top sidebar">
+      class="d-flex flex-column align-items-center align-items-sm-start ps-2 pdark min-vh-100 sticky-top sidebar">
     
       <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
         <li class="my-3">
@@ -19,6 +19,12 @@
             <router-link to="/admin/food" class="nav-link px-0 align-middle">
             <i class="fs-4 text-white align-middle material-icons">fastfood</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap pe-5">បញ្ចីម្ហូប</span>
+            </router-link>
+        </li>
+        <li class="nav-item mt-2">
+            <router-link to="/admin/category" class="nav-link px-0 align-middle">
+            <i class="fs-4 text-white align-middle material-icons">category</i>
+            <span class="ms-1 d-none d-sm-inline text-white siemreap pe-5">ប្រភេទម្ហូប</span>
             </router-link>
         </li>
         <li class="nav-item mt-2">

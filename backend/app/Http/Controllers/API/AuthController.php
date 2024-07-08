@@ -56,8 +56,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        \Log::info('Register request data: ', $request->all());
-    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -65,8 +63,8 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
-            'address' => 'required|string',
             'phoneNumber' => 'required|string',
+            'address' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
     
@@ -77,23 +75,24 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-
-        if ($request->hasFile('profile')) {
-            $path = $request->file('profile')->store('public/StoreImages');
-            $ProfileUrl = Storage::url($path);
-        } else {
-            $ProfileUrl = null;
-        }
-
+    
+        $img = $request->file('profile');
+        $ext = $img->getClientOriginalExtension();
+        $imageName = time() . '.' . $ext;
+        $profilePath = 'storage/images';
+        $img->move(public_path($profilePath), $imageName);
+        $profile = $profilePath . '/' . $imageName;
+    
+        // Create user record
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'age' => $request->age,
+            'password' => Hash::make($request->password),
+            'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
+            'phoneNumber' => $request->phoneNumber,
             'address' => $request->address,
-            'profile' => $profile,
-            'phoneNumber' => $request->phoneNumber
+            'profile' => $profile
         ]);
     
         return response()->json([

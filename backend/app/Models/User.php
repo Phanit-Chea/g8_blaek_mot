@@ -29,16 +29,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone_number',
-        'age',
+        'phoneNumber',
         'gender',
         'address',
         'password',
         'dateOfBirth',
-        'gender',
-        'phoneNumber',
-        'address',
-        'profile',
+        'profile'
     ];
 
     /**
@@ -63,5 +59,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Chat::class);
     }
+    public function food(): HasMany
+    {
+        return $this->hasMany(Food::class);
+    }
+
 }
 
