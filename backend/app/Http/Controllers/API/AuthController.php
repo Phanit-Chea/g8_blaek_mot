@@ -93,7 +93,10 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+<<<<<<< HEAD
         \Log::info('Register request data: ', $request->all());
+=======
+>>>>>>> CreateFoodNew
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -101,8 +104,8 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
-            'address' => 'required|string',
             'phoneNumber' => 'required|string',
+            'address' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -113,14 +116,22 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> CreateFoodNew
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> CreateFoodNew
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -128,9 +139,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
+            'phoneNumber' => $request->phoneNumber,
             'address' => $request->address,
-            'profile' => $profile,
-            'phoneNumber' => $request->phoneNumber
+            'profile' => $profile
         ]);
         $token  = $user->createToken('auth_token')->plainTextToken;
         $user->remember_token = $token;

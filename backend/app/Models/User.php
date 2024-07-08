@@ -29,16 +29,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone_number',
-        'age',
+        'phoneNumber',
         'gender',
         'address',
         'password',
         'dateOfBirth',
-        'gender',
-        'phoneNumber',
-        'address',
-        'profile',
+        'profile'
     ];
 
     /**
@@ -64,18 +60,21 @@ class User extends Authenticatable
         $data = $request->only(
         'name',
         'email',
-        'phone_number',
-        'age',
+        'phoneNumber',
         'gender',
         'address',
         'password',
+        'dateOfBirth',
         'profile');
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
+<<<<<<< HEAD
     }
     public function chat(): HasMany
     {
         return $this->hasMany(Chat::class);
+=======
+>>>>>>> CreateFoodNew
     }
 }
 

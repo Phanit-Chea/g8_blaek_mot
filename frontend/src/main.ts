@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
+
 import './assets/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.js'
@@ -17,6 +18,7 @@ import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css';
 import { useAuthStore } from './stores/auth-store';
 import { useUserStore } from './stores/userStore';
+
 
 
 const app = createApp(App)

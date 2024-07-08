@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ShowFoodResource;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
 use App\Http\Resources\FoodResource;
 use Exception;
+
+
+
 
 
 class FoodController extends Controller
@@ -86,10 +91,14 @@ class FoodController extends Controller
 
         return response()->json([
             'id' => $food->id,
+            'category_id' => $food->category_id,
             'name' => $food->name,
-            'description' => $food->description,
+            'image' => $food->image,
+            'video_url' => $food->video_url,
+            'cooking_time' => $food->cooking_time,
             'ingredients' => $ingredients,
         ]);
+
     }
 
     /**
