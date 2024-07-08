@@ -1,16 +1,13 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
-use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use PhpParser\Node\Expr\FuncCall;
-use Spatie\FlareClient\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [ApiAuthController::class,'register']);
 Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/updateProfile', [ApiAuthController::class, 'update']);
+});
 
 //category
 Route::post('/category/create', [CategoryController::class, 'store'])->name('category.create'); // ->middleware('auth:sanctum');
@@ -43,11 +42,10 @@ Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->n
 
 // Remove or merge the following line if it was part of the conflict
 // Route::post('/register', [AuthController::class, 'register']);
-
+// 
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
-
 
 Route::prefix("food")->group(function(){
     Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');
@@ -65,3 +63,6 @@ Route::prefix("chat")->group(function(){
     Route::put('/update/{id}',[ChatController::class,'update'])->name('chat.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}',[ChatController::class,'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
 });
+
+Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
+
