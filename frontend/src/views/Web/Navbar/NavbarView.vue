@@ -127,7 +127,7 @@
 
       </div>
     </div>
-    <!-- {{ useAuth.data }} -->
+    {{ useAuth.data }}
   </nav>
 
 </template>
