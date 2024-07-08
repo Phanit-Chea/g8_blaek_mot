@@ -68,13 +68,6 @@ class User extends Authenticatable
         'profile');
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
-<<<<<<< HEAD
-    }
-    public function chat(): HasMany
-    {
-        return $this->hasMany(Chat::class);
-=======
->>>>>>> CreateFoodNew
     }
 }
 
