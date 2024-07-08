@@ -1,8 +1,4 @@
-
 import ChatVue from '@/views/chat/ChatVue.vue'
-import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
-import path from 'path';
-
 const routes = [
     {
         path: '/admin/dashboard',
@@ -11,12 +7,7 @@ const routes = [
         meta: {
             requiresAuth: true,
             role: 'admin'
-        },
-    },
-    {
-        path: '/admin/category',
-        name: '/admin/category',
-        component: () => import('@/views/Admin/CategoryAdmin/CategoryVue.vue')
+        }
     },
     {
         path: '/login',
@@ -47,18 +38,13 @@ const routes = [
 
     ,
     {
-        path: '/detail/:id',
-        name: 'food-detail',
-        component: () => import('@/views/Web/FoodDetail/FoodDetail.vue'),
+        path: '/detail',
+        name: 'detail',
+        component: () => import('@/views/Web/FoodDetail/FoodDetail.vue')
     },
     {
         path: '/category',
         name: 'category',
-        component: () => import('@/views/Web/Category/Category.vue')
-    },
-    {
-        path: '/category/:id',
-        name: 'category-list',
         component: () => import('@/views/Web/Category/Category.vue')
     },
     {
@@ -97,36 +83,6 @@ const routes = [
         name: 'aboutUsUpdate',
         component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
     }
-        path: '/admin/user',
-        name: '/admin/user',
-        component: () => import('@/views/Admin/User/ListView.vue')
-    },
-    {
-        path: '/admin/food',
-        name: '/admin/food',
-        component: () => import('@/views/Admin/Food/ListView.vue')
-    },
-    {
-        path: '/admin/partnership',
-        name: '/admin/partnership',
-        component: () => import('@/views/Admin/Partnership/ListView.vue')
-    },
-    {
-        path: '/admin/setting',
-        name: '/admin/setting',
-        component: () => import('@/views/Admin/Setting/ListView.vue')
-    },
-    {
-        path: '/create/food',
-        name: '/create/food',
-        component: () => import('@/views/Admin/Food/FormAddFoodView.vue')
-    },
-    {
-        path: '/food/edit/:id',
-        name: 'edit-food',
-        component: () => import('@/views/Admin/Food/Edit.vue')
-    },
-
 ]
 
 export default routes;
