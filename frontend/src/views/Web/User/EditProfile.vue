@@ -96,7 +96,7 @@ import Swal from 'sweetalert2';
 
 const userStore = useUserStore();
 
-// Reactive references
+
 const profileImageUrl = ref(`http://127.0.0.1:8000/${userStore.user.profile}`);
 const previewImage = ref(profileImageUrl.value);
 const file = ref<File | null>(null);
@@ -107,15 +107,13 @@ const form = ref({
   name: userStore.user.name,
   email: userStore.user.email,
   phoneNumber: userStore.user.phoneNumber,
-  gender: userStore.user.gender || '', // Ensure default value is set correctly
+  gender: userStore.user.gender || '', 
   address: userStore.user.address,
   dateOfBirth: userStore.user.dateOfBirth,
   password: '',
   confirmPassword: '',
   profile: userStore.user.profile,
 });
-
-// Watch for changes in user profile and update image URLs
 watch(() => userStore.user.profile, (newValue) => {
   profileImageUrl.value = `http://127.0.0.1:8000/${newValue}`;
   previewImage.value = profileImageUrl.value;
@@ -123,7 +121,6 @@ watch(() => userStore.user.profile, (newValue) => {
 watch(() => userStore.user.gender, (newValue) => {
   form.value.gender = newValue;
 });
-// Function to open file dialog
 const selectImage = () => {
   const fileInput = document.getElementById('file-input') as HTMLInputElement;
   fileInput.click();
@@ -157,8 +154,8 @@ const updateProfile = async () => {
       formData.append('profile', file.value);
     }
 
-    const token = userStore.user.remember_token; // Ensure this is the correct token
-    console.log('Token being sent:', token);
+    const token = userStore.user.remember_token;
+
 
     const headers = {
       'Content-Type': 'multipart/form-data',
@@ -166,18 +163,18 @@ const updateProfile = async () => {
     };
 
     console.log('Headers being sent:', headers);
-    console.log('FormData being sent:', formData);
+
 
     const response = await axiosInstance.post('/updateProfile', formData, { headers });
 
     console.log('Response received:', response);
 
     if (response.data.success) {
-      userStore.user.profile = response.data.data.profile; // Assuming profile field returned from backend
-      console.log('Profile updated successfully:', response.data.data);
+      userStore.user.profile = response.data.data.profile;
+
       success.value = true;
 
-      // Display SweetAlert success message
+
       Swal.fire({
         icon: 'success',
         title: 'Profile Updated',
@@ -185,7 +182,7 @@ const updateProfile = async () => {
         confirmButtonText: 'OK'
       });
 
-      // Also update the user data in the store
+
       userStore.setUser(response.data.data);
     } else {
       throw new Error('Profile update failed');

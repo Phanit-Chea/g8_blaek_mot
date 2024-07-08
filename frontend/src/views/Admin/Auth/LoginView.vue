@@ -1,23 +1,4 @@
 <template>
-  <!-- <div class="container">
-    <form class="form" @submit.prevent="login">
-      <p class="form-title">Sign in to your account</p>
-      <div class="input-container">
-        <input type="email" placeholder="Enter email" v-model="formData.email">
-      </div>
-      <div class="input-container">
-        <input type="password" placeholder="Enter password" v-model="formData.password">
-      </div>
-      <button type="submit" class="submit">Sign in</button>
-
-      <p class="signup-link">
-        No account?
-        <a href="#">Sign up</a>
-      </p>
-
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </form>
-  </div> -->
   <div class="container">
 
     <div class="login-card">
