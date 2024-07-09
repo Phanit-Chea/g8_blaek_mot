@@ -8,52 +8,21 @@
         href=""
         class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
       >
-        <h3 class="d-none d-sm-inline mt-3">Category</h3>
+        <h3 class="d-none d-sm-inline mt-3 siemreap">ប្រភេទម្ហូប</h3>
       </a>
       <ul
         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
         id="menu"
       >
-        <li class="nav-item">
-          <a href="#" class="nav-link align-middle px-0">
+        <li class="nav-item" v-for="category in categories" :key="category.id" @click="selectCategory(category.id)">
+          <router-link 
+            :to="{ name: 'category-list', params: { id: category.id } }"
+            class="nav-link align-middle px-0">
             
-            <span class="ms-1 d-none d-sm-inline text-white">Breakfast</span>
-          </a>
+            <span class="ms-1 d-none d-sm-inline text-white">{{category.name}}</span>
+          </router-link>
         </li>
 
-        <li class="nav-item">
-          <a href="#" class=" nav-link px-0 align-middle">
-       
-            <span class="ms-1 d-none d-sm-inline text-white">Lunch</span></a
-          >
-        </li>
-
-        <li class="nav-item">
-          <a href="#" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-          
-            <span class="ms-1 d-none d-sm-inline text-white">Dinner</span>
-          </a>
-        </li>
-        <li class=" dropdown">
-          <a
-            class="nav-link dropdown-toggle px-0 align-middle text-white"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <span class="ms-1 d-none d-sm-inline">Others</span>
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-dark dropdown-menu-end p-0"
-            aria-labelledby="navbarDropdown"
-          >
-            <li><a class="dropdown-item w-30 text-white" href="#">Dessert</a></li>
-            <li><a class="dropdown-item w-30 text-white" href="#">Snacks</a></li>
-            <li><a class="dropdown-item w-30 text-white" href="#">Drinks</a></li>
-          </ul>
-        </li>
       </ul>
       <hr />
     </div>
@@ -62,11 +31,38 @@
 
 <script>
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import axiosInstance from '@/plugins/axios'
 
-export default {}
+export default {
+  name: 'side-bar',
+  data() {
+    return {
+      categories: [],
+    }
+  },
+  mounted() {
+    this.fetchCategories()
+  },
+  methods: {
+    async fetchCategories() {
+      try {
+        const response = await axiosInstance.get('/category/list')
+        if (response.data.success) {
+          this.categories = response.data.data
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    },
+    selectCategory(categoryId) {
+    this.$emit('categorySelected', categoryId);
+    
+  },
+  }
+}
 </script>
 
-<style>
+<style scoped>
 /* Style the dropdown toggle button */
 .nav-link.dropdown-toggle {
   font-size: 16px;
@@ -114,5 +110,8 @@ export default {}
 
 .sidebar .nav-item .nav-link:hover::after {
   width: 100%;
+}
+.siemreap {
+  font-family: 'Siemreap', cursive;
 }
 </style>

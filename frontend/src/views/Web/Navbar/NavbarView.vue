@@ -1,3 +1,4 @@
+
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
@@ -47,7 +48,7 @@
 
             <li>
               <nav-link>
-                <a href="/profile">
+                <a href="/user">
                   <button>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
                       stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +77,7 @@
               </nav-link>
             </li>
 
-          </ul>
+</ul>
         </nav>
         <nav v-else class="popup-window">
           <ul>
@@ -116,19 +117,18 @@
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-        <nav-link>
-          <a href="/" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link siemreap">ទំព័រដើម</a>
-        </nav-link>
-        <nav-link>
-          <a href="/category" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">ប្រភេទអាហារ</a>
-        </nav-link>
-        <nav-link>
-          <a href="/aboutus" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">អំពីពួកយើង</a>
-        </nav-link>
+
+        <router-link to="/"
+          class="pagesLink text-green-700 fs-5 text-decoration-none nav-link siemreap">ទំព័រដើម</router-link>
+        <router-link to="/category"
+          class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">ប្រភេទអាហារ</router-link>
+        <router-link to="/aboutUs" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">
+          អំពីពួកយើង
+        </router-link>
 
       </div>
     </div>
-    <!-- {{ useAuth }} -->
+    {{ useAuth.data }}
   </nav>
 
 </template>
@@ -215,7 +215,7 @@ const useAuth = useAuthStore();
   --underline-margin-y: 0.3125em;
 }
 
-/* popup settings 👆 */
+
 
 .popup {
   display: inline-block;

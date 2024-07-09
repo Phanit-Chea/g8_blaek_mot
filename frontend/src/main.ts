@@ -1,7 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
-import './assets/main.css'
+
+import './assets/css/main.css'
+import './assets/css/bootstrap-icons.css'
+import './assets/css/bootstrap.min.css'
+import './assets/css/tooplate-crispy-kitchen.css'
 
 
 
@@ -18,8 +22,11 @@ import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
-import { useAuthStore } from './stores/auth-store';
 
+// import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net';
+
+// DataTable.use(DataTablesCore);
 
 const app = createApp(App)
 const pinia = createPinia();
@@ -34,9 +41,6 @@ app.use(router.router)
 app.use(ElementPlus)
 app.use(router.simpleAcl)
 app.use(pinia);
-
-const authStore = useAuthStore();
-authStore.loadAuthState();
 
 app.config.globalProperties.$axios = axios
 
