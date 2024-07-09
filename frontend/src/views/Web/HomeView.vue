@@ -1,7 +1,7 @@
 <script>
 import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
 import FooterView from '@/views/Web/Footer/FooterView.vue'
-import axios from 'axios'
+import axiosInstance from '@/plugins/axios'
 
 export default {
   name: 'HomePage',
@@ -11,22 +11,33 @@ export default {
   },
   data() {
     return {
-      foods: []
+      foods: [],
+      randomFoods: [],
+      randomNumber:''
     }
   },
   mounted() {
     this.fetchFood()
+    this.fetchRandomfood()
   },
   methods: {
     async fetchFood() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/food/list')
+        const response = await axiosInstance.get('/food/list')
         if (response.data.success) {
           this.foods = response.data.data
-          console.log(foods)
         }
       } catch (error) {
         console.error('Error fetching student:', error)
+      }
+    },
+    async fetchRandomfood() {
+      try {
+        console.log('Fetching random food...')
+        const response = await axiosInstance.get('/food/random/6')
+          this.randomFoods = response.data.suitable_food
+      } catch (error) {
+        console.error('Error fetching random food:', error)
       }
     }
   }
@@ -176,19 +187,22 @@ export default {
             </div>
           </div>
         </div>
-        
       </div>
-      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-              class="visually-hidden">unread messages</span></span></i></a>
-    
+      <a href="/chat"
+        ><i class="bi bi-chat-dots-fill chat"
+          ><span
+            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
+            ><span class="visually-hidden">unread messages</span></span
+          ></i
+        ></a
+      >
     </section>
 
     <section id="menu" class="menu section">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Menu Today</h2>
-        <p><span>Food</span> <span class="description-title">Recomand</span></p>
+        <p><span>Today Food</span> <span class="description-title">Recomment</span></p>
       </div>
       <!-- End Section Title -->
 
@@ -233,77 +247,19 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"
                   ><img
-                    src="../../assets/ContainerImages/fryFish.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
+                /></router-link>
+                <h4>{{food.name}}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
 
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
+              <!-- Menu Item ------------------------------------------------------------------>
             </div>
           </div>
           <!-- End Starter Menu Content -->
@@ -564,19 +520,22 @@ export default {
             <h2 class="text-center mb-lg-5 mb-4">Popular Food This Month</h2>
           </div>
 
-          <!-- First Menu Item -->
-          <div class="col-lg-4 col-md-6 col-12">
+          <!-- First Menu Item____________________________________________________________________ -->
+          <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
             <div class="menu-thumb">
-              <div class="menu-image-wrap">
+              <router-link
+                :to="{ name: 'food-detail', params: { id: food.id } }"
+                class="menu-image-wrap"
+              >
                 <img
-                  src="../../assets/CategoryImages/dinner.png"
+                  :src="`http://127.0.0.1:8000/${food.image}`"
                   class="img-fluid menu-image"
-                  alt="Morning Fresh Breakfast"
+                  alt="Food image"
                 />
-                <span class="menu-tag">Breakfast</span>
-              </div>
+                <!-- <span class="menu-tag">Breakfast</span> -->
+              </router-link>
               <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">Morning Fresh</h4>
+                <h4 class="mb-0">{{ food.name }}</h4>
                 <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
                   ><small>Add</small>+</span
                 >
@@ -595,186 +554,6 @@ export default {
                     <label for="star1-1"></label>
                   </div>
                   <p class="reviews-text mb-0 ms-4">102 Reviews</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Second Menu Item -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="menu-thumb">
-              <div class="menu-image-wrap">
-                <img
-                  src="../../assets/CategoryImages/drink.png"
-                  class="img-fluid menu-image"
-                  alt="Tooplate Soup Lunch"
-                />
-                <span class="menu-tag">Lunch</span>
-              </div>
-              <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">Tooplate Soup</h4>
-                <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-                  ><small>Add</small>+</span
-                >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">3/5</h6>
-                  <div class="rating">
-                    <input value="5" name="rating2" id="star2-5" type="radio" />
-                    <label for="star2-5"></label>
-                    <input value="4" name="rating2" id="star2-4" type="radio" />
-                    <label for="star2-4"></label>
-                    <input value="3" name="rating2" id="star2-3" type="radio" />
-                    <label for="star2-3"></label>
-                    <input value="2" name="rating2" id="star2-2" type="radio" />
-                    <label for="star2-2"></label>
-                    <input value="1" name="rating2" id="star2-1" type="radio" />
-                    <label for="star2-1"></label>
-                  </div>
-                  <p class="reviews-text mb-0 ms-4">50 Reviews</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Third Menu Item -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="menu-thumb">
-              <div class="menu-image-wrap">
-                <img
-                  src="../../assets/CategoryImages/drink.png"
-                  class="img-fluid menu-image"
-                  alt="Premium Steak Dinner"
-                />
-                <span class="menu-tag">Dinner</span>
-              </div>
-              <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">Premium Steak</h4>
-                <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-                  ><small>Add</small>+</span
-                >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">3/5</h6>
-                  <div class="rating">
-                    <input value="5" name="rating3" id="star3-5" type="radio" />
-                    <label for="star3-5"></label>
-                    <input value="4" name="rating3" id="star3-4" type="radio" />
-                    <label for="star3-4"></label>
-                    <input value="3" name="rating3" id="star3-3" type="radio" />
-                    <label for="star3-3"></label>
-                    <input value="2" name="rating3" id="star3-2" type="radio" />
-                    <label for="star3-2"></label>
-                    <input value="1" name="rating3" id="star3-1" type="radio" />
-                    <label for="star3-1"></label>
-                  </div>
-                  <p class="reviews-text mb-0 ms-4">86 Reviews</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Fourth Menu Item -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="menu-thumb">
-              <div class="menu-image-wrap">
-                <img
-                  src="../../assets/CategoryImages/drink.png"
-                  class="img-fluid menu-image"
-                  alt="Seafood Set Dinner"
-                />
-                <span class="menu-tag">Dinner</span>
-              </div>
-              <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">Seafood Set</h4>
-                <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-                  ><small>Add</small>+</span
-                >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">3/5</h6>
-                  <div class="rating">
-                    <input value="5" name="rating4" id="star4-5" type="radio" />
-                    <label for="star4-5"></label>
-                    <input value="4" name="rating4" id="star4-4" type="radio" />
-                    <label for="star4-4"></label>
-                    <input value="3" name="rating4" id="star4-3" type="radio" />
-                    <label for="star4-3"></label>
-                    <input value="2" name="rating4" id="star4-2" type="radio" />
-                    <label for="star4-2"></label>
-                    <input value="1" name="rating4" id="star4-1" type="radio" />
-                    <label for="star4-1"></label>
-                  </div>
-                  <p class="reviews-text mb-0 ms-4">44 Reviews</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Fifth Menu Item -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="menu-thumb">
-              <div class="menu-image-wrap">
-                <img
-                  src="../../assets/CategoryImages/drink.png"
-                  class="img-fluid menu-image"
-                  alt="Burger Set Breakfast"
-                />
-                <span class="menu-tag">Breakfast</span>
-              </div>
-              <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">Burger Set</h4>
-                <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-                  ><small>Add</small>+</span
-                >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
-                  <div class="rating">
-                    <input value="5" name="rating5" id="star5-5" type="radio" />
-                    <label for="star5-5"></label>
-                    <input value="4" name="rating5" id="star5-4" type="radio" />
-                    <label for="star5-4"></label>
-                    <input value="3" name="rating5" id="star5-3" type="radio" />
-                    <label for="star5-3"></label>
-                    <input value="2" name="rating5" id="star5-2" type="radio" />
-                    <label for="star5-2"></label>
-                    <input value="1" name="rating5" id="star5-1" type="radio" />
-                    <label for="star5-1"></label>
-                  </div>
-                  <p class="reviews-text mb-0 ms-4">102 Reviews</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sixth Menu Item -->
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="menu-thumb">
-              <div class="menu-image-wrap">
-                <img
-                  src="../../assets/CategoryImages/drink.png"
-                  class="img-fluid menu-image"
-                  alt="Healthy Soup Lunch"
-                />
-                <span class="menu-tag">Lunch</span>
-              </div>
-              <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">Healthy Soup</h4>
-                <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-                  ><small>Add</small>+</span
-                >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">3/5</h6>
-                  <div class="rating">
-                    <input value="5" name="rating6" id="star6-5" type="radio" />
-                    <label for="star6-5"></label>
-                    <input value="4" name="rating6" id="star6-4" type="radio" />
-                    <label for="star6-4"></label>
-                    <input value="3" name="rating6" id="star6-3" type="radio" />
-                    <label for="star6-3"></label>
-                    <input value="2" name="rating6" id="star6-2" type="radio" />
-                    <label for="star6-2"></label>
-                    <input value="1" name="rating6" id="star6-1" type="radio" />
-                    <label for="star6-1"></label>
-                  </div>
-                  <p class="reviews-text mb-0 ms-4">64 Reviews</p>
                 </div>
               </div>
             </div>
@@ -965,10 +744,7 @@ export default {
   <FooterView></FooterView>
 </template>
 
-<!-- <script setup lang="ts">
-import FooterView from '../Web/Footer/FooterView.vue'
-import NavbarView from '../Web/Navbar/NavbarView.vue'
-</script> -->
+
 
 
 <style scoped>
