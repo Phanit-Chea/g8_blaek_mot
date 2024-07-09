@@ -74,6 +74,12 @@ const routes = [
     }
     ,
     {
+        path: '/admin/userList',
+        name: 'user/list',
+        component: () => import('@/views/Admin/User/ListView.vue')
+    }
+    ,
+    {
         path: '/chat',
         name: 'chat',
         component: ChatVue,
@@ -83,6 +89,9 @@ const routes = [
         name: 'aboutUsUpdate',
         component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
     }
+
+
+
 ]
 
 export default routes;
