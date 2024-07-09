@@ -1,7 +1,7 @@
 <script>
 import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
 import FooterView from '@/views/Web/Footer/FooterView.vue'
-import axios from 'axios'
+import axiosInstance from '@/plugins/axios'
 
 export default {
   name: 'HomePage',
@@ -11,27 +11,37 @@ export default {
   },
   data() {
     return {
-      foods: []
+      foods: [],
+      randomFoods: [],
+      randomNumber:''
     }
   },
   mounted() {
     this.fetchFood()
+    this.fetchRandomfood()
   },
   methods: {
     async fetchFood() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/food/list')
+        const response = await axiosInstance.get('/food/list')
         if (response.data.success) {
           this.foods = response.data.data
-          console.log(foods)
         }
       } catch (error) {
         console.error('Error fetching student:', error)
       }
     },
-    
+    async fetchRandomfood() {
+      try {
+        console.log('Fetching random food...')
+        const response = await axiosInstance.get('/food/random/6')
+          this.randomFoods = response.data.suitable_food
+      } catch (error) {
+        console.error('Error fetching random food:', error)
+      }
+    }
   }
-};
+}
 </script>
 <template>
   <NavbarView></NavbarView>
@@ -177,19 +187,22 @@ export default {
             </div>
           </div>
         </div>
-        
       </div>
-      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-              class="visually-hidden">unread messages</span></span></i></a>
-    
+      <a href="/chat"
+        ><i class="bi bi-chat-dots-fill chat"
+          ><span
+            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
+            ><span class="visually-hidden">unread messages</span></span
+          ></i
+        ></a
+      >
     </section>
 
     <section id="menu" class="menu section">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Menu Today</h2>
-        <p><span>Food</span> <span class="description-title">Recomand</span></p>
+        <p><span>Today Food</span> <span class="description-title">Recomment</span></p>
       </div>
       <!-- End Section Title -->
 
@@ -234,77 +247,19 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"
                   ><img
-                    src="../../assets/ContainerImages/fryFish.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
+                /></router-link>
+                <h4>{{food.name}}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
 
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
+              <!-- Menu Item ------------------------------------------------------------------>
             </div>
           </div>
           <!-- End Starter Menu Content -->
@@ -568,7 +523,10 @@ export default {
           <!-- First Menu Item____________________________________________________________________ -->
           <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
             <div class="menu-thumb">
-              <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="menu-image-wrap">
+              <router-link
+                :to="{ name: 'food-detail', params: { id: food.id } }"
+                class="menu-image-wrap"
+              >
                 <img
                   :src="`http://127.0.0.1:8000/${food.image}`"
                   class="img-fluid menu-image"
@@ -577,7 +535,7 @@ export default {
                 <!-- <span class="menu-tag">Breakfast</span> -->
               </router-link>
               <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">{{food.name}}</h4>
+                <h4 class="mb-0">{{ food.name }}</h4>
                 <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
                   ><small>Add</small>+</span
                 >
@@ -600,8 +558,6 @@ export default {
               </div>
             </div>
           </div>
-
-          
         </div>
       </div>
     </section>
