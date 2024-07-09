@@ -316,7 +316,7 @@ onMounted(() => {
 </script>
   
 <style scoped>
-@import 'datatables.net-dt';
+/* @import 'datatables.net-dt'; */
 .b-action {
   display: flex;
   gap: 15px;

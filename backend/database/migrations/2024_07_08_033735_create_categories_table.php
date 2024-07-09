@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('name');
-            $table->string('description');
-            $table->string('media_id');
+            $table->text('description')->nullable();
+            $table->foreignId('media_id')->nullable()->constrained('media')->onDelete('set null');
             $table->timestamps();
         });
     }

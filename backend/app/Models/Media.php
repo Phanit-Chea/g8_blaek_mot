@@ -23,9 +23,9 @@ class Media extends Model {
         // $file->storeAs('public/images/posts', $newFileName);
         return $newFileName;
 
-        // $filename = time() . '_' . $file->getClientOriginalName();
-        // $path = $file->storeAs('public/CategoryImage', $filename);
-        // return $filename;
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs('public/CategoryImage', $filename);
+        return $filename;
     }
 
     public static function createOrUpdate($request, $id = null) {

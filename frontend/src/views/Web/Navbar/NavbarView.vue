@@ -1,3 +1,4 @@
+
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
@@ -76,7 +77,7 @@
               </nav-link>
             </li>
 
-          </ul>
+</ul>
         </nav>
         <nav v-else class="popup-window">
           <ul>
@@ -214,7 +215,7 @@ const useAuth = useAuthStore();
   --underline-margin-y: 0.3125em;
 }
 
-/* popup settings 👆 */
+
 
 .popup {
   display: inline-block;

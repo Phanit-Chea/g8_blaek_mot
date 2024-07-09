@@ -36,6 +36,7 @@
     "pinia": "^2.1.7",
     "popper.js": "^1.16.1",
     "sweetalert2": "^11.12.2",
+    "swiper": "^11.1.4",
     "vee-validate": "^4.12.8",
     "vue": "^3.4.30",
     "vue-gates": "^2.1.2",
