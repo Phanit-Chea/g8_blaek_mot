@@ -6,6 +6,7 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,7 @@ Route::prefix("food")->group(function(){
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
 });
 
 Route::prefix("chat")->group(function(){
