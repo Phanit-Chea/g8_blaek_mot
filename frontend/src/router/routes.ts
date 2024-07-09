@@ -88,6 +88,11 @@ const routes = [
         path: '/aboutUsUpdateForm',
         name: 'aboutUsUpdate',
         component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
+    },
+    {
+        path: '/admin/dashboard/page',
+        name: 'adminDashboardPage',
+        component: () => import('../Components/NavbarAdmin.vue')
     }
 
 
