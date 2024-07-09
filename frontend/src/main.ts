@@ -2,7 +2,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 
-import './assets/main.css'
+import './assets/css/main.css'
+import './assets/css/bootstrap-icons.css'
+import './assets/css/bootstrap.min.css'
+import './assets/css/tooplate-crispy-kitchen.css'
 
 
 
