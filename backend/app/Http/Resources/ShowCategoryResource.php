@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\CategoryMedia\MediaResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class aboutUsResource extends JsonResource
+class ShowCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +16,11 @@ class aboutUsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'imageDetail' => $this->imageDetail,
-            'description' => $this->description,
-            'recommentFood' => $this->commentFood,
-            'ourMission' => $this->ourMission,
-            'ourVision' => $this->ourVision
-
+            "id" => $this->id,
+            "title" => $this->title,
+            "name" => $this->name,
+            "description" => $this->description,
+            "image" => new MediaResource($this->media)
         ];
     }
 }
