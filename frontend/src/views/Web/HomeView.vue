@@ -177,11 +177,7 @@ export default {
           </div>
         </div>
         
-      </div>
-      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-              class="visually-hidden">unread messages</span></span></i></a>
-    
+      </div>    
     </section>
 
     <section id="menu" class="menu section">
@@ -964,12 +960,6 @@ export default {
   </div>
   <FooterView></FooterView>
 </template>
-
-<!-- <script setup lang="ts">
-import FooterView from '../Web/Footer/FooterView.vue'
-import NavbarView from '../Web/Navbar/NavbarView.vue'
-</script> -->
-
 
 <style scoped>
 .cardCategory,

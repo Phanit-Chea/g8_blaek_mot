@@ -23,7 +23,7 @@ import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
 
 // import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net';
+// import DataTablesCore from 'datatables.net';
 
 // DataTable.use(DataTablesCore);
 
