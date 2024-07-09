@@ -19,7 +19,10 @@ import 'leaflet/dist/leaflet.css';
 import { useAuthStore } from './stores/auth-store';
 import { useUserStore } from './stores/userStore';
 
+// import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net';
 
+// DataTable.use(DataTablesCore);
 
 const app = createApp(App)
 const pinia = createPinia();
