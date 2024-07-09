@@ -6,7 +6,9 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -88,3 +90,10 @@ Route::prefix('chat')->group(function () {
 Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
 Route::post('/aboutus/create', [AboutUsController::class, 'createAboutUs'])->name('aboutus.create');
 Route::get('/aboutus/latest', [AboutUsController::class, 'getLatest']);
+
+//==========CountStars===============//
+Route::prefix('ratings')->group(function () {
+    Route::post('/', [RatingController::class, 'store']);
+    Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
+    Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
+});
