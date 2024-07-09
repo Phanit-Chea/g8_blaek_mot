@@ -82,7 +82,13 @@ const routes = [
         path: '/aboutUsUpdateForm',
         name: 'aboutUsUpdate',
         component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
+    },
+    {
+        path: '/aboutUsSlideForm',
+        name: 'aboutUsSlide',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsSlideView.vue')
     }
+
 ]
 
 export default routes;
