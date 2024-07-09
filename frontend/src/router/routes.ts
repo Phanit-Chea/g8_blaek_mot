@@ -34,9 +34,7 @@ const routes = [
         path: '/resetpassword',
         name: 'resetpassword',
         component: () => import('@/views/Admin/Auth/ResetPasswordView.vue')
-    }
-
-    ,
+    },
     {
         path: '/detail',
         name: 'detail',
@@ -45,6 +43,11 @@ const routes = [
     {
         path: '/category',
         name: 'category',
+        component: () => import('@/views/Web/Category/Category.vue')
+    },
+    {
+        path: '/category/:id',
+        name: 'category-list',
         component: () => import('@/views/Web/Category/Category.vue')
     },
     {
@@ -88,7 +91,22 @@ const routes = [
         path: '/aboutUsUpdateForm',
         name: 'aboutUsUpdate',
         component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
-    }
+    },
+    {
+        path: '/create/food',
+        name: '/create/food',
+        component: () => import('@/views/Admin/Food/FormAddFoodView.vue')
+    },
+    {
+        path: '/food/list',
+        name: '/food/list',
+        component: () => import('@/views/Admin/Food/ListView.vue')
+    },
+    {
+        path: '/food/edit/:id',
+        name: 'edit-food',
+        component: () => import('@/views/Admin/Food/Edit.vue')
+    },
 
 
 

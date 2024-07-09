@@ -9,27 +9,27 @@ export default {
     NavbarView,
     FooterView
   },
-  data() {
-    return {
-      foods: []
-    }
-  },
-  mounted() {
-    this.fetchFood()
-  },
-  methods: {
-    async fetchFood() {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/food/list')
-        if (response.data.success) {
-          this.foods = response.data.data
-          console.log(foods)
-        }
-      } catch (error) {
-        console.error('Error fetching student:', error)
-      }
-    }
-  }
+  // data() {
+  //   return {
+  //     foods: []
+  //   }
+  // },
+  // mounted() {
+  //   this.fetchFood()
+  // },
+  // methods: {
+  //   async fetchFood() {
+  //     try {
+  //       const response = await axios.get('http://127.0.0.1:8000/api/food/list')
+  //       if (response.data.success) {
+  //         this.foods = response.data.data
+  //         console.log(foods)
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching student:', error)
+  //     }
+  //   }
+  // }
 }
 </script>
 <template>

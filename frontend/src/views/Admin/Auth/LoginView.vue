@@ -1,4 +1,5 @@
 <template>
+
   <div class="container">
 
     <div class="login-card">
@@ -8,11 +9,11 @@
       <form class="form" @submit.prevent="login">
         <div class="form-group">
           <label for="email">Email</label>
-          <input required="" name="email" id="email" type="text" v-model="formData.email">
+          <input name="email" id="email" type="text" v-model="formData.email">
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input required="" name="password" id="password" type="password" v-model="formData.password">
+          <input name="password" id="password" type="password" v-model="formData.password">
         </div>
         <div class="form-group">
           <button type="submit" class="submit">Sign in</button>
@@ -22,15 +23,14 @@
           <a href="/register">Register your account?</a> <br>
           <a href="/register">Forgot password?</a>
         </p>
-        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+        <p v-if="errorMessage" class="error-message">{{ formData.email }} |{{ formData.password }}</p>
       </form>
     </div>
   </div>
 
 </template>
-
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '../../../stores/auth-store';
 import { useUserStore } from '../../../stores/userStore';
@@ -47,8 +47,8 @@ export default defineComponent({
   },
   methods: {
     async login() {
-      const useAuth = useAuthStore(); // Ensure to call the function
-      const userStore = useUserStore(); // Ensure to call the function
+      const authStore = useAuthStore();
+      const userStore = useUserStore();
 
       // Check if email and password are provided
       if (!this.formData.email || !this.formData.password) {
@@ -64,14 +64,19 @@ export default defineComponent({
 
         console.log(response.data.user);
 
-
         const profileImage = response.data.user.profile;
-        const remember_token = response.data.user.remember_token;
-        useAuth.login(profileImage, remember_token);
+        const rememberToken = response.data.user.remember_token;
+
+        authStore.isAuthenticated = true;
+        authStore.user.profileImage = profileImage;
+        authStore.login(profileImage, rememberToken);
         userStore.setUser(response.data.user);
-        this.formData.email = '';
-        this.formData.password = '';
-        this.errorMessage = '';
+
+        // Store data in localStorage
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('profileImage', profileImage);
+        localStorage.setItem('rememberToken', rememberToken);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
 
         this.$router.push('/');
       } catch (error) {
@@ -83,17 +88,27 @@ export default defineComponent({
         console.error('Login failed:', this.errorMessage);
       }
     }
+  },
+  mounted() {
+    // Check if the user is already authenticated
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    if (isAuthenticated === 'true') {
+      const authStore = useAuthStore();
+      const userStore = useUserStore();
+
+      authStore.isAuthenticated = true;
+      authStore.user.profileImage = localStorage.getItem('profileImage');
+      authStore.login(localStorage.getItem('profileImage'), localStorage.getItem('rememberToken'));
+      userStore.setUser(JSON.parse(localStorage.getItem('user')));
+
+      this.$router.push('/');
+    }
   }
 });
 </script>
 
-<style scoped>
-/* html,
-body {
-  height: 100%;
-  margin: 0;
-} */
 
+<style scoped>
 .container {
   display: flex;
   justify-content: center;
