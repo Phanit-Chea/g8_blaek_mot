@@ -12,8 +12,7 @@ export default {
   data() {
     return {
       foods: [],
-      randomFoods: [],
-      randomNumber:''
+      randomFoods: []
     }
   },
   mounted() {
