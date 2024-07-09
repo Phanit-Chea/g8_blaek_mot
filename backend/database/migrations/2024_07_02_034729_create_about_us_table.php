@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('about_us', function (Blueprint $table) {
             $table->id();
-            $table->string('imageSlide');
             $table->string('imageDetail');
-            $table->string('description');
+            $table->text('description');
             $table->string('recommentFood');
             $table->string('ourMission');
             $table->string('ourVision');

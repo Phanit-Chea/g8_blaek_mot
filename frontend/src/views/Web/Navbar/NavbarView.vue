@@ -35,7 +35,7 @@
         <input type="checkbox" />
         <div tabindex="0" class="burger">
           <div v-if="useAuth.isAuthenticated" class="account ">
-            <img :src="`http://127.0.0.1:8000/${useAuth.user.profileImage}`" alt="login" width="45px" />
+            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
           </div>
           <div v-else>
             <i class="material-icons fs-1 text-white">person</i>
@@ -132,35 +132,10 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
-import { useUserStore } from '../../../stores/userStore.ts';
-import { useRouter } from 'vue-router';
-import axiosInstance from '../../../plugins/axios.ts'
-import axios from 'axios';
+import { useUserStore } from '@/stores/userStore';
 
 const useAuth = useAuthStore();
-const router = useRouter();
 const userStore = useUserStore();
-const token = userStore.user.remember_token;
-
-console.log(token);
-
-// const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-axiosInstance.post('/logout', {}, {
-  headers: {
-    'Authorization': 'Bearer ' + token, // Add your authentication token if required
-  }
-})
-.then(response => {
-  useAuth.isAuthenticated= false;
-  useAuth.profileImage= '';
-  userStore.user='';
-  router.push('/');
-  console.log('Logout successful:', response.data);
-})
-.catch(error => {
-  console.error('Error during logout:', error);
-});
 
 
 </script>
@@ -241,7 +216,7 @@ axiosInstance.post('/logout', {}, {
   --underline-margin-y: 0.3125em;
 }
 
-/* popup settings 👆 */
+
 
 .popup {
   display: inline-block;
