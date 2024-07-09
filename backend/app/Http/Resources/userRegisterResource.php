@@ -22,7 +22,7 @@ class userRegisterResource extends JsonResource
             'dateOfBirth' => $this->dateOfBirth,
             'profile' => $this->profile,
             'address' => $this->address,
-            'access_token' => $this->accessToken
+            'remember_token' => $this->remember_token
         ];
 }
 }

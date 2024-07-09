@@ -74,10 +74,22 @@ const routes = [
     }
     ,
     {
+        path: '/admin/userList',
+        name: 'user/list',
+        component: () => import('@/views/Admin/User/ListView.vue')
+    }
+    ,
+    {
         path: '/chat',
         name: 'chat',
         component: ChatVue,
+    },
+    {
+        path: '/aboutUsUpdateForm',
+        name: 'aboutUsUpdate',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
     }
+
 
 
 ]

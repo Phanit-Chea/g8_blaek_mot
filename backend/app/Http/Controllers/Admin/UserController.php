@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -19,9 +20,9 @@ class UserController extends Controller
      */
     function __construct()
     {
-        $this->middleware('role_or_permission:User access|User create|User edit|User delete', ['only' => ['index','show']]);
-        $this->middleware('role_or_permission:User create', ['only' => ['create','store']]);
-        $this->middleware('role_or_permission:User edit', ['only' => ['edit','update']]);
+        $this->middleware('role_or_permission:User access|User create|User edit|User delete', ['only' => ['index', 'show']]);
+        $this->middleware('role_or_permission:User create', ['only' => ['create', 'store']]);
+        $this->middleware('role_or_permission:User edit', ['only' => ['edit', 'update']]);
         $this->middleware('role_or_permission:User delete', ['only' => ['destroy']]);
     }
 
@@ -32,9 +33,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user= User::latest()->get();
+        $user = User::latest()->get();
 
-        return view('setting.user.index',['users'=>$user]);
+        return view('setting.user.index', ['users' => $user]);
     }
 
     /**
@@ -45,7 +46,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('setting.user.new',['roles'=>$roles]);
+        return view('setting.user.new', ['roles' => $roles]);
     }
 
     /**
@@ -58,14 +59,14 @@ class UserController extends Controller
     {
 
         $request->validate([
-            'name'=>'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password'=>'required|confirmed'
+            'password' => 'required|confirmed'
         ]);
         $user = User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'password'=> bcrypt($request->password),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
         $user->syncRoles($request->roles);
         return redirect()->back()->withSuccess('User created !!!');
@@ -92,7 +93,7 @@ class UserController extends Controller
     {
         $role = Role::get();
         $user->roles;
-       return view('setting.user.edit',['user'=>$user,'roles' => $role]);
+        return view('setting.user.edit', ['user' => $user, 'roles' => $role]);
     }
 
     /**
@@ -105,11 +106,11 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name'=>'required',
-            'email' => 'required|email|unique:users,email,'.$user->id.',id',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id . ',id',
         ]);
 
-        if($request->password != null){
+        if ($request->password != null) {
             $request->validate([
                 'password' => 'required|confirmed'
             ]);
@@ -133,4 +134,28 @@ class UserController extends Controller
         $role->delete();
         return redirect()->back()->withSuccess('Role deleted !!!');
     }
+
+    public function customerList()
+    {
+        $users = User::where('email', '!=', 'blaek.mot@admin.com')->get();
+
+        // Return the users as a JSON response
+        return response()->json($users);
+    }
+    public function destroyCustomer($id)
+    {
+        // Find the user by ID
+        $customer = User::find($id);
+        
+        // Check if the user exists
+        if (!$customer) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        
+        // Delete the user
+        $customer->delete();
+        
+        return response()->json(['message' => 'User deleted successfully'], 200);
+    }
+ 
 }

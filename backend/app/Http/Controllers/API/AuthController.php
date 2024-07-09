@@ -30,26 +30,43 @@ class AuthController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-    
+
+        // Log incoming request data
+        \Log::info('Update profile request received', $request->all());
+
         // Validate the request data
         $validatedData = $request->validate([
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
-            'profile' => 'sometimes|string|max:255',
+            'profile' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'address' => 'sometimes|string|max:255',
             'gender' => 'sometimes|in:Male,Female,Other',
             'dateOfBirth' => 'sometimes|date',
             'phoneNumber' => 'sometimes|string|max:20',
-            // Add validation for other fields as necessary
         ]);
-    
-        // Update the user's profile
+
+        // Handle file upload
+        if ($request->hasFile('profile')) {
+            $img = $request->file('profile');
+            $ext = $img->getClientOriginalExtension();
+            $imageName = time() . '.' . $ext;
+            $profilePath = 'storage/images';
+            $img->move(public_path($profilePath), $imageName);
+            $validatedData['profile'] = $profilePath . '/' . $imageName;
+        }
+
+        // Update user profile
         $user->update($validatedData);
-    
+        $user = User::find($user->id);
+        $userData = $user->toArray();
+        $userData['remember_token'] = $user->remember_token;
+
+        \Log::info('Profile updated successfully', $userData);
+
         return response()->json([
             'success' => true,
             'message' => 'Profile updated successfully',
-            'data' => new UpdateProfileResource($user)
+            'data' => $userData
         ]);
     }
 
@@ -64,7 +81,7 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-  
+
 
     /**
      * Remove the specified resource from storage.
@@ -76,7 +93,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        \Log::info('Register request data: ', $request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -84,8 +100,8 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
-            'address' => 'required|string',
             'phoneNumber' => 'required|string',
+            'address' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -96,14 +112,14 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-
+    
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-
+    
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -111,10 +127,13 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
+            'phoneNumber' => $request->phoneNumber,
             'address' => $request->address,
-            'profile' => $profile,
-            'phoneNumber' => $request->phoneNumber
+            'profile' => $profile
         ]);
+        $token  = $user->createToken('auth_token')->plainTextToken;
+        $user->remember_token = $token;
+        $user->save();
 
         return response()->json([
             'message' => 'User created successfully',

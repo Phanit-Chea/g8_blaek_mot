@@ -98,3 +98,8 @@ export default {
   name: 'FooterView'
 }
 </script>
+<style scoped>
+  p{
+    color: white;
+  }
+</style>
