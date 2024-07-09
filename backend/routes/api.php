@@ -69,3 +69,5 @@ Route::prefix("chat")->group(function(){
 Route::post('/aboutus/create', [AboutUsController::class, 'createAboutUs'])->name('aboutus.create');
 Route::get('/aboutus/latest', [AboutUsController::class, 'getLatest']);
 
+Route::post('/aboutUsSlide/create', [AboutUsSlideController::class, 'createSlide'])->name('aboutus.createAboutUsSlide');
+Route::get('/imageSlide/lists', [AboutUsSlideController::class, 'index'])->name('aboutus.imageSlide');
