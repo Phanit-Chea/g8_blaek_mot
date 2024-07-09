@@ -100,8 +100,8 @@ const routes = [
         component: () => import('@/views/Admin/Food/FormAddFoodView.vue')
     },
     {
-        path: '/food/list',
-        name: '/food/list',
+        path: '/admin/food',
+        name: '/admin/food',
         component: () => import('@/views/Admin/Food/ListView.vue')
     },
     {
