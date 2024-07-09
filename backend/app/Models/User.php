@@ -60,14 +60,19 @@ class User extends Authenticatable
         $data = $request->only(
         'name',
         'email',
-        'phoneNumber',
+        'phone_number',
+        'age',
         'gender',
         'address',
         'password',
-        'dateOfBirth',
         'profile');
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
     }
+    public function food(): HasMany
+    {
+        return $this->hasMany(Food::class);
+    }
+
 }
 

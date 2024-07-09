@@ -13,13 +13,7 @@ class ShowFoodResource extends JsonResource
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-    {
-<<<<<<< HEAD
-        return [
-            'from_user' => $this->from_user,
-            'description' => $this->description
-        ];
-=======
+{
         {
             return [
                 'id' => $this->id,
@@ -35,6 +29,6 @@ class ShowFoodResource extends JsonResource
                 'updated_at' => $this->updated_at,
             ];
         }
->>>>>>> show_food
+
     }
 }

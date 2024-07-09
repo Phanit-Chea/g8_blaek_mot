@@ -203,7 +203,7 @@ export default {
       </div>
       <div class="containerBottom row overflow-auto" style="height: 60vh" >
         <div class="col-md-4 col-lg-3 mb-4" v-for="food in foods" :key="food.id">
-          <a href="/detail" class="nav-link">
+          <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="nav-link">
             <div class="card shadow" style="height: 100%">
               <img
                 :src="`http://127.0.0.1:8000/${food.image}`"
@@ -228,12 +228,14 @@ export default {
                   </div>
                   <a href="#" class="d-flex align-items-center text-decoration-none cardFooterRight">
                     <span class="rate-count text-dark">100k</span>
-                    <i class="material-icons">turned_in</i>
+                    <div @click="handleClick">
+                      <i class="material-icons text-success">turned_in</i>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-          </a>
+          </router-link>
         </div>
         
       </div>

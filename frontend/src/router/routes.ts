@@ -57,6 +57,11 @@ const routes = [
         component: () => import('@/views/Web/Category/Category.vue')
     },
     {
+        path: '/category/:id',
+        name: 'category-list',
+        component: () => import('@/views/Web/Category/Category.vue')
+    },
+    {
         path: '/aboutus',
         name: 'aboutus',
         component: () => import('@/views/Web/AboutUs/ListView.vue')
@@ -88,6 +93,10 @@ const routes = [
         component: ChatVue,
     },
     {
+        path: '/aboutUsUpdateForm',
+        name: 'aboutUsUpdate',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
+    },{
         path: '/admin/user',
         name: '/admin/user',
         component: () => import('@/views/Admin/User/ListView.vue')
@@ -116,8 +125,7 @@ const routes = [
         path: '/food/edit/:id',
         name: 'edit-food',
         component: () => import('@/views/Admin/Food/Edit.vue')
-    },
-
+    }
 
 ]
 

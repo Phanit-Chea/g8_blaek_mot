@@ -113,14 +113,12 @@ class AuthController extends Controller
                 'success' => false
             ], 422);
         }
-
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-
         // Create user record
         $user = User::create([
             'name' => $request->name,

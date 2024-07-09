@@ -64,10 +64,9 @@
                   <label for="category" class="form-label mb-0  fw-bold text-center siemreap"
                     >ប្រភេទ</label
                   >
-                  <select id="category" class=" mt-3 py-2 form-control form-select-sm  text-center">
+                  <select id="category" class=" mt-3 py-2 form-control form-select-sm  text-center" required v-model="selectedCategory">
                     <option class="siemreap" value="" selected>ជ្រើសប្រភេទម្ហូប</option>
-                    <option class="siemreap" value="">ពេលព្រឹក</option>
-                    
+                    <option class="siemreap" v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
                   </select>
                 </div>
 
@@ -120,15 +119,20 @@ export default {
   data() {
     return {
       food: {
-        category_id: '1',
+        category_id: null,
         name: '',
         image: null,
         video_url: '',
         cooking_time: '',
         ingredients: ''
       },
-      imagePreview: null
+      imagePreview: null,
+      categories: [],
+      selectedCategory: null
     }
+  },
+  mounted() {
+    this.fetchCategories();
   },
   async created() {
     await this.fetchFoodDetail();
@@ -145,7 +149,7 @@ export default {
     },
     async updateFood(event) {
       event.preventDefault();
-
+      this.food.category_id = this.selectedCategory
       const formData = new FormData();
       formData.append('category_id', this.food.category_id);
       formData.append('name', this.food.name);
@@ -163,16 +167,25 @@ export default {
           }
         });
         this.$router.push('/admin/food');
-        alert('Food updated successfully.');
       } catch (error) {
         console.error('Error updating food:', error);
-        alert('Failed to update food. Please try again.');
+        alert('error:', error);
       }
     },
     handleFileUpload(event) {
       this.food.image = event.target.files[0];
       this.imagePreview = URL.createObjectURL(event.target.files[0]);
-    }
+    },
+    async fetchCategories() {
+      try {
+        const response = await axiosInstance.get('/category/list')
+        if (response.data.success) {
+          this.categories = response.data.data
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    },
   }
 };
 </script>
