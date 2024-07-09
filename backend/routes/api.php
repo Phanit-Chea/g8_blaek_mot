@@ -52,5 +52,6 @@ Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->nam
 //==========CountStars===============//
 Route::prefix('ratings')->group(function () {
     Route::post('/', [RatingController::class, 'store']);
-    Route::get('/statistics/{food_id}', [RatingController::class, 'getRatingStatistics']);
+    Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
+    Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
 });

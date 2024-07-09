@@ -15,7 +15,7 @@ class RatingController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'food_id' => 'required|integer', 
+            'food_id' => 'required|integer',
             'stars_rating' => 'required|integer|min:1|max:5',
         ]);
 
@@ -23,47 +23,31 @@ class RatingController extends Controller
 
         return response()->json($rating, 201);
     }
-
-    public function getRatingStatistics($food_id)
+    //=======
+    public function countUsersRatedFood($foodId)
     {
-        $ratings = Rating::where('food_id', $food_id)->get();
-        $totalUsers = $ratings->count();
-    
-        //=============Custom percentages for each star=============//
-        $starPercentages = [
-            1 => "20%",
-            2 => "40%",
-            3 => "60%",
-            4 => "80%",
-            5 => "100%",
-        ];
-    
-        //=========Group by the correct column name========//
-        $starCounts = $ratings->groupBy('stars_rating')->map->count();
-    
-        // Calculate the percentage of users who chose each star
-        $userPercentages = $starCounts->map(function ($count) use ($totalUsers) {
-            return $totalUsers > 0 ? ($count / $totalUsers) * 100 : 0;
-        });
-    
-        //=======Combine the star percentages and user percentages========//
-        $combinedPercentages = $userPercentages->map(function ($userPercentage, $star) use ($starPercentages) {
-            return [
-                'stars_rating' => $star,
-                'custom_percentage' => $starPercentages[$star] ?? 0, // Ensure a default value if star not found
-                'user_percentage' => $userPercentage,
-            ];
-        });
-    
-        //========Convert the collection to an array and reset the keys===========//
-        $combinedPercentagesArray = $combinedPercentages->values()->toArray();
-    
-        return response()->json([
-            'total_users' => $totalUsers,
-            'combined_percentages' => $combinedPercentagesArray
-        ]);
+        $count = Rating::where('food_id', $foodId)
+           
+            ->count('user_id');
+
+        return response()->json(['count' => $count]);
     }
     
-    
-    
+    public function calculateAverageRating($foodId)
+{
+    $totalStars = Rating::where('food_id', $foodId)->sum('stars_rating');
+    $countUsers = Rating::where('food_id', $foodId)->count('user_id');
+
+    if ($countUsers > 0) {
+        $averageRating = $totalStars / $countUsers;
+    } else {
+        $averageRating = 0; // Handle the case where no users have rated yet
+    }
+
+    //======Round the average rating to the nearest whole number=========//
+    $averageRating = round($averageRating);
+
+    return response()->json(['average_rating' => $averageRating]);
+}
+
 }
