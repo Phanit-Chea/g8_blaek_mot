@@ -35,12 +35,8 @@
     "leaflet": "^1.9.4",
     "pinia": "^2.1.7",
     "popper.js": "^1.16.1",
-<<<<<<< HEAD
+    "sweetalert": "^2.1.2",
     "vee-validate": "^4.13.2",
-=======
-    "sweetalert2": "^11.12.2",
-    "vee-validate": "^4.12.8",
->>>>>>> 5b7a9f5df079ad985a7e4622d1482e4cda24edbf
     "vue": "^3.4.30",
     "vue-gates": "^2.1.2",
     "vue-router": "^4.4.0",
