@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +41,7 @@ Route::delete('/customers/delete/{id}', [UserController::class, 'destroyCustomer
 // Post related routes
 Route::prefix('post')->middleware('auth:sanctum')->group(function () {
     Route::get('/list', [PostController::class, 'index']);
+});
 //category
 Route::post('/category/create', [CategoryController::class, 'store'])->name('category.create'); // ->middleware('auth:sanctum');
 Route::get('category/list', [CategoryController::class, 'index'])->name('categiry.list');
