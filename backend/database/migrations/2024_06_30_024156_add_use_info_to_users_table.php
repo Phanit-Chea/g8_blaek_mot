@@ -31,7 +31,7 @@ return new class extends Migration
             $table->dropColumn('dateOfBirth');
             $table->dropColumn('gender');
             $table->dropColumn('address');
-            $table->dropColumn('profile');
+            
         });
     }
 };
