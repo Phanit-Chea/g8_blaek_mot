@@ -7,7 +7,7 @@ use App\Http\Resources\ShowFoodResource;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
+use App\Models\Season;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
@@ -165,5 +165,67 @@ class FoodController extends Controller
         }
 
         return response()->json($food, 200);
+    }
+    public function getRandomFood($count = 6)
+    {
+        $dishes = Food::all(); // Get all dishes
+        $suitableFood = [];
+
+        // Get the current season
+        $currentSeason = Season::getCurrentSeason();
+        
+
+        if ($currentSeason === 'Rainy') {
+            $unwantedIngredients = ['Spicy', 'spicy', 'salty']; // Example unwanted ingredients
+        } elseif ($currentSeason === 'Dry') {
+            $unwantedIngredients = ['sour']; // Example unwanted ingredients
+        }
+
+        // Filter out dishes with unwanted ingredients
+        foreach ($dishes as $dish) {
+            $ingredients = explode(',', $dish->ingredients); // Split the ingredients string into an array
+            $isValid = true;
+
+            foreach ($ingredients as $ingredient) {
+                if (in_array(trim($ingredient), $unwantedIngredients)) {
+                    $isValid = false;
+                    break;
+                }
+            }
+
+            if ($isValid) {
+                $suitableFood[] = $dish;
+            }
+        }
+
+        // Use the current date as a seed for randomness
+        $seed = strtotime(date('Y-m-d')); // Get the current date as a timestamp
+        srand($seed); // Seed the random number generator
+
+        // Return the specified number of random suitable foods, defaulting to 6
+        $count = min($count, count($suitableFood)); // Ensure count does not exceed available suitable foods
+        if ($count > 0) {
+            $randomFoods = array_rand($suitableFood, $count);
+            $selectedFoods = [];
+
+            if (is_array($randomFoods)) {
+                foreach ($randomFoods as $index) {
+                    $selectedFoods[] = $suitableFood[$index];
+                }
+            } else {
+                $selectedFoods = [$suitableFood[$randomFoods]];
+            }
+
+            // Reset the random number generator to avoid side effects
+            srand();
+
+            return response()->json([
+                'suitable_food' => $selectedFoods
+            ]);
+        } else {
+            return response()->json([
+                'suitable_food' => null
+            ]);
+        }
     }
 }
