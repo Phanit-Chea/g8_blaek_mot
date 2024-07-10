@@ -7,13 +7,13 @@ use App\Http\Resources\ShowFoodResource;
 use App\Models\Food;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Faker\Generator as Faker;
+use App\Models\Season;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
 use App\Http\Resources\FoodResource;
 use Exception;
-use App\Models\Season;
+
 
 
 
@@ -166,9 +166,6 @@ class FoodController extends Controller
 
         return response()->json($food, 200);
     }
-    
-
-
     public function getRandomFood($count = 6)
     {
         $dishes = Food::all(); // Get all dishes
@@ -231,5 +228,4 @@ class FoodController extends Controller
             ]);
         }
     }
-
 }

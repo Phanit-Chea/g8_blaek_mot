@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
@@ -87,6 +88,8 @@ Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->nam
 Route::post('/aboutus/create', [AboutUsController::class, 'createAboutUs'])->name('aboutus.create');
 Route::get('/aboutus/latest', [AboutUsController::class, 'getLatest']);
 
+Route::post('/aboutUsSlide/create', [AboutUsSlideController::class, 'createSlide'])->name('aboutus.createAboutUsSlide');
+Route::get('/imageSlide/lists', [AboutUsSlideController::class, 'index'])->name('aboutus.imageSlide');
 //==========CountStars===============//
 Route::prefix('ratings')->group(function () {
     Route::post('/', [RatingController::class, 'store']);
