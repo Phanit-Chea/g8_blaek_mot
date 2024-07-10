@@ -1,4 +1,3 @@
-
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
@@ -46,7 +45,7 @@
         <input type="checkbox" />
         <div tabindex="0" class="burger">
           <div v-if="useAuth.isAuthenticated" class="account ">
-            <img :src="`http://127.0.0.1:8000/${useAuth.user.profileImage}`" alt="login" width="45px" />
+            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
           </div>
           <div v-else>
             <i class="material-icons fs-1 text-white">person</i>
@@ -87,7 +86,7 @@
               </nav-link>
             </li>
 
-</ul>
+          </ul>
         </nav>
         <nav v-else class="popup-window">
           <ul>
@@ -138,15 +137,18 @@
 
       </div>
     </div>
-    {{ useAuth.data }}
+    <!-- {{ userStore.user }} -->
   </nav>
 
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
+import { useUserStore } from '@/stores/userStore';
 
 const useAuth = useAuthStore();
+const userStore = useUserStore();
+
 
 </script>
 

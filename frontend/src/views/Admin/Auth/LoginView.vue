@@ -62,18 +62,24 @@ export default defineComponent({
           password: this.formData.password
         });
 
-        console.log(response.data.user);
-
-
         const profileImage = response.data.user.profile;
         const remember_token = response.data.user.remember_token;
-        useAuth.login(profileImage, remember_token);
+        const isAuthenticated = true;
+        useAuth.login(profileImage, remember_token, isAuthenticated);
         userStore.setUser(response.data.user);
+
+        // Store token in localStorage if necessary
+        localStorage.setItem('token', remember_token);
+
+        if (this.formData.email === 'blaek.mot@admin.com' && this.formData.password === 'blaek_motG8') {
+          this.$router.push('/admin/dashboard');
+        } else {
+          this.$router.push('/');
+        }
         this.formData.email = '';
         this.formData.password = '';
         this.errorMessage = '';
 
-        this.$router.push('/');
       } catch (error) {
         if (error.response) {
           this.errorMessage = error.response.data.message;
@@ -83,7 +89,8 @@ export default defineComponent({
         console.error('Login failed:', this.errorMessage);
       }
     }
-  }
+  },
+  
 });
 </script>
 

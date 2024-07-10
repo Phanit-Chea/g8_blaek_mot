@@ -13,6 +13,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+
 import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
@@ -21,6 +22,7 @@ import axios from './plugins/axios'
 import 'uno.css'
 import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
+import piniaPersist from 'pinia-plugin-persistedstate';
 
 // import DataTable from 'datatables.net-vue3';
 // import DataTablesCore from 'datatables.net';
@@ -29,6 +31,7 @@ import 'leaflet/dist/leaflet.css';
 
 const app = createApp(App)
 const pinia = createPinia();
+pinia.use(piniaPersist);
 
 
 configure({
@@ -44,3 +47,4 @@ app.use(pinia);
 app.config.globalProperties.$axios = axios
 
 app.mount('#app')
+export default pinia;
