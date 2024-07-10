@@ -62,7 +62,7 @@
             </li>
             <li>
 
-              <button @click="logout">
+              <button @click="handleLogout">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
                   stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -133,12 +133,43 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
 import { useUserStore } from '@/stores/userStore';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const useAuth = useAuthStore();
 const userStore = useUserStore();
+const router = useRouter();
 
+const handleLogout = async () => {
+  try {
+    const accessToken = userStore.user.remember_token;
+    if (!accessToken) {
+      throw new Error('Access token not found');
+    }
+    const response = await axios.post('http://127.0.0.1:8000/api/logout', {}, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+    });
 
+    if (response.status === 200) {
+      useAuth.logout();
+      useAuth.isAuthenticated= false;
+      userStore.clearUser();
+      localStorage.removeItem('authToken');
+      console.log('Logout successful');
+      router.push('/');
+    } else {
+      throw new Error('Failed to logout');
+    }
+  } catch (error) {
+    console.error('Logout failed', error);
+  }
+};
 </script>
+
+
+
 
 <style scoped>
 .favoriteIcon,

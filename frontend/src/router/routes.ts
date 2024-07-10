@@ -22,7 +22,7 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import('@/views/Web/HomeView.vue')
+        component: () => import('@/views/Web/HomeView.vue'),
     },
 
     {
