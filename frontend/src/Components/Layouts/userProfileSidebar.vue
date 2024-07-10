@@ -61,28 +61,22 @@
               <h3 class="text-center text-dark siemreap" id="exampleModalLabel">បង្កើតថតឯកសារ</h3>
             </div>
             <div class="modal-body">
-  <form @submit.prevent="createFolder">
-    <div class="form-group">
-      <label class="text-dark siemreap">ឈ្មោះថតឯកសារ*</label>
-      <input 
-        type="text" 
-        class="form-control my-3 px-3 siemreap" 
-        id="name" 
-        aria-describedby="name" 
-        placeholder="បញ្ចូលឈ្មោះថតឯកសារ" 
-        v-model="folder_name" 
-      />
-    </div>
-    <div class="px-3 pb-3 d-flex justify-content-end">
-      <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
-        បោះបង់
-      </button>
-      <button type="submit" class="btn ms-2 text-bold siemreap" style="background-color: #238400">
-        បង្កើត
-      </button>
-    </div>
-  </form>
-</div>
+              <form @submit.prevent="createFolder">
+                <div class="form-group">
+                  <label class="text-dark siemreap">ឈ្មោះថតឯកសារ</label>
+                  <input type="text" class="form-control my-3 px-3 siemreap" id="name" aria-describedby="name"
+                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ" v-model="folder_name" />
+                </div>
+                <div class="px-3 pb-3 d-flex justify-content-end">
+                  <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
+                    បោះបង់
+                  </button>
+                  <button type="submit" class="btn ms-2 text-bold siemreap" style="background-color: #238400">
+                    បង្កើត
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -105,14 +99,14 @@ const createFolder = async () => {
     const state = localStorage.getItem('auth');
     const token = state ? JSON.parse(state).accessToken : null;
 
-    if (!token) {
-      alert('No access token found');
-      return;
-    }
+    // if (!token) {
+    //   alert('No access token found');
+    //   return;
+    // }
 
     const response = await axios.post(
       'http://127.0.0.1:8000/api/folder/create',
-      { folder_name: folder_name.value },
+      { folder_name: folder_name.value },  // Access the ref value
       {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -133,6 +127,7 @@ const createFolder = async () => {
     alert('An error occurred while creating the folder');
   }
 };
+
 
 onMounted(() => {
   // You may skip loading auth state if you directly access the token from local storage
