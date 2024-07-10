@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 
+import 'bootstrap/dist/js/bootstrap.bundle';
 import './assets/css/main.css'
 import './assets/css/bootstrap-icons.css'
 import './assets/css/bootstrap.min.css'

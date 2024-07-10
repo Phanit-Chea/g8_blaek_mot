@@ -20,7 +20,25 @@
         </button>
       </div>
     </div>
-    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
+    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
+      v-if="useAuth.isAuthenticated && userStore.user.email == 'blaek.mot@admin.com'">
+      <!-- <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"><span
+              class="visually-hidden">unread messages</span></span></i></a> -->
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">chat</i>
+      </router-link>
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">notifications</i>
+      </router-link>
+      <router-link to="/admin/dashboard"
+       >
+        <button class="btn btn-danger" type="submit">Dashboard</button>
+      </router-link>
+    </div>
+    <div v-else class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
       <a href="#"
         class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
@@ -113,6 +131,7 @@
           </ul>
         </nav>
       </label>
+
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
@@ -127,7 +146,6 @@
 
       </div>
     </div>
-    <!-- {{ userStore.user }} -->
   </nav>
 
 </template>
