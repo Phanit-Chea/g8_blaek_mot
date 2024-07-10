@@ -659,6 +659,17 @@ strong {
   padding: 26px 32px 0 32px;
 }
 
+.menu-image-wrap img {
+  width: 100%; /* Set the width to 100% of the parent container */
+  height: 200px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the entire area without stretching */
+}
+
+.menu-thumb {
+  margin-bottom: 20px; /* Add some margin between menu items */
+}
+
+
 #BookingModal .modal-body {
   padding: 38px 32px;
   padding-right: 35%;
