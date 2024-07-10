@@ -80,4 +80,10 @@ class AuthController extends Controller
         User::store($request, $id);
         return ['success' => true, 'Message' => 'User Was updated successfully'];
     }
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete(); // Revoke all user tokens
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
 }
