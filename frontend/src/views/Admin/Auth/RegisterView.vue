@@ -1,144 +1,4 @@
-<!-- <template>
-    <div class="register">
-        <NavbarView></NavbarView>
-        <div class="container d-flex" style="margin-top: 180px;">
 
-            <div class="login-box">
-                <h2 class="text-center text-success">បង្កើតគណនីថ្មី</h2>
-                <form @submit.prevent="registerAccount">
-                    <div class="input-group">
-                        <label for="name">ឈ្មោះ:</label>
-                        <input type="text" id="name" v-model="form.name" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="email">អុីមែល:</label>
-                        <input type="email" id="email" v-model="form.email" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="password">លេខសម្ងាត់:</label>
-                        <input type="password" id="password" v-model="form.password" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="confirmPassword">លេខកូដសម្ងាត់ថ្មី:</label>
-                        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="dateOfBirth">ថ្ងៃខែកំណើត:</label>
-                        <input type="date" id="dateOfBirth" v-model="form.dateOfBirth" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="gender">ភេទ:</label>
-                        <div class="input-group">
-                            <div class="gender">
-                                <input type="radio" id="female" name="gender" value="female" v-model="form.gender">
-                                <label for="female">ស្រី</label>
-                            </div>
-                            <div class="gender" style="margin-left: 40px;">
-                                <input type="radio" id="male" name="gender" value="male" v-model="form.gender">
-                                <label for="male">ប្រុស</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label for="phoneNumber">លេខទូរស័ព្ទ:</label>
-                        <input type="text" id="phoneNumber" v-model="form.phoneNumber" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="address">អាស័យដ្ធាន:</label>
-                        <input type="text" id="address" v-model="form.address" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="profile">រូបភាពផ្ទាល់ខ្លួន:</label>
-                        <div class="input-group">
-
-                            <input type="file" id="profile" @change="handleProfileChange" />
-                            <img :src="form.profilePreview" alt="Profile Preview" v-if="form.profilePreview" class="profile-preview" />
-                        </div>
-                    </div>
-                    <button type="submit">Register</button>
-                    <div class="links">
-                        <a href="/register">Free Registration</a>
-                        <a href="/forgot-password">Forgot password?</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <FooterView></FooterView>
-    </div>
-</template>
-
-<script>
-import NavbarView from '../../Web/Navbar/NavbarView.vue';
-import FooterView from '../../Web/Footer/FooterView.vue';
-import axios from 'axios';
-import { useUserStore } from '../../../stores/userStore';
-
-export default {
-    name: "FormView",
-    components: {
-        NavbarView,
-        FooterView
-    },
-    data() {
-        return {
-            form: {
-                name: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                dateOfBirth: '',
-                gender: '',
-                phoneNumber: '',
-                profile: null,
-                profilePreview: null,
-                address: ''
-            }
-        };
-    },
-    methods: {
-        handleProfileChange(event) {
-            const file = event.target.files[0];
-            if (file) {
-                this.form.profile = file;
-                this.form.profilePreview = URL.createObjectURL(file);
-            }
-        },
-        async registerAccount() {
-            const userStore = useUserStore();
-            userStore.setUser(this.form);
-
-            console.log(userStore.user);
-
-            const formData = new FormData();
-            formData.append('name', this.form.name);
-            formData.append('email', this.form.email);
-            formData.append('password', this.form.password);
-            formData.append('confirmPassword', this.form.confirmPassword);
-            formData.append('dateOfBirth', this.form.dateOfBirth);
-            formData.append('gender', this.form.gender);
-            formData.append('phoneNumber', this.form.phoneNumber);
-            formData.append('profile', this.form.profile);
-            formData.append('address', this.form.address);
-
-            try {
-                const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                console.log(response.data);
-                alert('Registration successful! You can now log in.');
-                this.$router.push('/');
-            } catch (error) {
-                console.error(error);
-                alert('Registration failed. Please try again.');
-            }
-        }
-    }
-}
-</script>
-
-</template> -->
 <template>
     <NavbarView></NavbarView>
 
@@ -212,80 +72,77 @@ import FooterView from '../../Web/Footer/FooterView.vue';
 import axios from 'axios';
 import { useAuthStore } from '../../../stores/auth-store';
 import { useUserStore } from '../../../stores/userStore';
-import { useRouter } from 'vue-router';
 
 export default {
-    components: {
-        NavbarView,
-        FooterView,
+  components: {
+    NavbarView,
+    FooterView,
+  },
+  data() {
+    return {
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        dateOfBirth: '',
+        gender: '',
+        phoneNumber: '',
+        profile: '',
+        address: ''
+      }
+    };
+  },
+  methods: {
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      this.form.profile = file;
     },
-    data() {
-        return {
-            form: {
-                name: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                dateOfBirth: '',
-                gender: '',
-                phoneNumber: '',
-                profile: '',
-                address: ''
-            }
-        };
-    },
-    methods: {
-        handleFileUpload(event) {
-            const file = event.target.files[0];
-            this.form.profile = file;
-        },
+    async registerAccount() {
+      const userStore = useUserStore();
+      const authStore = useAuthStore();
 
-        async registerAccount() {
-            const userStore = useUserStore();
-            const authStore = useAuthStore();
+      const formData = new FormData();
+      formData.append('name', this.form.name);
+      formData.append('email', this.form.email);
+      formData.append('password', this.form.password);
+      formData.append('confirmPassword', this.form.confirmPassword);
+      formData.append('dateOfBirth', this.form.dateOfBirth);
+      formData.append('gender', this.form.gender);
+      formData.append('phoneNumber', this.form.phoneNumber);
+      formData.append('profile', this.form.profile);
+      formData.append('address', this.form.address);
 
-            const formData = new FormData();
-            formData.append('name', this.form.name);
-            formData.append('email', this.form.email);
-            formData.append('password', this.form.password);
-            formData.append('confirmPassword', this.form.confirmPassword);
-            formData.append('dateOfBirth', this.form.dateOfBirth);
-            formData.append('gender', this.form.gender);
-            formData.append('phoneNumber', this.form.phoneNumber);
-            formData.append('profile', this.form.profile);
-            formData.append('address', this.form.address);
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
 
-            try {
-                const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+        console.log('Registration response:', response.data);
 
-                console.log('Registration response:', response.data); // Log the response
+        // Assuming the response contains the user data and access token
+        const user = response.data.user;
+        const profileImage = user.profile;
+        const accessToken = response.data.access_token;
+        const isAuthenticated = true;
 
-                // Assuming the response contains the user data and access token
-                const user = response.data.user;
-                const profileImage = user.profile;
-                const accessToken = response.data.access_token; // Get access token from response
-                console.log('Access token:', accessToken); // Log the access token
+        console.log('Access token:', accessToken);
 
-                // Store the profile image and access token in Pinia
-                authStore.login(profileImage, accessToken);
-                userStore.setUser(user);
-
-                this.$router.push('/');
-            } catch (error) {
-                console.error(error);
-                alert('Registration failed. Please try again.');
-            }
-        }
+        // Store the profile image and access token in Pinia
+        authStore.login(profileImage, accessToken,isAuthenticated);
+        userStore.setUser(user);
+        this.$router.push('/');
+      } catch (error) {
+        console.error(error);
+        alert('Registration failed. Please try again.');
+      }
     }
-
-
+  }
 }
-
 </script>
+
 <style>
 .siemreap {
     font-family: 'Siemreap', cursive;

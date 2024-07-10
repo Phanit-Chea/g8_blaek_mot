@@ -57,21 +57,36 @@ const onSubmit = handleSubmit(async (values) => {
     // Ensure CSRF token is set
     await axiosInstance.get('/sanctum/csrf-cookie')
 
-    const { data } = await axiosInstance.post('/login', values)
-    localStorage.setItem('access_token', data.access_token)
-    router.push('/')
-  } catch (error) {
-    if (error.response && error.response.data) {
-      loginError.value = error.response.data.message || 'Login failed. Please try again.'
-    } else {
-      loginError.value = 'An unexpected error occurred. Please try again.'
-    }
-    console.error('Login error:', error)
-  }
-})
+        const profileImage = response.data.user.profile;
+        const remember_token = response.data.user.remember_token;
+        const isAuthenticated = true;
+        useAuth.login(profileImage, remember_token, isAuthenticated);
+        userStore.setUser(response.data.user);
 
-const { value: password, errorMessage: nameError } = useField('password')
-const { value: email, errorMessage: emailError } = useField('email')
+        // Store token in localStorage if necessary
+        localStorage.setItem('token', remember_token);
+
+        if (this.formData.email === 'blaek.mot@admin.com' && this.formData.password === 'blaek_motG8') {
+          this.$router.push('/admin/dashboard');
+        } else {
+          this.$router.push('/');
+        }
+        this.formData.email = '';
+        this.formData.password = '';
+        this.errorMessage = '';
+
+      } catch (error) {
+        if (error.response) {
+          this.errorMessage = error.response.data.message;
+        } else {
+          this.errorMessage = error.message;
+        }
+        console.error('Login failed:', this.errorMessage);
+      }
+    }
+  },
+  
+});
 </script>
 
 <style scoped>

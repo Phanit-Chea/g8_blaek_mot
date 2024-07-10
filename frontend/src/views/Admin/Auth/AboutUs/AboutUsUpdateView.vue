@@ -90,7 +90,7 @@ export default defineComponent({
         console.log('Response:', response)
 
         // Navigate to the About Us page
-        this.$router.push('/aboutUs')
+        this.$router.push('/aboutus')
       } catch (error) {
         console.error('Error:', error.response || error)
         alert('Form submission failed. Please try again.')

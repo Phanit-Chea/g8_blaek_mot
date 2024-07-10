@@ -1,11 +1,15 @@
 <?php
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,12 +69,9 @@ Route::prefix("food")->group(function(){
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
 });
 
-// Food related routes
-Route::prefix('food')->group(function () {
-    Route::post('/create', [FoodController::class, 'store'])->name('food.create');
-});
 
 // Chat related routes
 Route::prefix('chat')->group(function () {
@@ -86,3 +87,11 @@ Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->nam
 Route::post('/aboutus/create', [AboutUsController::class, 'createAboutUs'])->name('aboutus.create');
 Route::get('/aboutus/latest', [AboutUsController::class, 'getLatest']);
 
+Route::post('/aboutUsSlide/create', [AboutUsSlideController::class, 'createSlide'])->name('aboutus.createAboutUsSlide');
+Route::get('/imageSlide/lists', [AboutUsSlideController::class, 'index'])->name('aboutus.imageSlide');
+//==========CountStars===============//
+Route::prefix('ratings')->group(function () {
+    Route::post('/', [RatingController::class, 'store']);
+    Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
+    Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
+});
