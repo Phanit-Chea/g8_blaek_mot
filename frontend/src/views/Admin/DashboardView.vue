@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import HeaderMenu from '../../../src/Components/HeaderMenu.vue'
+import HeaderMenu from '../../../src/Components/HeaderMenu.vue';
+// import NavbarAdmin from '../../../src/Components/NavbarAdmin.vue';\
+import NavbarAdmin from '../../Components/NavbarAdmin.vue'
+
+
 </script>
+
 <template>
-  <div class="container-fluid" >
-    <div class="row flex-nowrap">
-      <header-menu/>
+  <div class="container-fluid">
+   <!-- <NavbarAdmin/> -->
+    <NavbarAdmin />
+
+    <div class="row flex-nowrap" style="margin-top: 7%;">
+      <header-menu />
       <div class="flex flex-col bg-white justify-center rounded-lg h-100vh" style="width:86.8%">
         <div class="text-center">
           <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Dashboard</h1>
@@ -16,3 +24,6 @@ import HeaderMenu from '../../../src/Components/HeaderMenu.vue'
   </div>
 
 </template>
+<style scoped>
+
+</style>

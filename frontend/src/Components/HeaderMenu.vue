@@ -1,5 +1,5 @@
 <template>
-    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color:	#1d243c; width: 170px">
+    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color:	#1d243c; width: 190px">
     <div
       class="d-flex flex-column align-items-center align-items-sm-start ps-2 pdark min-vh-100 sticky-top sidebar">
     
@@ -14,6 +14,12 @@
             <i class="fs-4 text-white align-middle material-icons">person</i>
             <span class="ms-2 d-none d-sm-inline text-white siemreap">អ្នកប្រើ</span>
           </router-link> 
+        </li>
+        <li class="nav-item mt-2">
+            <router-link to="/admin/food" class="nav-link px-0 align-middle">
+            <i class="fs-4 text-white align-middle material-icons">fastfood</i>
+            <span class="ms-1 d-none d-sm-inline text-white siemreap pe-5">បញ្ចីម្ហូប</span>
+            </router-link>
         </li>
         <li class="nav-item mt-2">
             <router-link to="/admin/category" class="nav-link px-0 align-middle">
