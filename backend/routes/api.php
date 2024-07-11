@@ -70,10 +70,7 @@ Route::prefix("food")->group(function(){
     Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
 });
 
-// Food related routes
-Route::prefix('food')->group(function () {
-    Route::post('/create', [FoodController::class, 'store'])->name('food.create');
-});
+
 
 // Chat related routes
 Route::prefix('chat')->group(function () {
