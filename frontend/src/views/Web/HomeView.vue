@@ -13,12 +13,20 @@ export default {
     return {
       foods: [],
       randomFoods: [],
-      randomNumber:''
+      randomNumber:'',
+    //======code axios for ratingStar======//
+      rating: {
+        user_id: null,
+        food_id: null,
+        stars_rating: null,
+      }
     }
   },
+  //======code axios for randomfood======//
   mounted() {
     this.fetchFood()
     this.fetchRandomfood()
+   
   },
   methods: {
     async fetchFood() {
@@ -39,7 +47,44 @@ export default {
       } catch (error) {
         console.error('Error fetching random food:', error)
       }
-    }
+    },
+    //=========code axios for ratingStar===============//
+     async createRating(event) {
+      event.preventDefault()
+      const formData = new FormData()
+      formData.append('user_id', this.rating.user_id)
+      formData.append('food_id', this.rating.food_id)
+      formData.append('stars_rating', this.rating.stars_rating)
+      
+      try {
+        await axiosInstance.post('/ratings', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      
+        this.$router.push('/')
+      } catch (error) {
+        console.error('Error creating rating:', error)
+        alert('Failed to create rating. Please try again.')
+      }
+    },
+    async fetchAverageRating(foodId) {
+      try {
+        const response = await axiosInstance.get(`/ratings/averages/${foodId}`)
+        console.log('Average Rating:', response.data.average_rating)
+      } catch (error) {
+        console.error('Error fetching average rating:', error)
+      }
+    },
+    async fetchUserCount(foodId) {
+      try {
+        const response = await axiosInstance.get(`/ratings/count-users/${foodId}`)
+        console.log('User Count:', response.data.count)
+      } catch (error) {
+        console.error('Error fetching user count:', error)
+      }
+    },
   }
 }
 </script>
@@ -743,9 +788,6 @@ export default {
   </div>
   <FooterView></FooterView>
 </template>
-
-
-
 
 <style scoped>
 .cardCategory,
