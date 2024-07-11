@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
