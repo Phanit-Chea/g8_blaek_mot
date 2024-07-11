@@ -1,17 +1,15 @@
 <template>
   <div class="formContainer">
-    <NavbarView></NavbarView>
-    <div class="container d-flex justify-content-center align-items-center mt-40 siemreap">
+    <div class="container siemreap">
+      <div class="sideBar">
+        <HeaderMenu class="headerMenu"></HeaderMenu>
+      </div>
       <section class="aboutUsUpdate">
         <header class="fw-bold text-success fs-3">ផ្លាស់ប្ដូរព័ត៍មានរបស់អ្នក</header>
         <form class="form" @submit.prevent="submitForm" enctype="multipart/form-data">
           <div class="input-box">
             <label>ព័ត៍មានរបស់អ្នក</label>
-            <input
-              placeholder="សូមបញ្ចូលព័ត៍មានរបស់អ្នក"
-              type="text"
-              v-model="form.description"
-            />
+            <input placeholder="សូមបញ្ចូលព័ត៍មានរបស់អ្នក" type="text" v-model="form.description" />
           </div>
           <div class="input-box">
             <label>ការណែនាំ</label>
@@ -38,26 +36,21 @@
         </form>
       </section>
     </div>
-
-    <FooterView></FooterView>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NavbarView from '../../../Web/Navbar/NavbarView.vue'
-import FooterView from '../../../Web/Footer/FooterView.vue'
+import HeaderMenu from '../../../../Components/HeaderMenu.vue'
 import axiosInstance from '@/plugins/axios'
 
 export default defineComponent({
   components: {
-    NavbarView,
-    FooterView
+    HeaderMenu
   },
   data() {
     return {
       form: {
-        imageSlide: null,
         imageDetail: null,
         description: '',
         recommentFood: '',
@@ -70,24 +63,29 @@ export default defineComponent({
     handleFileUpload(event: any, type: string) {
       const file = event.target.files[0]
       if (type === 'imageDetail') {
-        this.form.imageDetail = file      
+        this.form.imageDetail = file
       }
     },
     async submitForm() {
       try {
         const formData = new FormData()
-        formData.append('description', this.form.description)
-        formData.append('recommentFood', this.form.recommentFood)
-        formData.append('ourMission', this.form.ourMission)
-        formData.append('ourVision', this.form.ourVision)
-        formData.append('imageDetail', this.form.imageDetail)
+        if (this.form.imageDetail) {
+          formData.append('description', this.form.description)
+          formData.append('recommentFood', this.form.recommentFood)
+          formData.append('ourMission', this.form.ourMission)
+          formData.append('ourVision', this.form.ourVision)
+          formData.append('imageDetail', this.form.imageDetail)
+        } else {
+          alert('Please select an image file.')
+          return
+        }
 
         const response = await axiosInstance.post('/aboutus/create', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
-        console.log('Response:', response)
+        console.log('Response1:', response)
 
         // Navigate to the About Us page
         this.$router.push('/aboutus')
@@ -108,16 +106,24 @@ export default defineComponent({
   font-family: 'Siemreap', cursive;
 }
 .container {
-  padding-top: 15px;
-  height: 100%;
-  background-color: rgb(255, 255, 255);
+  width: 100%;
   display: flex;
+  background-color: rgb(255, 255, 255);
+  margin: 0;
+  gap: 20px;
+}
+.sideBar {
+  display: flex;
+  width: 20%;
+  padding-left: 0;
+  margin-left: -15px;
 }
 .formContainer {
   background-color: rgb(255, 255, 255);
+  justify-content: space-between;
 }
 .form {
-  margin-top: 20px;
+  margin-top: 0px;
   padding: 4px;
 }
 .aboutUsUpdate {
@@ -130,8 +136,7 @@ export default defineComponent({
   background-color: white;
   padding: 25px;
   border-radius: 8px;
-  margin-top: 5%;
-  margin: 5px;
+  margin: 13%;
   box-shadow: 0 0 45px rgba(10, 84, 36, 0.537);
 }
 
