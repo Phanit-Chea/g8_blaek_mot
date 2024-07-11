@@ -12,7 +12,13 @@ export default {
   data() {
     return {
       foods: [],
-      randomFoods: []
+      randomFoods: [],
+      selectedRandomNumber: 6
+    }
+  },
+  watch: {
+    selectedRandomNumber(newValue) {
+      this.fetchRandomfood()
     }
   },
   mounted() {
@@ -33,8 +39,8 @@ export default {
     async fetchRandomfood() {
       try {
         console.log('Fetching random food...')
-        const response = await axiosInstance.get('/food/random/6')
-          this.randomFoods = response.data.suitable_food
+        const response = await axiosInstance.get(`/food/random/${this.selectedRandomNumber}`)
+        this.randomFoods = response.data.suitable_food
       } catch (error) {
         console.error('Error fetching random food:', error)
       }
@@ -42,6 +48,7 @@ export default {
   }
 }
 </script>
+
 <template>
   <NavbarView></NavbarView>
   <div class="contain-home" style="padding-top: 120px">
@@ -235,6 +242,18 @@ export default {
               <h4>Dinner</h4>
             </a>
           </li>
+          <li class="nav-item">
+  <select id="category" class="mt-2 form-control form-select-sm text-center" v-model.number="selectedRandomNumber">
+    <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
+    <option class="siemreap" value="1">១</option>
+    <option class="siemreap" value="2">២</option>
+    <option class="siemreap" value="4">៤</option>
+    <option class="siemreap" value="6">៦</option>
+    <option class="siemreap" value="8">៨</option>
+    <option class="siemreap" value="10">១០</option>
+  </select>
+</li>
+          
           <!-- End tab nav item -->
         </ul>
 
@@ -247,13 +266,15 @@ export default {
 
             <div class="row gy-5">
               <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
-                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
                     :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
                 /></router-link>
-                <h4>{{food.name}}</h4>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
