@@ -102,7 +102,43 @@ const router = createRouter({
       path: '/admin/dashboard/page',
       name: 'adminDashboardPage',
       component: () => import('../Components/NavbarAdmin.vue')
+    },
+    {
+      path: '/admin/user',
+      name: 'admin/user',
+      component: () => import('../views/Admin/User/ListView.vue')
+    },
+    {
+      path: '/admin/food',
+      name: 'admin/list',
+      component: () => import('../views/Admin/Food/ListView.vue')
+    },
+    {
+      path: '/admin/category',
+      name: 'admin/category',
+      component: () => import('../views/Admin/CategoryAdmin/CategoryVue.vue')
+    },
+    {
+      path: '/admin/partnership',
+      name: 'admin/partnership',
+      component: () => import('../views/Admin/Partnership/ListView.vue')
+    },
+    {
+      path: '/admin/setting',
+      name: 'admin/setting',
+      component: () => import('../views/Admin/Setting/ListView.vue')
+    },
+    {
+      path: '/aboutUsSlideForm',
+      name: 'aboutUsSlideForm',
+      component: () => import('../views/Admin/Auth/AboutUs/AboutUsSlideView.vue')
+    },
+    {
+      path: '/create/food',
+      name: 'createFood',
+      component: () => import('../views/Admin/Food/FormAddFoodView.vue')
     }
+    
   ]
 })
 

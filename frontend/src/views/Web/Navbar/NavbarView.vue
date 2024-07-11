@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
-      v-if="useAuth.isAuthenticated && userStore.user.email == 'blaek.mot@admin.com'">
+      v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'">
       <!-- <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
             class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"><span
               class="visually-hidden">unread messages</span></span></i></a> -->
@@ -131,7 +131,6 @@
           </ul>
         </nav>
       </label>
-
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
@@ -153,6 +152,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
 import { useUserStore } from '@/stores/userStore';
+import useStore from 'element-plus/es/components/table/src/store/index.mjs';
 
 const useAuth = useAuthStore();
 const userStore = useUserStore();

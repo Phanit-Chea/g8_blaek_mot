@@ -13,13 +13,8 @@
         </el-form-item>
 
         <div>
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="isSubmitting"
-            type="primary"
-            native-type="submit"
-          >Submit</el-button>
+          <el-button size="large" class="mt-3 w-full" :disabled="isSubmitting" type="primary"
+            native-type="submit">Submit</el-button>
         </div>
       </el-form>
       <div v-if="loginError" class="mt-4 text-red-500 text-center">{{ loginError }}</div>
@@ -33,8 +28,12 @@ import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth-store'
+import { useUserStore } from '@/stores/userStore'
 
 const router = useRouter()
+const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const formSchema = yup.object({
   password: yup.string().required().label('Password'),
@@ -51,42 +50,40 @@ const { handleSubmit, isSubmitting } = useForm({
 
 const loginError = ref('')
 
+const { value: email, errorMessage: emailError } = useField('email')
+const { value: password, errorMessage: passwordError } = useField('password')
+
 const onSubmit = handleSubmit(async (values) => {
   loginError.value = '' // Clear previous errors
   try {
     // Ensure CSRF token is set
     await axiosInstance.get('/sanctum/csrf-cookie')
 
-        const profileImage = response.data.user.profile;
-        const remember_token = response.data.user.remember_token;
-        const isAuthenticated = true;
-        useAuth.login(profileImage, remember_token, isAuthenticated);
-        userStore.setUser(response.data.user);
+    const response = await axiosInstance.post('/login', values)
+    const { user, remember_token } = response.data
 
-        // Store token in localStorage if necessary
-        localStorage.setItem('token', remember_token);
+    // Set user data in stores
+    authStore.login({ ...user, token: remember_token })
+    userStore.setUser(user)
 
-        if (this.formData.email === 'blaek.mot@admin.com' && this.formData.password === 'blaek_motG8') {
-          this.$router.push('/admin/dashboard');
-        } else {
-          this.$router.push('/');
-        }
-        this.formData.email = '';
-        this.formData.password = '';
-        this.errorMessage = '';
+    // Store token in localStorage if necessary
+    localStorage.setItem('token', remember_token)
 
-      } catch (error) {
-        if (error.response) {
-          this.errorMessage = error.response.data.message;
-        } else {
-          this.errorMessage = error.message;
-        }
-        console.error('Login failed:', this.errorMessage);
-      }
+    // Check email and password for admin access
+    if (values.email === 'admin@gmail.com' && values.password === 'password') {
+      router.push('/admin/dashboard')
+    } else {
+      router.push('/')
     }
-  },
-  
-});
+  } catch (error) {
+    if (error.response) {
+      loginError.value = error.response.data.message
+    } else {
+      loginError.value = error.message
+    }
+    console.error('Login failed:', loginError.value)
+  }
+})
 </script>
 
 <style scoped>
