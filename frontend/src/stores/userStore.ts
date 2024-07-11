@@ -1,43 +1,24 @@
 import { defineStore } from 'pinia';
 
-function saveUserState(key, state) {
-    localStorage.setItem(key, JSON.stringify(state));
-}
-
-function loadUserState(key) {
-    const state = localStorage.getItem(key);
-    return state ? JSON.parse(state) : null;
-}
-
 export const useUserStore = defineStore('user', {
-    state: () => ({
-        user: {
-            // name: '',
-            // email: '',
-            // password: '',
-            // confirmPassword: '',
-            // dateOfBirth: '',
-            // gender: '',
-            // phoneNumber: '',
-            // profile: '',
-            // profilePreview: '',
-            // address: '',
-        }
-    }),
-    actions: {
-        setUser(user) {
-            this.user = {...user};
-            saveUserState('user', this.$state);
-        },
-        loadUserState() {
-            const state = loadUserState('user');
-            if (state) {
-                this.$patch(state);
-            }
-        },
-        clearUserState() {
-            this.$reset();
-            localStorage.removeItem('user');
-        }
-    }
+  state: () => ({
+    user: null,
+  }),
+  actions: {
+    setUser(user: any) {
+      this.user = user;
+    },
+    clearUser() {
+      this.user = null;
+    },
+  },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'user',
+        storage: localStorage,
+      },
+    ],
+  },
 });
