@@ -47,8 +47,8 @@ Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->n
 
 //food
 
-Route::post('/saveFood/create/{id}', [SaveFoodController::class, 'store'])->name('saveFood.create')->middleware('auth:sanctum');
-Route::delete('/saveFood/delete/{id}', [SaveFoodController::class, 'destroy'])->name('saveFood.destroy')->middleware('auth:sanctum');
+Route::post('/save/create/{id}', [SaveFoodController::class, 'store'])->name('save.create')->middleware('auth:sanctum');
+Route::delete('/save/delete/{id}', [SaveFoodController::class, 'destroy'])->name('save.destroy')->middleware('auth:sanctum');
 
 Route::post('/register', [ApiAuthController::class, 'register']);
 
@@ -60,11 +60,7 @@ Route::prefix("food")->group(function(){
     Route::get('/show/{id}',[FoodController::class,'show'])->name('food.show');
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
-<<<<<<< HEAD
-    Route::get('category/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
-=======
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
->>>>>>> develop
 });
 
 Route::prefix("chat")->group(function(){

@@ -16,7 +16,10 @@ class SaveFoodController extends Controller
      */
     public function index()
     {
-        // 
+        $save = SaveFood::all();
+        return response()->json([
+            'data' => $save,
+        ], 200);
     }
     /**
      * Store a newly created resource in storage.
