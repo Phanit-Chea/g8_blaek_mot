@@ -2,11 +2,13 @@
 <script>
 import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
 import axiosInstance from '@/plugins/axios'
+import NavbarAdmin from '@/Components/NavbarAdmin.vue';
 
 export default {
   name: 'list-food',
   components: {
-    HeaderMenu
+    HeaderMenu,
+    NavbarAdmin
   },
   data() {
     return {
@@ -42,7 +44,8 @@ export default {
 };
 </script>
 <template>
-  <div class="container-fluid">
+  <NavbarAdmin></NavbarAdmin>
+  <div class="container-fluid" style="margin-top: 6%;">
     <div class="row flex-nowrap">
       <header-menu />
       <!-- Table  -->

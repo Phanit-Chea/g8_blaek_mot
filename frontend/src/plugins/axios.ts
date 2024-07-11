@@ -19,7 +19,7 @@ axiosInstance.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
 
 // Add a request interceptor
 // axiosInstance.interceptors.request.use(config => {
-//   const token = useAuthStore.user.remember_token;
+//   const token = useUserStore.user.remember_token;
 //   if (token) {
 //     config.headers.Authorization = `Bearer ${token}`;
 //   }
