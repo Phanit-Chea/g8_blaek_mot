@@ -89,6 +89,16 @@ const routes = [
         component: ChatVue,
     },
     {
+        path: '/aboutUsUpdateForm',
+        name: 'aboutUsUpdate',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
+    },
+    {
+        path: '/aboutUsSlideForm',
+        name: 'aboutUsSlide',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsSlideView.vue')
+    },
+    {
         path: '/admin/user',
         name: '/admin/user',
         component: () => import('@/views/Admin/User/ListView.vue')

@@ -1,5 +1,6 @@
 // src/plugins/axios.js
-import { useUserStore } from '@/stores/userStore';
+// import { useUserStore } from '@/stores/userStore';
+import { useAuthStore } from '@/stores/auth-store'
 import axios from 'axios'
 
 const axiosInstance = axios.create({
@@ -18,7 +19,7 @@ axiosInstance.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
 
 // Add a request interceptor
 // axiosInstance.interceptors.request.use(config => {
-//   const token = useUserStore.user.remember_token;
+//   const token = useAuthStore.user.remember_token;
 //   if (token) {
 //     config.headers.Authorization = `Bearer ${token}`;
 //   }
