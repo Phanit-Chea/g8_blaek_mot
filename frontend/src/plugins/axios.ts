@@ -1,5 +1,6 @@
 // src/plugins/axios.js
-import { useUserStore } from '@/stores/userStore';
+// import { useUserStore } from '@/stores/userStore';
+import { useAuthStore } from '@/stores/auth-store'
 import axios from 'axios'
 
 const axiosInstance = axios.create({

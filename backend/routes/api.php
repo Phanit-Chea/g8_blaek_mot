@@ -1,15 +1,18 @@
 <?php
-
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\api\AuthController as ApiAuthController;
+use App\Http\Controllers\AboutUsSlideController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
-use App\Http\Controllers\API\PostController;
-use App\Http\Controllers\Api\SaveFoodController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ChatController;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SaveFoodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +30,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/post/list', [PostController::class, 'index'])->middleware('auth:sanctum');
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/updateProfile', [ApiAuthController::class, 'update']);
+
+// Auth related routes
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [ApiAuthController::class, 'register']);
+    Route::get('/me', [AuthController::class, 'index'])->middleware('auth:sanctum');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/updateProfile', [ApiAuthController::class, 'update']);
+    });
 });
 
+// user list 
+Route::get('/customers/list', [UserController::class, 'customerList']);
+Route::delete('/customers/delete/{id}', [UserController::class, 'destroyCustomer']);
+// Post related routes
+Route::prefix('post')->middleware('auth:sanctum')->group(function () {
+    Route::get('/list', [PostController::class, 'index']);
+
+});
 //category
 Route::post('/category/create', [CategoryController::class, 'store'])->name('category.create'); // ->middleware('auth:sanctum');
 Route::get('category/list', [CategoryController::class, 'index'])->name('categiry.list');
@@ -61,15 +76,29 @@ Route::prefix("food")->group(function(){
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
 });
 
-Route::prefix("chat")->group(function(){
-    Route::post('/create/{to_user}',[ChatController::class,'store'])->name('chat.create')->middleware('auth:sanctum');
-    Route::get('/list',[ChatController::class,'index'])->name('chat.list');
-    Route::get('/{to_user}', [ChatController::class,'show'])->name('chat.show')->middleware('auth:sanctum');
-    Route::put('/update/{id}',[ChatController::class,'update'])->name('chat.update')->middleware('auth:sanctum');
-    Route::delete('/delete/{id}',[ChatController::class,'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
+
+// Chat related routes
+Route::prefix('chat')->group(function () {
+    Route::post('/create/{to_user}', [ChatController::class, 'store'])->name('chat.create')->middleware('auth:sanctum');
+    Route::get('/list', [ChatController::class, 'index'])->name('chat.list');
+    Route::get('/{to_user}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth:sanctum');
+    Route::put('/update/{id}', [ChatController::class, 'update'])->name('chat.update')->middleware('auth:sanctum');
+    Route::delete('/delete/{id}', [ChatController::class, 'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
 });
 
+// About us related routes
 Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
+Route::post('/aboutus/create', [AboutUsController::class, 'createAboutUs'])->name('aboutus.create');
+Route::get('/aboutus/latest', [AboutUsController::class, 'getLatest']);
 
+Route::post('/aboutUsSlide/create', [AboutUsSlideController::class, 'createSlide'])->name('aboutus.createAboutUsSlide');
+Route::get('/imageSlide/lists', [AboutUsSlideController::class, 'index'])->name('aboutus.imageSlide');
+//==========CountStars===============//
+Route::prefix('ratings')->group(function () {
+    Route::post('/', [RatingController::class, 'store']);
+    Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
+    Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
+});

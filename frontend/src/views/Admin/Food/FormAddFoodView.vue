@@ -113,6 +113,10 @@
 
 <script>
 import axiosInstance from '@/plugins/axios'
+import { useAuthStore } from '@/stores/auth-store';
+import { useUserStore } from '@/stores/userStore.ts';
+const useAuth = useUserStore();
+
 
 export default {
   name: 'create-food',
@@ -151,10 +155,12 @@ export default {
       formData.append('video_url', this.food.video_url)
       formData.append('cooking_time', this.food.cooking_time)
       formData.append('ingredients', this.food.ingredients)
-
+      // console.log(this.food.categrory_id);
+      console.log(useAuth.user.remember_token);
       try {
         await axiosInstance.post('/food/create', formData, {
           headers: {
+            'Authorization':` Bearer ${useAuth.user.remember_token}`,
             'Content-Type': 'multipart/form-data'
           }
         })

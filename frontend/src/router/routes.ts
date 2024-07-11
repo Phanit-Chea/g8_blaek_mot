@@ -1,8 +1,4 @@
-
 import ChatVue from '@/views/chat/ChatVue.vue'
-
-import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
-import path from 'path';
 const routes = [
     {
         path: '/admin/dashboard',
@@ -96,7 +92,13 @@ const routes = [
         path: '/aboutUsUpdateForm',
         name: 'aboutUsUpdate',
         component: () => import('@/views/Admin/Auth/AboutUs/AboutUsUpdateView.vue')
-    },{
+    },
+    {
+        path: '/aboutUsSlideForm',
+        name: 'aboutUsSlide',
+        component: () => import('@/views/Admin/Auth/AboutUs/AboutUsSlideView.vue')
+    },
+    {
         path: '/admin/user',
         name: '/admin/user',
         component: () => import('@/views/Admin/User/ListView.vue')
@@ -125,7 +127,19 @@ const routes = [
         path: '/food/edit/:id',
         name: 'edit-food',
         component: () => import('@/views/Admin/Food/Edit.vue')
-    }
+    },
+    {
+        path: '/admin/profile',
+        name: 'admin-profile',
+        component: () => import('../views/Admin/Auth/AdminProfile.vue')
+    },
+    {
+        path: '/404',
+        name: 'notFound',
+        component: () => import('../views/404notFound/NotFound.vue')
+    },
+
+
 
 ]
 

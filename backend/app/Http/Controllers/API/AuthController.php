@@ -59,14 +59,14 @@ class AuthController extends Controller
         $user->update($validatedData);
         $user = User::find($user->id);
         $userData = $user->toArray();
-        $userData['remember_token'] = $user->remember_token;
+        // $userData['remember_token'] = $user->remember_token;
 
         \Log::info('Profile updated successfully', $userData);
 
         return response()->json([
             'success' => true,
             'message' => 'Profile updated successfully',
-            'data' => $userData
+            'data' => $user
         ]);
     }
 

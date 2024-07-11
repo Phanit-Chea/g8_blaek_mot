@@ -20,7 +20,25 @@
         </button>
       </div>
     </div>
-    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
+    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
+      v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'">
+      <!-- <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"><span
+              class="visually-hidden">unread messages</span></span></i></a> -->
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">chat</i>
+      </router-link>
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">notifications</i>
+      </router-link>
+      <router-link to="/admin/dashboard"
+       >
+        <button class="btn btn-danger" type="submit">Dashboard</button>
+      </router-link>
+    </div>
+    <div v-else class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
       <a href="#"
         class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
@@ -35,7 +53,7 @@
         <input type="checkbox" />
         <div tabindex="0" class="burger">
           <div v-if="useAuth.isAuthenticated" class="account ">
-            <img :src="`http://127.0.0.1:8000/${useAuth.user.profileImage}`" alt="login" width="45px" />
+            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
           </div>
           <div v-else>
             <i class="material-icons fs-1 text-white">person</i>
@@ -113,6 +131,7 @@
           </ul>
         </nav>
       </label>
+
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
@@ -127,15 +146,18 @@
 
       </div>
     </div>
-    {{ useAuth.data }}
   </nav>
 
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
+import { useUserStore } from '@/stores/userStore';
 
 const useAuth = useAuthStore();
+const userStore = useUserStore();
+
+
 </script>
 
 <style scoped>
@@ -214,7 +236,7 @@ const useAuth = useAuthStore();
   --underline-margin-y: 0.3125em;
 }
 
-/* popup settings 👆 */
+
 
 .popup {
   display: inline-block;

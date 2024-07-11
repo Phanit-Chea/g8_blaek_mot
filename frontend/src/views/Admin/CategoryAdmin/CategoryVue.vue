@@ -1,5 +1,6 @@
 <template>
-  <div class="container-fluid">
+  <NavbarAdmin></NavbarAdmin>
+  <div class="container-fluid" style="margin-top: 6%;">
     <div class="row flex-nowrap">
       <header-menu />
       <div class="col">
@@ -177,6 +178,7 @@
   
 <script setup lang="ts">
 import HeaderMenu from '@/Components/HeaderMenu.vue';
+import NavbarAdmin from '@/Components/NavbarAdmin.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -316,7 +318,7 @@ onMounted(() => {
 </script>
   
 <style scoped>
-@import 'datatables.net-dt';
+/* @import 'datatables.net-dt'; */
 .b-action {
   display: flex;
   gap: 15px;
