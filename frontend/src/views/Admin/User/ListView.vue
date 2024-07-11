@@ -1,5 +1,6 @@
 <template>
-  <div class="container-fluid">
+  <NavbarAdmin></NavbarAdmin>
+  <div class="container-fluid" style="margin-top: 6%;">
     <div class="row flex-nowrap">
       <header-menu />
       <div class="container" style="width: 86.8%">
@@ -26,8 +27,10 @@
                   </select>
                 </div>
                 <!-- Search Form -->
-                <form @submit.prevent="searchUsers" class="form-inline d-flex justify-content-end pe-4 w-50 align-items-center">
-                  <input v-model="searchTerm" class="form-control mr-sm-2 w-50 py-2" type="search" placeholder="ស្វែងរក" aria-label="Search" />
+                <form @submit.prevent="searchUsers"
+                  class="form-inline d-flex justify-content-end pe-4 w-50 align-items-center">
+                  <input v-model="searchTerm" class="form-control mr-sm-2 w-50 py-2" type="search" placeholder="ស្វែងរក"
+                    aria-label="Search" />
                   <button class="btn bg-primary py-1 px-2" type="submit">
                     <i class="material-icons text-white">search</i>
                   </button>
@@ -50,7 +53,8 @@
                   </tr>
                 </thead>
                 <tbody v-if="filteredUsers.length > 0">
-                  <UserList v-for="user in filteredUsers" :key="user.id" :user="user" @deleteUser="handleDeleteUser(user.id)" />
+                  <UserList v-for="user in filteredUsers" :key="user.id" :user="user"
+                    @deleteUser="handleDeleteUser(user.id)" />
                 </tbody>
                 <tbody v-else>
                   <tr>
@@ -72,6 +76,7 @@ import { ref, onMounted, computed } from 'vue';
 import HeaderMenu from '../../../../src/Components/HeaderMenu.vue';
 import UserList from '../../../../src/Components/UserList.vue';
 import Swal from 'sweetalert2';
+import NavbarAdmin from '@/Components/NavbarAdmin.vue';
 
 // Reference for users, search term, and number range
 const users = ref([]);

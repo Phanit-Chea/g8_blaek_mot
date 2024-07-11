@@ -46,7 +46,7 @@
 
                         <li>
                             <nav-link>
-                                <a href="/user">
+                                <a href="/admin/profile">
                                     <button>
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="1.2" stroke-linecap="round"

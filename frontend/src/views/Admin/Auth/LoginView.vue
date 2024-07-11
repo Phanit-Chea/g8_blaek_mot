@@ -71,7 +71,7 @@ export default defineComponent({
         // Store token in localStorage if necessary
         localStorage.setItem('token', remember_token);
 
-        if (this.formData.email === 'blaek.mot@admin.com' && this.formData.password === 'blaek_motG8') {
+        if (this.formData.email === 'admin@gmail.com' && this.formData.password === 'password') {
           this.$router.push('/admin/dashboard');
         } else {
           this.$router.push('/');

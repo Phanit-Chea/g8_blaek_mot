@@ -128,6 +128,17 @@ const routes = [
         name: 'edit-food',
         component: () => import('@/views/Admin/Food/Edit.vue')
     },
+    {
+        path: '/admin/profile',
+        name: 'admin-profile',
+        component: () => import('../views/Admin/Auth/AdminProfile.vue')
+    },
+    {
+        path: '/404',
+        name: 'notFound',
+        component: () => import('../views/404notFound/NotFound.vue')
+    },
+
 
 
 ]
