@@ -16,9 +16,9 @@ export default {
       randomNumber:'',
     //======code axios for ratingStar======//
       rating: {
-        user_id: null,
-        food_id: null,
-        stars_rating: null,
+        user_id: [],
+        food_id: [],
+        stars_rating: '',
       }
     }
   },
@@ -26,6 +26,9 @@ export default {
   mounted() {
     this.fetchFood()
     this.fetchRandomfood()
+    this.fetchRating()
+    this.fetchAverageRating()
+    this.fetchUserCount()
    
   },
   methods: {
@@ -49,7 +52,7 @@ export default {
       }
     },
     //=========code axios for ratingStar===============//
-     async createRating(event) {
+     async fetchRating(event) {
       event.preventDefault()
       const formData = new FormData()
       formData.append('user_id', this.rating.user_id)
@@ -79,8 +82,8 @@ export default {
     },
     async fetchUserCount(foodId) {
       try {
-        const response = await axiosInstance.get(`/ratings/count-users/${foodId}`)
-        console.log('User Count:', response.data.count)
+        const response = await axiosInstance.get(`/ratings/countUsers/${foodId}`)
+        console.log('User Count:', response.data.countUsers)
       } catch (error) {
         console.error('Error fetching user count:', error)
       }
@@ -584,8 +587,8 @@ export default {
                 <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
                   ><small>Add</small>+</span
                 >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
+                <div class="d-flex flex-wrap align-items-center w-100 mt-2" >
+                  <h6 class="reviews-text mb-0 me-3">{{rating.calculateAverageRating}}/5</h6>
                   <div class="rating">
                     <input value="5" name="rating1" id="star1-5" type="radio" />
                     <label for="star1-5"></label>
@@ -598,7 +601,7 @@ export default {
                     <input value="1" name="rating1" id="star1-1" type="radio" />
                     <label for="star1-1"></label>
                   </div>
-                  <p class="reviews-text mb-0 ms-4">102 Reviews</p>
+                  <p class="reviews-text mb-0 ms-4">{{rating.count}} Reviews</p>
                 </div>
               </div>
             </div>

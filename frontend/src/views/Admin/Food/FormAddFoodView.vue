@@ -156,7 +156,7 @@ export default {
       formData.append('cooking_time', this.food.cooking_time)
       formData.append('ingredients', this.food.ingredients)
       // console.log(this.food.categrory_id);
-      console.log(useAuth.user.remember_token);
+      console.log(this.food.category_id);
       try {
         await axiosInstance.post('/food/create', formData, {
           headers: {
