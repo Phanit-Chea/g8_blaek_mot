@@ -86,14 +86,29 @@ class SaveFoodController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Food deleted successfully',
+                'message' => 'Save Food deleted successfully',
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete food',
+                'message' => 'Failed to delete Save food',
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+
+    public function listAllSaveFoodBySpecificUser()
+    {
+        $userID = Auth::id();
+
+        $savedFoods = SaveFood::join('food', 'save_food.food_id', '=', 'food.id')
+            ->where('save_food.user_id', $userID)
+            ->select('food.name', 'food.image', 'save_food.id as save_food_id')
+            ->get();
+
+        return response()->json([
+            'data' => $savedFoods,
+        ], 200);
     }
 }

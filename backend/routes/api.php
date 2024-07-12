@@ -63,6 +63,7 @@ Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->n
 //food
 
 Route::post('/save/create/{id}', [SaveFoodController::class, 'store'])->name('save.create')->middleware('auth:sanctum');
+Route::get('/save/list', [SaveFoodController::class, 'listAllSaveFoodBySpecificUser'])->name('save.list')->middleware('auth:sanctum');
 Route::delete('/save/delete/{id}', [SaveFoodController::class, 'destroy'])->name('save.destroy')->middleware('auth:sanctum');
 
 Route::post('/register', [ApiAuthController::class, 'register']);
