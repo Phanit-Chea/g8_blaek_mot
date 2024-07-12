@@ -52,7 +52,8 @@ export default {
     <h1 v-if="food.name" class="text-success mt-2 mb-3">{{ food.name }}</h1>
     <p v-else>Loading...</p>
   </div>
-      <div class="col col-lg-2 d-flex mt-3 mb-3">
+   <el-rate v-model="value" clearable />
+      <!-- <div class="col col-lg-2 d-flex mt-3 mb-3">
         <div class="small-ratings d-flex">
           <i class="fa fa-star rating-color mx-1"></i>
           <i class="fa fa-star rating-color mx-1"></i>
@@ -60,7 +61,7 @@ export default {
           <i class="fa fa-star mx-1"></i>
           <i class="fa fa-star mx-1"></i>
         </div>
-      </div>
+      </div> -->
       <hr />
       <!-- ===================icon action share ,save,print,========================== -->
       <div class="mt-3 mb-3">

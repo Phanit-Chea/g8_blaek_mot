@@ -2,12 +2,19 @@
 import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
 import FooterView from '@/views/Web/Footer/FooterView.vue'
 import axiosInstance from '@/plugins/axios'
+import { ref } from 'vue'
 
 export default {
   name: 'HomePage',
   components: {
     NavbarView,
     FooterView
+  },
+  setup() {
+    const value = ref(3)
+    return {
+      value
+    }
   },
   data() {
     return {
@@ -588,7 +595,7 @@ export default {
                   ><small>Add</small>+</span
                 >
                 <div class="d-flex flex-wrap align-items-center w-100 mt-2" >
-                  <h6 class="reviews-text mb-0 me-3">{{rating.calculateAverageRating}}/5</h6>
+                  <h6 class="reviews-text mb-0 me-3">{{rating.stars_rating}}/5</h6>
                   <div class="rating">
                     <input value="5" name="rating1" id="star1-5" type="radio" />
                     <label for="star1-5"></label>
