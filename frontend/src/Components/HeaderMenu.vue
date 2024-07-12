@@ -1,5 +1,5 @@
 <template>
-    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color:	#1d243c; width: 170px">
+    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 " style="background-color:	#1d243c; width: 190px">
     <div
       class="d-flex flex-column align-items-center align-items-sm-start ps-2 pdark min-vh-100 sticky-top sidebar">
     

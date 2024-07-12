@@ -13,10 +13,14 @@ export default {
     return {
       foods: [],
       randomFoods: [],
+      categoryID: null,
       selectedRandomNumber: 6
     }
   },
   watch: {
+    categoryID(newValue) {
+      this.fetchRandomfood()
+    },
     selectedRandomNumber(newValue) {
       this.fetchRandomfood()
     }
@@ -33,13 +37,15 @@ export default {
           this.foods = response.data.data
         }
       } catch (error) {
-        console.error('Error fetching student:', error)
+        console.error('Error fetching foods:', error)
       }
     },
     async fetchRandomfood() {
       try {
         console.log('Fetching random food...')
-        const response = await axiosInstance.get(`/food/random/${this.selectedRandomNumber}`)
+        const response = await axiosInstance.get(
+          `/food/random/${this.categoryID}?count=${this.selectedRandomNumber}`
+        )
         this.randomFoods = response.data.suitable_food
       } catch (error) {
         console.error('Error fetching random food:', error)
@@ -219,41 +225,67 @@ export default {
           data-aos-delay="100"
         >
           <li class="nav-item">
-            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters">
+            <a
+              class="nav-link active show"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-starters"
+              v-on:click="categoryID = 4"
+            >
               <h4>Starters</h4>
             </a>
           </li>
           <!-- End tab nav item -->
 
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
-              <h4>Breakfast</h4> </a
-            ><!-- End tab nav item -->
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-breakfast"
+              v-on:click="categoryID = 1"
+            >
+              <h4>Breakfast</h4>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-lunch"
+              v-on:click="categoryID = 2"
+            >
               <h4>Lunch</h4>
             </a>
           </li>
           <!-- End tab nav item -->
 
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
+            <a
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-dinner"
+              v-on:click="categoryID = 3"
+            >
               <h4>Dinner</h4>
             </a>
           </li>
           <li class="nav-item">
-  <select id="category" class="mt-2 form-control form-select-sm text-center" v-model.number="selectedRandomNumber">
-    <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
-    <option class="siemreap" value="1">១</option>
-    <option class="siemreap" value="2">២</option>
-    <option class="siemreap" value="4">៤</option>
-    <option class="siemreap" value="6">៦</option>
-    <option class="siemreap" value="8">៨</option>
-    <option class="siemreap" value="10">១០</option>
-  </select>
-</li>
-          
+            <select
+              id="category"
+              class="mt-2 form-control form-select-sm text-center"
+              v-model.number="selectedRandomNumber"
+            >
+              <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
+              <option class="siemreap" value="1">១</option>
+              <option class="siemreap" value="2">២</option>
+              <option class="siemreap" value="4">៤</option>
+              <option class="siemreap" value="6">៦</option>
+              <option class="siemreap" value="8">៨</option>
+              <option class="siemreap" value="10">១០</option>
+            </select>
+          </li>
+
           <!-- End tab nav item -->
         </ul>
 
@@ -291,74 +323,16 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
@@ -373,77 +347,18 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
             </div>
           </div>
           <!-- End Lunch Menu Content -->
@@ -455,74 +370,16 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
@@ -533,53 +390,155 @@ export default {
       </div>
     </section>
 
-    <section class="menu section-padding">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="text-center mb-lg-5 mb-4">Popular Food This Month</h2>
-          </div>
 
-          <!-- First Menu Item____________________________________________________________________ -->
-          <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
-            <div class="menu-thumb">
-              <router-link
-                :to="{ name: 'food-detail', params: { id: food.id } }"
-                class="menu-image-wrap"
-              >
-                <img
-                  :src="`http://127.0.0.1:8000/${food.image}`"
-                  class="img-fluid menu-image"
-                  alt="Food image"
-                />
-                <!-- <span class="menu-tag">Breakfast</span> -->
-              </router-link>
-              <div class="menu-info d-flex flex-wrap align-items-center">
-                <h4 class="mb-0">{{ food.name }}</h4>
-                <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-                  ><small>Add</small>+</span
-                >
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
-                  <div class="rating">
-                    <input value="5" name="rating1" id="star1-5" type="radio" />
-                    <label for="star1-5"></label>
-                    <input value="4" name="rating1" id="star1-4" type="radio" />
-                    <label for="star1-4"></label>
-                    <input value="3" name="rating1" id="star1-3" type="radio" />
-                    <label for="star1-3"></label>
-                    <input value="2" name="rating1" id="star1-2" type="radio" />
-                    <label for="star1-2"></label>
-                    <input value="1" name="rating1" id="star1-1" type="radio" />
-                    <label for="star1-1"></label>
-                  </div>
-                  <p class="reviews-text mb-0 ms-4">102 Reviews</p>
-                </div>
+<section class="menu section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center mb-lg-5 mb-4">Popular Food This Month</h2>
+      </div>
+
+      <!-- First Menu Item -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="menu-thumb">
+          <div class="menu-image-wrap">
+            <img
+              src="../../assets/CategoryImages/dinner.png"
+              class="img-fluid menu-image"
+              alt="Morning Fresh Breakfast"
+            />
+            <span class="menu-tag">Breakfast</span>
+          </div>
+          <div class="menu-info d-flex flex-wrap align-items-center">
+            <h4 class="mb-0">Morning Fresh</h4>
+            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
+              ><small>Add</small>+</span
+            >
+            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
+              <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
+              <div class="rating">
+                <input value="5" name="rating1" id="star1-5" type="radio" />
+                <label for="star1-5"></label>
+                <input value="4" name="rating1" id="star1-4" type="radio" />
+                <label for="star1-4"></label>
+                <input value="3" name="rating1" id="star1-3" type="radio" />
+                <label for="star1-3"></label>
+                <input value="2" name="rating1" id="star1-2" type="radio" />
+                <label for="star1-2"></label>
+                <input value="1" name="rating1" id="star1-1" type="radio" />
+                <label for="star1-1"></label>
               </div>
+              <p class="reviews-text mb-0 ms-4">102 Reviews</p>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Second Menu Item -->
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="menu-thumb">
+          <div class="menu-image-wrap">
+            <img
+              src="../../assets/CategoryImages/drink.png"
+              class="img-fluid menu-image"
+              alt="Tooplate Soup Lunch"
+            />
+            <span class="menu-tag">Lunch</span>
+          </div>
+          <div class="menu-info d-flex flex-wrap align-items-center">
+            <h4 class="mb-0">Tooplate Soup</h4>
+            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
+              ><small>Add</small>+</span
+            >
+            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
+              <h6 class="reviews-text mb-0 me-3">3/5</h6>
+              <div class="rating">
+                <input value="5" name="rating2" id="star2-5" type="radio" />
+                <label for="star2-5"></label>
+                <input value="4" name="rating2" id="star2-4" type="radio" />
+                <label for="star2-4"></label>
+                <input value="3" name="rating2" id="star2-3" type="radio" />
+                <label for="star2-3"></label>
+                <input value="2" name="rating2" id="star2-2" type="radio" />
+                <label for="star2-2"></label>
+                <input value="1" name="rating2" id="star2-1" type="radio" />
+                <label for="star2-1"></label>
+              </div>
+              <p class="reviews-text mb-0 ms-4">50 Reviews</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="menu-thumb">
+          <div class="menu-image-wrap">
+            <img
+              src="../../assets/CategoryImages/dinner.png"
+              class="img-fluid menu-image"
+              alt="Tooplate Soup Lunch"
+            />
+            <span class="menu-tag">Lunch</span>
+          </div>
+          <div class="menu-info d-flex flex-wrap align-items-center">
+            <h4 class="mb-0">Tooplate Soup</h4>
+            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
+              ><small>Add</small>+</span
+            >
+            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
+              <h6 class="reviews-text mb-0 me-3">3/5</h6>
+              <div class="rating">
+                <input value="5" name="rating2" id="star2-5" type="radio" />
+                <label for="star2-5"></label>
+                <input value="4" name="rating2" id="star2-4" type="radio" />
+                <label for="star2-4"></label>
+                <input value="3" name="rating2" id="star2-3" type="radio" />
+                <label for="star2-3"></label>
+                <input value="2" name="rating2" id="star2-2" type="radio" />
+                <label for="star2-2"></label>
+                <input value="1" name="rating2" id="star2-1" type="radio" />
+                <label for="star2-1"></label>
+              </div>
+              <p class="reviews-text mb-0 ms-4">50 Reviews</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="menu-thumb">
+          <div class="menu-image-wrap">
+            <img
+              src="../../assets/CategoryImages/drink.png"
+              class="img-fluid menu-image"
+              alt="Tooplate Soup Lunch"
+            />
+            <span class="menu-tag">Lunch</span>
+          </div>
+          <div class="menu-info d-flex flex-wrap align-items-center">
+            <h4 class="mb-0">Tooplate Soup</h4>
+            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
+              ><small>Add</small>+</span
+            >
+            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
+              <h6 class="reviews-text mb-0 me-3">3/5</h6>
+              <div class="rating">
+                <input value="5" name="rating2" id="star2-5" type="radio" />
+                <label for="star2-5"></label>
+                <input value="4" name="rating2" id="star2-4" type="radio" />
+                <label for="star2-4"></label>
+                <input value="3" name="rating2" id="star2-3" type="radio" />
+                <label for="star2-3"></label>
+                <input value="2" name="rating2" id="star2-2" type="radio" />
+                <label for="star2-2"></label>
+                <input value="1" name="rating2" id="star2-1" type="radio" />
+                <label for="star2-1"></label>
+              </div>
+              <p class="reviews-text mb-0 ms-4">50 Reviews</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div> 
+      </div> 
     </section>
 
     <!-- Why Us Section -->
@@ -826,4 +785,15 @@ export default {
 .siemreap {
   font-family: 'Siemreap', cursive;
 }
+
+.menu-image-wrap img {
+  width: 100%; /* Set the width to 100% of the parent container */
+  height: 200px; /* Set a fixed height */
+  object-fit: cover; /* Ensure the image covers the entire area without stretching */
+}
+
+.menu-thumb {
+  margin-bottom: 20px; /* Add some margin between menu items */
+}
 </style>
+

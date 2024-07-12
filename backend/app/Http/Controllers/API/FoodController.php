@@ -166,9 +166,9 @@ class FoodController extends Controller
 
         return response()->json($food, 200);
     }
-    public function getRandomFood($count = 6)
+    public function getRandomFood($categoryID, Request $request)
     {
-        $dishes = Food::all(); // Get all dishes
+        $dishes = Food::where('category_id', $categoryID)->get(); // Get all dishes
         $suitableFood = [];
 
         // Get the current season
@@ -201,7 +201,7 @@ class FoodController extends Controller
         // Use the current date as a seed for randomness
         $seed = strtotime(date('Y-m-d')); // Get the current date as a timestamp
         srand($seed); // Seed the random number generator
-
+        $count = $request->input('count');
         // Return the specified number of random suitable foods, defaulting to 6
         $count = min($count, count($suitableFood)); // Ensure count does not exceed available suitable foods
         if ($count > 0) {
