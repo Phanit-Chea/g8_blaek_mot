@@ -3,18 +3,13 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
-use App\Http\Controllers\API\CategoryController as APICategoryController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
 
-use App\Http\Controllers\Api\FoodController;
-use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\RatingController;
-use App\Http\Controllers\AuthController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -80,15 +75,6 @@ Route::prefix("food")->group(function(){
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
     Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
-});
-
-// Category related routes
-Route::prefix('category')->group(function () {
-    Route::post('/create', [APICategoryController::class, 'store'])->middleware('auth:sanctum')->name('category.create');
-    Route::get('/list', [APICategoryController::class, 'index'])->name('category.list');
-    Route::get('/show/{id}', [APICategoryController::class, 'show'])->name('category.show');
-    Route::post('/update/{id}', [APICategoryController::class, 'update'])->name('category.update');
-    Route::delete('/delete/{id}', [APICategoryController::class, 'destroy'])->name('category.destroy');
 });
 
 // Food related routes

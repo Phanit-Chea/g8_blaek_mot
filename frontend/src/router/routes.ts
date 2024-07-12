@@ -128,6 +128,11 @@ const routes = [
         name: 'edit-food',
         component: () => import('@/views/Admin/Food/Edit.vue')
     },
+    {
+        path: '/map',
+        name: 'map',
+        component: () => import('@/views/Map/GoogleMap.vue')
+    }
 
 
 ]
