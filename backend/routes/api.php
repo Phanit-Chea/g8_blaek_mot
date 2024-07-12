@@ -94,5 +94,5 @@ Route::get('/imageSlide/lists', [AboutUsSlideController::class, 'index'])->name(
 Route::prefix('ratings')->group(function () {
     Route::post('/', [RatingController::class, 'store']);
     Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
-    Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
+    Route::get('countUsers/{foodId}', [RatingController::class, 'countUsersRatedFood']);
 });

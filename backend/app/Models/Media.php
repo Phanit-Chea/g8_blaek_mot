@@ -15,7 +15,7 @@ class Media extends Model {
     }
 
     public static function uploadFile($file): string {
-        $filename = $file->getClientOriginalName();
+        $filename = $file->getClientOriginalName(); 
         $filenameWithoutExtension = pathinfo($filename, PATHINFO_FILENAME);
         $fileExtension = $file->getClientOriginalExtension();
         $newFileName = time() . '_' . str_replace(' ', '_', $filenameWithoutExtension) . '.' . $fileExtension;

@@ -23,7 +23,7 @@ class RatingController extends Controller
 
         return response()->json($rating, 201);
     }
-    //=======
+    
     public function countUsersRatedFood($foodId)
     {
         $count = Rating::where('food_id', $foodId)
