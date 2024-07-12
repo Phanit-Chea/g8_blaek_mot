@@ -7,8 +7,10 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController as ControllersChatController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -61,7 +63,13 @@ Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->n
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
-Route::post('/folder/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
+Route::prefix("folder")->group(function(){
+    Route::get('/list', [FolderController::class, 'index'])->name('folder.list')->middleware('auth:sanctum');
+    Route::post('/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
+    Route::put('/update/{id}', [FolderController::class, 'update'])->name('folder.update')->middleware('auth:sanctum');
+    Route::delete('/delete/{id}', [FolderController::class, 'destroy'])->name('folder.delete')->middleware('auth:sanctum');
+});
+
 
 Route::prefix("food")->group(function(){
     Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');

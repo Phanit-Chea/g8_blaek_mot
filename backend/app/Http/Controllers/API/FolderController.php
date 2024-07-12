@@ -15,8 +15,10 @@ class FolderController extends Controller
      */
     public function index()
     {
-        // Implement your logic to return a list of folders
+        $user = folder::all();
+        return response()->json(['success' => true, 'data' => $user], 200);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -61,8 +63,15 @@ class FolderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Implement your logic to update a specific folder
+        $folder = folder::store($request, $id);
+        return response()->json(
+            [
+            'success' => true, 
+            'message' => 'folder was updated successfully'
+        ], 200);
+        
     }
+
 
     /**
      * Remove the specified resource from storage.
