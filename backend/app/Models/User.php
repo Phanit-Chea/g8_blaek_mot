@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -18,13 +19,21 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+    // User.php
+
+    public function foods()
+    {
+        return $this->hasMany(Food::class);
+    }
+
     protected $fillable = [
         'name',
         'email',
-        'phone_number',
+        'phoneNumber',
         'gender',
         'address',
         'password',
+        'dateOfBirth',
         'profile'
     ];
 
@@ -46,4 +55,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function store($request, $id = null){
+        $data = $request->only(
+        'name',
+        'email',
+        'phone_number',
+        'age',
+        'gender',
+        'address',
+        'password',
+        'profile');
+        $data = self::updateOrCreate(['id' => $id], $data);
+        return $data;
+    }
+    public function chat(): HasMany
+    {
+        return $this->hasMany(Chat::class);
+    }
+    public function food(): HasMany
+    {
+        return $this->hasMany(Food::class);
+    }
+
 }
+

@@ -1,43 +1,44 @@
 <template>
-  <div id="map"></div>
+  <div>
+    <div class="map-container" v-for="(mapUrl, index) in mapUrls" :key="index">
+      <iframe
+        :src="mapUrl"
+        width="100%"
+        height="450"
+        style="border: 0"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
 </template>
 
 <script>
-import { onMounted } from 'vue';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-
 export default {
-  name: 'MapView',
-  setup() {
-    onMounted(() => {
-      const cambodiaBounds = L.latLngBounds(
-        [10.486543687375556, 102.34809563797801],
-        [14.704581152503045, 107.62768729271226]
-      );
-
-      const map = L.map('map', {
-        center: [12.5657, 104.991],
-        zoom: 7,
-        maxBounds: cambodiaBounds,
-        maxBoundsViscosity: 1.0
-      });
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-
-      L.marker([11.5564, 104.9282]).addTo(map)
-        .bindPopup('Phnom Penh, Cambodia')
-        .openPopup();
-    });
+  data() {
+    return {
+      mapUrls: [
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2072142.8891111037!2d104.49797514186897!3d12.565679435349416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31095137e50f30b1%3A0x8c46a30fd8f40a27!2sCambodia!5e0!3m2!1sen!2sus!4v1624942392507!5m2!1sen!2sus",
+      ]
+    };
   }
 };
 </script>
 
-<style scoped>
-#map {
+<style>
+.map-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
-  height: 50vh;
+  height: 450px;
+  box-shadow: 0 0 10px rgba(66, 30, 91, 0.463);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 </style>

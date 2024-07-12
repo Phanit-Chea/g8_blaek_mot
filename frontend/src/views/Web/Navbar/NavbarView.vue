@@ -1,266 +1,163 @@
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
-      <img
-        src="../../../assets/ContainerImages/logo.png"
-        alt="homeImage"
-        width="100%"
-        height="100px"
-      />
+      <router-link to="/">
+        <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" width="90%" height="90px" />
+      </router-link>
+
     </div>
-    <div
-      class="navCenter col-md d-flex align-items-center"
-      style="width: 100%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px"
-    >
+    <div class="navCenter col-md d-flex align-items-center"
+      style="width:55%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
       <div class="input-group w-240">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
         </button>
-        <input
-          type="text"
-          class="form-control p-3 border border-success border-end-0 shadow-none"
-          placeholder="What would you like to eat?"
-          aria-label="Search"
-        />
-        <button class="text-light input-group-text border border-success border-start-0" style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center;"> 
+        <input type="text" class="form-control p-2 border border-success border-end-0 shadow-none"
+          placeholder="What would you like to eat?" aria-label="Search" />
+        <button class="text-light input-group-text border border-success border-start-0"
+          style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center">
           Search
         </button>
       </div>
     </div>
-    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <router-link
-        to="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
-        <i class="material-icons fs-1">turned_in</i>
+    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
+      v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'">
+      <!-- <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"><span
+              class="visually-hidden">unread messages</span></span></i></a> -->
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">chat</i>
       </router-link>
-      <router-link
-        to="#"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
       </router-link>
-      <router-link
-        to="#"
-        class="account me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"
-      >
-        <img
-          src="../../../assets/login.png"
-          alt="login"
-          width="38px"
-          data-bs-toggle="modal"
-          data-bs-target="#loginForm"
-        />
+      <router-link to="/admin/dashboard"
+       >
+        <button class="btn btn-danger" type="submit">Dashboard</button>
       </router-link>
     </div>
-    <div class="navPages row text-warning mt-3">
+    <div v-else class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
+      <a href="#"
+        class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">turned_in</i>
+      </a>
+
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">notifications</i>
+      </router-link>
+
+      <label class="popup">
+        <input type="checkbox" />
+        <div tabindex="0" class="burger">
+          <div v-if="useAuth.isAuthenticated" class="account ">
+            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
+          </div>
+          <div v-else>
+            <i class="material-icons fs-1 text-white">person</i>
+          </div>
+        </div>
+
+        <nav v-if="useAuth.isAuthenticated" class="popup-window">
+          <ul>
+
+            <li>
+              <nav-link>
+                <a href="/user">
+                  <button>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
+                      </path>
+                    </svg>
+                    <span class="siemreap">ព័ត៍មានផ្ទាល់ខ្លួន</span>
+                  </button>
+                </a>
+              </nav-link>
+            </li>
+            <li>
+              <nav-link>
+                <a href="/logout">
+                  <button>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
+                      </path>
+                    </svg>
+                    <span class="siemreap">ចេញពីគណនី</span>
+                  </button>
+                </a>
+              </nav-link>
+            </li>
+
+          </ul>
+        </nav>
+        <nav v-else class="popup-window">
+          <ul>
+            <li>
+              <nav-link>
+                <a href="/login">
+                  <button>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
+                      </path>
+                    </svg>
+                    <span class="siemreap">ចូលគណនី</span>
+                  </button>
+                </a>
+              </nav-link>
+            </li>
+            <li>
+              <nav-link>
+                <a href="/register">
+                  <button>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.598 9h-1.055c1.482-4.638 5.83-8 10.957-8 6.347 0 11.5 5.153 11.5 11.5s-5.153 11.5-11.5 11.5c-5.127 0-9.475-3.362-10.957-8h1.055c1.443 4.076 5.334 7 9.902 7 5.795 0 10.5-4.705 10.5-10.5s-4.705-10.5-10.5-10.5c-4.568 0-8.459 2.923-9.902 7zm12.228 3l-4.604-3.747.666-.753 6.112 5-6.101 5-.679-.737 4.608-3.763h-14.828v-1h14.826z">
+                      </path>
+                    </svg>
+                    <span class="siemreap">បង្កើតគណនីថ្មី</span>
+                  </button>
+                </a>
+              </nav-link>
+            </li>
+          </ul>
+        </nav>
+      </label>
+
+    </div>
+    <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-        <router-link to="/" class="pagesLink text-green fs-4 text-decoration-none nav-link">Home</router-link>
-        <router-link to="/category" class="pagesLink text-green fs-4 text-decoration-none nav-link">Category</router-link>
-        <router-link to="/aboutus" class="pagesLink text-green fs-4 text-decoration-none nav-link">About Us</router-link>
-        <router-link to="#" class="pagesLink text-green fs-4 text-decoration-none nav-link">Join With Us</router-link>
+
+        <router-link to="/"
+          class="pagesLink text-green-700 fs-5 text-decoration-none nav-link siemreap">ទំព័រដើម</router-link>
+        <router-link to="/category"
+          class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">ប្រភេទអាហារ</router-link>
+        <router-link to="/aboutUs" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">
+          អំពីពួកយើង
+        </router-link>
+
       </div>
     </div>
   </nav>
 
-  <!-- Login Form Modal -->
-  <div
-    class="modal fade"
-    id="loginForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="loginFormLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-green">Login</h5>
-          <button
-            type="button"
-            class="btn-close text-danger"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter email" />
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Password" />
-            </div>
-          </form>
-          <div class="text-center">
-            <span>
-              Forgot
-              <a to="#" data-bs-toggle="modal" data-bs-target="#resetForm">
-                reset password now
-              </a>
-            </span>
-          </div>
-          <div class="text-center">
-            <span>
-              Don’t have an account?
-              <a to="#" data-bs-toggle="modal" data-bs-target="#registerForm">
-                Register now
-              </a>
-            </span>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Login</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Register Form Modal -->
-  <div
-    class="modal fade"
-    id="registerForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="registerFormLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="d-flex justify-content-between align-items-center border-b p-2">
-            <h3 class="text-success m-0">Registration</h3>
-            <button
-              type="button"
-              class="btn btn-link text-success"
-              data-bs-toggle="modal"
-              data-bs-target="#loginForm"
-            >
-              Login now
-            </button>
-          </div>
-          <div class="p-3">
-            <form>
-              <div class="mb-2">
-                <label for="fullName" class="block text-sm font-medium text-success">Full Name</label>
-                <input type="text" id="fullName" class="form-control" />
-              </div>
-              <div class="mb-2">
-                <label for="email" class="block text-sm font-medium text-success">Email address</label>
-                <input type="email" id="email" class="form-control" />
-              </div>
-              <div class="mb-2">
-                <label for="password" class="block text-sm font-medium text-success">Password</label>
-                <input type="password" id="password" class="form-control" />
-              </div>
-              <div class="mb-2">
-                <label for="phone" class="block text-sm font-medium text-success">Phone</label>
-                <input type="number" id="phone" class="form-control" />
-              </div>
-              <div class="mb-2">
-                <label for="gender" class="block text-sm font-medium text-success">Gender</label>
-                <select id="gender" class="form-control">
-                  <option value="">Select Gender</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                </select>
-              </div>
-              <div class="mb-2">
-                <label for="age" class="block text-sm font-medium text-success">Age</label>
-                <input type="number" id="age" class="form-control" />
-              </div>
-              <div class="mb-2">
-                <label for="province" class="block text-sm font-medium text-success">Province</label>
-                <select id="province" class="form-control">
-                  <option value="" selected disabled>Select Province</option>
-                  <option value="banteayMeanchey">Banteay Meanchey</option>
-                  <option value="battambang">Battambang</option>
-                  <option value="kampongCham">Kampong cham</option>
-                  <option value="kampongChhnamg">Kampong Chhnamg</option>
-                  <option value="kampongSpeu">Kampong Speu</option>
-                  <option value="kampongThom">Kampong Thom</option>
-                  <option value="kampot">Kampot</option>
-                  <option value="kandal">Kandal</option>
-                  <option value="kep">Kep</option>
-                  <option value="kohKong">Koh Kong</option>
-                  <option value="kratie">Kratie</option>
-                  <option value="mondulkiri">Mondulkiri</option>
-                  <option value="oddarMeanchey">Oddar Meanchey</option>
-                  <option value="pailin">Pailin</option>
-                  <option value="phnomPenh">Phnom Penh</option>
-                  <option value="preahSihanouk">Preah Sihanouk</option>
-                  <option value="preahVihear">Preah Vihear</option>
-                  <option value="preyVeng">Prey Veng</option>
-                  <option value="pursat">Pursat</option>
-                  <option value="ratanakiri">Ratanakiri</option>
-                  <option value="siemReap">Siem Reap</option>
-                  <option value="stungTreng">Stung Treng</option>
-                  <option value="svayRieng">Svay Rieng</option>
-                  <option value="takeo">Takeo</option>
-                  <option value="tboungKhmum">Tboung Khmum</option>
-                </select>
-              </div>
-              <div class="mb-2 form-check">
-                <input type="checkbox" id="terms" class="form-check-input" />
-                <label for="terms" class="form-check-label text-sm">
-                  Accept all terms & conditions
-                </label>
-              </div>
-              <button type="submit" class="btn btn-success">Sign Up</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Reset Password Modal -->
-  <div
-    class="modal fade"
-    id="resetForm"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="resetFormLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-green">Reset Password</h5>
-          <button
-            type="button"
-            class="btn-close text-danger"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="newPassword" class="form-label">New Password</label>
-              <input type="password" class="form-control" id="newPassword" />
-            </div>
-            <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="confirmPassword" />
-            </div>
-            <div class="d-flex gap-3">
-              <button type="submit" class="btn btn-success">Reset Password</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
-<script>
-export default {
-  name: 'NavbarView'
-}
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth-store.ts';
+import { useUserStore } from '@/stores/userStore';
+
+const useAuth = useAuthStore();
+const userStore = useUserStore();
+
+
 </script>
 
 <style scoped>
@@ -268,7 +165,7 @@ export default {
 .notification,
 .account {
   transition: transform 0.3s ease, border 0.3s ease;
-  border: 3px solid rgba(62, 160, 9, 0.942);
+  border: 2px solid rgba(62, 160, 9, 0.942);
   color: rgba(62, 160, 9, 0.942);
 }
 
@@ -282,8 +179,205 @@ export default {
 .favoriteIcon:hover,
 .notification:hover,
 .account:hover {
-  transform: scale(1.1);
   z-index: 10;
   border-color: rgba(62, 160, 9, 0.942);
+}
+
+/* The design is inspired from Galahhad*/
+
+.popup {
+  --burger-line-width: 1.125em;
+  --burger-line-height: 0.125em;
+  --burger-offset: 0.625em;
+  --burger-bg: green;
+  --burger-color: #333;
+  --burger-line-border-radius: 0.1875em;
+  --burger-diameter: 3.125em;
+  --burger-btn-border-radius: calc(var(--burger-diameter) / 2);
+  --burger-line-transition: 0.3s;
+  --burger-transition: all 0.1s ease-in-out;
+  --burger-hover-scale: 1.1;
+  --burger-active-scale: 0.95;
+  --burger-enable-outline-color: var(--burger-bg);
+  --burger-enable-outline-width: 0.125em;
+  --burger-enable-outline-offset: var(--burger-enable-outline-width);
+  /* nav */
+  --nav-padding-x: 0.25em;
+  --nav-padding-y: 0.625em;
+  --nav-border-radius: 0.375em;
+  --nav-border-color: #ccc;
+  --nav-border-width: 0.0625em;
+  --nav-shadow-color: rgba(0, 0, 0, 0.2);
+  --nav-shadow-width: 0 1px 5px;
+  --nav-bg: #eee;
+  --nav-font-family: "Poppins", sans-serif;
+  --nav-default-scale: 0.8;
+  --nav-active-scale: 1;
+  --nav-position-left: -102px;
+  --nav-position-right: unset;
+  /* if you want to change sides just switch one property */
+  /* from properties to "unset" and the other to 0 */
+  /* title */
+  --nav-title-size: 0.625em;
+  --nav-title-color: #777;
+  --nav-title-padding-x: 1rem;
+  --nav-title-padding-y: 0.25em;
+  /* nav button */
+  --nav-button-padding-x: 1rem;
+  --nav-button-padding-y: 0.375em;
+  --nav-button-border-radius: 0.375em;
+  --nav-button-font-size: 17px;
+  --nav-button-hover-bg: green;
+  --nav-button-hover-text-color: #fff;
+  --nav-button-distance: 0.875em;
+  /* underline */
+  --underline-border-width: 0.0625em;
+  --underline-border-color: #ccc;
+  --underline-margin-y: 0.3125em;
+}
+
+
+
+.popup {
+  display: inline-block;
+  text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+.popup input {
+  display: none;
+}
+
+.burger {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: var(--burger-bg);
+  width: var(--burger-diameter);
+  height: var(--burger-diameter);
+  border-radius: var(--burger-btn-border-radius);
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: var(--burger-transition);
+  outline: var(--burger-enable-outline-width) solid transparent;
+  outline-offset: 0;
+}
+
+.popup-window {
+  transform: scale(var(--nav-default-scale));
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  padding: var(--nav-padding-y) var(--nav-padding-x);
+  background: var(--nav-bg);
+  font-family: var(--nav-font-family);
+  color: var(--nav-text-color);
+  border-radius: var(--nav-border-radius);
+  box-shadow: var(--nav-shadow-width) var(--nav-shadow-color);
+  border: var(--nav-border-width) solid var(--nav-border-color);
+  top: calc(var(--burger-diameter) + var(--burger-enable-outline-width) + var(--burger-enable-outline-offset));
+  left: var(--nav-position-left);
+  right: var(--nav-position-right);
+  transition: var(--burger-transition);
+  margin-top: 10px;
+}
+
+.popup-window legend {
+  padding: var(--nav-title-padding-y) var(--nav-title-padding-x);
+  margin: 0;
+  color: var(--nav-title-color);
+  font-size: var(--nav-title-size);
+  text-transform: uppercase;
+}
+
+.popup-window ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.popup-window ul button {
+  outline: none;
+  width: 100%;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  color: var(--burger-color);
+  font-size: var(--nav-button-font-size);
+  padding: var(--nav-button-padding-y) var(--nav-button-padding-x);
+  white-space: nowrap;
+  border-radius: var(--nav-button-border-radius);
+  cursor: pointer;
+  column-gap: var(--nav-button-distance);
+}
+
+.popup-window ul li:nth-child(1) svg,
+.popup-window ul li:nth-child(2) svg {
+  color: green;
+}
+
+.popup-window ul li:nth-child(4) svg,
+.popup-window ul li:nth-child(5) svg {
+  color: rgb(153, 153, 153);
+}
+
+.popup-window ul li:nth-child(7) svg {
+  color: red;
+}
+
+.popup-window hr {
+  margin: var(--underline-margin-y) 0;
+  border: none;
+  border-bottom: var(--underline-border-width) solid var(--underline-border-color);
+}
+
+/* actions */
+
+.popup-window ul button:hover,
+.popup-window ul button:focus-visible,
+.popup-window ul button:hover svg,
+.popup-window ul button:focus-visible svg {
+  color: var(--nav-button-hover-text-color);
+  background: var(--nav-button-hover-bg);
+}
+
+.burger:hover {
+  transform: scale(var(--burger-hover-scale));
+}
+
+.burger:active {
+  transform: scale(var(--burger-active-scale));
+}
+
+.burger:focus:not(:hover) {
+  outline-color: var(--burger-enable-outline-color);
+  outline-offset: var(--burger-enable-outline-offset);
+}
+
+.popup input:checked+.burger span:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.popup input:checked+.burger span:nth-child(2) {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
+}
+
+.popup input:checked+.burger span:nth-child(3) {
+  transform: translateX(calc(var(--burger-diameter) * -1 - var(--burger-line-width)));
+}
+
+.popup input:checked~nav {
+  transform: scale(var(--nav-active-scale));
+  visibility: visible;
+  opacity: 1;
+}
+
+.siemreap {
+  font-family: 'Siemreap', cursive;
 }
 </style>

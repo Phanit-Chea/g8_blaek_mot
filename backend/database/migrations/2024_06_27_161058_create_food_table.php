@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('food', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('food_name');
-            $table->string('upload_image');
-            $table->string('video_url')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('category_id')->constrained('categories')->onDelete('cascade');
+            $table->string('name');
+            $table->string('image');
+            $table->string('video_url');
             $table->string('cooking_time');
-            $table->text('ingredient');
-            $table->text('how_to_cook');
+            $table->text('ingredients');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('food');
+        Schema::dropIfExists('foods');
     }
 };

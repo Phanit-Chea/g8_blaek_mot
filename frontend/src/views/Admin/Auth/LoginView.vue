@@ -1,92 +1,169 @@
-<!-- src/components/Login.vue -->
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <el-card class="w-full max-w-md shadow-lg">
-   <span class="material-symbols-outlined">cancel</span>
-      <h3>Login </h3>
-      <el-form @submit="onSubmit">
-        <el-form-item :error="emailError">
-          <el-input placeholder="Email Address" v-model="email" size="large" />
-        </el-form-item>
-        <el-form-item :error="nameError" class="mt-8">
-          <el-input placeholder="Password" v-model="password" size="large" type="password" />
-        </el-form-item>
-        <div>
-       <span class="psw">Forgot <a href="#">password?</a></span>
+  <div class="container">
+
+    <div class="login-card">
+      <div class="card-header">
+        <div class="log">Login</div>
+      </div>
+      <form class="form" @submit.prevent="login">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input required="" name="email" id="email" type="text" v-model="formData.email">
         </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-          <el-button
-            size="large"
-            class="mt-3 w-full"
-            :disabled="islogin"
-            type="success"
-            native-type="Sing in"
-            >Sign in→</el-button >
-         
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input required="" name="password" id="password" type="password" v-model="formData.password">
         </div>
-        <div class="text-center">
-        <span>Don’t have an account?<a href="#">Register now</a> </span>
+        <div class="form-group">
+          <button type="submit" class="submit">Sign in</button>
         </div>
-      </el-form>
-    </el-card>
+        <p class="signup-link">
+          No account?
+          <a href="/register">Register your account?</a> <br>
+          <a href="/register">Forgot password?</a>
+        </p>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
+    </div>
   </div>
+
 </template>
-<script setup lang="ts">
-import axiosInstance from '@/plugins/axios'
-import { useField, useForm } from 'vee-validate'
-import * as yup from 'yup'
-import { useRouter } from 'vue-router'
 
-const router = useRouter()
+<script lang="ts">
+import { defineComponent } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '../../../stores/auth-store';
+import { useUserStore } from '../../../stores/userStore';
 
-const formSchema = yup.object({
-  password: yup.string().required().label('Password'),
-  email: yup.string().required().email().label('Email address')
-})
-
-const { handleSubmit, islogin} = useForm({
-  initialValues: {
-    password: '',
-    email: ''
+export default defineComponent({
+  data() {
+    return {
+      formData: {
+        email: '',
+        password: ''
+      },
+      errorMessage: '' // To hold error message
+    };
   },
-  validationSchema: formSchema
-})
+  methods: {
+    async login() {
+      const useAuth = useAuthStore(); // Ensure to call the function
+      const userStore = useUserStore(); // Ensure to call the function
 
-const onSubmit = handleSubmit(async (values) => {
-  try {
-    const { data } = await axiosInstance.post('/login', values)
-    localStorage.setItem('access_token', data.access_token)
-    router.push('/')
-  } catch (error) {
-    console.warn('Error')
-  }
-})
-const { value: password, errorMessage: nameError } = useField('password')
-const { value: email, errorMessage: emailError } = useField('email')
+      // Check if email and password are provided
+      if (!this.formData.email || !this.formData.password) {
+        this.errorMessage = 'Please enter both email and password.';
+        return;
+      }
+
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/login', {
+          email: this.formData.email,
+          password: this.formData.password
+        });
+
+        const profileImage = response.data.user.profile;
+        const remember_token = response.data.user.remember_token;
+        const isAuthenticated = true;
+        useAuth.login(profileImage, remember_token, isAuthenticated);
+        userStore.setUser(response.data.user);
+
+        // Store token in localStorage if necessary
+        localStorage.setItem('token', remember_token);
+
+        if (this.formData.email === 'admin@gmail.com' && this.formData.password === 'password') {
+          this.$router.push('/admin/dashboard');
+        } else {
+          this.$router.push('/');
+        }
+        this.formData.email = '';
+        this.formData.password = '';
+        this.errorMessage = '';
+
+      } catch (error) {
+        if (error.response) {
+          this.errorMessage = error.response.data.message;
+        } else {
+          this.errorMessage = error.message;
+        }
+        console.error('Login failed:', this.errorMessage);
+      }
+    }
+  },
+  
+});
 </script>
+
 <style scoped>
-h3{
-  color:rgb(65, 123, 7);
-}
-.min-h-screen {
-  min-height: 100vh;
-}
-span a {
- color: rgb(65, 123, 7);
+/* html,
+body {
+  height: 100%;
+  margin: 0;
+} */
+
+.container {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9fafb;
+  /* Light gray background for contrast */
+}
+
+.login-card {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #e8e8e8;
+  box-shadow: 2px 2px 10px #ccc;
+}
+
+.card-header {
   text-align: center;
+  margin-bottom: 20px
 }
-button{
-  background-color: rgb(65, 123, 7);
+
+.card-header .log {
+  margin: 0;
+  font-size: 24px;
+  color: black;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #333;
   color: white;
-  border-radius: 30px;
-  width: 30%;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-.material-symbols-outlined {
-  margin-left: 95%;
-  color:red;
-  font-variation-settings:
-  'opsz'100
+
+button[type="submit"]:hover {
+  background-color: #ccc;
+  color: black;
 }
 </style>
-

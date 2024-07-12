@@ -4,33 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
-    use HasFactory ,SoftDeletes;
-    protected $fillable = [
-        "user_id", 
-        "food_name",
-        "upload_image",
-        "video_url", 
-        "cooking_time", 
-        "ingredient", 
-        "how_to_cook"
-    ];
-    public static function list(){
-        return self::all();
+    use HasFactory;
 
-    }
+
+
+    protected $fillable = [
+        'user_id',
+        'category_id',
+        'name',
+        'image',
+        'video_url',
+        'cooking_time',
+        'nutrition',
+        'ingredients',
+    ];
+
+
+
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public static function store($request, $id = null)
+    public function category()
     {
-        $data = $request->only("user_id", "food_name","upload_image", "video_url",  "cooking_time","ingredient","how_to_cook");
-        $data = self::updateOrCreate(['id' => $id], $data);
-        return $data;
+        return $this->belongsTo(Category::class);
     }
 }

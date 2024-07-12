@@ -1,10 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\MailSettingController;
+use App\Http\Controllers\Admin\{
+    ProfileController,
+    MailSettingController,
+};
 use App\Http\Controllers\SendMailController;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\AboutUsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +26,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Route to test mail sending
-Route::get('/test-mail', function() {
+
+Route::get('/test-mail',function(){
+
+    $message = "Testing mail";
+
     Mail::raw('Hi, welcome!', function ($message) {
-        $message->to('ajayydavex@gmail.com')
-                ->subject('Testing mail');
+      $message->to('ajayydavex@gmail.com')
+        ->subject('Testing mail');
     });
     dd('Email sent');
 });
@@ -64,5 +71,8 @@ Route::namespace('App\Http\Controllers\Admin')->name('admin.')->prefix('admin')-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
 Route::get('/form', [SendMailController::class, 'loadForm']);
 Route::post('/send/email', [SendMailController::class, 'send'])->name('send');
+
+
