@@ -1,4 +1,5 @@
 <template>
+  <NavbarAdmin />
   <div class="container siemreap">
     <div class="sideBar">
       <HeaderMenu class="headerMenu"></HeaderMenu>
@@ -20,10 +21,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import HeaderMenu from '../../../../Components/HeaderMenu.vue'
+import NavbarAdmin from '@/Components/NavbarAdmin.vue'
 import axiosInstance from '@/plugins/axios'
 
 export default defineComponent({
   components: {
+    NavbarAdmin,
     HeaderMenu
   },
   data() {
@@ -56,7 +59,7 @@ export default defineComponent({
           }
         })
         console.log('Response1:', response)
-        
+
         // Navigate to the About Us page
         this.$router.push('/aboutus')
       } catch (error) {
@@ -76,6 +79,7 @@ export default defineComponent({
   font-family: 'Siemreap', cursive;
 }
 .container {
+  padding-top: 7%;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -90,9 +94,6 @@ export default defineComponent({
   padding-left: 0;
   margin-left: -15px;
 }
-.form {
-  padding: 4px;
-}
 .aboutUsUpdate {
   display: flex;
   flex-direction: column;
@@ -104,6 +105,9 @@ export default defineComponent({
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 45px rgba(10, 84, 36, 0.537);
+}
+.form {
+  padding: 4px;
 }
 
 .input-box input {

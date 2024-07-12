@@ -1,4 +1,5 @@
 <template>
+  <NavbarAdmin></NavbarAdmin>
   <div class="formContainer">
     <div class="container siemreap">
       <div class="sideBar">
@@ -42,10 +43,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import HeaderMenu from '../../../../Components/HeaderMenu.vue'
+import NavbarAdmin from '@/Components/NavbarAdmin.vue';
 import axiosInstance from '@/plugins/axios'
 
 export default defineComponent({
   components: {
+    NavbarAdmin,
     HeaderMenu
   },
   data() {
@@ -119,6 +122,7 @@ export default defineComponent({
   margin-left: -15px;
 }
 .formContainer {
+  padding-top: 7%;
   background-color: rgb(255, 255, 255);
   justify-content: space-between;
 }
@@ -136,7 +140,8 @@ export default defineComponent({
   background-color: white;
   padding: 25px;
   border-radius: 8px;
-  margin: 13%;
+  margin: 5%;
+  margin-left: 13%;
   box-shadow: 0 0 45px rgba(10, 84, 36, 0.537);
 }
 
