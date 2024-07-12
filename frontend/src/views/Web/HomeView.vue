@@ -13,10 +13,14 @@ export default {
     return {
       foods: [],
       randomFoods: [],
+      categoryID: null,
       selectedRandomNumber: 6
     }
   },
   watch: {
+    categoryID(newValue) {
+      this.fetchRandomfood()
+    },
     selectedRandomNumber(newValue) {
       this.fetchRandomfood()
     }
@@ -33,13 +37,15 @@ export default {
           this.foods = response.data.data
         }
       } catch (error) {
-        console.error('Error fetching student:', error)
+        console.error('Error fetching foods:', error)
       }
     },
     async fetchRandomfood() {
       try {
         console.log('Fetching random food...')
-        const response = await axiosInstance.get(`/food/random/${this.selectedRandomNumber}`)
+        const response = await axiosInstance.get(
+          `/food/random/${this.categoryID}?count=${this.selectedRandomNumber}`
+        )
         this.randomFoods = response.data.suitable_food
       } catch (error) {
         console.error('Error fetching random food:', error)
@@ -219,41 +225,67 @@ export default {
           data-aos-delay="100"
         >
           <li class="nav-item">
-            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters">
+            <a
+              class="nav-link active show"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-starters"
+              v-on:click="categoryID = 4"
+            >
               <h4>Starters</h4>
             </a>
           </li>
           <!-- End tab nav item -->
 
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
-              <h4>Breakfast</h4> </a
-            ><!-- End tab nav item -->
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-breakfast"
+              v-on:click="categoryID = 1"
+            >
+              <h4>Breakfast</h4>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-lunch"
+              v-on:click="categoryID = 2"
+            >
               <h4>Lunch</h4>
             </a>
           </li>
           <!-- End tab nav item -->
 
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
+            <a
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-dinner"
+              v-on:click="categoryID = 3"
+            >
               <h4>Dinner</h4>
             </a>
           </li>
           <li class="nav-item">
-  <select id="category" class="mt-2 form-control form-select-sm text-center" v-model.number="selectedRandomNumber">
-    <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
-    <option class="siemreap" value="1">១</option>
-    <option class="siemreap" value="2">២</option>
-    <option class="siemreap" value="4">៤</option>
-    <option class="siemreap" value="6">៦</option>
-    <option class="siemreap" value="8">៨</option>
-    <option class="siemreap" value="10">១០</option>
-  </select>
-</li>
-          
+            <select
+              id="category"
+              class="mt-2 form-control form-select-sm text-center"
+              v-model.number="selectedRandomNumber"
+            >
+              <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
+              <option class="siemreap" value="1">១</option>
+              <option class="siemreap" value="2">២</option>
+              <option class="siemreap" value="4">៤</option>
+              <option class="siemreap" value="6">៦</option>
+              <option class="siemreap" value="8">៨</option>
+              <option class="siemreap" value="10">១០</option>
+            </select>
+          </li>
+
           <!-- End tab nav item -->
         </ul>
 
@@ -291,74 +323,16 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
@@ -373,77 +347,18 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
             </div>
           </div>
           <!-- End Lunch Menu Content -->
@@ -455,74 +370,16 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
