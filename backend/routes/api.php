@@ -70,7 +70,8 @@ Route::prefix("food")->group(function(){
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
-    Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
+    Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
+   
 });
 
 
