@@ -1,28 +1,19 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+// tailwind.config.js
+import defaultTheme from 'tailwindcss/defaultTheme';
+import forms from '@tailwindcss/forms';
 
-module.exports = {
-    purge: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-    ],
-
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
-            },
-        },
+export default {
+  content: [
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+    './storage/framework/views/*.php',
+    './resources/views/**/*.blade.php',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+      },
     },
-
-    variants: {
-        extend: {
-            opacity: ['disabled'],
-        },
-    },
-    experimental: {
-        applyComplexClasses: true,
-    },
-
-    plugins: [require('@tailwindcss/forms')],
+  },
+  plugins: [forms],
 };

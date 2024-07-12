@@ -6,9 +6,10 @@ use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController as ControllersChatController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::prefix('auth')->group(function () {
 });
 
 // user list 
+Route::middleware('auth:sanctum')->get('/userList', [UserController::class, 'userList']);
 Route::get('/customers/list', [UserController::class, 'customerList']);
 Route::delete('/customers/delete/{id}', [UserController::class, 'destroyCustomer']);
 // Post related routes
@@ -81,6 +83,10 @@ Route::prefix('chat')->group(function () {
     Route::get('/{to_user}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth:sanctum');
     Route::put('/update/{id}', [ChatController::class, 'update'])->name('chat.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [ChatController::class, 'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
+    Route::get('/chat/unique-senders', [ChatController::class, 'getUsersChatWithMe'])->name('chat.unique-senders')->middleware('auth:sanctum');
+    Route::get('/users', [ChatController::class, 'getUsers'])->name('chat.getUsers')->middleware('auth:sanctum');
+    Route::middleware('auth:sanctum')->get('/userListWithChats', [ChatController::class, 'userListWithChats']);
+
 });
 
 // About us related routes

@@ -78,5 +78,20 @@ class User extends Authenticatable
         return $this->hasMany(Food::class);
     }
 
+    public function sentChats()
+    {
+        return $this->hasMany(Chat::class, 'from_user');
+    }
+
+    public function receivedChats()
+    {
+        return $this->hasMany(Chat::class, 'to_user');
+    }
+
+    public function chats()
+    {
+        return $this->sentChats()->union($this->receivedChats());
+    }
+
 }
 

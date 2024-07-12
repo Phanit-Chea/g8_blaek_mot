@@ -6,6 +6,7 @@ use App\Models\Chat;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChatRequest;
 use App\Http\Resources\ChatResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,9 +19,18 @@ class ChatController extends Controller
      */
     public function index()
     {
-        $chat = Chat::all();
-        $chat = ChatResource::collection($chat);
-        return response(['success' => true, 'data' => $chat], 200);
+        // Fetch all chats
+        $chats = Chat::all();
+
+        // Group chats by `from_user`
+        $groupedChats = $chats->groupBy('from_user');
+
+        // Transform each group using `ChatResource`
+        $groupedChats = $groupedChats->map(function ($group) {
+            return ChatResource::collection($group);
+        });
+
+        return response(['success' => true, 'data' => $groupedChats], 200);
     }
 
     /**
@@ -63,7 +73,7 @@ class ChatController extends Controller
      */
     // ChatController.php
     // ChatController.php
-    public function show( $to_user)
+    public function show($to_user)
     {
         $from_user = Auth::id();
         $chats = Chat::where(function ($query) use ($from_user, $to_user) {
@@ -118,4 +128,130 @@ class ChatController extends Controller
             return response()->json(['error' => 'Error deleting chat'], 500);
         }
     }
+
+
+
+    public function getUsersChatWithMe()
+    {
+        try {
+            // Get the currently authenticated user's ID
+            $authUserId = Auth::id();
+
+            // Fetch chat records where the user is the receiver
+            $chats = Chat::where('to_user', $authUserId)
+                ->orderBy('created_at', 'asc') // Order by created_at ascending (earliest first)
+                ->get();
+
+            if ($chats->isEmpty()) {
+                return response(['error' => 'No chat records found for the user.'], 404);
+            }
+
+            // Extract unique sender IDs who have chatted with the authenticated user
+            $uniqueSenderIds = $chats->pluck('from_user')->unique();
+
+            // Prepare an array to store grouped sender messages
+            $senderMessages = [];
+
+            foreach ($uniqueSenderIds as $senderId) {
+                // Filter chats sent by this sender to the authenticated user
+                $senderChats = $chats->where('from_user', $senderId);
+
+                // Count the number of messages sent by this sender
+                $messageCount = $senderChats->count();
+
+                // Fetch user details for the sender
+                $senderUser = User::find($senderId);
+
+                // Add sender messages to the response array
+                $senderMessages[] = [
+                    'sender' => $senderUser,
+                    'message_count' => $messageCount,
+                    'messages' => $senderChats->map(function ($chat) {
+                        return [
+                            'message' => $chat->message,
+                            'description' => $chat->description,
+                            'image' => $chat->image,
+                            'video' => $chat->video,
+                            'created_at' => $chat->created_at,
+                        ];
+                    })->toArray(),
+                ];
+            }
+
+            return response(['success' => true, 'sender_messages' => $senderMessages], 200);
+        } catch (\Exception $e) {
+            // Log the exception for debugging purposes
+            \Log::error('Error fetching users who chatted with me: ' . $e->getMessage());
+            return response(['error' => 'Internal Server Error: ' . $e->getMessage()], 500);
+        }
+    }
+// get user exception user account
+    public function getUsers()
+    {
+        try {
+            $currentUserId = Auth::user()->id();
+    
+            // Users who have chatted with the current user
+            $usersWithChats = User::whereHas('chat', function ($query) use ($currentUserId) {
+                $query->where('to_user', $currentUserId)
+                      ->orWhere('from_user', $currentUserId);
+            })
+            ->where('id', '!=', $currentUserId)
+            ->orderBy('name')
+            ->get();
+    
+            // Debugging: Check usersWithChats result
+            \Log::info('Users with chats: ' . $usersWithChats);
+    
+            // Users who haven't chatted with the current user
+            $usersWithoutChats = User::whereDoesntHave('chats', function ($query) use ($currentUserId) {
+                $query->where('to_user', $currentUserId)
+                      ->orWhere('from_user', $currentUserId);
+            })
+            ->where('id', '!=', $currentUserId)
+            ->orderBy('name')
+            ->get();
+    
+            // Debugging: Check usersWithoutChats result
+            \Log::info('Users without chats: ' . $usersWithoutChats);
+    
+            // Merge both collections
+            $users = $usersWithChats->merge($usersWithoutChats);
+    
+            return response()->json($users);
+        } catch (\Exception $e) {
+            // Log the exception for debugging purposes
+            \Log::error('Error fetching users who chatted with me: ' . $e->getMessage());
+            return response(['error' => 'Internal Server Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function userListWithChats(Request $request)
+    {
+        $authenticatedUserId = $request->user()->id;
+
+        // Subquery to get the latest chat timestamp for each user who chatted with the authenticated user
+        $latestChatSubquery = Chat::selectRaw('MAX(created_at) as latest_chat_time')
+            ->where('to_user', $authenticatedUserId)
+            ->groupBy('from_user');
+
+        // Fetch users, left join with the latest chat subquery to get the latest chat time
+        $users = User::leftJoinSub($latestChatSubquery, 'latest_chats', function ($join) {
+                $join->on('users.id', '=', 'latest_chats.from_user');
+            })
+            ->orderByDesc('latest_chats.latest_chat_time')
+            ->select('users.*', 'latest_chats.latest_chat_time')
+            ->get();
+
+        // Check if users array is empty or if latest_chat_time is null for all users
+        if ($users->isEmpty() || $users->every(function ($user) {
+            return $user->latest_chat_time === null;
+        })) {
+            return response()->json(['error' => 'No chats found for the authenticated user'], 404);
+        }
+
+        return response()->json(['message' => 'Users list with chats retrieved successfully', 'users' => $users], 200);
+    }
 }
+
+

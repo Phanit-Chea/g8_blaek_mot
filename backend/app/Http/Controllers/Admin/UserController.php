@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -156,6 +157,16 @@ class UserController extends Controller
         $customer->delete();
         
         return response()->json(['message' => 'User deleted successfully'], 200);
+    }
+    public function userList() {
+        $authenticatedUser = auth()->user(); // Get the authenticated user
+    
+        if (!$authenticatedUser) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+    
+        $users = User::where('id', '!=', $authenticatedUser->id)->get(); // Get all users except the authenticated user
+        return response()->json(['message' => 'Users list retrieved successfully', 'users' => $users], 200);
     }
  
 }
