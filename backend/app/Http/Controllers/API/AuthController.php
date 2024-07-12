@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -90,30 +91,51 @@ class AuthController extends Controller
             'user' => $user
         ], 200);
     }
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request)
+    {
+        // Validate the request data
         $validator = Validator::make($request->all(), [
-            'email' =>'required|email',
+            'email' => 'required|email',
+            'old_password' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|string|min:6|same:password'
         ]);
+
+        // If validation fails, return the errors
         if ($validator->fails()) {
-            return response([
-               'message' => $validator->errors(),
-               'success' => false
+            return response()->json([
+                'message' => $validator->errors(),
+                'success' => false
             ], 400);
         }
+
+        // Find the user by email
         $user = User::where('email', $request->email)->first();
+
+        // If user not found, return an error response
         if (!$user) {
-            return response([
-               'message' => 'User not found',
-               'success' => false
+            return response()->json([
+                'message' => 'User not found',
+                'success' => false
             ], 400);
         }
-        $user->password =  Hash::make($request->password);
+
+        // Check if the provided old password matches the user's current password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json([
+                'message' => 'Old password is incorrect',
+                'success' => false
+            ], 400);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->password);
         $user->save();
-        return response([
-           'message' => 'Password reset successfully',
-           'success' => true
+
+        // Return a success response
+        return response()->json([
+            'message' => 'Password reset successfully',
+            'success' => true
         ], 200);
     }
 }

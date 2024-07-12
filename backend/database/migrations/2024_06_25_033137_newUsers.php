@@ -15,7 +15,7 @@ class newUsers extends Migration
             $table->string('phone_number')->nullable()->after('email');
             $table->string('gender')->nullable()->after('phone_number');
             $table->integer('age')->nullable()->after('gender');
-            $table->string('province')->nullable()->after('age');
+            $table->string('address')->nullable()->after('age');
         });
     }
 

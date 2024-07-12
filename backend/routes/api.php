@@ -35,3 +35,5 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 Route::prefix("food")->group(function(){
     Route::post('/create',[FoodController::class,'store'])->name('food.create');
 });
+
+Route::post('resetPassword', [ApiAuthController::class, 'resetPassword'])->name('resetPassword');
