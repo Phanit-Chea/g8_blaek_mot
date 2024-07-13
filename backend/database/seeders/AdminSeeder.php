@@ -38,7 +38,14 @@ class AdminSeeder extends Seeder
             'gender' => 'Male'
         ]);
         
-
+        $folders = [
+            ["user_id"=>"1","folder_name"=>"favorite"],
+            ["user_id"=>"1","folder_name"=>"love"],
+            
+        ];
+        foreach ($folders as $folder) {
+            \App\Models\Folder::create($folder);
+        }
 
         $admin_role = Role::create(['name' => 'admin']);
         $writer_role = Role::create(['name' => 'user']);

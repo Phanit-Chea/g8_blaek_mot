@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('save_food', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('food_id');
+            $table->foreignId('food_id')->constrained('food')->onDelete('cascade');
+            $table->foreignId('folder_id')->nullable()->constrained('folders')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
