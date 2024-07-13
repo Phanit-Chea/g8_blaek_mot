@@ -12,6 +12,8 @@ class SaveFood extends Model
     protected $fillable = [
         'user_id',
         'food_id',
+        'folder_id'
+        
     ];
 
     public function user()
