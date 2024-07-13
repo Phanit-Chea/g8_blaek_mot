@@ -24,14 +24,16 @@ class SaveFoodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($id)
+    public function store(Request $request, $id)
     {
         try {
             $userID = Auth::id();
+            $folderID = $request->input('folder_id');
 
             $saveFood = SaveFood::create([
                 'user_id' => $userID,
                 'food_id' => $id,
+                'folder_id' => $folderID,
             ]);
 
             return response()->json([
@@ -111,4 +113,19 @@ class SaveFoodController extends Controller
             'data' => $savedFoods,
         ], 200);
     }
+
+    public function listSaveFoodByFolder($folderId)
+{
+    $userID = Auth::id();
+
+    $savedFoods = SaveFood::join('food', 'save_food.food_id', '=', 'food.id')
+        ->where('save_food.user_id', $userID)
+        ->where('save_food.folder_id', $folderId)
+        ->select('food.name', 'food.image', 'save_food.id as save_food_id')
+        ->get();
+
+    return response()->json([
+        'data' => $savedFoods,
+    ], 200);
+}
 }
