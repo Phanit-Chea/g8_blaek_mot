@@ -132,7 +132,13 @@ const routes = [
         path: '/map',
         name: 'map',
         component: () => import('@/views/Map/GoogleMap.vue')
-    }
+    },
+    {
+        path: '/detail',
+        name: 'detail',
+        component: () => import('../views/Web/FoodDetail/FoodDetail.vue')
+    },
+
 
 
 ]

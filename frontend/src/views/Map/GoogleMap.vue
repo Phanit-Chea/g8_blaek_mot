@@ -17,8 +17,9 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted, ref } from 'vue'
+<<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -30,17 +31,17 @@ const accessToken = 'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3Rl
 const lat = ref(0)
 const lng = ref(0)
 const mapContainer = ref(null)
-const map = ref(null)
-const geolocateControl = ref(null)
-const restaurants = ref([])
-let restaurantMarkers = []
-let userMarker = null
+const map = ref<mapboxgl.Map | null>(null)
+const geolocateControl = ref<mapboxgl.GeolocateControl | null>(null)
+const restaurants = ref<any[]>([])
+let restaurantMarkers: mapboxgl.Marker[] = []
+let userMarker: mapboxgl.Marker | null = null
 
-onMounted(() => {
+onMounted(async () => {
   mapboxgl.accessToken = accessToken
 
   map.value = new mapboxgl.Map({
-    container: mapContainer.value,
+    container: mapContainer.value!,
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [104.991, 12.5657],
     zoom: 13
@@ -74,15 +75,52 @@ onMounted(() => {
   })
   map.value.addControl(geocoder)
 
-  geocoder.on('result', (e) => {
+  geocoder.on('result', (e: any) => {
     const coords = e.result.geometry.coordinates
     lat.value = coords[1]
     lng.value = coords[0]
     setUserMarker(coords)
-    map.value.flyTo({ center: coords })
+    map.value!.flyTo({ center: coords })
     getRestaurants(coords[1], coords[0])
   })
+
+  // Fetch customer's address from the database
+  const customerAddress = await fetchCustomerAddress()
+  if (customerAddress) {
+    const coords = await geocodeAddress(customerAddress)
+    if (coords) {
+      setUserMarker(coords)
+      map.value!.flyTo({ center: coords })
+      getRestaurants(coords[1], coords[0])
+    }
+  }
 })
+
+async function fetchCustomerAddress() {
+  try {
+    const response = await axios.get('/api/customer/address')
+    return response.data.address
+  } catch (error) {
+    console.error('Error fetching customer address:', error)
+    return null
+  }
+}
+
+async function geocodeAddress(address: string) {
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${accessToken}`
+  try {
+    const response = await axios.get(url)
+    if (response.data.features.length > 0) {
+      return response.data.features[0].geometry.coordinates
+    } else {
+      console.error('Address not found')
+      return null
+    }
+  } catch (error) {
+    console.error('Error geocoding address:', error)
+    return null
+  }
+}
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -91,8 +129,8 @@ function getLocation() {
         lat.value = position.coords.latitude
         lng.value = position.coords.longitude
         setUserMarker([lng.value, lat.value])
-        map.value.setCenter([lng.value, lat.value])
-        map.value.setZoom(13)
+        map.value!.setCenter([lng.value, lat.value])
+        map.value!.setZoom(13)
         getRestaurants(lat.value, lng.value)
       },
       (error) => { console.error('Geolocation error:', error) },
@@ -103,15 +141,14 @@ function getLocation() {
   }
 }
 
-async function getRestaurants(lat, lng) {
+async function getRestaurants(lat: number, lng: number) {
   clearMarkers()
 
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/restaurant.json?proximity=${lng},${lat}&access_token=${accessToken}`
   try {
-    const response = await fetch(url)
-    const data = await response.json()
-    restaurants.value = data.features
-      .map((feature) => {
+    const response = await axios.get(url)
+    restaurants.value = response.data.features
+      .map((feature: any) => {
         const coords = feature.geometry.coordinates
         const distance = getDistance(lat, lng, coords[1], coords[0])
         return {
@@ -121,9 +158,9 @@ async function getRestaurants(lat, lng) {
           distance: distance
         }
       })
-      .filter((restaurant) => restaurant.distance <= 2)
+      .filter((restaurant: any) => restaurant.distance <= 2)
 
-    restaurants.value.forEach((restaurant) => {
+    restaurants.value.forEach((restaurant: any) => {
       addRestaurantMarker(restaurant.coords, restaurant.text, restaurant.distance)
     })
   } catch (error) {
@@ -131,13 +168,13 @@ async function getRestaurants(lat, lng) {
   }
 }
 
-function setUserMarker(coords) {
+function setUserMarker(coords: number[]) {
   if (!userMarker) {
     const popup = new mapboxgl.Popup().setHTML('<strong>Your Location</strong>')
     userMarker = new mapboxgl.Marker({ color: 'red', draggable: true })
       .setLngLat(coords)
       .setPopup(popup)
-      .addTo(map.value)
+      .addTo(map.value!)
       .on('dragend', (event) => {
         const newCoords = event.target.getLngLat()
         lat.value = newCoords.lat
@@ -149,9 +186,9 @@ function setUserMarker(coords) {
   }
 }
 
-function addRestaurantMarker(coords, name, distance) {
+function addRestaurantMarker(coords: number[], name: string, distance: number) {
   const popup = new mapboxgl.Popup().setHTML(`<strong>${name}</strong><br>Distance: ${distance.toFixed(2)} km`)
-  const marker = new mapboxgl.Marker().setLngLat(coords).setPopup(popup).addTo(map.value)
+  const marker = new mapboxgl.Marker().setLngLat(coords).setPopup(popup).addTo(map.value!)
   restaurantMarkers.push(marker)
 }
 
@@ -160,7 +197,7 @@ function clearMarkers() {
   restaurantMarkers = []
 }
 
-function getDistance(lat1, lon1, lat2, lon2) {
+function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371
   const dLat = deg2rad(lat2 - lat1)
   const dLon = deg2rad(lon1 - lon2)
@@ -170,10 +207,11 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return distance
 }
 
-function deg2rad(deg) {
+function deg2rad(deg: number) {
   return deg * (Math.PI / 180)
 }
 </script>
+
 
 <style scoped>
 .map {
