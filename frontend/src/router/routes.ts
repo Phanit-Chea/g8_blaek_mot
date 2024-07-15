@@ -73,8 +73,8 @@ const routes = [
         component: () => import('@/views/Web/User/SaveRecipes.vue')
     },
     {
-        path: '/user/folder',
-        name: 'user/folder',
+        path: '/user/folder/{id}',
+        name: 'folder-list',
         component: () => import('../views/Web/User/Folder.vue')
     },
     {

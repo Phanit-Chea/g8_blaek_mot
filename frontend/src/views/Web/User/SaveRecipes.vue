@@ -1,67 +1,25 @@
 <template>
-<navbar-view-vue/>
-  <div class="container-fluid" style="margin-top:10.8%" >
+  <navbar-view-vue />
+  <div class="container-fluid" style="margin-top: 10.8%">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
       <div class="col py-3">
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
-            <div class="card ms-4" style="width: 22.5%">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img"
-                alt="..."
-              />
+            <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.save_food_id">
+              <img :src="`http://127.0.0.1:8000/${save.image}`" class="card-img" alt="..." />
               <div class="card-body d-flex justify-content-between px-0">
-                <h4 class="card-title text-dark">Card title</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+                <h4 class="card-title text-dark">{{ save.name }}</h4>
+                <button
+                  class="btn text-white"
+                  style="background-color: #54983c"
+                  data-target="#delete"
+                  @click="deleteSavefood(save.save_food_id)"
+                >
+                  unsave
+                </button>
               </div>
             </div>
-            <div class="card ms-4" style="width: 22.5%">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img"
-                alt="..."
-              />
-              <div class="card-body d-flex justify-content-between px-0">
-                <h4 class="card-title text-dark">Card title</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
-              </div>
-            </div>
-            <div class="card ms-4" style="width: 22.5%">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img"
-                alt="..."
-              />
-              <div class="card-body d-flex justify-content-between px-0">
-                <h4 class="card-title text-dark">Card title</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
-              </div>
-            </div>
-            <div class="card ms-4" style="width: 22.5%">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img"
-                alt="..."
-              />
-              <div class="card-body d-flex justify-content-between px-0">
-                <h4 class="card-title text-dark">Card title</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
-              </div>
-            </div>
-            <div class="card ms-4" style="width: 22.5%">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img"
-                alt="..."
-              />
-              <div class="card-body d-flex justify-content-between px-0">
-                <h4 class="card-title text-dark">Card title</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
-              </div>
-            </div>
-            
           </div>
         </div>
       </div>
@@ -72,11 +30,49 @@
 <script>
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
 import NavbarViewVue from '../Navbar/NavbarView.vue'
+import { useUserStore } from '@/stores/userStore.ts'
+import axiosInstance from '@/plugins/axios'
 
 export default {
   components: {
     userProfileSidebarVue,
     NavbarViewVue
+  },
+  data() {
+    return {
+      saves: []
+    }
+  },
+  mounted() {
+    this.fetchSaves()
+  },
+  methods: {
+    async fetchSaves() {
+      try {
+        const userStore = useUserStore()
+        const response = await axiosInstance.get('/save/list', {
+          headers: {
+            Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+
+        this.saves = response.data.data
+        console.log(this.saves)
+      } catch (error) {
+        console.error('Error fetching foods:', error)
+      }
+    },
+    async deleteSavefood(foodId) {
+      try {
+        const response = await axiosInstance.delete(`/save/delete/${foodId}`)
+        if (response.data.success) {
+          this.fetchSaves()
+        }
+      } catch (error) {
+        console.error('Error deleting food:', error)
+      }
+    }
   }
 }
 </script>
@@ -163,4 +159,5 @@ img {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
 </style>

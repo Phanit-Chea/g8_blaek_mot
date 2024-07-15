@@ -16,6 +16,7 @@ use App\Http\Controllers\GroupController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SaveFoodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,26 +62,34 @@ Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->n
 
 // Remove or merge the following line if it was part of the conflict
 // Route::post('/register', [AuthController::class, 'register']);
-// 
+
+//food
+
+Route::post('/save/create/{id}', [SaveFoodController::class, 'store'])->name('save.create')->middleware('auth:sanctum');
+Route::get('/save/list', [SaveFoodController::class, 'listAllSaveFoodBySpecificUser'])->name('save.list')->middleware('auth:sanctum');
+Route::get('/save/list/{folderID}', [SaveFoodController::class, 'listSaveFoodByFolder'])->name('save.list.byfolder')->middleware('auth:sanctum');
+Route::delete('/save/delete/{id}', [SaveFoodController::class, 'destroy'])->name('save.delete');
+
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
-Route::prefix("folder")->group(function () {
-    Route::get('/list', [FolderController::class, 'index'])->name('folder.list')->middleware('auth:sanctum');
+Route::prefix("folder")->group(function(){
+    Route::get('/list', [FolderController::class, 'listSpecificUserFolder'])->name('folder.list')->middleware('auth:sanctum');
     Route::post('/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
     Route::put('/update/{id}', [FolderController::class, 'update'])->name('folder.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [FolderController::class, 'destroy'])->name('folder.delete')->middleware('auth:sanctum');
 });
 
 
-Route::prefix("food")->group(function () {
-    Route::post('/create', [FoodController::class, 'store'])->name('food.create')->middleware('auth:sanctum');
-    Route::get('/list', [FoodController::class, 'index'])->name('food.list');
-    Route::get('/show/{id}', [FoodController::class, 'show'])->name('food.show');
-    Route::post('/update/{id}', [FoodController::class, 'update'])->name('food.update');
-    Route::delete('/delete/{id}', [FoodController::class, 'destroy'])->name('food.delete');
-    Route::get('bycategory/{id}', [FoodController::class, 'listFoodByCategory'])->name('food.listfoodbycategory');
-    Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
+Route::prefix("food")->group(function(){
+    Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');
+    Route::get('/list',[FoodController::class,'index'])->name('food.list');
+    Route::get('/show/{id}',[FoodController::class,'show'])->name('food.show');
+    Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
+    Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
+    Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
+   
 });
 
 

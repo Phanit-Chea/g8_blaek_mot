@@ -1,10 +1,14 @@
 <script>
 import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
 import FooterView from '@/views/Web/Footer/FooterView.vue'
+import { useUserStore } from '@/stores/userStore.ts'
 import axiosInstance from '@/plugins/axios'
 
 export default {
   name: 'HomePage',
+  props: {
+    show: Boolean
+  },
   components: {
     NavbarView,
     FooterView
@@ -13,10 +17,18 @@ export default {
     return {
       foods: [],
       randomFoods: [],
-      selectedRandomNumber: 6
+      folders: [],
+      saves: [],
+      categoryID: 1,
+      selectedRandomNumber: 6,
+      selectedFoodId: null,
+      selectedFolderId: null
     }
   },
   watch: {
+    categoryID(newValue) {
+      this.fetchRandomfood()
+    },
     selectedRandomNumber(newValue) {
       this.fetchRandomfood()
     }
@@ -24,6 +36,10 @@ export default {
   mounted() {
     this.fetchFood()
     this.fetchRandomfood()
+    this.fetchFolder()
+      $(function() {
+      $('#modal').modal('toggle');
+    })
   },
   methods: {
     async fetchFood() {
@@ -33,17 +49,67 @@ export default {
           this.foods = response.data.data
         }
       } catch (error) {
-        console.error('Error fetching student:', error)
+        console.error('Error fetching foods:', error)
       }
     },
     async fetchRandomfood() {
       try {
         console.log('Fetching random food...')
-        const response = await axiosInstance.get(`/food/random/${this.selectedRandomNumber}`)
+        const response = await axiosInstance.get(
+          `/food/random/${this.categoryID}?count=${this.selectedRandomNumber}`
+        )
         this.randomFoods = response.data.suitable_food
       } catch (error) {
         console.error('Error fetching random food:', error)
       }
+    },
+    async fetchFolder() {
+      try {
+        const userStore = useUserStore()
+        const response = await axiosInstance.get('/folder/list', {
+          headers: {
+            Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+          this.folders = response.data.data
+      } catch (error) {
+        console.error('Error fetching folders:', error)
+      }
+    },
+     hideModal() {
+      $('#modal').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      $('body').css('overflow', 'auto');
+    },
+    async saveFood() {
+      try {
+        const userStore = useUserStore()
+        const response = await axiosInstance.post(
+          `/save/create/${this.selectedFoodId}`,
+          {
+            folder_id: this.selectedFolderId
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userStore.user.remember_token}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        if (response.data.success) {
+          this.$router.push('/user/save')
+          this.selectedFoodId = null
+          this.selectedFolderId = null
+          this.hideModal();
+        }
+      } catch (error) {
+        console.error('Error saving food:', error)
+      }
+    },
+    selectFood(foodID) {
+      this.selectedFoodId = foodID
     }
   }
 }
@@ -218,50 +284,77 @@ export default {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <li class="nav-item">
-            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters">
-              <h4>Starters</h4>
-            </a>
-          </li>
-          <!-- End tab nav item -->
+          
 
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
-              <h4>Breakfast</h4> </a
-            ><!-- End tab nav item -->
+            <a
+              class="nav-link show"
+        
+              data-bs-toggle="tab"
+              data-bs-target="#menu-breakfast"
+              v-on:click="categoryID = 1"
+            >
+              <h4>Breakfast</h4>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-lunch"
+              v-on:click="categoryID = 2"
+            >
               <h4>Lunch</h4>
             </a>
           </li>
           <!-- End tab nav item -->
 
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
+            <a
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-dinner"
+              v-on:click="categoryID = 3"
+            >
               <h4>Dinner</h4>
             </a>
           </li>
           <li class="nav-item">
-  <select id="category" class="mt-2 form-control form-select-sm text-center" v-model.number="selectedRandomNumber">
-    <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
-    <option class="siemreap" value="1">១</option>
-    <option class="siemreap" value="2">២</option>
-    <option class="siemreap" value="4">៤</option>
-    <option class="siemreap" value="6">៦</option>
-    <option class="siemreap" value="8">៨</option>
-    <option class="siemreap" value="10">១០</option>
-  </select>
-</li>
-          
+            <a
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-starters"
+              v-on:click="categoryID = 4"
+            >
+              <h4>Bakeries</h4>
+            </a>
+          </li>
+          <!-- End tab nav item -->
+          <li class="nav-item">
+            <select
+              id="category"
+              class="mt-2 form-control form-select-sm text-center"
+              v-model.number="selectedRandomNumber"
+            >
+              <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
+              <option class="siemreap" value="1">១</option>
+              <option class="siemreap" value="2">២</option>
+              <option class="siemreap" value="4">៤</option>
+              <option class="siemreap" value="6">៦</option>
+              <option class="siemreap" value="8">៨</option>
+              <option class="siemreap" value="10">១០</option>
+            </select>
+          </li>
+
           <!-- End tab nav item -->
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
-          <div class="tab-pane fade active show" id="menu-starters">
+          <div class="tab-pane fade" id="menu-starters">
             <div class="tab-header text-center">
               <p>Menu</p>
-              <h3>Starters</h3>
+              <h3>Bakeries</h3>
             </div>
 
             <div class="row gy-5">
@@ -291,74 +384,16 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
@@ -373,77 +408,18 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
             </div>
           </div>
           <!-- End Lunch Menu Content -->
@@ -455,74 +431,16 @@ export default {
             </div>
 
             <div class="row gy-5">
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
+              <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
+                <router-link
+                  :to="{ name: 'food-detail', params: { id: food.id } }"
+                  class="glightbox"
                   ><img
-                    src="../../assets/CategoryImages/dinner.png"
+                    :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                /></a>
-                <h4>Magnam Tiste</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Aut Luia</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Est Eligendi</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Eos Luibusdam</h4>
-                <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
-              </div>
-              <!-- Menu Item -->
-
-              <div class="col-lg-4 menu-item">
-                <a href="../../assets/CategoryImages/dinner.png" class="glightbox"
-                  ><img
-                    src="../../assets/CategoryImages/dinner.png"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></a>
-                <h4>Laboriosam Direva</h4>
+                /></router-link>
+                <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
               <!-- Menu Item -->
@@ -533,155 +451,62 @@ export default {
       </div>
     </section>
 
+    <section class="menu section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="text-center mb-lg-5 mb-4">Popular Food This Month</h2>
+          </div>
 
-<section class="menu section-padding">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h2 class="text-center mb-lg-5 mb-4">Popular Food This Month</h2>
-      </div>
-
-      <!-- First Menu Item -->
-      <div class="col-lg-4 col-md-6 col-12">
-        <div class="menu-thumb">
-          <div class="menu-image-wrap">
-            <img
-              src="../../assets/CategoryImages/dinner.png"
-              class="img-fluid menu-image"
-              alt="Morning Fresh Breakfast"
-            />
-            <span class="menu-tag">Breakfast</span>
-          </div>
-          <div class="menu-info d-flex flex-wrap align-items-center">
-            <h4 class="mb-0">Morning Fresh</h4>
-            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-              ><small>Add</small>+</span
-            >
-            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-              <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
-              <div class="rating">
-                <input value="5" name="rating1" id="star1-5" type="radio" />
-                <label for="star1-5"></label>
-                <input value="4" name="rating1" id="star1-4" type="radio" />
-                <label for="star1-4"></label>
-                <input value="3" name="rating1" id="star1-3" type="radio" />
-                <label for="star1-3"></label>
-                <input value="2" name="rating1" id="star1-2" type="radio" />
-                <label for="star1-2"></label>
-                <input value="1" name="rating1" id="star1-1" type="radio" />
-                <label for="star1-1"></label>
+          <!-- First Menu Item____________________________________________________________________ -->
+          <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
+            <div class="menu-thumb">
+              <router-link
+                :to="{ name: 'food-detail', params: { id: food.id } }"
+                class="menu-image-wrap"
+              >
+                <img
+                  :src="`http://127.0.0.1:8000/${food.image}`"
+                  class="img-fluid menu-image"
+                  alt="Food image"
+                />
+                <!-- <span class="menu-tag">Breakfast</span> -->
+              </router-link>
+              <div class="menu-info d-flex flex-wrap justify-content-between align-items-center">
+                <h4 class="mb-0">{{ food.name }}</h4>
+                <button
+                  class=" bg-white  text-dark cursor-pointer border-0 open-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  :value="food.id"
+                  @click="selectFood(food.id)"
+                >
+                  <i class="fs-1 save align-middle material-icons">bookmark</i>
+                </button>
+                <div class="d-flex flex-wrap justify-content-between align-items-center w-100 mt-2">
+                  <div class="d-flex">
+                    
+                  <h6 class="reviews-text mb-0 mt-2 me-3">4.3/5</h6>
+                  <div class="rating">
+                    <input value="5" name="rating1" id="star1-5" type="radio" />
+                    <label for="star1-5"></label>
+                    <input value="4" name="rating1" id="star1-4" type="radio" />
+                    <label for="star1-4"></label>
+                    <input value="3" name="rating1" id="star1-3" type="radio" />
+                    <label for="star1-3"></label>
+                    <input value="2" name="rating1" id="star1-2" type="radio" />
+                    <label for="star1-2"></label>
+                    <input value="1" name="rating1" id="star1-1" type="radio" />
+                    <label for="star1-1"></label>
+                  </div>
+                  </div>
+                  <p class="reviews-text mb-0 me-3">102 Reviews</p>
+                </div>
               </div>
-              <p class="reviews-text mb-0 ms-4">102 Reviews</p>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Second Menu Item -->
-      <div class="col-lg-4 col-md-6 col-12">
-        <div class="menu-thumb">
-          <div class="menu-image-wrap">
-            <img
-              src="../../assets/CategoryImages/drink.png"
-              class="img-fluid menu-image"
-              alt="Tooplate Soup Lunch"
-            />
-            <span class="menu-tag">Lunch</span>
-          </div>
-          <div class="menu-info d-flex flex-wrap align-items-center">
-            <h4 class="mb-0">Tooplate Soup</h4>
-            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-              ><small>Add</small>+</span
-            >
-            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-              <h6 class="reviews-text mb-0 me-3">3/5</h6>
-              <div class="rating">
-                <input value="5" name="rating2" id="star2-5" type="radio" />
-                <label for="star2-5"></label>
-                <input value="4" name="rating2" id="star2-4" type="radio" />
-                <label for="star2-4"></label>
-                <input value="3" name="rating2" id="star2-3" type="radio" />
-                <label for="star2-3"></label>
-                <input value="2" name="rating2" id="star2-2" type="radio" />
-                <label for="star2-2"></label>
-                <input value="1" name="rating2" id="star2-1" type="radio" />
-                <label for="star2-1"></label>
-              </div>
-              <p class="reviews-text mb-0 ms-4">50 Reviews</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 col-12">
-        <div class="menu-thumb">
-          <div class="menu-image-wrap">
-            <img
-              src="../../assets/CategoryImages/dinner.png"
-              class="img-fluid menu-image"
-              alt="Tooplate Soup Lunch"
-            />
-            <span class="menu-tag">Lunch</span>
-          </div>
-          <div class="menu-info d-flex flex-wrap align-items-center">
-            <h4 class="mb-0">Tooplate Soup</h4>
-            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-              ><small>Add</small>+</span
-            >
-            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-              <h6 class="reviews-text mb-0 me-3">3/5</h6>
-              <div class="rating">
-                <input value="5" name="rating2" id="star2-5" type="radio" />
-                <label for="star2-5"></label>
-                <input value="4" name="rating2" id="star2-4" type="radio" />
-                <label for="star2-4"></label>
-                <input value="3" name="rating2" id="star2-3" type="radio" />
-                <label for="star2-3"></label>
-                <input value="2" name="rating2" id="star2-2" type="radio" />
-                <label for="star2-2"></label>
-                <input value="1" name="rating2" id="star2-1" type="radio" />
-                <label for="star2-1"></label>
-              </div>
-              <p class="reviews-text mb-0 ms-4">50 Reviews</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 col-12">
-        <div class="menu-thumb">
-          <div class="menu-image-wrap">
-            <img
-              src="../../assets/CategoryImages/drink.png"
-              class="img-fluid menu-image"
-              alt="Tooplate Soup Lunch"
-            />
-            <span class="menu-tag">Lunch</span>
-          </div>
-          <div class="menu-info d-flex flex-wrap align-items-center">
-            <h4 class="mb-0">Tooplate Soup</h4>
-            <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer"
-              ><small>Add</small>+</span
-            >
-            <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-              <h6 class="reviews-text mb-0 me-3">3/5</h6>
-              <div class="rating">
-                <input value="5" name="rating2" id="star2-5" type="radio" />
-                <label for="star2-5"></label>
-                <input value="4" name="rating2" id="star2-4" type="radio" />
-                <label for="star2-4"></label>
-                <input value="3" name="rating2" id="star2-3" type="radio" />
-                <label for="star2-3"></label>
-                <input value="2" name="rating2" id="star2-2" type="radio" />
-                <label for="star2-2"></label>
-                <input value="1" name="rating2" id="star2-1" type="radio" />
-                <label for="star2-1"></label>
-              </div>
-              <p class="reviews-text mb-0 ms-4">50 Reviews</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div> 
-      </div> 
     </section>
 
     <!-- Why Us Section -->
@@ -862,8 +687,84 @@ export default {
       </div>
     </section>
     <!-- /Book A Table Section -->
+    <!-- Popup form -->
+    <div>
+      <div id="myForm" v-if="formVisible" style="display: none">
+        <!-- Form content goes here -->
+        <form action="" class="form-container">
+          <h1>Login</h1>
+
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter Email" name="email" required />
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required />
+
+          <button type="submit" class="btn">Login</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div>
+    </div>
   </div>
+
+  <!-- Popup form -->
+  <div
+    class="modal fade rounded"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog rounded">
+      <div class="modal-content rounded">
+        <div class="div0">
+          <div class="div2 pt-4 px-4 ">
+            <div class="px-3">
+              <h3 class="text-dark siemreap" id="exampleModalLabel">រក្សាទុកម្ហូប</h3>
+            </div>
+            <div class="modal-body">
+              <form @submit.prevent="saveFood()">
+                <div class="form-group">
+                  <label class="text-dark siemreap">ជ្រើសរើសថតឯកសារ</label>
+                  <select
+                    id="category"
+                    class="  form-control form-select-sm text-center"
+                    v-model="selectedFolderId"
+                  >
+                    <option class="siemreap" value="" selected>ជ្រើសរើសថតឯកសារ</option>
+                    <option
+                      class="siemreap"
+                      v-for="folder in folders"
+                      :key="folder.id"
+                      :value="folder.id"
+                    >
+                      {{ folder.folder_name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="px-3  d-flex justify-content-end mt-3">
+                  <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
+                    បោះបង់
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn ms-2 text-white text-bold siemreap"
+                    style="background-color: #238400"
+                  >
+                    រក្សាទុក
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <FooterView></FooterView>
+
+  <!-- Button trigger modal -->
 </template>
 
 
@@ -925,18 +826,97 @@ export default {
   color: #66b64a;
 }
 
+.popup-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
 .siemreap {
   font-family: 'Siemreap', cursive;
 }
 
-.menu-image-wrap img {
-  width: 100%; /* Set the width to 100% of the parent container */
-  height: 200px; /* Set a fixed height */
-  object-fit: cover; /* Ensure the image covers the entire area without stretching */
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
 }
 
-.menu-thumb {
-  margin-bottom: 20px; /* Add some margin between menu items */
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter-from {
+  opacity: 0;
+}
+
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .modal-container,
+.modal-leave-to .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.save{
+  color: #4CAF50; /* Green */
+}
+.save:hover{
+  cursor: pointer;
+
+  text-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50;
 }
 </style>
-
