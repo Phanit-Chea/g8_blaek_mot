@@ -4,7 +4,8 @@ import NavbarView from '../Navbar/NavbarView.vue'
 import FooterView from '../Footer/FooterView.vue'
 import SideBar from '@/Components/Layouts/SideBar.vue'
 import { ref, onMounted } from 'vue'
-
+import { useAuthStore } from '../../../stores/auth-store'
+// import { ref } from 'vue'
 
 import axios from 'axios'
 import mapboxgl from 'mapbox-gl'
@@ -14,7 +15,10 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
-const accessToken = 'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3RlMW8yZWhzdiJ9.Djy2BP-ysXAcH2mxJItgYg'
+import { useRoute } from 'vue-router';
+
+const accessToken =
+  'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3RlMW8yZWhzdiJ9.Djy2BP-ysXAcH2mxJItgYg'
 const lat = ref(0)
 const lng = ref(0)
 const mapContainer = ref(null)
@@ -24,22 +28,60 @@ const restaurants = ref<any[]>([])
 let restaurantMarkers: mapboxgl.Marker[] = []
 let userMarker: mapboxgl.Marker | null = null
 
-const food = ref({})
+
+const food = ref({});
+const rating = ref({ stars_rating: 1 });
+const route = useRoute();
 
 const fetchFoodDetail = async () => {
   try {
-    const response = await axiosInstance.get(`/food/show/${$route.params.id}`)
-    food.value = response.data
-  } catch (error) {
-    console.error('Error fetching food details:', error)
-    alert(error)
-  }
-}
+    const response = await axiosInstance.get(`/show/${route.params.id}`);
+    console.log('Food detail response:', response.data); // Log response for debugging
+console.log( fetchFoodDetail);
 
-onMounted(async () => {
-  await fetchFoodDetail()
-  // Additional logic for fetching nearby restaurants can go here if needed
-})
+
+    if (response.data && response.data.id) {
+      food.value = response.data;
+    } else {
+      console.error('Food ID not found in API response');
+    }
+  } catch (error) {
+    console.error('Error fetching food details:', error);
+    alert('Error fetching food details. Please try again later.');
+  }
+};
+
+
+const submitRating = async () => {
+  try {
+    if (!food.value || !food.value.id) {
+      console.error('Food ID is undefined or null');
+      return;
+    }
+
+    const ratingData = {
+      stars_rating: rating.value.stars_rating,
+      food_id: food.value.id,
+      // Assuming user_id is handled on the backend or through authentication
+    };
+
+    console.log('Submitting rating with data:', ratingData);
+
+    const response = await axiosInstance.post('/ratings/create', ratingData);
+    console.log('Rating submitted successfully:', response.data);
+
+    rating.value.stars_rating = 1; // Reset rating after submission
+    alert('Rating submitted successfully!');
+  } catch (error) {
+    console.error('Error submitting rating:', error);
+    alert('Error submitting rating. Please try again later.');
+  }
+};
+
+// Fetch food details when component mounts
+// onMounted(fetchFoodDetail);
+
+
 
 onMounted(async () => {
   mapboxgl.accessToken = accessToken
@@ -111,7 +153,9 @@ async function fetchCustomerAddress() {
 }
 
 async function geocodeAddress(address: string) {
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${accessToken}`
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+    address
+  )}.json?access_token=${accessToken}`
   try {
     const response = await axios.get(url)
     if (response.data.features.length > 0) {
@@ -137,7 +181,9 @@ function getLocation() {
         map.value!.setZoom(13)
         getRestaurants(lat.value, lng.value)
       },
-      (error) => { console.error('Geolocation error:', error) },
+      (error) => {
+        console.error('Geolocation error:', error)
+      },
       { enableHighAccuracy: true }
     )
   } else {
@@ -191,7 +237,9 @@ function setUserMarker(coords: number[]) {
 }
 
 function addRestaurantMarker(coords: number[], name: string, distance: number) {
-  const popup = new mapboxgl.Popup().setHTML(`<strong>${name}</strong><br>Distance: ${distance.toFixed(2)} km`)
+  const popup = new mapboxgl.Popup().setHTML(
+    `<strong>${name}</strong><br>Distance: ${distance.toFixed(2)} km`
+  )
   const marker = new mapboxgl.Marker().setLngLat(coords).setPopup(popup).addTo(map.value!)
   restaurantMarkers.push(marker)
 }
@@ -205,7 +253,9 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371
   const dLat = deg2rad(lat2 - lat1)
   const dLon = deg2rad(lon1 - lon2)
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   const distance = R * c
   return distance
@@ -215,6 +265,7 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180)
 }
 </script>
+
 <template>
   <NavbarView></NavbarView>
   <div class="d-flex" style="margin-top: 158px">
@@ -229,18 +280,32 @@ function deg2rad(deg: number) {
       </div>
 
       <div>
-        <h1 v-if="food.name" class="text-success mt-2 mb-3">{{ food.name }}</h1>
-        <p v-else>Loading...</p>
+    <div v-if="food.name">
+      <h1 class="text-success mt-2 mb-3">{{ food.name }}</h1>
+      <p>{{ food.description }}</p>
+    </div>
+    <div v-else>
+      <p>Loading...</p>
+    </div>
+
+    <div class="col col-lg-2 d-flex mt-3 mb-3">
+      <div class="rating">
+        <input v-model="rating.stars_rating" value="5" name="rating" id="star5" type="radio" />
+        <label for="star5"></label>
+        <input v-model="rating.stars_rating" value="4" name="rating" id="star4" type="radio" />
+        <label for="star4"></label>
+        <input v-model="rating.stars_rating" value="3" name="rating" id="star3" type="radio" />
+        <label for="star3"></label>
+        <input v-model="rating.stars_rating" value="2" name="rating" id="star2" type="radio" />
+        <label for="star2"></label>
+        <input v-model="rating.stars_rating" value="1" name="rating" id="star1" type="radio" />
+        <label for="star1"></label>
       </div>
-      <div class="col col-lg-2 d-flex mt-3 mb-3">
-        <div class="small-ratings d-flex">
-          <i class="fa fa-star rating-color mx-1"></i>
-          <i class="fa fa-star rating-color mx-1"></i>
-          <i class="fa fa-star rating-color mx-1"></i>
-          <i class="fa fa-star mx-1"></i>
-          <i class="fa fa-star mx-1"></i>
-        </div>
-      </div>
+    </div>
+
+    <button type="button" class="btn btn-success" @click="submitRating">Rate Now</button>
+  </div>
+      <!-- {{ userStore }} -->
       <hr />
       <!-- ===================icon action share ,save,print,========================== -->
       <div class="mt-3 mb-3">
@@ -679,5 +744,4 @@ function deg2rad(deg: number) {
   padding-top: 25px;
   font-weight: 700;
 }
-
 </style>
