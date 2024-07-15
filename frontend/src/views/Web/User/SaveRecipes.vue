@@ -11,7 +11,7 @@
               <div class="card-body d-flex justify-content-between px-0">
                 <h4 class="card-title text-dark">{{ save.name }}</h4>
                 <button
-                  class="btn"
+                  class="btn text-white"
                   style="background-color: #54983c"
                   data-target="#delete"
                   @click="deleteSavefood(save.save_food_id)"

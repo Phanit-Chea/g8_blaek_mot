@@ -72,9 +72,7 @@ export default {
             'Content-Type': 'application/json'
           }
         })
-        if (response.data.success) {
           this.folders = response.data.data
-        }
       } catch (error) {
         console.error('Error fetching folders:', error)
       }
@@ -483,7 +481,7 @@ export default {
                   :value="food.id"
                   @click="selectFood(food.id)"
                 >
-                  <i class="fs-1 text-success align-middle material-icons">bookmark</i>
+                  <i class="fs-1 save align-middle material-icons">bookmark</i>
                 </button>
                 <div class="d-flex flex-wrap justify-content-between align-items-center w-100 mt-2">
                   <div class="d-flex">
@@ -720,20 +718,20 @@ export default {
     <div class="modal-dialog rounded">
       <div class="modal-content rounded">
         <div class="div0">
-          <div class="div2 py-4 w-50" style="background-color: rgba(255, 255, 255, 0.5)">
-            <div class="px-3 pt-3">
-              <h3 class="text-dark siemreap" id="exampleModalLabel">Save Food</h3>
+          <div class="div2 pt-4 px-4 ">
+            <div class="px-3">
+              <h3 class="text-dark siemreap" id="exampleModalLabel">រក្សាទុកម្ហូប</h3>
             </div>
             <div class="modal-body">
               <form @submit.prevent="saveFood()">
                 <div class="form-group">
-                  <label class="text-dark siemreap">Select Folder</label>
+                  <label class="text-dark siemreap">ជ្រើសរើសថតឯកសារ</label>
                   <select
                     id="category"
-                    class="mt-3 py-2 form-control form-select-sm text-center"
+                    class="  form-control form-select-sm text-center"
                     v-model="selectedFolderId"
                   >
-                    <option class="siemreap" value="" selected>Select Folder</option>
+                    <option class="siemreap" value="" selected>ជ្រើសរើសថតឯកសារ</option>
                     <option
                       class="siemreap"
                       v-for="folder in folders"
@@ -744,16 +742,16 @@ export default {
                     </option>
                   </select>
                 </div>
-                <div class="px-3 pb-3 d-flex justify-content-end mt-3">
+                <div class="px-3  d-flex justify-content-end mt-3">
                   <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
-                    Cancel
+                    បោះបង់
                   </button>
                   <button
                     type="submit"
-                    class="btn ms-2 text-bold siemreap"
+                    class="btn ms-2 text-white text-bold siemreap"
                     style="background-color: #238400"
                   >
-                    Save
+                    រក្សាទុក
                   </button>
                 </div>
               </form>
@@ -884,9 +882,7 @@ export default {
   color: #42b983;
 }
 
-.modal-body {
-  margin: 20px 0;
-}
+
 
 .modal-default-button {
   float: right;
@@ -913,5 +909,14 @@ export default {
 .modal-leave-to .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+.save{
+  color: #4CAF50; /* Green */
+}
+.save:hover{
+  cursor: pointer;
+
+  text-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50;
 }
 </style>

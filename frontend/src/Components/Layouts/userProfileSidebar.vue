@@ -203,7 +203,8 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '../../stores/auth-store'
+import { useUserStore } from '../../stores/userStore'
 import { METHODS } from 'http'
 
 const useAuth = useAuthStore()
@@ -223,21 +224,17 @@ const toggleOptions = (folderId: number) => {
 
 const deleteFolder = async (folderId: number) => {
   try {
-    const user_token = localStorage.getItem('token')
-
-    if (!user_token) {
-      alert('No access token found')
-      return
-    }
+   const userStore = useUserStore()
 
     const response = await axios.delete(`http://127.0.0.1:8000/api/folder/delete/${folderId}`, {
       headers: {
-        Authorization: `Bearer ${user_token}`
-      }
+            Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
     })
 
     if (response.data.success) {
-      alert('Folder deleted successfully')
+      
       folders.value = folders.value.filter((folder) => folder.id !== folderId)
     } else {
       alert('Failed to delete folder')
@@ -250,25 +247,20 @@ const deleteFolder = async (folderId: number) => {
 
 const createFolder = async () => {
   try {
-    const user_token = localStorage.getItem('token')
-
-    if (!user_token) {
-      alert('No access token found')
-      return
-    }
+    const userStore = useUserStore()
 
     const response = await axios.post(
       'http://127.0.0.1:8000/api/folder/create',
       { folder_name: folder_name.value },
       {
         headers: {
-          Authorization: `Bearer ${user_token}`
-        }
+            Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
       }
     )
 
     if (response.data.success) {
-      alert('Folder created successfully')
       folders.value.push(response.data.folder)
       folder_name.value = ''
     } else {
@@ -287,25 +279,21 @@ const showRenameForm = (folder: any) => {
 
 const renameFolder = async () => {
   try {
-    const user_token = localStorage.getItem('token')
-
-    if (!user_token) {
-      alert('No access token found')
-      return
-    }
+    const userStore = useUserStore()
 
     const response = await axios.put(
       `http://127.0.0.1:8000/api/folder/update/${renamingFolderId.value}`,
       { folder_name: renamingFolderName.value },
       {
         headers: {
-          Authorization: `Bearer ${user_token}`
-        }
+            Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
+
       }
     )
 
     if (response.data.success) {
-      alert('Folder renamed successfully')
       const folder = folders.value.find((f) => f.id === renamingFolderId.value)
       if (folder) {
         folder.folder_name = renamingFolderName.value
@@ -322,24 +310,19 @@ const renameFolder = async () => {
 
 const fetchFolders = async () => {
   try {
-    const user_token = localStorage.getItem('token')
+    const userStore = useUserStore()
 
-    if (!user_token) {
-      alert('No access token found')
-      return
-    }
 
     const response = await axios.get('http://127.0.0.1:8000/api/folder/list', {
-      headers: {
-        Authorization: `Bearer ${user_token}`
-      }
+       headers: {
+            Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
     })
 
-    if (response.data.success) {
+   
       folders.value = response.data.data
-    } else {
-      alert('Failed to fetch folders')
-    }
+    
   } catch (error) {
     console.error('Error fetching folders:', error)
     alert('An error occurred while fetching folders')
