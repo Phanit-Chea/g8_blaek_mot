@@ -7,7 +7,10 @@
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
             <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.save_food_id">
+              <router-link :to="{ name: 'food-detail', params: { id: save.save_food_id } }" class="nav-link">
+
               <img :src="`http://127.0.0.1:8000/${save.image}`" class="card-img" alt="..." />
+              </router-link>
               <div class="card-body d-flex justify-content-between px-0">
                 <h4 class="card-title text-dark">{{ save.name }}</h4>
                 <button
@@ -159,5 +162,7 @@ img {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-
+.nav-link{
+  text-decoration: none;
+}
 </style>

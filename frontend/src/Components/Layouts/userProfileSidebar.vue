@@ -225,7 +225,7 @@ const toggleOptions = (folderId: number) => {
 const deleteFolder = async (folderId: number) => {
   try {
    const userStore = useUserStore()
-
+   
     const response = await axios.delete(`http://127.0.0.1:8000/api/folder/delete/${folderId}`, {
       headers: {
             Authorization: `Bearer ${userStore.user.remember_token}`,

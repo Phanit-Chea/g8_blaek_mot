@@ -89,10 +89,10 @@ export default {
 
         <div class="col-4">
           <div class="card mb-3" id="foodImage1">
-            <img src="../../../assets/FoodDetail/image.png" alt="" width="100%" height="195px" />
+            <img :src="`http://127.0.0.1:8000/${food.image}`" alt="" width="100%" height="195px" />
           </div>
           <div class="card" id="foodImage2">
-            <img src="../../../assets/FoodDetail/image.png" alt="" width="100%" height="195px" />
+            <img :src="`http://127.0.0.1:8000/${food.image}`" alt="" width="100%" height="195px" />
           </div>
         </div>
       </div>
