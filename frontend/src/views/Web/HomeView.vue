@@ -83,7 +83,7 @@ export default {
       $('#modal').modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
-      $('body').css('overflow', 'auto'); 
+      $('body').css('overflow', 'auto');
     },
     async saveFood() {
       try {

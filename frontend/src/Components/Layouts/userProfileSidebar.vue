@@ -46,10 +46,10 @@
           class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
           id="menu"
         >
-          <li v-for="folder in folders" :key="folder.id" class="nav-item d-flex justify-content-between " >
+          <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
             <router-link
               :to="{ name: 'folder-list', params: { id: folder.id } }"
-              @click.prevent="selectFolder(folder.id)"
+              @click="selectFolder(folder.id)"
               class="link-folder nav-link px-3 align-middle d-flex justify-content-between align-items-center"
             >
               <div>
@@ -237,6 +237,7 @@ const deleteFolder = async (folderId: number) => {
     })
 
     if (response.data.success) {
+      alert('Folder deleted successfully')
       folders.value = folders.value.filter((folder) => folder.id !== folderId)
     } else {
       alert('Failed to delete folder')
@@ -267,7 +268,7 @@ const createFolder = async () => {
     )
 
     if (response.data.success) {
-      
+      alert('Folder created successfully')
       folders.value.push(response.data.folder)
       folder_name.value = ''
     } else {
@@ -304,6 +305,7 @@ const renameFolder = async () => {
     )
 
     if (response.data.success) {
+      alert('Folder renamed successfully')
       const folder = folders.value.find((f) => f.id === renamingFolderId.value)
       if (folder) {
         folder.folder_name = renamingFolderName.value
