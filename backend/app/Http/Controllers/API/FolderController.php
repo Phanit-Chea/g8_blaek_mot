@@ -53,10 +53,7 @@ class FolderController extends Controller
         return response()->json(['success' => true, 'message' => 'Folder created successfully', 'folder' => $folder], 201);
     }
   
-    public function show(string $id)
-    {
-        // Implement your logic to return a specific folder
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,8 +65,7 @@ class FolderController extends Controller
             [
             'success' => true, 
             'message' => 'folder was updated successfully'
-        ], 200);
-        
+        ], 200);    
     }
 
 
@@ -91,9 +87,6 @@ class FolderController extends Controller
         $folder->delete();
     
         return response()->json(['success' => true, 'message' => 'Folder deleted successfully']);
-
-
-
-        
+   
     }
 }

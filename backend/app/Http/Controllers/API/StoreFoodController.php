@@ -39,7 +39,7 @@ class StoreFoodController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while storing the food.',
+                'message' => 'Food fail to store.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -68,16 +68,13 @@ class StoreFoodController extends Controller
     {
         try {
             $storeFood = StoreFood::findOrFail($id);
-
-            // Get the created_at timestamp of the food item
+    
             $createdAt = $storeFood->created_at;
-
-            // Calculate the time 2 minutes after creation
+    
             $deleteTime = $createdAt->addMinutes(2);
-
-            // Schedule the deletion to happen at the calculated time
+    
             $storeFood->delete($deleteTime);
-
+    
             return response()->json([
                 'data' => null,
                 'message' => "Food will be deleted 2 minutes after creation",
