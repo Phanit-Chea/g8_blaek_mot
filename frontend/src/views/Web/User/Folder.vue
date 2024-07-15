@@ -1,21 +1,22 @@
 <template>
   <navbar-view-vue />
-  <div class="container-fluid" style="margin-top:11.03%">
+  <div class="container-fluid" style="margin-top: 11.03%">
     <div class="row flex-nowrap">
-      <user-profile-sidebar-vue />
+      <user-profile-sidebar-vue @selectFolder="onFolderSelected" />
       <div class="col py-3">
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
-            <div class="card ms-4" style="width: 22.5%">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
-                class="card-img" alt="..." />
+            <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.id">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                class="card-img"
+                alt="..."
+              />
               <div class="card-body d-flex justify-content-between px-0">
-                <h4 class="card-title text-dark">Card title</h4>
+                <h4 class="card-title text-dark">{{ save.name }}</h4>
                 <a href="#" class="btn" style="background-color: #54983c">Detail</a>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -26,11 +27,45 @@
 <script>
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
 import NavbarViewVue from '../Navbar/NavbarView.vue'
+import { useUserStore } from '@/stores/userStore.ts'
+import axiosInstance from '@/plugins/axios'
 
 export default {
   components: {
     userProfileSidebarVue,
     NavbarViewVue
+  },
+  props: ['id'],
+  data() {
+    return {
+      saves: [],
+      selectedFolderId: null
+    }
+  },
+  mounted() {
+    this.fetchFolder()
+  },
+  methods: {
+    onFolderSelected(folderId) {
+      this.selectedFolderId = folderId
+      this.fetchFolder()
+    },
+    async fetchFolder() {
+      this.saves = [] // Reset saves before fetching new ones
+      // alert(this.selectedFolderId)
+      const userStore = useUserStore()
+    
+        const response = await axiosInstance.get(`/save/list/1`, {
+          headers: {
+             Authorization: `Bearer ${userStore.user.remember_token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        this.saves = response.data
+        console.log('Fetched saves:', this.saves)
+        
+      
+    }
   }
 }
 </script>
