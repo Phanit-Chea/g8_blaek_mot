@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\RatingController;
+use App\Http\Controllers\Api\StoreFoodController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController as ControllersChatController;
 use App\Models\Rating;
@@ -104,3 +105,9 @@ Route::prefix('ratings')->group(function () {
     Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
     Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
 });
+
+Route::prefix('storeFood')->group(function () {
+    Route::post('/create/{id}', [StoreFoodController::class, 'store'])->name('storeFood.create')->middleware('auth:sanctum');
+    Route::delete('/delete/{id}', [StoreFoodController::class, 'destroy'])->name('storeFood.delete')->middleware('auth:sanctum');
+});
+
