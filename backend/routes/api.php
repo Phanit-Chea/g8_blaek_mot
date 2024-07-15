@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
@@ -6,11 +7,12 @@ use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController as ControllersChatController;
+use App\Http\Controllers\GroupController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -98,6 +100,15 @@ Route::prefix('chat')->group(function () {
     Route::get('/{to_user}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth:sanctum');
     Route::put('/update/{id}', [ChatController::class, 'update'])->name('chat.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [ChatController::class, 'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
+
+    Route::middleware('auth:sanctum')->get('/users/except-me', [ChatController::class, 'getUsersExceptMe']);
+    Route::middleware('auth:sanctum')->get('/chat/users-with-messages', [ChatController::class, 'getUsersWithMessages']);
+    Route::middleware('auth:sanctum')->get('/users/from', [ChatController::class, 'getUsersFrom']);
+    Route::middleware('auth:sanctum')->get('/users/chatTo', [ChatController::class, 'getUserChatToMe']);
+    Route::middleware('auth:sanctum')->get('/users/chatList', [ChatController::class, 'listChat']);
+
+    // create_group
+    Route::middleware('auth:sanctum')->post('/groups', [GroupController::class, 'create']);
 });
 
 // About us related routes

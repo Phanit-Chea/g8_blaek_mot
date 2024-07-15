@@ -232,5 +232,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+    'timezone' => 'Asia/Phnom_Penh',
 
 ];
