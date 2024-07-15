@@ -66,13 +66,13 @@ Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->n
 Route::post('/save/create/{id}', [SaveFoodController::class, 'store'])->name('save.create')->middleware('auth:sanctum');
 Route::get('/save/list', [SaveFoodController::class, 'listAllSaveFoodBySpecificUser'])->name('save.list')->middleware('auth:sanctum');
 Route::get('/save/list/{folderID}', [SaveFoodController::class, 'listSaveFoodByFolder'])->name('save.list.byfolder')->middleware('auth:sanctum');
-Route::delete('/save/delete/{id}', [SaveFoodController::class, 'destroy'])->name('save.destroy')->middleware('auth:sanctum');
+Route::delete('/save/delete/{id}', [SaveFoodController::class, 'destroy'])->name('save.delete');
 
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 Route::prefix("folder")->group(function(){
-    Route::get('/list', [FolderController::class, 'index'])->name('folder.list')->middleware('auth:sanctum');
+    Route::get('/list', [FolderController::class, 'listSpecificUserFolder'])->name('folder.list')->middleware('auth:sanctum');
     Route::post('/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
     Route::put('/update/{id}', [FolderController::class, 'update'])->name('folder.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [FolderController::class, 'destroy'])->name('folder.delete')->middleware('auth:sanctum');

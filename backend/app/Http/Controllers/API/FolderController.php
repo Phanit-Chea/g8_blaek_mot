@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\folder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class FolderController extends Controller
@@ -29,11 +30,11 @@ class FolderController extends Controller
         $validator = Validator::make($request->all(), [
             'folder_name' => 'required|string',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 402);
         }
-    
+
         $user = $request->user();
 
         if (!$user) {
@@ -44,15 +45,15 @@ class FolderController extends Controller
             ]);
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-    
+
         $folder = new folder();
         $folder->user_id = $user->id;
         $folder->folder_name = $request->folder_name;
         $folder->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Folder created successfully', 'folder' => $folder], 201);
     }
-  
+
     public function show(string $id)
     {
         // Implement your logic to return a specific folder
@@ -66,10 +67,11 @@ class FolderController extends Controller
         $folder = folder::store($request, $id);
         return response()->json(
             [
-            'success' => true, 
-            'message' => 'folder was updated successfully'
-        ], 200);
-        
+                'success' => true,
+                'message' => 'folder was updated successfully'
+            ],
+            200
+        );
     }
 
 
@@ -78,22 +80,30 @@ class FolderController extends Controller
      */
     public function destroy($id)
     {
-    $user = auth()->user();
-    
+        $user = auth()->user();
+
         $folder = folder::where('user_id', $user->id)
             ->where('id', $id)
             ->first();
-    
+
         if (!$folder) {
             return response()->json(['error' => 'Folder not found'], 404);
         }
-    
+
         $folder->delete();
-    
+
         return response()->json(['success' => true, 'message' => 'Folder deleted successfully']);
+    }
 
+    public function listSpecificUserFolder(Request $request)
+    {
+        $userID = Auth::id();
 
+        $folders = folder::where('user_id', $userID)
+            ->get();
 
-        
+        return response()->json([
+            'data' => $folders,
+        ], 200);
     }
 }
