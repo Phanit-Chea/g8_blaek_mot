@@ -19,7 +19,7 @@ export default {
       randomFoods: [],
       folders: [],
       saves: [],
-      categoryID: null,
+      categoryID: 1,
       selectedRandomNumber: 6,
       selectedFoodId: null,
       selectedFolderId: null
@@ -56,7 +56,7 @@ export default {
       try {
         console.log('Fetching random food...')
         const response = await axiosInstance.get(
-          `/food/random/${this.categoryID ? this.categoryID : 1}?count=${this.selectedRandomNumber}`
+          `/food/random/${this.categoryID}?count=${this.selectedRandomNumber}`
         )
         this.randomFoods = response.data.suitable_food
       } catch (error) {
@@ -290,8 +290,8 @@ export default {
 
           <li class="nav-item">
             <a
-              class="nav-link active show"
-              href="#"
+              class="nav-link show"
+        
               data-bs-toggle="tab"
               data-bs-target="#menu-breakfast"
               v-on:click="categoryID = 1"
@@ -474,19 +474,21 @@ export default {
                 />
                 <!-- <span class="menu-tag">Breakfast</span> -->
               </router-link>
-              <div class="menu-info d-flex flex-wrap align-items-center">
+              <div class="menu-info d-flex flex-wrap justify-content-between align-items-center">
                 <h4 class="mb-0">{{ food.name }}</h4>
                 <button
-                  class="price-tag bg-white shadow-lg ms-4 text-dark cursor-pointer open-button"
+                  class=" bg-white  text-dark cursor-pointer border-0 open-button"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                   :value="food.id"
                   @click="selectFood(food.id)"
                 >
-                  <small>Add</small>+
+                  <i class="fs-1 text-success align-middle material-icons">bookmark</i>
                 </button>
-                <div class="d-flex flex-wrap align-items-center w-100 mt-2">
-                  <h6 class="reviews-text mb-0 me-3">4.3/5</h6>
+                <div class="d-flex flex-wrap justify-content-between align-items-center w-100 mt-2">
+                  <div class="d-flex">
+                    
+                  <h6 class="reviews-text mb-0 mt-2 me-3">4.3/5</h6>
                   <div class="rating">
                     <input value="5" name="rating1" id="star1-5" type="radio" />
                     <label for="star1-5"></label>
@@ -499,7 +501,8 @@ export default {
                     <input value="1" name="rating1" id="star1-1" type="radio" />
                     <label for="star1-1"></label>
                   </div>
-                  <p class="reviews-text mb-0 ms-4">102 Reviews</p>
+                  </div>
+                  <p class="reviews-text mb-0 me-3">102 Reviews</p>
                 </div>
               </div>
             </div>
