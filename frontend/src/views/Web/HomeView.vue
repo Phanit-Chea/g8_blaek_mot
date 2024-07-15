@@ -291,10 +291,10 @@ export default {
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
-          <div class="tab-pane fade active show" id="menu-starters">
+          <div class="tab-pane fade " id="menu-starters">
             <div class="tab-header text-center">
               <p>Menu</p>
-              <h3>Starters</h3>
+              <h3>Bakeries</h3>
             </div>
 
             <div class="row gy-5">
