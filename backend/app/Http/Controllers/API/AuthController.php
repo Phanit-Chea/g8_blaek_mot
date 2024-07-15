@@ -129,7 +129,8 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'phoneNumber' => $request->phoneNumber,
             'address' => $request->address,
-            'profile' => $profile
+            'profile' => $profile,
+            
         ]);
         $token  = $user->createToken('auth_token')->plainTextToken;
         $user->remember_token = $token;

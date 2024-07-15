@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('from_user')->constrained('users')->onDelete('cascade');
             $table->foreignId('to_user')->constrained('users')->onDelete('cascade');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->text('video')->nullable();
-            $table->timestamps();
+            $table->timestampsTz();
+            DB::statement("SET time_zone = '+07:00'");
         });
     }
 
