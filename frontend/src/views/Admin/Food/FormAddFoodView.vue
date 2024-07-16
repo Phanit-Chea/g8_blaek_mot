@@ -156,7 +156,7 @@ export default {
       formData.append('cooking_time', this.food.cooking_time)
       formData.append('ingredients', this.food.ingredients)
       // console.log(this.food.categrory_id);
-      console.log(useAuth.user.remember_token);
+      
       try {
         await axiosInstance.post('/food/create', formData, {
           headers: {
@@ -168,7 +168,8 @@ export default {
         this.$router.push('/')
       } catch (error) {
         console.error('Error creating food:', error)
-        alert('Failed to create food. Please try again.')
+        // alert('Failed to create food. Please try again.')
+        alert(error);
       }
     },
     async fetchCategories() {
