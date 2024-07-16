@@ -2,13 +2,13 @@
   <navbar-view-vue />
   <div class="container-fluid" style="margin-top: 11.03%">
     <div class="row flex-nowrap">
-      <user-profile-sidebar-vue @selectFolder="onFolderSelected" />
+      <user-profile-sidebar-vue @folderSelected="onFolderSelected" />
       <div class="col py-3">
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
             <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.id">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXr8dJVZ4N_-7d5cwXGGLXWzs_esjltt0Dw&s"
+                :src="`http://127.0.0.1:8000/${save.image}`"
                 class="card-img"
                 alt="..."
               />
@@ -35,7 +35,6 @@ export default {
     userProfileSidebarVue,
     NavbarViewVue
   },
-  props: ['id'],
   data() {
     return {
       saves: [],
@@ -47,24 +46,24 @@ export default {
   },
   methods: {
     onFolderSelected(folderId) {
-      this.selectedFolderId = folderId
-      this.fetchFolder()
-    },
+  alert('Received folderId:', folderId);
+  this.selectedFolderId = folderId;
+  this.fetchFolder();
+},
     async fetchFolder() {
-      this.saves = [] // Reset saves before fetching new ones
-      // alert(this.selectedFolderId)
       const userStore = useUserStore()
-    
-        const response = await axiosInstance.get(`/save/list/1`, {
+      try {
+        const response = await axiosInstance.get(`/save/list/${this.selectedFolderId|8}`, {
           headers: {
-             Authorization: `Bearer ${userStore.user.remember_token}`,
+            Authorization: `Bearer ${userStore.user.remember_token}`,
             'Content-Type': 'application/json'
           }
         })
-        this.saves = response.data
+        this.saves = response.data.data
         console.log('Fetched saves:', this.saves)
-        
-      
+      } catch (error) {
+        console.error('Error fetching saves:', error)
+      }
     }
   }
 }
