@@ -19,7 +19,7 @@
             :to="{ name: 'category-list', params: { id: category.id } }"
             class="nav-link align-middle px-0">
             
-            <span class="ms-1 d-none d-sm-inline text-white">{{category.name}}</span>
+            <span class="ms-1 d-none d-sm-inline text-white">{{category.title}}</span>
           </router-link>
         </li>
 
