@@ -31,6 +31,7 @@ export default {
     },
     selectedRandomNumber(newValue) {
       this.fetchRandomfood()
+      randomNumber: ''
     }
   },
   mounted() {
@@ -372,7 +373,7 @@ export default {
             <h2 class="text-center mb-lg-5 mb-4">ម្ហូបដ៏ពេញនិយមនៅរដូវកាលនេះ</h2>
           </div>
 
-          <!-- First Menu Item____________________________________________________________________ -->
+          <!-- First Menu Item -->
           <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
             <div class="menu-thumb">
               <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="menu-image-wrap">
@@ -468,6 +469,7 @@ export default {
         </div>
       </div>
     </section>
+
     <!-- /Why Us Section -->
 
     <section id="book-a-table" class="book-a-table section">
@@ -610,21 +612,6 @@ export default {
 .responsive-img {
   width: 100%;
   height: 50vh;
-}
-
-.chat {
-  font-size: 3rem;
-  position: fixed;
-  bottom: 20px;
-  right: 40px;
-  color: #66b64a;
-  cursor: pointer;
-  transition: transform 0.5s;
-}
-
-.chat:hover {
-  transform: scale(1.05) rotate(-5deg);
-  color: #62cd3c;
 }
 
 .cardFooter {
