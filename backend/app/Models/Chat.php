@@ -15,7 +15,8 @@ class Chat extends Model
         'to_user',
         'description',
         'image',
-        'video'
+        'video',
+        'active'
     ];
 
 }
