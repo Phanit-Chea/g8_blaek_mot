@@ -743,7 +743,19 @@ export default {
 
 .save:hover {
   cursor: pointer;
+}
 
-  text-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50;
+.menu-image-wrap img {
+  width: 100%;
+  /* Set the width to 100% of the parent container */
+  height: 200px;
+  /* Set a fixed height */
+  object-fit: cover;
+  /* Ensure the image covers the entire area without stretching */
+}
+
+.menu-thumb {
+  margin-bottom: 20px;
+  /* Add some margin between menu items */
 }
 </style>
