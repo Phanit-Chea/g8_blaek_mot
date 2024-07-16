@@ -1,13 +1,8 @@
 <template>
   <div class="col-auto col-md-2 col-xl-2 px-sm-0 px-0">
-    <div
-      class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed sidebar"
-      style="background-color: #54983c; width: 200px"
-    >
-      <ul
-        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-        id="menu"
-      >
+    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed sidebar"
+      style="background-color: #54983c; width: 200px">
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
         <li class="nav-item mt-3">
           <router-link to="/user" class="nav-link align-middle px-0">
             <i class="fs-4 text-white align-middle material-icons">person</i>
@@ -28,11 +23,8 @@
           </router-link>
         </li>
         <li>
-          <i class="fs-5 material-icons"
-            ><span class="folder ms-1 d-none d-sm-inline text-white siemreap"
-              >ថតឯកសាររបស់អ្នក</span
-            ></i
-          >
+          <i class="fs-5 material-icons"><span
+              class="folder ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសាររបស់អ្នក</span></i>
         </li>
 
         <li data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -42,44 +34,25 @@
           </a>
         </li>
 
-        <ul
-          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
-          id="menu"
-        >
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
           <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
-            <router-link
-              :to="{ name: 'folder-list', params: { id: folder.id } }"
-              @click="selectFolder(folder.id)"
-              class="link-folder nav-link px-3 align-middle d-flex justify-content-between align-items-center"
-            >
+            <router-link :to="{ name: 'folder-list', params: { id: folder.id } }" @click="selectFolder(folder.id)"
+              class="link-folder nav-link px-3 align-middle d-flex justify-content-between align-items-center">
               <div>
                 <i class="fs-4 text-white align-middle material-icons">folder</i>
                 <span class="d-none d-sm-inline text-white siemreap">{{ folder.folder_name }}</span>
               </div>
             </router-link>
-            <a
-              class="btn"
-              @click.stop="toggleOptions(folder.id)"
-              role="button"
-              style="border: none"
-            >
+            <a class="btn" @click.stop="toggleOptions(folder.id)" role="button" style="border: none">
               <i class="bi bi-three-dots-vertical"></i>
             </a>
             <div v-show="folder.id === showOptionsFor" class="card card-body mt-1 small-card">
               <div>
-                <button
-                  @click="deleteFolder(folder.id)"
-                  class="btn btn-danger btn-sm"
-                  style="width: 70%"
-                >
+                <button @click="deleteFolder(folder.id)" class="btn btn-danger btn-sm" style="width: 70%">
                   លុប
                 </button>
-                <button
-                  @click="showRenameForm(folder)"
-                  class="btn btn-primary btn-sm"
-                  data-bs-toggle="modal"
-                  data-bs-target="#renameModal"
-                >
+                <button @click="showRenameForm(folder)" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#renameModal">
                   កែសម្រួល
                 </button>
               </div>
@@ -91,13 +64,7 @@
   </div>
 
   <!-- Popup form update folder -->
-  <div
-    class="modal fade rounded"
-    id="renameModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade rounded" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog rounded">
       <div class="modal-content rounded">
         <div class="div0 d-flex justify-content-between">
@@ -115,24 +82,14 @@
               <form @submit.prevent="renameFolder">
                 <div class="form-group">
                   <label class="text-dark siemreap">ឈ្មោះថតឯកសារ</label>
-                  <input
-                    type="text"
-                    class="form-control my-3 px-3 siemreap"
-                    id="name"
-                    aria-describedby="name"
-                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ"
-                    v-model="renamingFolderName"
-                  />
+                  <input type="text" class="form-control my-3 px-3 siemreap" id="name" aria-describedby="name"
+                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ" v-model="renamingFolderName" />
                 </div>
                 <div class="px-3 pb-3 d-flex justify-content-end">
                   <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
                     បោះបង់
                   </button>
-                  <button
-                    type="submit"
-                    class="btn ms-2 text-bold siemreap"
-                    style="background-color: #238400"
-                  >
+                  <button type="submit" class="btn ms-2 text-bold siemreap" style="background-color: #238400">
                     កែសម្រួល
                   </button>
                 </div>
@@ -145,13 +102,8 @@
   </div>
 
   <!-- Popup form  -->
-  <div
-    class="modal fade rounded"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade rounded" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog rounded">
       <div class="modal-content rounded">
         <div class="div0 d-flex justify-content-between">
@@ -169,24 +121,14 @@
               <form @submit.prevent="createFolder">
                 <div class="form-group">
                   <label class="text-dark siemreap">ឈ្មោះថតឯកសារ</label>
-                  <input
-                    type="text"
-                    class="form-control my-3 px-3 siemreap"
-                    id="name"
-                    aria-describedby="name"
-                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ"
-                    v-model="folder_name"
-                  />
+                  <input type="text" class="form-control my-3 px-3 siemreap" id="name" aria-describedby="name"
+                    placeholder="បញ្ចូលឈ្មោះថតឯកសារ" v-model="folder_name" />
                 </div>
                 <div class="px-3 pb-3 d-flex justify-content-end">
                   <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
                     បោះបង់
                   </button>
-                  <button
-                    type="submit"
-                    class="btn ms-2 text-bold siemreap"
-                    style="background-color: #238400"
-                  >
+                  <button type="submit" class="btn ms-2 text-bold siemreap" style="background-color: #238400">
                     បង្កើត
                   </button>
                 </div>
@@ -224,17 +166,17 @@ const toggleOptions = (folderId: number) => {
 
 const deleteFolder = async (folderId: number) => {
   try {
-   const userStore = useUserStore()
-   
+    const userStore = useUserStore()
+
     const response = await axios.delete(`http://127.0.0.1:8000/api/folder/delete/${folderId}`, {
       headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+        Authorization: `Bearer ${userStore.user.remember_token}`,
+        'Content-Type': 'application/json'
+      }
     })
 
     if (response.data.success) {
-      
+
       folders.value = folders.value.filter((folder) => folder.id !== folderId)
     } else {
       alert('Failed to delete folder')
@@ -254,9 +196,9 @@ const createFolder = async () => {
       { folder_name: folder_name.value },
       {
         headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+          Authorization: `Bearer ${userStore.user.remember_token}`,
+          'Content-Type': 'application/json'
+        }
       }
     )
 
@@ -286,9 +228,9 @@ const renameFolder = async () => {
       { folder_name: renamingFolderName.value },
       {
         headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+          Authorization: `Bearer ${userStore.user.remember_token}`,
+          'Content-Type': 'application/json'
+        }
 
       }
     )
@@ -314,15 +256,15 @@ const fetchFolders = async () => {
 
 
     const response = await axios.get('http://127.0.0.1:8000/api/folder/list', {
-       headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+      headers: {
+        Authorization: `Bearer ${userStore.user.remember_token}`,
+        'Content-Type': 'application/json'
+      }
     })
 
-   
-      folders.value = response.data.data
-    
+
+    folders.value = response.data.data
+
   } catch (error) {
     console.error('Error fetching folders:', error)
     alert('An error occurred while fetching folders')
