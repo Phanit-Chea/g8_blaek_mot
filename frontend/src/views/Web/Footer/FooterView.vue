@@ -13,31 +13,32 @@
       <div class="container mt-3">
         <div class="row text-center text-md-start">
           <div class="col-md mb-5">
-            <h3>About Us</h3>
-            <p>កកូរ</p>
-            <p>ស៊ុបគោ</p>
-            <p>ស៊ុបពពែរ</p>
-            <p>ស៊ុបត្រីឆ្លាម</p>
-            <p>ស៊ុមស៊ីឆាន់</p>
+            <h3>សេវាកម្ម</h3>
+            <p>ផ្តល់ជូនមុខម្ហូប</p>
+            <p>រៀបចំកាលវិភាគ</p>
+            <p>បង្កើតម្ហូប</p>
+           
           </div>
           <div class="col-md mb-5">
-            <h4>Contact Us</h4>
-            <p>Email: blaekmot@gmail.com</p>
-            <p>Phone: +855 96 272 8396</p>
-            <p>LinkedIn: RATANAKKHOEURN</p>
+            <h4>ទំនាក់ទំ​នង</h4>
+            <p>អុីមែល: admin@gmail.com</p>
+            <p>លេខទូរស៍ព្ទ: +855 97 631 5667</p>
+            <p>LinkedIn: PHANIT CHEA</p>
           </div>
           <div class="col-md mb-5">
-            <h4>Service</h4>
-            <p>Email: blaekmot@gmail.com</p>
-            <p>Phone: +855 96 272 8396</p>
-            <p>LinkedIn: RATANAKKHOEURN</p>
+            <h4>គុណតម្លែ</h4>
+            <p>បញ្ជីមុខម្ហូបអស្ចារ្</p>
+            <p>ការណែនាំលម្អិត</p>
+            <p>ចំណេញពេលវេលា</p>
+            <p>សមាជិកភាពគ្រួសារ</p>
+            <p>ការណែនាំផ្ទាល់ខ្លួន</p>
           </div>
           <div class="col-md">
-            <h4>Follow Us</h4>
+            <h4>តាមដាន ពួកយើងតាមរយះ</h4>
             <input
               type="text"
               class="form-control p-1 w-80"
-              placeholder="What would you like to eat?"
+              placeholder="តើអ្នកចង់ដានពួកយើងតាមរយះអ្វី?"
               aria-label="Search"
             />
             <ul class="list-unstyled d-flex justify-content-md-start mt-3 gap-2">
