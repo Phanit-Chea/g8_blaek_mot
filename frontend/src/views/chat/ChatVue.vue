@@ -25,8 +25,7 @@
 
       <div class="card_left card-body c-body overflow-y-scroll ">
         <blockquote class="blockquote mb-0">
-
-          <div v-for="user in listUser.data" :key="user.id">
+          <div v-for="user in listUser" :key="user.id">
             <div class="container_user" @click="handleUserClick(user)">
               <div class="user d-flex justify-content-between">
                 <div class="c_user d-flex align-items-center">
@@ -120,10 +119,12 @@
               </div>
 
             </div>
+
           </div>
+
         </div>
 
-        <div class="foot bg-danger p-3 border-top"
+        <div class="foot  p-3 border-top"
           style="position: fixed; bottom: 18px; width: 61.4%; z-index: 1; border-radius: 10px;">
           <div class="d-flex align-items-center justify-content-between">
             <i class="bi bi-plus-circle-fill fs-3 text-success" style="cursor: pointer;" @click="openFileInput"></i>
@@ -266,9 +267,6 @@ import { useAuthStore } from '@/stores/auth-store';
 import { useUserStore } from '@/stores/userStore';
 import { chatStore } from '../../stores/chatStore';
 
-
-
-
 export default defineComponent({
   components: {
     NavbarView,
@@ -285,9 +283,17 @@ export default defineComponent({
         phoneNumber: string;
         dateOfBirth: Date;
         lastActive: string;
+        latest_chat: {
+          description: string | null;
+          from_user: number;
+          created_at: {
+            date: string;
+            time: string;
+          };
+        };
       }>,
-      userClicked: null,
-      currentUserId: null,
+      userClicked: null as number | null,
+      currentUserId: null as number | null,
       selectedUser: null as {
         id: number;
         name: string;
@@ -298,31 +304,28 @@ export default defineComponent({
         phoneNumber: string;
         dateOfBirth: Date;
         lastActive: string;
+        latest_chat: {
+          description: string | null;
+          from_user: number;
+          created_at: {
+            date: string;
+            time: string;
+          };
+        };
       } | null,
       userAccountSender: null as {
         description: string | null;
         image: string | null;
         video: string | null;
       } | null,
-      fileInput: null as HTMLInputElement | null,
       description: '',
       searchQuery: '',
       formData: {
-        image: null as string | null,
-        video: null as string | null,
+        image: null as File | null,
+        video: null as File | null,
         description: null as string | null,
       },
-
     };
-
-  },
-  mounted() {
-    this.$root.$on('showCreateFolderPopup', () => {
-      // Show the popup form here
-      this.$refs.createForm.style.display = 'block';
-    });
-
-    this.fetchUsers();
   },
   computed: {
     filteredUsers() {
@@ -335,6 +338,7 @@ export default defineComponent({
     async fetchUsers() {
       const userAuth = useAuthStore();
       const userStore = useUserStore();
+
       try {
         const response = await axiosInstance.get('/chat/users/chatList', {
           headers: {
@@ -343,12 +347,16 @@ export default defineComponent({
         });
 
         if (response.status === 200) {
-          this.listUser = response.data;
+          this.listUser = response.data.data; // Ensure you access the correct structure of the response
+          console.log('Fetched user list:', this.listUser);
+          console.log(userAuth.accessToken);
 
-          const userId = userStore.user.id;
-          this.currentUserId = userId;
-
-
+          // Ensure currentUserId is set correctly
+          if (userStore.user && userStore.user.id) {
+            this.currentUserId = userStore.user.id;
+          } else {
+            console.error('Current user ID is not available in userStore.');
+          }
         } else {
           console.error('Failed to fetch user list:', response.statusText);
         }
@@ -366,20 +374,25 @@ export default defineComponent({
       phoneNumber: string;
       dateOfBirth: Date;
       lastActive: string;
+      latest_chat: {
+        description: string | null;
+        from_user: number;
+        created_at: {
+          date: string;
+          time: string;
+        };
+      };
     }) {
       this.selectedUser = user; // Assuming this.selectedUser is a property of your component
-      this.currentUserId = user.user.id; // Assuming you want to store the current user's ID
+      // this.currentUserId = user.id; // Ensure you want to store the current user's ID
       const chatActive = chatStore();
+      const userAuth = useUserStore();
+      this.currentUserId = userAuth.user.id;
       // Set the latest chat's active status
-      if (this.selectedUser.latest_chat) {
-        this.selectedUser.latest_chat.active = 1;
-        chatActive.setActive(true);
-        this.userClicked = chatActive.active;
-        this.currentUserId = user.latest_chat.from_user;
-
+      if (this.selectedUser.user.latest_chat) {
+        this.selectedUser.latest_chat.active = 0; // Set active to false when clicked
+        this.userClicked = user.id; // Mark the clicked user
       }
-
-
     },
     openFileInput() {
       const input = this.$refs.fileInput as HTMLInputElement;
@@ -388,9 +401,9 @@ export default defineComponent({
       }
     },
     handleFileUpload() {
-      const input = this.$refs.fileInput;
-      const file = input.files[0];
-      if (file) {
+      const input = this.$refs.fileInput as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
         this.formData.image = file;
         console.log(this.formData.image);
       }
@@ -402,12 +415,9 @@ export default defineComponent({
       }
 
       const userAuth = useAuthStore();
-      const to_user = this.selectedUser.user.id; // Ensure this is an integer
+      const to_user = this.selectedUser.user.id;
       const formData = new FormData();
       formData.append('description', this.description);
-      if (this.formData.description) {
-        formData.append('description', this.formData.description);
-      }
       if (this.formData.image) {
         formData.append('image', this.formData.image);
       }
@@ -432,13 +442,15 @@ export default defineComponent({
         console.error('Message sending failed:', error);
         alert('Message sending failed. Please try again.');
       }
-    },
-
+    }
+    ,
     closeChat() {
       this.selectedUser = null;
     },
   },
-
+  mounted() {
+    this.fetchUsers();
+  },
 });
 </script>
 

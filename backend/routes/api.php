@@ -4,13 +4,20 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
-use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\CategoryController as APICategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\Api\RatingController;
+use App\Http\Controllers\CategoryController;
+
+use App\Http\Controllers\Api\FolderController;
+
+
+use App\Http\Controllers\ChatController as ControllersChatController;
+// use App\Http\Controllers\GroupController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
