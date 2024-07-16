@@ -75,7 +75,7 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
 Route::prefix("folder")->group(function(){
-    Route::get('/list', [FolderController::class, 'listSpecificUserFolder'])->name('folder.list')->middleware('auth:sanctum');
+    Route::get('/list', [FolderController::class, 'index'])->name('folder.list')->middleware('auth:sanctum');
     Route::post('/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
     Route::put('/update/{id}', [FolderController::class, 'update'])->name('folder.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [FolderController::class, 'destroy'])->name('folder.delete')->middleware('auth:sanctum');
@@ -90,6 +90,7 @@ Route::prefix("food")->group(function(){
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
     Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
+    Route::get('/categories/food-count', [FoodController::class, 'categoryFoodCountsJson']);
    
 });
 

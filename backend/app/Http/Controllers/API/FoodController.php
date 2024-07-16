@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
 use App\Http\Resources\FoodResource;
+use App\Models\Category;
 use Exception;
-
-
-
-
+use Illuminate\Support\Facades\DB;
 
 class FoodController extends Controller
 {
@@ -227,5 +225,18 @@ class FoodController extends Controller
                 'suitable_food' => null
             ]);
         }
+    }
+
+
+    public function categoryFoodCountsJson()
+    {
+        // Query to get list of categories and count of food items
+        $categories = Category::leftJoin('food', 'categories.id', '=', 'food.category_id')
+                              ->select('categories.title', DB::raw('count(food.id) as food_count'))
+                              ->groupBy('categories.id', 'categories.title')
+                              ->get();
+
+        // Return the data as JSON
+        return response()->json($categories);
     }
 }
