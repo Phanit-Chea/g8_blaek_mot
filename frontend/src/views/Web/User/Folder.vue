@@ -7,11 +7,7 @@
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
             <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.id">
-              <img
-                :src="`http://127.0.0.1:8000/${save.image}`"
-                class="card-img"
-                alt="..."
-              />
+              <img :src="`http://127.0.0.1:8000/${save.image}`" class="card-img" alt="..." />
               <div class="card-body d-flex justify-content-between px-0">
                 <h4 class="card-title text-dark">{{ save.name }}</h4>
                 <a href="#" class="btn" style="background-color: #54983c">Detail</a>
@@ -28,8 +24,10 @@
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
 import NavbarViewVue from '../Navbar/NavbarView.vue'
 import { useUserStore } from '@/stores/userStore.ts'
+import { useFolderStore } from '@/stores/folderStore'
 import axiosInstance from '@/plugins/axios'
-
+import { useRoute } from 'vue-router'
+const route = useRoute()
 export default {
   components: {
     userProfileSidebarVue,
@@ -46,10 +44,10 @@ export default {
   },
   methods: {
     onFolderSelected(folderId) {
-  alert('Received folderId:', folderId);
-  this.selectedFolderId = folderId;
-  this.fetchFolder();
-},
+      alert('Received folderId:', folderId)
+      this.selectedFolderId = folderId
+      this.fetchFolder()
+    },
     async fetchFolder() {
       const userStore = useUserStore()
       try {

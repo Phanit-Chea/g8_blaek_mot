@@ -46,9 +46,10 @@
           class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
           id="menu"
         >
-          <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex" @click="selectFolder(folder.id)">
+          <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
             <router-link
               :to="{ name: 'folder-list', params: { id: folder.id } }"
+              @click="selectFolder(folder.id)"
               class="link-folder nav-link px-3 align-middle d-flex justify-content-between align-items-center"
             >
               <div>
@@ -199,7 +200,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
@@ -225,7 +225,7 @@ const toggleOptions = (folderId: number) => {
 const deleteFolder = async (folderId: number) => {
   try {
    const userStore = useUserStore()
-
+   
     const response = await axios.delete(`http://127.0.0.1:8000/api/folder/delete/${folderId}`, {
       headers: {
             Authorization: `Bearer ${userStore.user.remember_token}`,
@@ -311,18 +311,13 @@ const renameFolder = async () => {
 const fetchFolders = async () => {
   try {
     const userStore = useUserStore()
-
-
     const response = await axios.get('http://127.0.0.1:8000/api/folder/list', {
        headers: {
             Authorization: `Bearer ${userStore.user.remember_token}`,
             'Content-Type': 'application/json'
           }
     })
-
-   
       folders.value = response.data.data
-    
   } catch (error) {
     console.error('Error fetching folders:', error)
     alert('An error occurred while fetching folders')
@@ -334,10 +329,10 @@ onMounted(() => {
 })
 
 const methods = {
-  selectFolder(folderId: number) {
+  selectFolder(folderId) {
     this.$emit('folderSelected', folderId)
   }
-};
+}
 </script>
 
 <style scoped>
