@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
 use function Laravel\Prompts\select;
+
 
 class ChatController extends Controller
 {
@@ -272,9 +272,9 @@ class ChatController extends Controller
                 $join->on('users.id', '=', 'chats.from_user')
                     ->orOn('users.id', '=', 'chats.to_user');
             })
-            ->select('users.id', 'users.name', 'users.email', 'users.address', 'users.profile', 'users.gender','dateOfBirth','phoneNumber', DB::raw('MAX(chats.created_at) as latest_chat_time'))
+            ->select('users.id', 'users.name', 'users.email', 'users.address', 'users.profile', 'users.gender','address','phoneNumber','dateOfBirth',DB::raw('MAX(chats.created_at) as latest_chat_time'))
             ->whereIn('users.id', $userIds)
-            ->groupBy('users.id', 'users.name', 'users.email', 'users.address', 'users.profile', 'users.gender','dateOfBirth','phoneNumber')
+            ->groupBy('users.id', 'users.name', 'users.email', 'users.address', 'users.profile', 'users.gender','address','phoneNumber','dateOfBirth')
             ->orderByDesc('latest_chat_time')
             ->get();
 
@@ -291,7 +291,6 @@ class ChatController extends Controller
                 'description' => $latestChat->description,
                 'image' => $latestChat->image,
                 'video' => $latestChat->video,
-                'active'=>$latestChat->active,
                 'created_at' => [
                     'date' => Carbon::parse($latestChat->created_at)->format('d-m-Y'),
                     'time' => Carbon::parse($latestChat->created_at)->format('H:i'),
@@ -306,7 +305,6 @@ class ChatController extends Controller
                     'description' => $chat->description,
                     'image' => $chat->image,
                     'video' => $chat->video,
-                    'active'=>$chat->active,
                     'created_at' => [
                         'date' => Carbon::parse($chat->created_at)->format('d-m-Y'),
                         'time' => Carbon::parse($chat->created_at)->format('H:i'),
