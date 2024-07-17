@@ -1,4 +1,4 @@
-import ChatVue from '@/views/chat/ChatVue.vue'
+import ChatView from '@/views/chat/ChatVue.vue'
 const routes = [
     {
         path: '/admin/dashboard',
@@ -86,7 +86,7 @@ const routes = [
     {
         path: '/chat',
         name: 'chat',
-        component: ChatVue,
+        component: ChatView,
     },
     {
         path: '/aboutUsUpdateForm',

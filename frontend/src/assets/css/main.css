@@ -1691,3 +1691,9 @@ section,
   color: gold;
   transition: color 0.3s;
 }
+.mapboxgl-ctrl-geocoder input[type='text']{
+  padding: none;
+}
+
+
+
