@@ -87,6 +87,7 @@ Route::prefix("food")->group(function(){
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
     Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
+    Route::get('/weekly/random', [FoodController::class, 'getWeeklyRandomFood'])->name('weekly.random');
    
 });
 
