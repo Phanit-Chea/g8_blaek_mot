@@ -31,10 +31,10 @@
       </span>
     </i>
   </a>
-      <a href="#"
+      <!-- <a href="#"
         class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">turned_in</i>
-      </a>
+      </a> -->
 
       <router-link to="#"
         class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
