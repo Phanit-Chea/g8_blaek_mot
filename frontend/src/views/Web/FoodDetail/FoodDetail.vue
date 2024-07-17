@@ -15,7 +15,7 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'
 
 const accessToken =
   'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3RlMW8yZWhzdiJ9.Djy2BP-ysXAcH2mxJItgYg'
@@ -28,61 +28,85 @@ const restaurants = ref<any[]>([])
 let restaurantMarkers: mapboxgl.Marker[] = []
 let userMarker: mapboxgl.Marker | null = null
 
+const food = ref({})
+const rating = ref([])
+const route = useRoute()
+const userStore = useAuthStore()
 
-const food = ref({});
-const rating = ref({ stars_rating: 1 });
-const route = useRoute();
-
+// ==============fectFoodDeatail=============
 const fetchFoodDetail = async () => {
   try {
-    const response = await axiosInstance.get(`/show/${route.params.id}`);
-    console.log('Food detail response:', response.data); // Log response for debugging
-console.log( fetchFoodDetail);
-
+    const response = await axiosInstance.get(`/food/show/${route.params.id}`, {
+      headers: {
+        Authorization: `Bearer ${userStore.accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    console.log('Food detail response:', response.data)
 
     if (response.data && response.data.id) {
-      food.value = response.data;
+      food.value = response.data
     } else {
-      console.error('Food ID not found in API response');
+      console.error('Food ID not found in API response')
     }
   } catch (error) {
-    console.error('Error fetching food details:', error);
-    alert('Error fetching food details. Please try again later.');
+    console.error('Error fetching food details:', error)
+    alert('Error fetching food details. Please try again later.')
   }
-};
+}
 
+onMounted(fetchFoodDetail)
+// ==============end fetchFoodDetail=============
 
+// ============Submit Rating============
 const submitRating = async () => {
   try {
     if (!food.value || !food.value.id) {
-      console.error('Food ID is undefined or null');
-      return;
+      console.error('Food ID is undefined or null')
+      return
     }
+    const user = JSON.parse(localStorage.getItem('user'))
+    console.log(user['user'].id)
 
     const ratingData = {
       stars_rating: rating.value.stars_rating,
-      food_id: food.value.id,
-      // Assuming user_id is handled on the backend or through authentication
-    };
+      user_id: user['user'].id,
+      food_id: food.value.id
+    }
 
-    console.log('Submitting rating with data:', ratingData);
+    // console.log('Submitting rating with data:', ratingData)
 
-    const response = await axiosInstance.post('/ratings/create', ratingData);
-    console.log('Rating submitted successfully:', response.data);
+    const response = await axiosInstance.post('/ratings/create', ratingData)
+    console.log('Rating submitted successfully:', response.data)
 
-    rating.value.stars_rating = 1; // Reset rating after submission
-    alert('Rating submitted successfully!');
+    rating.value.stars_rating = 1
+    alert('Rating submitted successfully!')
   } catch (error) {
-    console.error('Error submitting rating:', error);
-    alert('Error submitting rating. Please try again later.');
+    console.error('Error submitting rating:', error)
+    alert('Error submitting rating. Please try again later.')
   }
-};
+}
+// ==============end submitRating==============
 
-// Fetch food details when component mounts
-// onMounted(fetchFoodDetail);
+// =============average StaticRange===============
+const averageRating = ref(0)
 
+const fetchAverageRating = async () => {
+  try {
+    const response = await axiosInstance.get(`/ratings/averages/${route.params.id}`)
+    console.log('Average Rating response:', response.data)
+    averageRating.value = response.data.average_rating
+  } catch (error) {
+    console.error('Error fetching average rating:', error)
+    alert('Error fetching average rating. Please try again later.')
+  }
+}
 
+onMounted(fetchAverageRating)
 
+// ===============end averageRating===============
+
+// ==============MAP==============
 onMounted(async () => {
   mapboxgl.accessToken = accessToken
 
@@ -280,31 +304,33 @@ function deg2rad(deg: number) {
       </div>
 
       <div>
-    <div v-if="food.name">
-      <h1 class="text-success mt-2 mb-3">{{ food.name }}</h1>
-      <p>{{ food.description }}</p>
-    </div>
-    <div v-else>
-      <p>Loading...</p>
-    </div>
+        <div v-if="food.name">
+          <h1 class="text-success mt-2 mb-3">{{ food.name }}</h1>
+          <p>{{ food.description }}</p>
+        </div>
+        <div v-else>
+          <p>Loading...</p>
+        </div>
 
-    <div class="col col-lg-2 d-flex mt-3 mb-3">
-      <div class="rating">
-        <input v-model="rating.stars_rating" value="5" name="rating" id="star5" type="radio" />
-        <label for="star5"></label>
-        <input v-model="rating.stars_rating" value="4" name="rating" id="star4" type="radio" />
-        <label for="star4"></label>
-        <input v-model="rating.stars_rating" value="3" name="rating" id="star3" type="radio" />
-        <label for="star3"></label>
-        <input v-model="rating.stars_rating" value="2" name="rating" id="star2" type="radio" />
-        <label for="star2"></label>
-        <input v-model="rating.stars_rating" value="1" name="rating" id="star1" type="radio" />
-        <label for="star1"></label>
+        <div class="col col-lg-2 d-flex mt-3 mb-3">
+          <div class="rating">
+            <input v-model="rating.stars_rating" value="5" name="rating" id="star5" type="radio" />
+            <label for="star5"></label>
+            <input v-model="rating.stars_rating" value="4" name="rating" id="star4" type="radio" />
+            <label for="star4"></label>
+            <input v-model="rating.stars_rating" value="3" name="rating" id="star3" type="radio" />
+            <label for="star3"></label>
+            <input v-model="rating.stars_rating" value="2" name="rating" id="star2" type="radio" />
+            <label for="star2"></label>
+            <input v-model="rating.stars_rating" value="1" name="rating" id="star1" type="radio" />
+            <label for="star1"></label>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-success" @click="submitRating">Rate Now</button>
+        <h3>Average Rating for Food ID: {{ route.params.id }}</h3>
+        <p>Average Rating: {{ averageRating }}</p>
       </div>
-    </div>
-
-    <button type="button" class="btn btn-success" @click="submitRating">Rate Now</button>
-  </div>
       <!-- {{ userStore }} -->
       <hr />
       <!-- ===================icon action share ,save,print,========================== -->
@@ -514,7 +540,7 @@ function deg2rad(deg: number) {
                 style="z-index: 1; top: -85px"
               >
                 <img
-                  src="../../../assets/FoodDetail/image.png"
+                  :src="`http://127.0.0.1:8000/${food.image}`"
                   alt=""
                   class="img-fluid rounded-circle"
                 />
@@ -522,110 +548,18 @@ function deg2rad(deg: number) {
 
               <div class="pt-5 mt-4 d-flex justify-content-between">
                 <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
+                  <h4 class="m-2">{{ food.name }}</h4>
+                  <div class="rating position-relative left-2">
+                    <span
+                      v-for="star in 5"
+                      :key="star"
+                      :class="['star', { filled: star <= averageRating }]"
+                      >★</span
+                    >
                   </div>
-                  <h4 class="m-2">food name</h4>
                   <div class="m-2 w-auto text-success rounded" id="category">category</div>
                 </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-md-3 mb-3">
-            <div class="card position-relative d-flex card1 zoom-card">
-              <div
-                class="border border-3 border-success rounded-circle w-50 position-absolute start-50 translate-middle-x"
-                style="z-index: 1; top: -85px"
-              >
-                <img
-                  src="../../../assets/FoodDetail/image.png"
-                  alt=""
-                  class="img-fluid rounded-circle"
-                />
-              </div>
-
-              <div class="pt-5 mt-4 d-flex justify-content-between">
-                <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                  </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
-                </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-md-3 mb-3">
-            <div class="card position-relative d-flex card1 zoom-card">
-              <div
-                class="border border-3 border-success rounded-circle w-50 position-absolute start-50 translate-middle-x"
-                style="z-index: 1; top: -85px"
-              >
-                <img
-                  src="../../../assets/FoodDetail/image.png"
-                  alt=""
-                  class="img-fluid rounded-circle"
-                />
-              </div>
-
-              <div class="pt-5 mt-4 d-flex justify-content-between">
-                <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                  </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
-                </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-md-3 mb-3">
-            <div class="card position-relative d-flex card1 zoom-card">
-              <div
-                class="border border-3 border-success rounded-circle w-50 position-absolute start-50 translate-middle-x"
-                style="z-index: 1; top: -85px"
-              >
-                <img
-                  src="../../../assets/FoodDetail/image.png"
-                  alt=""
-                  class="img-fluid rounded-circle"
-                />
-              </div>
-
-              <div class="pt-5 mt-4 d-flex justify-content-between">
-                <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                  </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
-                </div>
-                <div class="col d-flex align-items-end">
+                <div class="col d-flex align-items-end position-relative left-15">
                   <div class="m-2 btn btn-success">details</div>
                 </div>
               </div>
@@ -743,5 +677,18 @@ function deg2rad(deg: number) {
 .sidebar h3 {
   padding-top: 25px;
   font-weight: 700;
+}
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  font-size: 1.5em;
+  color: #d3d3d3; /* Default star color */
+}
+
+.star.filled {
+  color: #f39c12; /* Filled star color */
 }
 </style>

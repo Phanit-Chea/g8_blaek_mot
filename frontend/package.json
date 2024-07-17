@@ -17,8 +17,12 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@fawmi/vue-google-maps": "^0.9.79",
     "@fortawesome/fontawesome-free": "^6.5.2",
+<<<<<<< HEAD
     "@mapbox/mapbox-gl-directions": "^4.3.1",
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
+=======
+    "@material-ui/icons": "^4.11.3",
+>>>>>>> 4670af61bdb58ffa1d8c0307dee63f72f966adca
     "@popperjs/core": "^2.11.8",
     "@syncfusion/ej2-vue-popups": "^26.1.38",
     "@vee-validate/rules": "^4.5.8",

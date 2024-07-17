@@ -74,7 +74,8 @@ Route::prefix("food")->group(function(){
     Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
     Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
     Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
-    Route::get('/random/{count}', [FoodController::class, 'getRandomFood'])->name('food.random');
+    Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
+   
 });
 
 // Food related routes
@@ -108,4 +109,4 @@ Route::prefix('ratings')->group(function () {
     Route::post('/create', [RatingController::class, 'store']);
     Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
     Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
-});
+    Route::get('/list', [RatingController::class, 'index']);});

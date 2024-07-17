@@ -11,15 +11,19 @@ class RatingController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index()
+    {
+        $ratings = Rating::all();
+        return response()->json(['success' => true, 'data' => $ratings], 200);
+    }
+
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'food_id' => 'required|integer',
-            'stars_rating' => 'required|integer|min:1|max:5',
+        $rating = Rating::create([
+            'food_id' => $request->food_id,
+            'user_id' => $request->user_id,
+            'stars_rating' => $request->stars_rating,
         ]);
-
-        $rating = Rating::create($validated);
 
         return response()->json($rating, 201);
     }
