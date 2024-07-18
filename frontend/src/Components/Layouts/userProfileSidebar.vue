@@ -15,6 +15,12 @@
           </router-link>
         </li>
         <li class="nav-item mt-2">
+          <router-link to="/user/schedule" class="nav-link px-0 align-middle">
+            <i class="fs-4 text-white align-middle material-icons">calendar_month</i>
+            <span class="ms-1 d-none d-sm-inline text-white siemreap">កាលវិភាគ</span>
+          </router-link>
+        </li>
+        <li class="nav-item mt-2">
           <router-link to="/user/save" class="nav-link px-0 align-middle">
             <i class="fs-4 text-white align-middle material-icons">bookmark</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap">រក្សាទុក</span>
