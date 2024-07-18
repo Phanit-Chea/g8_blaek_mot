@@ -228,42 +228,42 @@ class FoodController extends Controller
         $dishes = Food::all(); // Get all dishes
         $suitableFood = [];
         $soupDishes = [];
-
+    
         // Get the current season
         $currentSeason = Season::getCurrentSeason();
-
+    
         // Filter out dishes with unwanted food names and separate soup dishes
         foreach ($dishes as $dish) {
-            // $isValid = true;
-
-            // // Add your custom logic to determine if a dish is valid
-            // if (stripos($dish->name, 'unwanted_word') !== false) {
-            //     $isValid = false;
-            // }
-
-            // if ($isValid) {
+            $isValid = true;
+    
+            // Add your custom logic to determine if a dish is valid
+            if (stripos($dish->name, 'unwanted_word') !== false) {
+                $isValid = false;
+            }
+    
+            if ($isValid) {
                 if (stripos($dish->name, 'សម្ល') !== false) {
                     $soupDishes[] = $dish;
                 } else {
                     $suitableFood[] = $dish;
                 }
-            // }
+            }
         }
-
+    
         // Use a combination of time and user input as a seed for randomness
         $seed = time() ^ $request->input('count');
         mt_srand($seed); // Seed the random number generator
-
+    
         $count = $request->input('count');
         $selectedFoods = [];
-
+    
         // Add soup dishes based on the current season
         if ($currentSeason === 'Dry') {
             $soupDishCount = min($count, count($soupDishes));
             $selectedFoods = array_merge($selectedFoods, array_rand($soupDishes, $soupDishCount));
             $count -= $soupDishCount;
         }
-
+    
         // Add random suitable foods for the whole week
         if ($count > 0) {
             $randomFoods = array_rand($suitableFood, min($count * 7, count($suitableFood)));
@@ -277,10 +277,10 @@ class FoodController extends Controller
                 }
             }
         }
-
+    
         // Reset the random number generator to avoid side effects
         mt_srand();
-
+    
         return response()->json([
             'suitable_food' => $selectedFoods
         ]);
