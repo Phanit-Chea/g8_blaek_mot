@@ -165,68 +165,7 @@ class FoodController extends Controller
 
         return response()->json($food, 200);
     }
-    // public function getRandomFood($categoryID, Request $request)
-    // {
-    //     $dishes = Food::where('category_id', $categoryID)->get(); // Get all dishes
-    //     $suitableFood = [];
 
-    //     // Get the current season
-    //     $currentSeason = Season::getCurrentSeason();
-
-
-    //     if ($currentSeason === 'Rainy') {
-    //         $unwantedIngredients = ['Spicy', 'spicy', 'salty']; // Example unwanted ingredients
-    //     } elseif ($currentSeason === 'Dry') {
-    //         $unwantedIngredients = ['sour']; // Example unwanted ingredients
-    //     }
-
-    //     // Filter out dishes with unwanted ingredients
-    //     foreach ($dishes as $dish) {
-    //         $ingredients = explode(',', $dish->ingredients); // Split the ingredients string into an array
-    //         $isValid = true;
-
-    //         foreach ($ingredients as $ingredient) {
-    //             if (in_array(trim($ingredient), $unwantedIngredients)) {
-    //                 $isValid = false;
-    //                 break;
-    //             }
-    //         }
-
-    //         if ($isValid) {
-    //             $suitableFood[] = $dish;
-    //         }
-    //     }
-
-    //     // Use the current date as a seed for randomness
-    //     $seed = strtotime(date('Y-m-d')); // Get the current date as a timestamp
-    //     srand($seed); // Seed the random number generator
-    //     $count = $request->input('count');
-    //     // Return the specified number of random suitable foods, defaulting to 6
-    //     $count = min($count, count($suitableFood)); // Ensure count does not exceed available suitable foods
-    //     if ($count > 0) {
-    //         $randomFoods = array_rand($suitableFood, $count);
-    //         $selectedFoods = [];
-
-    //         if (is_array($randomFoods)) {
-    //             foreach ($randomFoods as $index) {
-    //                 $selectedFoods[] = $suitableFood[$index];
-    //             }
-    //         } else {
-    //             $selectedFoods = [$suitableFood[$randomFoods]];
-    //         }
-
-    //         // Reset the random number generator to avoid side effects
-    //         srand();
-
-    //         return response()->json([
-    //             'suitable_food' => $selectedFoods
-    //         ]);
-    //     } else {
-    //         return response()->json([
-    //             'suitable_food' => null
-    //         ]);
-    //     }
-    // }
 
     public function getRandomFood($categoryID, Request $request)
     {
@@ -295,20 +234,20 @@ class FoodController extends Controller
 
         // Filter out dishes with unwanted food names and separate soup dishes
         foreach ($dishes as $dish) {
-            $isValid = true;
+            // $isValid = true;
 
-            // Add your custom logic to determine if a dish is valid
-            if (stripos($dish->name, 'unwanted_word') !== false) {
-                $isValid = false;
-            }
+            // // Add your custom logic to determine if a dish is valid
+            // if (stripos($dish->name, 'unwanted_word') !== false) {
+            //     $isValid = false;
+            // }
 
-            if ($isValid) {
+            // if ($isValid) {
                 if (stripos($dish->name, 'សម្ល') !== false) {
                     $soupDishes[] = $dish;
                 } else {
                     $suitableFood[] = $dish;
                 }
-            }
+            // }
         }
 
         // Use a combination of time and user input as a seed for randomness
