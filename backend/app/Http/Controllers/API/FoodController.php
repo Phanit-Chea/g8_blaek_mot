@@ -176,11 +176,11 @@ class FoodController extends Controller
         // Get the current season
         $currentSeason = Season::getCurrentSeason();
 
+        // Get the current date
+        $currentDate = date('Y-m-d');
+
         // Filter out dishes with unwanted food names and separate soup dishes
         foreach ($dishes as $dish) {
-
-
-
             if (stripos($dish->name, 'សម្ល') !== false) {
                 if ($currentSeason === 'Rainy') {
                     $soupDishes[] = $dish;
@@ -191,7 +191,7 @@ class FoodController extends Controller
         }
 
         // Use the current date as a seed for randomness
-        $seed = strtotime(date('Y-m-d')); // Get the current date as a timestamp
+        $seed = strtotime($currentDate); // Get the current date as a timestamp
         srand($seed); // Seed the random number generator
         $count = $request->input('count');
         $selectedFoods = [];
@@ -218,7 +218,8 @@ class FoodController extends Controller
         srand();
 
         return response()->json([
-            'suitable_food' => $selectedFoods
+            'suitable_food' => $selectedFoods,
+            'current_date' => $currentDate
         ]);
     }
 
@@ -230,6 +231,9 @@ class FoodController extends Controller
 
         // Get the current season
         $currentSeason = Season::getCurrentSeason();
+
+        // Get the current Monday of the week
+        $currentDate = date('Y-m-d', strtotime('last Sunday'));
 
         // Filter out dishes with unwanted food names and separate soup dishes
         foreach ($dishes as $dish) {
@@ -281,8 +285,31 @@ class FoodController extends Controller
         // Reset the random number generator to avoid side effects
         mt_srand();
 
+        // Prepare the data for display
+        $weeklyMenu = [];
+        for ($i = 0; $i < $days; $i++) {
+            $dailyMenu = [];
+            for ($j = 0; $j < $foodPerDay; $j++) {
+                $food = $selectedFoods[$i * $foodPerDay + $j];
+                $dailyMenu[] = [
+                    'id' => $food->id,
+                    'name' => $food->name,
+                    'start' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
+                    'end' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
+                    // 'time' => match ($i) {
+                    //     0 => '7:00',
+                    //     1 => '11:00',
+                    //     2 => '6:00',
+                    //     default => '12 PM',
+                    // }
+                ];
+            }
+            $weeklyMenu[] = $dailyMenu;
+        }
+
         return response()->json([
-            'suitable_food' => $selectedFoods
+            'weekly_menu' => $weeklyMenu,
+            'current_date' => $currentDate
         ]);
     }
 }
