@@ -15,6 +15,12 @@
           </router-link>
         </li>
         <li class="nav-item mt-2">
+          <router-link to="/user/schedule" class="nav-link px-0 align-middle">
+            <i class="fs-4 text-white align-middle material-icons">calendar_month</i>
+            <span class="ms-1 d-none d-sm-inline text-white siemreap">កាលវិភាគ</span>
+          </router-link>
+        </li>
+        <li class="nav-item mt-2">
           <router-link to="/user/save" class="nav-link px-0 align-middle">
             <i class="fs-4 text-white align-middle material-icons">bookmark</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap">រក្សាទុក</span>
@@ -46,9 +52,10 @@
           class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
           id="menu"
         >
-          <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex" @click="selectFolder(folder.id)">
+          <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
             <router-link
               :to="{ name: 'folder-list', params: { id: folder.id } }"
+              @click="selectFolder(folder.id)"
               class="link-folder nav-link px-3 align-middle d-flex justify-content-between align-items-center"
             >
               <div>
@@ -199,7 +206,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
@@ -241,7 +247,7 @@ const deleteFolder = async (folderId: number) => {
     }
   } catch (error) {
     console.error('Error deleting folder:', error)
-    alert('An error occurred while deleting the folder')
+    // alert('An error occurred while deleting the folder')
   }
 }
 
@@ -268,7 +274,7 @@ const createFolder = async () => {
     }
   } catch (error) {
     console.error('Error creating folder:', error)
-    alert('An error occurred while creating the folder')
+    // alert('An error occurred while creating the folder')
   }
 }
 
@@ -304,28 +310,23 @@ const renameFolder = async () => {
     }
   } catch (error) {
     console.error('Error renaming folder:', error)
-    alert('An error occurred while renaming the folder')
+    // alert('An error occurred while renaming the folder')
   }
 }
 
 const fetchFolders = async () => {
   try {
     const userStore = useUserStore()
-
-
     const response = await axios.get('http://127.0.0.1:8000/api/folder/list', {
        headers: {
             Authorization: `Bearer ${userStore.user.remember_token}`,
             'Content-Type': 'application/json'
           }
     })
-
-   
       folders.value = response.data.data
-    
   } catch (error) {
     console.error('Error fetching folders:', error)
-    alert('An error occurred while fetching folders')
+    // alert('An error occurred while fetching folders')
   }
 }
 
@@ -334,10 +335,10 @@ onMounted(() => {
 })
 
 const methods = {
-  selectFolder(folderId: number) {
+  selectFolder(folderId) {
     this.$emit('folderSelected', folderId)
   }
-};
+}
 </script>
 
 <style scoped>

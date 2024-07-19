@@ -73,6 +73,11 @@ const routes = [
         component: () => import('@/views/Web/User/SaveRecipes.vue')
     },
     {
+        path: '/user/schedule',
+        name: 'user/schedule',
+        component: () => import('@/views/Web/User/Schedule/ListView.vue')
+    },
+    {
         path: '/user/folder/:id',
         name: 'folder-list',
         component: () => import('../views/Web/User/Folder.vue')
