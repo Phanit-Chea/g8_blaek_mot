@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Laravel\Prompts\select;
+
 class StoreFoodController extends Controller
 {
     /**
@@ -15,7 +17,11 @@ class StoreFoodController extends Controller
      */
     public function index()
     {
-        //
+        $storeFood = StoreFood::all();
+        return response([
+            'success' => true,
+            'data' => $storeFood
+        ], 200);
     }
 
     /**
@@ -48,9 +54,9 @@ class StoreFoodController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+       
     }
 
     /**
@@ -68,22 +74,37 @@ class StoreFoodController extends Controller
     {
         try {
             $storeFood = StoreFood::findOrFail($id);
-    
-            $createdAt = $storeFood->created_at;
-    
-            $deleteTime = $createdAt->addMinutes(2);
-    
-            $storeFood->delete($deleteTime);
-    
-            return response()->json([
-                'data' => null,
-                'message' => "Food will be deleted 2 minutes after creation",
-            ], 200);
+
+            if ($storeFood->delete()) {
+                return response()->json([
+                    'data' => null,
+                    'message' => 'Food store deleted successfully',
+                ], 200);
+            } else {
+                return response()->json([
+                    'data' => null,
+                    'error' => 'Failed to delete store food',
+                ], 500);
+            }
         } catch (Exception $e) {
             return response()->json([
                 'data' => null,
                 'error' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function listAllStoreFood(){
+        try {
+            $id = Auth::id();
+            $storeFood = StoreFood::join('food', 'store_food.food_id', '=', 'food.id')
+                ->where('store_food.user_id', $id)
+                ->select('food.name', 'food.image', 'store_food.id as store_food_id')
+                ->get();
+    
+            return response()->json(['storefood' => $storeFood]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

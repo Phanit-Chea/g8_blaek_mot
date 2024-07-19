@@ -107,7 +107,9 @@ Route::prefix('ratings')->group(function () {
 });
 
 Route::prefix('storeFood')->group(function () {
-    Route::post('/create/{id}', [StoreFoodController::class, 'store'])->name('storeFood.create')->middleware('auth:sanctum');
+    Route::get('/list/all', [StoreFoodController::class, 'index'])->name('storeFood.list');
+    Route::get('/list', [StoreFoodController::class, 'listAllStoreFood'])->name('storeFood.listAll')->middleware('auth:sanctum');
+    Route::post('/store/{id}', [StoreFoodController::class, 'store'])->name('storeFood.store')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [StoreFoodController::class, 'destroy'])->name('storeFood.delete')->middleware('auth:sanctum');
 });
 
