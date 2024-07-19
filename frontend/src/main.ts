@@ -1,7 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.bundle.js';
-
-
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './assets/css/main.css'
 import './assets/css/bootstrap-icons.css'
@@ -10,8 +6,8 @@ import './assets/css/tooplate-crispy-kitchen.css'
 
 
 
-import 'bootstrap/dist/css/bootstrap.min.css' // Import Bootstrap CSS
-import 'bootstrap/dist/js/bootstrap.js'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
