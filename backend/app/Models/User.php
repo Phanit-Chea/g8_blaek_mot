@@ -34,7 +34,8 @@ class User extends Authenticatable
         'address',
         'password',
         'dateOfBirth',
-        'profile'
+        'profile',
+
     ];
 
     /**
@@ -69,13 +70,17 @@ class User extends Authenticatable
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
     }
-    public function chat(): HasMany
-    {
-        return $this->hasMany(Chat::class);
-    }
     public function food(): HasMany
     {
         return $this->hasMany(Food::class);
+    }
+    public function sentChats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'from_user');
+    }
+    public function receivedChats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'to_user');
     }
 
 }

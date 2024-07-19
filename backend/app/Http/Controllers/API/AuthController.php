@@ -97,8 +97,9 @@ class AuthController extends Controller
         //
     }
 
-    public function register(Request $request)
+   public function register(Request $request)
     {
+        Log::info('Register request data: ', $request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -106,8 +107,8 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
-            'phoneNumber' => 'required|string',
             'address' => 'required|string',
+            'phoneNumber' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -118,14 +119,14 @@ class AuthController extends Controller
                 'success' => false
             ], 404);
         }
-
+    
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-
+    
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -133,9 +134,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
-            'phoneNumber' => $request->phoneNumber,
             'address' => $request->address,
-            'profile' => $profile
+            'profile' => $profile,
+            'phoneNumber' => $request->phoneNumber
         ]);
         $token  = $user->createToken('auth_token')->plainTextToken;
         $user->remember_token = $token;

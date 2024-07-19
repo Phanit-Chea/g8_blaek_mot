@@ -1,5 +1,6 @@
 import ChatVue from '@/views/chat/ChatVue.vue'
 import path from 'path';
+import ChatView from '@/views/chat/ChatVue.vue'
 const routes = [
     {
         path: '/admin/dashboard',
@@ -74,8 +75,13 @@ const routes = [
         component: () => import('@/views/Web/User/SaveRecipes.vue')
     },
     {
-        path: '/user/folder',
-        name: 'user/folder',
+        path: '/user/schedule',
+        name: 'user/schedule',
+        component: () => import('@/views/Web/User/Schedule/ListView.vue')
+    },
+    {
+        path: '/user/folder/:id',
+        name: 'folder-list',
         component: () => import('../views/Web/User/Folder.vue')
     },
     {
@@ -87,7 +93,7 @@ const routes = [
     {
         path: '/chat',
         name: 'chat',
-        component: ChatVue,
+        component: ChatView,
     },
     {
         path: '/aboutUsUpdateForm',

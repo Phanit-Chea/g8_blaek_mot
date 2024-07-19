@@ -3,7 +3,10 @@
     <div class="container mx-auto mt-4">
       <div class="row d-flex">
           <div class="card ms-4" style=" width:22.5%" v-for="food in foods" :key="food.id" >
+            <router-link :to="{ name: 'food-detail', params: { id: food.id} }">
+
             <img  :src="`http://127.0.0.1:8000/${food.image}`" class="card-img" alt="..." />
+            </router-link>
             <div class="card-body d-flex justify-content-between px-0">
               <h4 class="card-title text-dark ">{{food.name}}</h4>
               <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="btn " style="background-color: #54983c">Detail</router-link>

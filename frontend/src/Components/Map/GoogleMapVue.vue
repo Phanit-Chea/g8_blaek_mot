@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div class="map-container" v-for="(mapUrl, index) in mapUrls" :key="index">
       <iframe
@@ -41,4 +41,4 @@ export default {
   height: 100%;
   border: 0;
 }
-</style>
+</style> -->

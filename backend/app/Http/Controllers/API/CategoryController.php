@@ -53,7 +53,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->title = $request->input('title');
-        $category->name = $request->input('name');
+    
         $category->description = $request->input('description');
 
         // Handle the image upload if present

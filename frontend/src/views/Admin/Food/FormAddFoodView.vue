@@ -64,9 +64,10 @@
                   <label for="category" class="form-label mb-0  fw-bold text-center siemreap"
                     >ប្រភេទ</label
                   >
+                 
                   <select id="category" class=" mt-3 py-2 form-control form-select-sm  text-center" required v-model="selectedCategory">
                     <option class="siemreap" value="" selected>ជ្រើសប្រភេទម្ហូប</option>
-                    <option class="siemreap" v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                    <option class="siemreap " v-for="category in categories" :key="category.id" :value="category.id">{{ category.title }}</option>
                   </select>
                 </div>
 
@@ -156,7 +157,7 @@ export default {
       formData.append('cooking_time', this.food.cooking_time)
       formData.append('ingredients', this.food.ingredients)
       // console.log(this.food.categrory_id);
-      console.log(useAuth.user.remember_token);
+      
       try {
         await axiosInstance.post('/food/create', formData, {
           headers: {
@@ -168,7 +169,8 @@ export default {
         this.$router.push('/')
       } catch (error) {
         console.error('Error creating food:', error)
-        alert('Failed to create food. Please try again.')
+        // alert('Failed to create food. Please try again.')
+        alert(error);
       }
     },
     async fetchCategories() {
