@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     onFolderSelected(folderId) {
-      alert('Received folderId:', folderId)
+      // alert('Received folderId:', folderId)
       this.selectedFolderId = folderId
       this.fetchFolder()
     },

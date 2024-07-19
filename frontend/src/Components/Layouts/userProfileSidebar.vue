@@ -247,7 +247,7 @@ const deleteFolder = async (folderId: number) => {
     }
   } catch (error) {
     console.error('Error deleting folder:', error)
-    alert('An error occurred while deleting the folder')
+    // alert('An error occurred while deleting the folder')
   }
 }
 
@@ -274,7 +274,7 @@ const createFolder = async () => {
     }
   } catch (error) {
     console.error('Error creating folder:', error)
-    alert('An error occurred while creating the folder')
+    // alert('An error occurred while creating the folder')
   }
 }
 
@@ -310,7 +310,7 @@ const renameFolder = async () => {
     }
   } catch (error) {
     console.error('Error renaming folder:', error)
-    alert('An error occurred while renaming the folder')
+    // alert('An error occurred while renaming the folder')
   }
 }
 
@@ -326,7 +326,7 @@ const fetchFolders = async () => {
       folders.value = response.data.data
   } catch (error) {
     console.error('Error fetching folders:', error)
-    alert('An error occurred while fetching folders')
+    // alert('An error occurred while fetching folders')
   }
 }
 

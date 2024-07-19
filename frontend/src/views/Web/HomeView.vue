@@ -59,6 +59,7 @@ export default {
           `/food/random/${this.categoryID}?count=${this.selectedRandomNumber}`
         )
         this.randomFoods = response.data.suitable_food
+        console.log(this.randomFoods)
       } catch (error) {
         console.error('Error fetching random food:', error)
       }
