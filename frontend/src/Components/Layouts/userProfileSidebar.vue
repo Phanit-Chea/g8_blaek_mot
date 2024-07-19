@@ -17,7 +17,7 @@
         </li>
 
         <li class="nav-item mt-2">
-          <router-link to="" class="nav-link px-0 align-middle mb-4">
+          <router-link to="/user/store" class="nav-link px-0 align-middle mb-4">
             <i class="fs-4 text-white align-middle material-icons">schedule</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap">បានមើលថ្មីៗ</span>
           </router-link>
