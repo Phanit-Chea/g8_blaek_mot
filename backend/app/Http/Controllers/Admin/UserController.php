@@ -146,16 +146,17 @@ class UserController extends Controller
     {
         // Find the user by ID
         $customer = User::find($id);
-        
+
         // Check if the user exists
         if (!$customer) {
             return response()->json(['message' => 'User not found'], 404);
         }
-        
+
         // Delete the user
         $customer->delete();
-        
+
         return response()->json(['message' => 'User deleted successfully'], 200);
     }
- 
+
+
 }

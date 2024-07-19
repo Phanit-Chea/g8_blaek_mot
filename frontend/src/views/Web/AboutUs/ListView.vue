@@ -6,8 +6,8 @@
     <!-- About us -->
     <div class="about-container d-flex p-5">
       <div class="w-50">
-        <h1 style="font-size: 140px; color: #54983c">ABOUT</h1>
-        <h4 style="font-size: 80px; color: #54983c">BLAEK MOT</h4>
+        <h1 style="font-size: 140px; color: #54983c">អំពី</h1>
+        <h4 style="font-size: 80px; color: #54983c">ប្លែកមាត់</h4>
       </div>
       <div class="w-50 mt-4">
         <p class="text-justify ps-5" style="border-left: 5px solid gray">{{ description }}</p>
@@ -17,11 +17,11 @@
     <!-- Detail about us -->
     <div class="detail-container mt-3 px-5 d-flex">
       <div class="w-50 pe-5">
-        <h2 class="mb-5">These are details about our website</h2>
+        <h2 class="mb-5">ព័ត័មានលម្អីតមួយចំនួនអំពីពួកយើង</h2>
         <div class="d-flex mb-3">
-          <button class="about-btn" @click="showRecommentFood">Recomment Food</button>
-          <button class="about-btn" @click="showMission">Our Mission</button>
-          <button class="about-btn" @click="showVision">Our Vision</button>
+          <button class="about-btn" @click="showRecommentFood">ការណែនាំម្ហូប</button>
+          <button class="about-btn" @click="showMission">បេសសកម្មរបស់ពួកយើង</button>
+          <button class="about-btn" @click="showVision">ចក្ខុវិស័យរបស់ពួកយើង</button>
         </div>
         <p class="text-justify">{{ result }}</p>
       </div>

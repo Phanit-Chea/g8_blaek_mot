@@ -23,7 +23,7 @@ class ChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
             'image' => 'nullable|image|max:2048', 
             'video' => ['nullable', 'file', new VideoWithAttributesValidationRule],
         ];

@@ -33,8 +33,7 @@
         class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
       </router-link>
-      <router-link to="/admin/dashboard"
-       >
+      <router-link to="/admin/dashboard">
         <button class="btn btn-danger" type="submit">Dashboard</button>
       </router-link>
     </div>
@@ -146,13 +145,18 @@
 
       </div>
     </div>
+    <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+          class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
+            class="visually-hidden">unread messages</span></span></i></a>
   </nav>
+
 
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
 import { useUserStore } from '@/stores/userStore';
+
 
 const useAuth = useAuthStore();
 const userStore = useUserStore();
@@ -161,12 +165,37 @@ const userStore = useUserStore();
 </script>
 
 <style scoped>
+.chat {
+  font-size: 3rem;
+  color: #66b64a;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.chat:hover {
+  transform: scale(1.05) rotate(-5deg);
+  color: #62cd3c;
+}
+
 .favoriteIcon,
 .notification,
 .account {
   transition: transform 0.3s ease, border 0.3s ease;
   border: 2px solid rgba(62, 160, 9, 0.942);
   color: rgba(62, 160, 9, 0.942);
+}
+
+
+.chat {
+  font-size: 3rem;
+  color: #66b64a;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.chat:hover {
+  transform: scale(1.05) rotate(-5deg);
+  color: #62cd3c;
 }
 
 .login {

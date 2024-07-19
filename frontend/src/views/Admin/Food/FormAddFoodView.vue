@@ -64,9 +64,10 @@
                   <label for="category" class="form-label mb-0  fw-bold text-center siemreap"
                     >ប្រភេទ</label
                   >
+                 
                   <select id="category" class=" mt-3 py-2 form-control form-select-sm  text-center" required v-model="selectedCategory">
                     <option class="siemreap" value="" selected>ជ្រើសប្រភេទម្ហូប</option>
-                    <option class="siemreap" v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                    <option class="siemreap " v-for="category in categories" :key="category.id" :value="category.id">{{ category.title }}</option>
                   </select>
                 </div>
 

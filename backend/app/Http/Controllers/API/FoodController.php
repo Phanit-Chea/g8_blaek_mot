@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
 use App\Http\Resources\FoodResource;
+use App\Models\Category;
 use Exception;
-
-
-
-
+use Illuminate\Support\Facades\DB;
 
 class FoodController extends Controller
 {
@@ -166,9 +164,9 @@ class FoodController extends Controller
 
         return response()->json($food, 200);
     }
-    public function getRandomFood($count = 6)
+    public function getRandomFood($categoryID, Request $request)
     {
-        $dishes = Food::all(); // Get all dishes
+        $dishes = Food::where('category_id', $categoryID)->get(); // Get all dishes
         $suitableFood = [];
 
         // Get the current season
@@ -201,7 +199,7 @@ class FoodController extends Controller
         // Use the current date as a seed for randomness
         $seed = strtotime(date('Y-m-d')); // Get the current date as a timestamp
         srand($seed); // Seed the random number generator
-
+        $count = $request->input('count');
         // Return the specified number of random suitable foods, defaulting to 6
         $count = min($count, count($suitableFood)); // Ensure count does not exceed available suitable foods
         if ($count > 0) {
@@ -227,5 +225,18 @@ class FoodController extends Controller
                 'suitable_food' => null
             ]);
         }
+    }
+
+
+    public function categoryFoodCountsJson()
+    {
+        // Query to get list of categories and count of food items
+        $categories = Category::leftJoin('food', 'categories.id', '=', 'food.category_id')
+                              ->select('categories.title', DB::raw('count(food.id) as food_count'))
+                              ->groupBy('categories.id', 'categories.title')
+                              ->get();
+
+        // Return the data as JSON
+        return response()->json($categories);
     }
 }
