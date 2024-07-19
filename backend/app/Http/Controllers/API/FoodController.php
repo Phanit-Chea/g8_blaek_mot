@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FoodRequest;
 use App\Http\Resources\FoodResource;
-use App\Models\Category;
 use Exception;
-use Illuminate\Support\Facades\DB;
+
+
+
+
 
 class FoodController extends Controller
 {
@@ -35,7 +37,7 @@ class FoodController extends Controller
     public function store(FoodRequest $request)
     {
         // Ensure the request comes from an authenticated user
-        $userID = Auth::id();
+        $userID = Auth::ai();
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {
@@ -166,161 +168,148 @@ class FoodController extends Controller
 
 
     public function getRandomFood($categoryID, Request $request)
-    {
-        $dishes = Food::where('category_id', $categoryID)->get(); // Get all dishes
-        $suitableFood = [];
-        $soupDishes = [];
+{
+    $dishes = Food::where('category_id', $categoryID)->get(); // Get all dishes
+    $suitableFood = [];
+    $soupDishes = [];
 
-        // Get the current season
-        $currentSeason = Season::getCurrentSeason();
+    // Get the current season
+    $currentSeason = Season::getCurrentSeason();
 
-        // Get the current date
-        $currentDate = date('Y-m-d');
+    // Get the current date
+    $currentDate = date('Y-m-d');
 
-        // Filter out dishes with unwanted food names and separate soup dishes
-        foreach ($dishes as $dish) {
+    // Filter out dishes with unwanted food names and separate soup dishes
+    foreach ($dishes as $dish) {
+        if (stripos($dish->name, 'សម្ល') !== false) {
+            if ($currentSeason === 'Rainy') {
+                $soupDishes[] = $dish;
+            }
+        } else {
+            $suitableFood[] = $dish;
+        }
+    }
+
+    // Use the current date as a seed for randomness
+    $seed = strtotime($currentDate); // Get the current date as a timestamp
+    srand($seed); // Seed the random number generator
+    $count = $request->input('count');
+    $selectedFoods = [];
+
+    // Add soup dishes only in the Dry season
+    if ($currentSeason === 'Dry') {
+        $selectedFoods = array_merge($selectedFoods, $soupDishes);
+        $count = $request->input('count') - count($soupDishes);
+    }
+
+    // Add random suitable foods
+    if ($count > 0) {
+        $randomFoods = array_rand($suitableFood, min($count, count($suitableFood)));
+        if (is_array($randomFoods)) {
+            foreach ($randomFoods as $index) {
+                $selectedFoods[] = $suitableFood[$index];
+            }
+        } else {
+            $selectedFoods[] = $suitableFood[$randomFoods];
+        }
+    }
+
+    // Reset the random number generator to avoid side effects
+    srand();
+
+    return response()->json([
+        'suitable_food' => $selectedFoods,
+        'current_date' => $currentDate
+    ]);
+}
+
+public function getWeeklyRandomFood(Request $request)
+{
+    $dishes = Food::all(); // Get all dishes
+    $suitableFood = [];
+    $soupDishes = [];
+
+    // Get the current season
+    $currentSeason = Season::getCurrentSeason();
+
+    // Get the current Monday of the week
+    $currentDate = date('Y-m-d', strtotime('last Sunday'));
+
+    // Filter out dishes with unwanted food names and separate soup dishes
+    foreach ($dishes as $dish) {
+        $isValid = true;
+
+        // Add your custom logic to determine if a dish is valid
+        if (stripos($dish->name, 'unwanted_word') !== false) {
+            $isValid = false;
+        }
+
+        if ($isValid) {
             if (stripos($dish->name, 'សម្ល') !== false) {
-                if ($currentSeason === 'Rainy') {
-                    $soupDishes[] = $dish;
-                }
+                $soupDishes[] = $dish;
             } else {
                 $suitableFood[] = $dish;
             }
         }
+    }
 
-        // Use the current date as a seed for randomness
-        $seed = strtotime($currentDate); // Get the current date as a timestamp
-        srand($seed); // Seed the random number generator
-        $count = $request->input('count');
-        $selectedFoods = [];
+    // Use a combination of time and user input as a seed for randomness
+    $seed = time() ^ $request->input('count');
+    mt_srand($seed); // Seed the random number generator
 
-        // Add soup dishes only in the Dry season
-        if ($currentSeason === 'Dry') {
-            $selectedFoods = array_merge($selectedFoods, $soupDishes);
-            $count = $request->input('count') - count($soupDishes);
-        }
+    $days = 7; // Number of days in a week
+    $foodPerDay = 5; // Number of food items per day
+    $selectedFoods = [];
 
-        // Add random suitable foods
-        if ($count > 0) {
-            $randomFoods = array_rand($suitableFood, min($count, count($suitableFood)));
-            if (is_array($randomFoods)) {
-                foreach ($randomFoods as $index) {
-                    $selectedFoods[] = $suitableFood[$index];
-                }
-            } else {
+    // Add soup dishes based on the current season
+    if ($currentSeason === 'Dry') {
+        $soupDishCount = min($foodPerDay * $days, count($soupDishes));
+        $selectedFoods = array_merge($selectedFoods, array_rand($soupDishes, $soupDishCount));
+        $foodPerDay -= $soupDishCount / $days;
+    }
+
+    // Add random suitable foods for the whole week
+    for ($i = 0; $i < $days; $i++) {
+        $randomFoods = array_rand($suitableFood, $foodPerDay);
+        if (is_array($randomFoods)) {
+            for ($j = 0; $j < $foodPerDay; $j++) {
+                $selectedFoods[] = $suitableFood[$randomFoods[$j]];
+            }
+        } else {
+            for ($j = 0; $j < $foodPerDay; $j++) {
                 $selectedFoods[] = $suitableFood[$randomFoods];
             }
         }
-
-        // Reset the random number generator to avoid side effects
-        srand();
-
-        return response()->json([
-            'suitable_food' => $selectedFoods,
-            'current_date' => $currentDate
-        ]);
     }
 
-    public function getWeeklyRandomFood(Request $request)
-    {
-        $dishes = Food::all(); // Get all dishes
-        $suitableFood = [];
-        $soupDishes = [];
+    // Reset the random number generator to avoid side effects
+    mt_srand();
 
-        // Get the current season
-        $currentSeason = Season::getCurrentSeason();
-
-        // Get the current Monday of the week
-        $currentDate = date('Y-m-d', strtotime('last Sunday'));
-
-        // Filter out dishes with unwanted food names and separate soup dishes
-        foreach ($dishes as $dish) {
-            $isValid = true;
-
-            // Add your custom logic to determine if a dish is valid
-            if (stripos($dish->name, 'unwanted_word') !== false) {
-                $isValid = false;
-            }
-
-            if ($isValid) {
-                if (stripos($dish->name, 'សម្ល') !== false) {
-                    $soupDishes[] = $dish;
-                } else {
-                    $suitableFood[] = $dish;
+    // Prepare the data for display
+    $weeklyMenu = [];
+    for ($i = 0; $i < $days; $i++) {
+        $dailyMenu = [];
+        for ($j = 0; $j < $foodPerDay; $j++) {
+            $food = $selectedFoods[$i * $foodPerDay + $j];
+            $dailyMenu[] = [
+                'id' => $food->id,
+                'name' => $food->name,
+                'start' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
+                'end' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
+                'time' => match ($i) {
+                    0 => '7:00',
+                    1 => '11:00',
+                    2 => '6:00',
+                    default => '12 PM',
                 }
-            }
+            ];
         }
-
-        // Use a combination of time and user input as a seed for randomness
-        $seed = time() ^ $request->input('count');
-        mt_srand($seed); // Seed the random number generator
-
-        $days = 7; // Number of days in a week
-        $foodPerDay = 5; // Number of food items per day
-        $selectedFoods = [];
-
-        // Add soup dishes based on the current season
-        if ($currentSeason === 'Dry') {
-            $soupDishCount = min($foodPerDay * $days, count($soupDishes));
-            $selectedFoods = array_merge($selectedFoods, array_rand($soupDishes, $soupDishCount));
-            $foodPerDay -= $soupDishCount / $days;
-        }
-
-        // Add random suitable foods for the whole week
-        for ($i = 0; $i < $days; $i++) {
-            $randomFoods = array_rand($suitableFood, $foodPerDay);
-            if (is_array($randomFoods)) {
-                for ($j = 0; $j < $foodPerDay; $j++) {
-                    $selectedFoods[] = $suitableFood[$randomFoods[$j]];
-                }
-            } else {
-                for ($j = 0; $j < $foodPerDay; $j++) {
-                    $selectedFoods[] = $suitableFood[$randomFoods];
-                }
-            }
-        }
-
-        // Reset the random number generator to avoid side effects
-        mt_srand();
-
-        // Prepare the data for display
-        $weeklyMenu = [];
-        for ($i = 0; $i < $days; $i++) {
-            $dailyMenu = [];
-            for ($j = 0; $j < $foodPerDay; $j++) {
-                $food = $selectedFoods[$i * $foodPerDay + $j];
-                $dailyMenu[] = [
-                    'id' => $food->id,
-                    'name' => $food->name,
-                    'start' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
-                    'end' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
-                    // 'time' => match ($i) {
-                    //     0 => '7:00',
-                    //     1 => '11:00',
-                    //     2 => '6:00',
-                    //     default => '12 PM',
-                    // }
-                ];
-            }
-            $weeklyMenu[] = $dailyMenu;
-        }
-
-        return response()->json([
-            'weekly_menu' => $weeklyMenu,
-            'current_date' => $currentDate
-        ]);
+        $weeklyMenu[] = $dailyMenu;
     }
 
-
-    public function categoryFoodCountsJson()
-    {
-        // Query to get list of categories and count of food items
-        $categories = Category::leftJoin('food', 'categories.id', '=', 'food.category_id')
-                              ->select('categories.title', DB::raw('count(food.id) as food_count'))
-                              ->groupBy('categories.id', 'categories.title')
-                              ->get();
-
-        // Return the data as JSON
-        return response()->json($categories);
-    }
+    return response()->json([
+        'weekly_menu' => $weeklyMenu,
+        'current_date' => $currentDate
+    ]);
+}
 }
