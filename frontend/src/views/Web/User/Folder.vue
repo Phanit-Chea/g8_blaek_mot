@@ -24,9 +24,11 @@
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
 import NavbarViewVue from '../Navbar/NavbarView.vue'
 import { useUserStore } from '@/stores/userStore.ts'
+import {useAuthStore} from '@/stores/auth-store.ts'
 import { useFolderStore } from '@/stores/folderStore'
 import axiosInstance from '@/plugins/axios'
 import { useRoute } from 'vue-router'
+import { constants } from 'buffer'
 const route = useRoute()
 export default {
   components: {
@@ -49,11 +51,12 @@ export default {
       this.fetchFolder()
     },
     async fetchFolder() {
-      const userStore = useUserStore()
+      const userStore = useUserStore();
+      const userAuth = useAuthStore();
       try {
         const response = await axiosInstance.get(`/save/list/${this.selectedFolderId|8}`, {
           headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
+            Authorization: `Bearer ${userAuth.accessToken}`,
             'Content-Type': 'application/json'
           }
         })
