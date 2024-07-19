@@ -37,7 +37,7 @@ class FoodController extends Controller
     public function store(FoodRequest $request)
     {
         // Ensure the request comes from an authenticated user
-        $userID = Auth::ai();
+        $userID = Auth::id();
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {
@@ -223,8 +223,11 @@ class FoodController extends Controller
         ]);
     }
 
+
     public function getWeeklyRandomFood(Request $request)
     {
+        $userId = Auth::id(); // Get the current user's ID
+
         $dishes = Food::all(); // Get all dishes
         $suitableFood = [];
         $soupDishes = [];
@@ -253,37 +256,54 @@ class FoodController extends Controller
             }
         }
 
-        // Use a combination of time and user input as a seed for randomness
-        $seed = time() ^ $request->input('count');
+        // Use a combination of user ID and current date as a seed for randomness
+        $seed = $userId ^ strtotime($currentDate);
         mt_srand($seed); // Seed the random number generator
 
         $days = 7; // Number of days in a week
         $foodPerDay = 5; // Number of food items per day
+        $totalFoodCount = $foodPerDay * $days;
         $selectedFoods = [];
 
         // Add soup dishes based on the current season
-        if ($currentSeason === 'Dry') {
-            $soupDishCount = min($foodPerDay * $days, count($soupDishes));
-            $selectedFoods = array_merge($selectedFoods, array_rand($soupDishes, $soupDishCount));
-            $foodPerDay -= $soupDishCount / $days;
+        if ($currentSeason === 'Dry' && count($soupDishes) > 0) {
+            $soupDishCount = min($totalFoodCount, count($soupDishes));
+            if ($soupDishCount > 0) {
+                $randomSoupIndexes = array_rand($soupDishes, $soupDishCount);
+                if (!is_array($randomSoupIndexes)) {
+                    $randomSoupIndexes = [$randomSoupIndexes];
+                }
+                foreach ($randomSoupIndexes as $index) {
+                    $selectedFoods[] = $soupDishes[$index];
+                }
+            }
+            $totalFoodCount -= $soupDishCount;
         }
 
-        // Add random suitable foods for the whole week
-        for ($i = 0; $i < $days; $i++) {
-            $randomFoods = array_rand($suitableFood, $foodPerDay);
-            if (is_array($randomFoods)) {
-                for ($j = 0; $j < $foodPerDay; $j++) {
-                    $selectedFoods[] = $suitableFood[$randomFoods[$j]];
-                }
+        // Add random suitable foods to fill the remaining slots
+        if ($totalFoodCount > 0 && count($suitableFood) > 0) {
+            if (count($suitableFood) >= $totalFoodCount) {
+                $randomSuitableIndexes = array_rand($suitableFood, $totalFoodCount);
             } else {
-                for ($j = 0; $j < $foodPerDay; $j++) {
-                    $selectedFoods[] = $suitableFood[$randomFoods];
-                }
+                $randomSuitableIndexes = array_rand($suitableFood, count($suitableFood));
+            }
+
+            if (!is_array($randomSuitableIndexes)) {
+                $randomSuitableIndexes = [$randomSuitableIndexes];
+            }
+            foreach ($randomSuitableIndexes as $index) {
+                $selectedFoods[] = $suitableFood[$index];
             }
         }
 
-        // Reset the random number generator to avoid side effects
-        mt_srand();
+        // Shuffle the final list to ensure randomness
+        shuffle($selectedFoods);
+
+        // If we still don't have enough items, repeat the existing items until we do
+        while (count($selectedFoods) < $foodPerDay * $days) {
+            $selectedFoods = array_merge($selectedFoods, $selectedFoods);
+        }
+        $selectedFoods = array_slice($selectedFoods, 0, $foodPerDay * $days);
 
         // Prepare the data for display
         $weeklyMenu = [];
@@ -296,12 +316,6 @@ class FoodController extends Controller
                     'name' => $food->name,
                     'start' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
                     'end' => date('Y-m-d', strtotime($currentDate . ' + ' . $i . ' days')),
-                    // 'time' => match ($i) {
-                    //     0 => '7:00',
-                    //     1 => '11:00',
-                    //     2 => '6:00',
-                    //     default => '12 PM',
-                    // }
                 ];
             }
             $weeklyMenu[] = $dailyMenu;
