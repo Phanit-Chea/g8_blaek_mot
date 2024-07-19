@@ -1,3 +1,5 @@
+import ChatVue from '@/views/chat/ChatVue.vue'
+import path from 'path';
 import ChatView from '@/views/chat/ChatVue.vue'
 const routes = [
     {
@@ -36,8 +38,8 @@ const routes = [
         component: () => import('@/views/Admin/Auth/RegisterView.vue')
     },
     {
-        path: '/resetpassword',
-        name: 'resetpassword',
+        path: '/resetPassword',
+        name: 'resetPassword',
         component: () => import('@/views/Admin/Auth/ResetPasswordView.vue')
     }
 
@@ -143,6 +145,11 @@ const routes = [
         name: 'notFound',
         component: () => import('../views/404notFound/NotFound.vue')
     },
+    {
+        path: '/forgotPassword',
+        name: 'forgotPassword',
+        component:()=>import('@/views/Admin/Auth/FogetPasswordView.vue')
+    }
 
 
 

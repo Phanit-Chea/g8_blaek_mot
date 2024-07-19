@@ -9,12 +9,16 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\RatingController;
+use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController as ControllersChatController;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SaveFoodController;
+use App\Http\Controllers\Api\StoreFoodController;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,21 +75,21 @@ Route::delete('/save/delete/{id}', [SaveFoodController::class, 'destroy'])->name
 Route::post('/register', [ApiAuthController::class, 'register']);
 
 ///=============create food=========//
-Route::prefix("folder")->group(function(){
-    Route::get('/list', [FolderController::class, 'listSpecificUserFolder'])->name('folder.list')->middleware('auth:sanctum');
+Route::prefix("folder")->group(function () {
+    Route::get('/list', [FolderController::class, 'index'])->name('folder.list')->middleware('auth:sanctum');
     Route::post('/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
     Route::put('/update/{id}', [FolderController::class, 'update'])->name('folder.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [FolderController::class, 'destroy'])->name('folder.delete')->middleware('auth:sanctum');
 });
 
 
-Route::prefix("food")->group(function(){
-    Route::post('/create',[FoodController::class,'store'])->name('food.create')->middleware('auth:sanctum');
-    Route::get('/list',[FoodController::class,'index'])->name('food.list');
-    Route::get('/show/{id}',[FoodController::class,'show'])->name('food.show');
-    Route::post('/update/{id}',[FoodController::class,'update'])->name('food.update');
-    Route::delete('/delete/{id}',[FoodController::class,'destroy'])->name('food.delete');
-    Route::get('bycategory/{id}',[FoodController::class,'listFoodByCategory'])->name('food.listfoodbycategory');
+Route::prefix("food")->group(function () {
+    Route::post('/create', [FoodController::class, 'store'])->name('food.create')->middleware('auth:sanctum');
+    Route::get('/list', [FoodController::class, 'index'])->name('food.list');
+    Route::get('/show/{id}', [FoodController::class, 'show'])->name('food.show');
+    Route::post('/update/{id}', [FoodController::class, 'update'])->name('food.update');
+    Route::delete('/delete/{id}', [FoodController::class, 'destroy'])->name('food.delete');
+    Route::get('bycategory/{id}', [FoodController::class, 'listFoodByCategory'])->name('food.listfoodbycategory');
     Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
     Route::get('/weekly/random', [FoodController::class, 'getWeeklyRandomFood'])->name('food.weekly.random')->middleware('auth:sanctum');
    
@@ -114,3 +118,15 @@ Route::prefix('ratings')->group(function () {
     Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
     Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
 });
+
+
+Route::post('/logout', [ApiAuthController::class, 'logout']);
+Route::get('/user', [ApiAuthController::class, 'index']);
+
+Route::post('/forgotPassword', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('resetPassword', [ResetPasswordController::class, 'resetPassword']);
+Route::prefix('storeFood')->group(function () {
+    Route::post('/create/{id}', [StoreFoodController::class, 'store'])->name('storeFood.create')->middleware('auth:sanctum');
+    Route::delete('/delete/{id}', [StoreFoodController::class, 'destroy'])->name('storeFood.delete')->middleware('auth:sanctum');
+});
+
