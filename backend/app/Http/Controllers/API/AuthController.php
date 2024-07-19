@@ -5,12 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UpdateProfileResource;
 use App\Http\Resources\userRegisterResource;
+use App\Mail\PasswordResetSuccess;
+use App\Mail\SendMail;
+use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,7 +38,7 @@ class AuthController extends Controller
         $user = Auth::user();
 
         // Log incoming request data
-        \Log::info('Update profile request received', $request->all());
+        Log::info('Update profile request received', $request->all());
 
         // Validate the request data
         $validatedData = $request->validate([
@@ -63,7 +67,7 @@ class AuthController extends Controller
         $userData = $user->toArray();
         // $userData['remember_token'] = $user->remember_token;
 
-        \Log::info('Profile updated successfully', $userData);
+        Log::info('Profile updated successfully', $userData);
 
         return response()->json([
             'success' => true,
@@ -112,16 +116,16 @@ class AuthController extends Controller
                 'message' => 'Validation errors',
                 'errors' => $validator->errors(),
                 'success' => false
-            ], 422);
+            ], 404);
         }
-    
+
         $img = $request->file('profile');
         $ext = $img->getClientOriginalExtension();
         $imageName = time() . '.' . $ext;
         $profilePath = 'storage/images';
         $img->move(public_path($profilePath), $imageName);
         $profile = $profilePath . '/' . $imageName;
-    
+
         // Create user record
         $user = User::create([
             'name' => $request->name,
@@ -140,54 +144,19 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User created successfully',
             'success' => true,
-            'user' => $user
+            'user' => new userRegisterResource($user),
         ], 200);
     }
-    public function resetPassword(Request $request)
+    //logout
+    public function logout(Request $request)
     {
-        // Validate the request data
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'old_password' => 'required|string',
-            'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required|string|min:6|same:password'
-        ]);
-
-        // If validation fails, return the errors
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->errors(),
-                'success' => false
-            ], 400);
+        try {
+            $request->user()->currentAccessToken()->delete();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Logout failed. Please try again.'], 404);
         }
-
-        // Find the user by email
-        $user = User::where('email', $request->email)->first();
-
-        // If user not found, return an error response
-        if (!$user) {
-            return response()->json([
-                'message' => 'User not found',
-                'success' => false
-            ], 400);
-        }
-
-        // Check if the provided old password matches the user's current password
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json([
-                'message' => 'Old password is incorrect',
-                'success' => false
-            ], 400);
-        }
-
-        // Update the user's password
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        // Return a success response
         return response()->json([
-            'message' => 'Password reset successfully',
-            'success' => true
-        ], 200);
+            'message' => 'Logged out successfully'
+        ]);
     }
 }

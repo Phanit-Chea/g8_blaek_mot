@@ -44,7 +44,7 @@ return [
             'driver' => 'session',
             'provider' => 'frontusers',
         ],
-        
+
     ],
 
     /*
@@ -69,7 +69,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        
+
         'frontusers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Frontuser::class,
@@ -101,7 +101,6 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
-            'throttle' => 60,
         ],
     ],
 
