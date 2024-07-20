@@ -14,11 +14,12 @@ use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController as ControllersChatController;
 use App\Models\Rating;
+use App\Http\Controllers\Api\StoreFoodController;
+use App\Http\Controllers\GroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SaveFoodController;
-use App\Http\Controllers\Api\StoreFoodController;
-use App\Http\Controllers\GroupController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -126,7 +127,9 @@ Route::get('/user', [ApiAuthController::class, 'index']);
 Route::post('/forgotPassword', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('resetPassword', [ResetPasswordController::class, 'resetPassword']);
 Route::prefix('storeFood')->group(function () {
-    Route::post('/create/{id}', [StoreFoodController::class, 'store'])->name('storeFood.create')->middleware('auth:sanctum');
+    Route::get('/list/all', [StoreFoodController::class, 'index'])->name('storeFood.list');
+    Route::get('/list', [StoreFoodController::class, 'listAllStoreFood'])->name('storeFood.listAll')->middleware('auth:sanctum');
+    Route::post('/store/{id}', [StoreFoodController::class, 'store'])->name('storeFood.store')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [StoreFoodController::class, 'destroy'])->name('storeFood.delete')->middleware('auth:sanctum');
 });
 

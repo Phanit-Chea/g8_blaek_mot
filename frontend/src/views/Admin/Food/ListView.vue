@@ -13,11 +13,19 @@ export default {
     return {
       foods: [],
       categoryFood: [],
+      searchQuery: '', // Add a data property for the search query
     }
   },
   mounted() {
     this.fetchFood();
     this.numberOfFood();
+  },
+  computed: {
+    filteredFoods() {
+      return this.foods.filter(food => 
+        food.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
   },
   methods: {
     async fetchFood() {
@@ -57,6 +65,7 @@ export default {
   }
 };
 </script>
+
 <template>
   <NavbarAdmin></NavbarAdmin>
   <div class="container-fluid" style="margin-top: 6%;">
@@ -65,21 +74,21 @@ export default {
       <!-- Table  -->
       <div class="container h-100" style="width: 85.8%" >
         <div class="card-container d-flex justify-content-between mt-4 px-4">
-    <div v-for="category in categoryFood" :key="category.id" class="card px-2" style="background-color: #402e9d; width: 18%">
-        <div class="card-header border-0">
-            <div class="d-flex justify-content-between pt-3 align-items-center">
+          <div v-for="category in categoryFood" :key="category.id" class="card px-2" style="background-color: #402e9d; width: 18%">
+            <div class="card-header border-0">
+              <div class="d-flex justify-content-between pt-3 align-items-center">
                 <h3 class="card-title siemreap text-white" style="font-size: 24px;">{{ category.title }}</h3>
                 <i class="material-icons text-white">light_mode</i>
+              </div>
             </div>
-        </div>
-        <div class="card-body px-3 pt-0">
-            <div class="d-flex flex-column">
+            <div class="card-body px-3 pt-0">
+              <div class="d-flex flex-column">
                 <p class="card-text siemreap text-white">{{ category.food_count }} មុខ</p>
                 <p class="card-text siemreap text-white">ចំនួនមុខម្ហូបពេលព្រឹក</p>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
         <div class="table-container px-4 mt-4">
           <!-- Search Bar -->
           <div class="bg-light d-flex justify-content-between align-items-center shadow py-3">
@@ -100,7 +109,13 @@ export default {
             </div>
             <form class="form-inline d-flex justify-content-end px-4 align-items-center flex-grow-1">
               <div class="input-group">
-                <input class="form-control form-control-sm" type="search" placeholder="ស្វែងរក" aria-label="Search" />
+                <input 
+                  class="form-control form-control-sm" 
+                  type="search" 
+                  placeholder="ស្វែងរក" 
+                  aria-label="Search"
+                  v-model="searchQuery"
+                />
                 <button class="btn btn-primary btn-sm" type="submit">
                   <i class="material-icons text-white">search</i>
                 </button>
@@ -124,12 +139,11 @@ export default {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="food in foods" :key="food.id">
+              <tr v-for="food in filteredFoods" :key="food.id">
                 <td class="siemreap text-center">{{ food.name }}</td>
                 <td class="siemreap text-center">{{ food.category_id }}</td>
                 <td class="siemreap">{{ food.ingredients }}</td>
                 <th class="siemreap text-center">20</th>
-
                 <td class="d-flex justify-content-evenly">
                   <p data-placement="top" data-toggle="tooltip" title="detail">
                     <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="btn btn-primary btn-xs"
