@@ -55,17 +55,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public static function store($request, $id = null){
+    protected $table = 'users';
+    public static function store($request, $id = null)
+    {
         $data = $request->only(
-        'name',
-        'email',
-        'phone_number',
-        'age',
-        'gender',
-        'address',
-        'password',
-        'profile');
+            'name',
+            'email',
+            'phone_number',
+            'age',
+            'gender',
+            'address',
+            'password',
+            'profile'
+        );
         $data = self::updateOrCreate(['id' => $id], $data);
         return $data;
     }
@@ -78,5 +80,13 @@ class User extends Authenticatable
         return $this->hasMany(Food::class);
     }
 
-}
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'from_user_id');
+    }
+}

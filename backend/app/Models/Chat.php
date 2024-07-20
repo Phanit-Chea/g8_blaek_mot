@@ -16,7 +16,8 @@ class Chat extends Model
         'description',
         'image',
         'video',
-        'active'
+        'active',
+        'group_id'
     ];
 
 }
