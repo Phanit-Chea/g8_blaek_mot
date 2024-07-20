@@ -7,8 +7,8 @@ use App\Models\StoreFood;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use function Laravel\Prompts\select;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class StoreFoodController extends Controller
 {
@@ -37,17 +37,38 @@ class StoreFoodController extends Controller
                 'food_id' => $id,
             ]);
 
+            // Call the method to delete old records
+            $this->deleteOldStoreFoods();
+
             return response()->json([
                 'success' => true,
-                'message' => 'Food store successfully',
+                'message' => 'Food stored successfully',
                 'data' => $storeFood,
             ], 201);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Food fail to store.',
+                'message' => 'Failed to store food.',
                 'error' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    /**
+     * Delete StoreFood records older than 4 minutes.
+     */
+    protected function deleteOldStoreFoods()
+    {
+        try {
+            $expirationTime = Carbon::now()->subMinutes(10080);
+            $deleted = StoreFood::where('created_at', '<', $expirationTime)->delete();
+
+            // Optionally log the number of records deleted
+            \Log::info("Deleted $deleted old StoreFood records.");
+
+        } catch (Exception $e) {
+            // Handle exceptions if needed
+            \Log::error('Error deleting old StoreFood records: ' . $e->getMessage());
         }
     }
 
@@ -56,7 +77,7 @@ class StoreFoodController extends Controller
      */
     public function show()
     {
-       
+        // Implement show method if needed
     }
 
     /**
@@ -64,7 +85,7 @@ class StoreFoodController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Implement update method if needed
     }
 
     /**
@@ -78,7 +99,7 @@ class StoreFoodController extends Controller
             if ($storeFood->delete()) {
                 return response()->json([
                     'data' => null,
-                    'message' => 'Food store deleted successfully',
+                    'message' => 'StoreFood deleted successfully',
                 ], 200);
             } else {
                 return response()->json([
