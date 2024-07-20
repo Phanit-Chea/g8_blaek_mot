@@ -1,4 +1,3 @@
-
 <template>
     <NavbarView></NavbarView>
 
@@ -74,72 +73,72 @@ import { useAuthStore } from '../../../stores/auth-store';
 import { useUserStore } from '../../../stores/userStore';
 
 export default {
-  components: {
-    NavbarView,
-    FooterView,
-  },
-  data() {
-    return {
-      form: {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        dateOfBirth: '',
-        gender: '',
-        phoneNumber: '',
-        profile: '',
-        address: ''
-      }
-    };
-  },
-  methods: {
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      this.form.profile = file;
+    components: {
+        NavbarView,
+        FooterView,
     },
-    async registerAccount() {
-      const userStore = useUserStore();
-      const authStore = useAuthStore();
+    data() {
+        return {
+            form: {
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                dateOfBirth: '',
+                gender: '',
+                phoneNumber: '',
+                profile: '',
+                address: ''
+            }
+        };
+    },
+    methods: {
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            this.form.profile = file;
+        },
+        async registerAccount() {
+            const userStore = useUserStore();
+            const authStore = useAuthStore();
 
-      const formData = new FormData();
-      formData.append('name', this.form.name);
-      formData.append('email', this.form.email);
-      formData.append('password', this.form.password);
-      formData.append('confirmPassword', this.form.confirmPassword);
-      formData.append('dateOfBirth', this.form.dateOfBirth);
-      formData.append('gender', this.form.gender);
-      formData.append('phoneNumber', this.form.phoneNumber);
-      formData.append('profile', this.form.profile);
-      formData.append('address', this.form.address);
+            const formData = new FormData();
+            formData.append('name', this.form.name);
+            formData.append('email', this.form.email);
+            formData.append('password', this.form.password);
+            formData.append('confirmPassword', this.form.confirmPassword);
+            formData.append('dateOfBirth', this.form.dateOfBirth);
+            formData.append('gender', this.form.gender);
+            formData.append('phoneNumber', this.form.phoneNumber);
+            formData.append('profile', this.form.profile);
+            formData.append('address', this.form.address);
 
-      try {
-        const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
-        console.log('Registration response:', response.data);
+                console.log('Registration response:', response.data);
 
-        // Assuming the response contains the user data and access token
-        const user = response.data.user;
-        const profileImage = user.profile;
-        const accessToken = response.data.access_token;
-        const isAuthenticated = true;
+                // Assuming the response contains the user data and access token
+                const user = response.data.user;
+                const profileImage = user.profile;
+                const accessToken = response.data.access_token;
+                const isAuthenticated = true;
 
-        console.log('Access token:', accessToken);
+                console.log('Access token:', accessToken);
 
-        // Store the profile image and access token in Pinia
-        authStore.login(profileImage, accessToken,isAuthenticated);
-        userStore.setUser(user);
-        this.$router.push('/');
-      } catch (error) {
-        console.error(error);
-        alert('Registration failed. Please try again.');
-      }
+                // Store the profile image and access token in Pinia
+                authStore.login(profileImage, accessToken, isAuthenticated);
+                userStore.setUser(user);
+                this.$router.push('/');
+            } catch (error) {
+                console.error(error);
+                alert('Registration failed. Please try again.');
+            }
+        }
     }
-  }
 }
 </script>
 

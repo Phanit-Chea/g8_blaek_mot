@@ -1,5 +1,6 @@
 <template>
-  <NavbarView />
+  <NavbarView :countUnread="countUnread" />
+
   <div class="container d-flex justify-content-between" style="margin-top: 13%;">
     <div class="card card-l">
       <div class="card-header">
@@ -8,7 +9,7 @@
             <i class="bi bi-search position-absolute translate-middle-y ms-2 ps-1 text-secondary"></i>
             <input class="form-control" id="search" placeholder="Search" type="text" />
           </div>
-          <!-- <i class="bi bi-plus-circle-fill align-content-center fs-3 my-1"></i> -->
+
           <button class="button" data-bs-toggle="modal" data-bs-target="#renameModal">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none"
               class="svg-icon">
@@ -18,77 +19,150 @@
                 <path d="m7.5 9.99998h5"></path>
               </g>
             </svg>
+
             <span class="label">Add</span>
+
+
           </button>
         </div>
       </div>
 
-      <div class="card_left card-body c-body overflow-y-scroll ">
-        <blockquote class="blockquote mb-0">
-          <div v-for="user in listUser" :key="user.id">
-            <div class="container_user" @click="handleUserClick(user)">
-              <div class="user d-flex justify-content-between">
-                <div class="c_user d-flex align-items-center">
-                  <!-- Assuming user.user.profile is the correct path to the profile image -->
-                  <img :src="`http://127.0.0.1:8000/${user.user.profile}`" alt="user" class="rounded-circle"
-                    width="50px" height="50px" />
-                  <div class="name d-flex flex-column ms-2">
-                    <span class="text-15px fw-bold">{{ user.user.name }}</span>
-                    <p class="text-11px mb-0 text-dark" v-if="user.latest_chat.description != null">
-                      {{ user.latest_chat.from_user === currentUserId ? 'You: ' + user.latest_chat.description :
-                        user.latest_chat.description }}
-                    </p>
-                    <p class="text-11px mb-0 text-dark" v-else-if="user.latest_chat.video != null">
-                      {{ user.latest_chat.from_user === currentUserId ? 'You: ' + 'video' :
-                        'video' }}
-                    </p>
-                    <p class="text-11px mb-0 text-dark" v-else>
-                      {{ user.latest_chat.from_user === currentUserId ? 'You: ' + 'image' :
-                        'image' }}
-                    </p>
+      <div class="card_left card-body c-body overflow-y-scroll">
+        <ul class="nav nav-link d-flex justify-content-center​​" data-aos="fade-up" data-aos-delay="100">
+          <li class="nav-item">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters"
+              style="display: flex; justify-content: center;align-items: center">
+              <h6 class="d-flex align-item-center">សារ</h6>
+              <span style="position:relative; left: 5px; bottom: 6px; " class="bg bg-success text-white">2</span>
+            </a>
+          </li>
+          <!-- End tab nav item -->
 
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast"
+              style="display: flex; justify-content: center;align-items: center">
+              <h6 class="d-flex align-item-center">ក្រុម</h6>
+              <span style="position:relative; left: 5px; bottom: 6px; " class="bg bg-success text-white">2</span>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+          <div class="tab-pane fade active show" id="menu-starters">
+            <div class="tab-header">
+              <blockquote class="blockquote mb-0">
+                <div>
+                  <div v-for="user in listUser.users" :key="user.id" class="container">
+                    <div class="container_user" @click="handleUserClick(user)">
+                      <div class="user d-flex justify-content-between">
+                        <div class="c_user d-flex align-items-center">
+                          <img
+                            :src="user.profile ? `http://127.0.0.1:8000/${user.profile}` : 'default_profile_image_url'"
+                            alt="user" class="rounded-circle" width="50px" height="50px" />
+                          <div class="name d-flex flex-column ms-2">
+                            <span class="text-15px fw-bold">{{ user.name }}</span>
+                            <p class="text-11px mb-0 text-dark" v-if="user.latest_chat && user.latest_chat.description">
+                              {{ user.latest_chat.from_user === currentUserId ? 'You: ' + user.latest_chat.description :
+                                user.latest_chat.description }}
+                            </p>
+                            <p class="text-11px mb-0 text-dark" v-else-if="user.latest_chat && user.latest_chat.video">
+                              {{ user.latest_chat.from_user === currentUserId ? 'You: video' : 'video' }}
+                            </p>
+                            <p class="text-11px mb-0 text-dark" v-else-if="user.latest_chat && user.latest_chat.image">
+                              {{ user.latest_chat.from_user === currentUserId ? 'You: image' : 'image' }}
+                            </p>
+                            <p class="text-11px mb-0 text-dark" v-else>
+                              No recent chats
+                            </p>
+                          </div>
+                        </div>
+                        <div class="c_p d-flex align-items-center justify-content-between align-item-center pr-2">
+                          <p class="text-11px mb-0 text-secondary" style="margin-right: 10px;" v-if="user.latest_chat">
+                            {{ user.latest_chat.created_at.time }}
+                          </p>
+                          <span class="rounded-circle" :class="{
+                            'bg-success': (user.latest_chat && user.latest_chat.active === 0 && user.latest_chat.from_user != currentUserId),
+                            'bg-white': (user.latest_chat && (user.latest_chat.active !== 0 || user.latest_chat.from_user === currentUserId)),
+                          }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="c_p d-flex align-items-center justify-content-between align-item-center pr-2">
-                  <!-- Assuming user.latest_chat.created_at.time is the correct property -->
-                  <p class="text-11px mb-0 text-secondary" style="margin-right: 10px;">
-                    {{ user.latest_chat.created_at.time }}
-                  </p>
-                  <!-- Assuming userStore.user represents status -->
-                  <span class="rounded-circle" :class="{
-                    'bg-success': user.latest_chat.active === 0,
-                    'bg-white': user.latest_chat.active === 1,
-                  }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
-                    <!-- Content here -->
-                  </span>
-                </div>
-              </div>
+              </blockquote>
             </div>
           </div>
-        </blockquote>
+        </div>
+        <div class="tab-pane fade" id="menu-breakfast">
+          <div class="tab-header text-center">
+            <p>បញ្ជីក្រុម</p>
+            <div>
+                  <div v-for="user in fetchGroupList" :key="user.id" class="container">
+                   
+                    <div class="container_user" @click="handleUserClick(user)">
+                      <div class="user d-flex justify-content-between">
+                        <div class="c_user d-flex align-items-center">
+                          <img
+                            :src="user.image ? `http://127.0.0.1:8000/${user.image}` : 'default_profile_image_url'"
+                            alt="user" class="rounded-circle" width="50px" height="50px" />
+                          <div class="name d-flex flex-column ms-2">
+                            <span class="text-15px fw-bold">{{ user.name }}</span>
+                            <p class="text-11px mb-0 text-dark" v-if="user.messages && user.messages.description">
+                              {{ user.messages.from_user === currentUserId ? 'You: ' + user.messages.description :
+                                user.messages.description }}
+                            </p>
+                            <p class="text-11px mb-0 text-dark" v-else-if="user.messages && user.messages.video">
+                              {{ user.messages.from_user === currentUserId ? 'You: video' : 'video' }}
+                            </p>
+                            <p class="text-11px mb-0 text-dark" v-else-if="user.messages && user.messages.image">
+                              {{ user.messages.from_user === currentUserId ? 'You: image' : 'image' }}
+                            </p>
+                            <p class="text-11px mb-0 text-dark" v-else>
+                              No recent chats
+                            </p>
+                          </div>
+                        </div>
+                        <div class="c_p d-flex align-items-center justify-content-between align-item-center pr-2">
+                          <p class="text-11px mb-0 text-secondary" style="margin-right: 10px;" v-if="user.latest_chat">
+                            {{ user.latest_chat.created_at.time }}
+                          </p>
+                          <span class="rounded-circle" :class="{
+                            'bg-success': (user.latest_chat && user.latest_chat.active === 0 && user.latest_chat.from_user != currentUserId),
+                            'bg-white': (user.latest_chat && (user.latest_chat.active !== 0 || user.latest_chat.from_user === currentUserId)),
+                          }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
     <div class="card card-r">
       <div v-if="selectedUser != null" class="full-height" style="height: 100vh;">
+{{selectedUser}}
         <div class="card-header bg-light d-flex align-items-center p-2 border-bottom"
           style="position: fixed; width: 61.4%; z-index: 1;">
-          <!-- <i class="bi bi-arrow-bar-left fs-4 me-3" style="cursor: pointer;" @click="goBack"></i> -->
           <div class="d-flex align-items-center">
             <img type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-              :src="`http://127.0.0.1:8000/${selectedUser.user.profile}`" alt="user" class="rounded-circle" width="40px"
-              height="40px" />
+              :src="selectedUser.profile ? `http://127.0.0.1:8000/${selectedUser.profile}` : 'default_profile_image_url'"
+              alt="user" class="rounded-circle" width="40px" height="40px" />
             <div class="ms-2">
-              <span class="text-15px fw-bold">{{ selectedUser.user.name }}</span>
-              <p class="text-11px mb-0 text-secondary">{{ selectedUser.user.email }}</p>
+              <span class="text-15px fw-bold">{{ selectedUser.name }}</span>
+              <p class="text-11px mb-0 text-secondary">{{ selectedUser.email }}</p>
             </div>
           </div>
         </div>
-
         <div class="card-body" style="height: 40vh; overflow-y: auto; margin-top: 60px; margin-bottom: 60px;">
 
-          <div v-for="chat in selectedUser.all_chats" :key="chat.id">
+          <div v-for="chat in allChats" :key="chat">
+
             <div v-if="chat.from_user !== currentUserId" class="d-flex align-items-start mb-1">
-              <img :src="`http://127.0.0.1:8000/${selectedUser.user.profile}`" alt="user" class="rounded-circle me-2"
+              <img :src="`http://127.0.0.1:8000/${selectedUser.profile}`" alt="user" class="rounded-circle me-2"
                 width="30px" height="30px" />
               <div class="d-flex flex-column">
                 <div v-if="chat.description != null" class="bg-primary text-white p-2 rounded-3 mb-1"
@@ -99,6 +173,7 @@
                   <img :src="`http://127.0.0.1:8000/${chat.image}`" alt="" width="100%" height="100%"
                     class="rounded-3" />
                 </div>
+
               </div>
             </div>
             <div v-else class="d-flex align-items-end justify-content-end mb-1 " style="width: auto;">
@@ -108,151 +183,149 @@
                   style="max-width: 300px; word-wrap: break-word;">
                   {{ chat.description }}
                 </div>
-                <!-- <img :src="`http://127.0.0.1:8000/${selectedUser.user.profile}`" alt="user" class="rounded-circle ms-2"
-                width="20px" height="20px"  /> -->
                 <div v-if="chat.image != null" class="position-relative" style="width: 200px; height: 200px;">
                   <img :src="`http://127.0.0.1:8000/${chat.image}`" alt="" width="100%" height="100%"
                     class="rounded-3" />
                 </div>
               </div>
-
             </div>
-
           </div>
-
         </div>
-
-        <div class="foot  p-3 border-top"
+        <div class="foot p-3 border-top"
           style="position: fixed; bottom: 18px; width: 61.4%; z-index: 1; border-radius: 10px;">
           <div class="d-flex align-items-center justify-content-between">
             <i class="bi bi-plus-circle-fill fs-3 text-success" style="cursor: pointer;" @click="openFileInput"></i>
-
             <input type="file" ref="fileInput" style="display: none;" @change="handleFileUpload">
-
             <div class="input-icons position-relative flex-grow-1 mx-3">
               <input class="form-control ps-4" id="search" placeholder="Message" type="text" v-model="description"
                 @keyup.enter="sendMessage" />
             </div>
-            <i class="bi bi-arrow-up-circle-fill fs-3 text-success" style="cursor: pointer;" @click="sendMessage"></i>
+            <form @submit.prevent="sendMessage">
+              <button type="submit" class="btn btn-link p-0">
+                <i class="bi bi-arrow-up-circle-fill fs-3 text-success" style="cursor: pointer;"></i>
+              </button>
+            </form>
           </div>
         </div>
       </div>
-
       <div v-else style="display: flex; justify-content: center; align-items: center; height: 100%;">
         <img src="../../assets/ContainerImages/chatWelcome.png" alt="" style="max-width: 100%; max-height: 100%;">
       </div>
     </div>
 
-  </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" v-if="selectedUser != null">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">User Info</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="d-flex align-items-center mb-3">
-            <img :src="`http://127.0.0.1:8000/${selectedUser.user.profile}`" alt="user" class="rounded-circle me-3"
-              width="70" height="70" />
-            <div>
-              <h6 class="mb-0">{{ selectedUser.user.name }}</h6>
-              <small class="text-muted">{{ selectedUser.user.email }}</small>
-            </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" v-if="selectedUser != null">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">User Info</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="p-4 border rounded">
-            <div class="mb-3">
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-journals text-success"></i>
-                <div>
-                  <p class="mb-0"> {{ selectedUser.user.dateOfBirth }}</p>
-                  <small class="text-muted">Date of birth</small>
-                </div>
-              </div>
-            </div>
-            <div class="mb-3">
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-exclamation-circle text-danger"></i>
-                <div>
-                  <p class="mb-0">{{ selectedUser.user.phoneNumber }}</p>
-                  <small class="text-muted">Mobile</small>
-                </div>
-              </div>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <i class="bi bi-person-circle text-info"></i>
+          <div class="modal-body">
+            <div class="d-flex align-items-center mb-3">
+              <img :src="`http://127.0.0.1:8000/${selectedUser.profile}`" alt="user" class="rounded-circle me-3"
+                width="70" height="70" />
               <div>
-                <a href="#" class="text-decoration-none">{{ selectedUser.user.address }}</a>
-                <small class="text-muted d-block">Address</small>
+                <h6 class="mb-0">{{ selectedUser.name }}</h6>
+                <small class="text-muted">{{ selectedUser.email }}</small>
+              </div>
+            </div>
+            <div class="p-4 border rounded">
+              <div class="mb-3">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-journals text-success"></i>
+                  <div>
+                    <p class="mb-0"> {{ selectedUser.dateOfBirth }}</p>
+                    <small class="text-muted">Date of birth</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-exclamation-circle text-danger"></i>
+                  <div>
+                    <p class="mb-0">{{ selectedUser.phoneNumber }}</p>
+                    <small class="text-muted">Mobile</small>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-circle text-info"></i>
+                <div>
+                  <a href="#" class="text-decoration-none">{{ selectedUser.address }}</a>
+                  <small class="text-muted d-block">Address</small>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- modal create group -->
-  <div class="modal fade" id="firstModal" tabindex="-1" role="dialog" aria-labelledby="firstModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="firstModalLabel">First Modal</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>This is the content of the first modal.</p>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secondModal">
-            Open Second Modal
-          </button>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Second Modal -->
-  <div class="modal fade rounded" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded">
-        <div class="modal-header">
-          <h5 class="modal-title text-center text-bold text-success siemreap">បង្កើតក្រុម</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="text-center text-success siemreap">
-            បង្កើតថតឯកសារផ្ទាល់ខ្លួនរបស់អ្នក ដើម្បីងាយស្រួលគ្រប់គ្រងអាហារដែលអ្នកបានរក្សាទុក
-          </p>
-          <form>
-            <div class="form-group">
-              <label for="name" class="text-dark siemreap">ឈ្មោះថតឯកសារ</label>
-              <input type="text" class="form-control my-3 px-3 siemreap" id="name" placeholder="បញ្ចូលឈ្មោះថតឯកសារ" />
+
+    <div class="modal fade rounded" id="renameModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded">
+          <div v-if="!groupCreated">
+            <div class="modal-header">
+
+              <h5 class="modal-title text-center text-bold text-success siemreap">បង្កើតក្រុម</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form @submit.prevent="createGroup">
+                <div>
+                  <div class="form-group">
+                    <label for="name" class="text-dark siemreap">ឈ្មោះក្រុម</label>
+                    <input type="text" class="form-control my-3 px-3 siemreap" id="name" placeholder="បញ្ចូលឈ្មោះក្រុម"
+                      v-model="form.name">
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">បោះបង់</button>
+                    <button type="submit" class="btn ms-2 text-bold siemreap"
+                      style="background-color: #238400">បង្កើត</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <div v-else style="background-color: #ebecf0;">
+            <div class="container ">
+              <p class="text-light siemreap btn" style="background-color: green;padding: 5px; width: auto;">{{
+                createdGroupName }}</p>
+              <div>
+                <div style="font-weight: bold;margin-bottom: 5px;">បញ្ចូលអ្នកដទៃទៅក្នុងក្រុមរបស់អ្នក</div>
+                <div class="d-flex" v-for="user in listUser.users " :key="user">
+                  <div class="card bg-light p-1" style="width: 100%; border: none;margin-bottom: 5px">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div class="d-flex align-items-center gap-3">
+                        <img :src="`http://127.0.0.1:8000/${user.profile}`" alt=""
+                          class="rounded-circle border border-rounded border-success border-2" width="50" height="50">
+                        <p class="mb-0 text-dark siemreap" style="font-weight: bold;">{{ user.name }}</p>
+                      </div>
+                      <button class="btn btn-success ms-auto">បញ្ជូល</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
             <div class="d-flex justify-content-end">
-              <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">បោះបង់</button>
-              <button type="submit" class="btn ms-2 text-bold siemreap"
-                style="background-color: #238400">កែសម្រួល</button>
+              <button type="button" class="btn btn-danger siemreap" @click="resetForm"
+                data-bs-dismiss="modal">បិទ</button>
             </div>
-          </form>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
-
-
-
 </template>
 
 
@@ -263,14 +336,23 @@ import NavbarView from '../Web/Navbar/NavbarView.vue';
 import axiosInstance from '@/plugins/axios';
 import { useAuthStore } from '@/stores/auth-store';
 import { useUserStore } from '@/stores/userStore';
-import { chatStore } from '../../stores/chatStore';
+import { useChatStore } from '@/stores/chatStore';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
   components: {
     NavbarView,
   },
+
   data() {
     return {
+      groupData: [] as Array<{
+        name: string,
+
+      }>
+      ,
+      groupCreated: false,
+      createdGroupName: '',
       listUser: [] as Array<{
         id: number;
         name: string;
@@ -290,8 +372,13 @@ export default defineComponent({
           };
         };
       }>,
+      fetchGroupList: null,
+      countUnread: null,
+      userActive: null,
       userClicked: null as number | null,
       currentUserId: null as number | null,
+      allChats: [],
+
       selectedUser: null as {
         id: number;
         name: string;
@@ -316,6 +403,9 @@ export default defineComponent({
         image: string | null;
         video: string | null;
       } | null,
+      form: {
+        name: '',
+      },
       description: '',
       searchQuery: '',
       formData: {
@@ -333,23 +423,44 @@ export default defineComponent({
     },
   },
   methods: {
+    async fetchGroup() {
+      const userAuth = useAuthStore();
+      const userStore = useUserStore();
+ 
+      try {
+        const response = await axiosInstance.get('/group/fetch/messages', {
+          headers: {
+            Authorization: `Bearer ${userAuth.accessToken}`,
+          },
+        });
+        if (response.status === 200) {
+          this.fetchGroupList = response.data; // Ensure listUser is reactive if using Composition API
+          console.log('Fetched group list:', this.fetchGroupList);
+          this.currentUserId = userStore.user.id
+        }
+      } catch (error) {
+        console.error('Failed to fetch user list:', error);
+      }
+    },
+
+
     async fetchUsers() {
       const userAuth = useAuthStore();
       const userStore = useUserStore();
+      const chatStore = useChatStore();
 
       try {
-        const response = await axiosInstance.get('/chat/users/chatList', {
+        const response = await axiosInstance.get('/chat/allUser/Chat', {
           headers: {
             Authorization: `Bearer ${userAuth.accessToken}`,
           },
         });
 
         if (response.status === 200) {
-          this.listUser = response.data.data; // Ensure you access the correct structure of the response
+          this.listUser = response.data;
           console.log('Fetched user list:', this.listUser);
-          console.log(userAuth.accessToken);
 
-          // Ensure currentUserId is set correctly
+
           if (userStore.user && userStore.user.id) {
             this.currentUserId = userStore.user.id;
           } else {
@@ -362,36 +473,51 @@ export default defineComponent({
         console.error('Failed to fetch user list:', error);
       }
     },
-    handleUserClick(user: {
-      id: number;
-      name: string;
-      email: string;
-      profile: string;
-      gender: string;
-      address: string;
-      phoneNumber: string;
-      dateOfBirth: Date;
-      lastActive: string;
-      latest_chat: {
-        description: string | null;
-        from_user: number;
-        created_at: {
-          date: string;
-          time: string;
-        };
-      };
-    }) {
-      this.selectedUser = user; // Assuming this.selectedUser is a property of your component
-      // this.currentUserId = user.id; // Ensure you want to store the current user's ID
-      const chatActive = chatStore();
-      const userAuth = useUserStore();
-      this.currentUserId = userAuth.user.id;
-      // Set the latest chat's active status
-      if (this.selectedUser.user.latest_chat) {
-        this.selectedUser.latest_chat.active = 0; // Set active to false when clicked
-        this.userClicked = user.id; // Mark the clicked user
+    async fetchChats(receiverId) {
+      try {
+        const userAuth = useAuthStore();
+        const userStore = useUserStore();
+
+        const response = await axiosInstance.get(`/chat/list/chat/${receiverId}`, {
+          headers: {
+            Authorization: `Bearer ${userAuth.accessToken}`,
+          },
+        });
+
+        if (response.status === 200) {
+          this.allChats = response.data.allChats;
+          console.log('Fetched chats:', this.allChats);
+          this.currentUserId = userStore.user.id;
+          console.log('Current user ID:', this.currentUserId);
+        } else {
+          console.error('Failed to fetch chats - Status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching chats:', error);
       }
     },
+    async handleUserClick(user) {
+      this.selectedUser = user;
+      console.log(this.selectedUser);
+
+      try {
+        const chatId = this.selectedUser.latest_chat.id; // Ensure chatId is set correctly
+        const response = await axiosInstance.post(`/chats/${chatId}/update-active`, {
+          active: 1,
+        });
+
+        this.fetchUsers();
+        console.log('Chat updated:', response.data);
+
+        // Call fetchChats with selectedUser.id
+        this.fetchChats(this.selectedUser.id);
+        this.fetchUnreadChats();
+      } catch (error) {
+        console.error('Error updating chat:', error);
+      }
+    }
+    ,
+
     openFileInput() {
       const input = this.$refs.fileInput as HTMLInputElement;
       if (input) {
@@ -407,22 +533,25 @@ export default defineComponent({
       }
     },
     async sendMessage() {
+      const userStore = useUserStore();
+      const userAuth = useAuthStore();
+
       if (!this.selectedUser) {
         alert('No user selected.');
         return;
       }
 
-      const userAuth = useAuthStore();
-      const to_user = this.selectedUser.user.id;
+      const to_user = this.selectedUser.id;
       const formData = new FormData();
       formData.append('description', this.description);
+
+
       if (this.formData.image) {
         formData.append('image', this.formData.image);
       }
       if (this.formData.video) {
         formData.append('video', this.formData.video);
       }
-
       try {
         const response = await axiosInstance.post(`/chat/create/${to_user}`, formData, {
           headers: {
@@ -436,20 +565,97 @@ export default defineComponent({
         this.description = '';
         this.formData.image = null;
         this.formData.video = null;
+        this.currentUserId = userStore.user.id;
+
+
+        this.fetchChats(this.selectedUser.id);
       } catch (error) {
         console.error('Message sending failed:', error);
         alert('Message sending failed. Please try again.');
       }
+
+
     }
     ,
-    closeChat() {
-      this.selectedUser = null;
+    async createGroup() {
+      const userStore = useUserStore();
+      const userAuth = useAuthStore();
+
+      const formData = new FormData();
+      formData.append('name', this.form.name);
+      try {
+        const response = await axiosInstance.post('/group/create', formData, {
+          headers: {
+            Authorization: `Bearer ${userAuth.accessToken}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        if (response.status === 201) {
+          console.log('Group created successfully:', response.data);
+          this.createdGroupName = this.form.name;
+          this.groupCreated = true;
+          Swal.fire({
+            title: 'Group Created Successfully!',
+            text: 'Do you want to add users to your group?',
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Handle the action for adding users
+              console.log('Add users to group');
+            } else {
+              // Handle the action when no is selected
+              console.log('No users added');
+            }
+          });
+          this.fetchUsers();
+        }
+      }
+      catch (error) {
+        console.error(error);
+        alert('Registration failed. Please try again.');
+        console.log(this.form.name);
+
+      }
+
+
+
+
     },
+    async fetchUnreadChats() {
+
+      const userAuth = useAuthStore();
+
+      try {
+        const response = await axiosInstance.get('/chat/count/unread', {
+          headers: {
+            Authorization: `Bearer ${userAuth.accessToken}`,
+          },
+        });
+
+        if (response.status === 200) {
+          // Assuming the response data contains an array of objects with total_chats property
+          this.countUnread = response.data.reduce((acc, chat) => acc + chat.total_chats, 0);
+          console.log(this.countUnread);
+        }
+      } catch (error) {
+        console.error('Error fetching unread chats:', error);
+      }
+    }
+    // closeChat() {
+    //   this.selectedUser = null;
+    // },
   },
   mounted() {
     this.fetchUsers();
+    this.fetchUnreadChats();
+    this.fetchGroup();
   },
 });
+
 </script>
 
 
@@ -457,6 +663,39 @@ export default defineComponent({
 <style scoped>
 /* @import "../node_modules/@syncfusion/ej2-vue-popups/styles/material.css"; */
 @import "../../../node_modules/@syncfusion/ej2-popups/styles/material.css";
+
+.button-container {
+  display: flex;
+  /* background-color: black; */
+  width: 250px;
+  height: 40px;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+}
+
+.button {
+  outline: 0 !important;
+  border: 0 !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+}
+
+.icon {
+  font-size: 20px;
+}
 
 .chat-message {
   max-width: auto;
@@ -553,7 +792,7 @@ export default defineComponent({
   box-shadow: 3px 0px 1px 1px white;
   border: 1px solid white;
   border-radius: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 3px;
 }
 
 .container_user:hover {

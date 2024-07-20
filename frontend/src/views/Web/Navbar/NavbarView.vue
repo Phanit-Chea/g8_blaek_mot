@@ -7,7 +7,7 @@
 
     </div>
     <div class="navCenter col-md d-flex align-items-center"
-      style="width:55%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
+      style="width:45%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
       <div class="input-group w-240">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
@@ -25,16 +25,17 @@
       <!-- <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
             class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none"><span
               class="visually-hidden">unread messages</span></span></i></a> -->
-      <router-link to="#"
+      <router-link to="/chat"
         class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
-        <i class="material-icons fs-1">chat</i>
+        <i class='fas fa-comment-dots' style='font-size:40px;'></i>
+        <span class="badge">{{ countUnread }}</span>
       </router-link>
       <router-link to="#"
         class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
+        <span class="badge">99+</span>
       </router-link>
-      <router-link to="/admin/dashboard"
-       >
+      <router-link to="/admin/dashboard">
         <button class="btn btn-danger" type="submit">Dashboard</button>
       </router-link>
     </div>
@@ -153,6 +154,11 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth-store.ts';
 import { useUserStore } from '@/stores/userStore';
+import { defineProps } from 'vue';
+const props = defineProps<{
+  countUnread: number
+}>();
+
 
 
 const useAuth = useAuthStore();
@@ -380,5 +386,21 @@ const userStore = useUserStore();
 
 .siemreap {
   font-family: 'Siemreap', cursive;
+}
+
+.notification {
+  position: relative;
+  display: inline-block;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 5px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+  text-align: center;
 }
 </style>
