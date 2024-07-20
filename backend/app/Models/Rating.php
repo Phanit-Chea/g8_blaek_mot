@@ -14,6 +14,7 @@ class Rating extends Model
         'user_id',
         'food_id',
         'stars_rating',
+        'feedback',
     ];
 
    

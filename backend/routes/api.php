@@ -109,4 +109,7 @@ Route::prefix('ratings')->group(function () {
     Route::post('/create', [RatingController::class, 'store']);
     Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
     Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
-    Route::get('/list', [RatingController::class, 'index']);});
+    Route::get('/list', [RatingController::class, 'index']);
+    Route::get('/list/feedback/{foodId}', [RatingController::class, 'show']);
+    Route::delete('/feedback/{id}', [RatingController::class, 'destroy']); // Delete comment
+});

@@ -13,6 +13,7 @@ class CreateRatingsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('food_id');
             $table->integer('stars_rating');
+            $table->text('feedback')->nullable();
             $table->softDeletes(); 
             $table->timestamps();
 
@@ -22,7 +23,9 @@ class CreateRatingsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::table('ratings', function (Blueprint $table) {
+            $table->renameColumn('feedback', 'feedback');
+        });
     }
 }
 

@@ -20,7 +20,6 @@ import NavbarAdmin from '../../Components/NavbarAdmin.vue'
           <p>Join Us Today and Get Started</p>
         </div>
       </div>
-    </section>
     </div>
   </div>
 

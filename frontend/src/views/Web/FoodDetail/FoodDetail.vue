@@ -5,7 +5,8 @@ import FooterView from '../Footer/FooterView.vue'
 import SideBar from '@/Components/Layouts/SideBar.vue'
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../../../stores/auth-store'
-// import { ref } from 'vue'
+import { useUserStore } from '@/stores/userStore'
+import { Modal } from 'bootstrap'
 
 import axios from 'axios'
 import mapboxgl from 'mapbox-gl'
@@ -29,9 +30,13 @@ let restaurantMarkers: mapboxgl.Marker[] = []
 let userMarker: mapboxgl.Marker | null = null
 
 const food = ref({})
-const rating = ref([])
+const rating = ref({ stars_rating: 0, feedback: '' })
+const isLoading = ref(false)
+
 const route = useRoute()
-const userStore = useAuthStore()
+const userStore = useUserStore()
+const averageRating = ref(0)
+const feedback = ref([])
 
 // ==============fectFoodDeatail=============
 const fetchFoodDetail = async () => {
@@ -59,52 +64,111 @@ onMounted(fetchFoodDetail)
 // ==============end fetchFoodDetail=============
 
 // ============Submit Rating============
+
 const submitRating = async () => {
   try {
     if (!food.value || !food.value.id) {
-      console.error('Food ID is undefined or null')
-      return
+      console.error('Food ID is undefined or null');
+      return;
     }
-    const user = JSON.parse(localStorage.getItem('user'))
-    console.log(user['user'].id)
+
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const ratingData = {
       stars_rating: rating.value.stars_rating,
+      feedback: feedback.value,
       user_id: user['user'].id,
       food_id: food.value.id
-    }
+    };
 
-    // console.log('Submitting rating with data:', ratingData)
+    // Set the loading state to true
+    isLoading.value = true;
 
-    const response = await axiosInstance.post('/ratings/create', ratingData)
-    console.log('Rating submitted successfully:', response.data)
+    const response = await axiosInstance.post('/ratings/create', ratingData);
+    console.log('Rating submitted successfully:', response.data);
 
-    rating.value.stars_rating = 1
-    alert('Rating submitted successfully!')
+    // Reset the form fields
+    rating.value.stars_rating = null;
+    feedback.value = null;
+
+    // Refresh the feedback list
+    await fetchFeedback();
   } catch (error) {
-    console.error('Error submitting rating:', error)
-    alert('Error submitting rating. Please try again later.')
+    console.error('Error submitting rating:', error);
+    alert('Error submitting rating. Please try again later.');
+  } finally {
+    // Set the loading state to false
+    isLoading.value = false;
+    if (!isLoading.value) {
+      window.location.reload();
+    }
   }
-}
+};
 // ==============end submitRating==============
 
 // =============average StaticRange===============
-const averageRating = ref(0)
 
 const fetchAverageRating = async () => {
   try {
     const response = await axiosInstance.get(`/ratings/averages/${route.params.id}`)
-    console.log('Average Rating response:', response.data)
     averageRating.value = response.data.average_rating
   } catch (error) {
     console.error('Error fetching average rating:', error)
     alert('Error fetching average rating. Please try again later.')
   }
 }
-
-onMounted(fetchAverageRating)
-
 // ===============end averageRating===============
+
+const feedbacks = ref([])
+const fetchFeedback = async () => {
+  try {
+    const response = await axiosInstance.get(`/ratings/list/feedback/${route.params.id}`)
+    feedbacks.value = response.data.data
+    console.log('feedbacks', feedbacks.value)
+  } catch (error) {
+    console.error('Error fetching average rating:', error)
+    alert('Error fetching average rating. Please try again later.')
+  }
+}
+
+onMounted(() => {
+  feedback.value = null;
+  rating.value.stars_rating = null;
+  fetchFoodDetail()
+  fetchAverageRating()
+  fetchFeedback()
+})
+
+const selectedComment = ref(null)
+
+const toggleDropdown = (comment) => {
+  selectedComment.value = selectedComment.value === comment ? null : comment
+  // Prevent dropdown menu from closing immediately
+  event.stopPropagation()
+}
+
+const confirmDelete = (comment) => {
+  selectedComment.value = comment
+  new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show()
+}
+
+const deleteComment = async () => {
+  if (selectedComment.value) {
+    try {
+      await axiosInstance.delete(`/ratings/feedback/${selectedComment.value.id}`)
+      feedbacks.value = feedbacks.value.filter((f) => f.id !== selectedComment.value.id)
+      const deleteConfirmModal = document.getElementById('deleteConfirmModal')
+      const modalInstance = bootstrap.Modal.getInstance(deleteConfirmModal)
+      if (modalInstance) {
+        modalInstance.hide()
+      }
+      selectedComment.value = null
+    } catch (error) {
+      console.error('Error deleting comment:', error)
+      alert('Error deleting comment. Please try again later.')
+    }
+  }
+}
 
 // ==============MAP==============
 onMounted(async () => {
@@ -298,9 +362,9 @@ function deg2rad(deg: number) {
     </div>
     <div class="col-10">
       <div class="d-flex align-center pt-2">
-        <a href="" class="list-unstyled text-decoration-none text-danger">Back to list</a>
+        <a href="" class="list-unstyled text-decoration-none text-danger">ត្រឡប់ក្រោយ</a>
         <span class="material-symbols-outlined fs-3 text-danger"> keyboard_arrow_right </span>
-        <a href="" class="list-unstyled text-decoration-none text-danger">food name</a>
+        <a href="" class="list-unstyled text-decoration-none text-danger">ឈ្មោះអាហារ</a>
       </div>
 
       <div>
@@ -309,27 +373,8 @@ function deg2rad(deg: number) {
           <p>{{ food.description }}</p>
         </div>
         <div v-else>
-          <p>Loading...</p>
+          <span class="loader ml-10"></span>
         </div>
-
-        <div class="col col-lg-2 d-flex mt-3 mb-3">
-          <div class="rating">
-            <input v-model="rating.stars_rating" value="5" name="rating" id="star5" type="radio" />
-            <label for="star5"></label>
-            <input v-model="rating.stars_rating" value="4" name="rating" id="star4" type="radio" />
-            <label for="star4"></label>
-            <input v-model="rating.stars_rating" value="3" name="rating" id="star3" type="radio" />
-            <label for="star3"></label>
-            <input v-model="rating.stars_rating" value="2" name="rating" id="star2" type="radio" />
-            <label for="star2"></label>
-            <input v-model="rating.stars_rating" value="1" name="rating" id="star1" type="radio" />
-            <label for="star1"></label>
-          </div>
-        </div>
-
-        <button type="button" class="btn btn-success" @click="submitRating">Rate Now</button>
-        <h3>Average Rating for Food ID: {{ route.params.id }}</h3>
-        <p>Average Rating: {{ averageRating }}</p>
       </div>
       <!-- {{ userStore }} -->
       <hr />
@@ -376,7 +421,7 @@ function deg2rad(deg: number) {
           style="width: 380px; height: 100px"
         >
           <span class="material-symbols-outlined mt-1"> timer </span>
-          <p class="mx-2 fs-5 mb-0">Time Spending:</p>
+          <p class="mx-2 fs-5 mb-0">រយះពេល:</p>
           <span class="fw-bold fs-5 mb-0">{{ food.cooking_time }}</span>
         </div>
         <div
@@ -385,7 +430,7 @@ function deg2rad(deg: number) {
           style="width: 380px; height: 100px"
         >
           <span class="material-symbols-outlined mt-1"> grocery </span>
-          <p class="mx-2 fs-5 mb-0">Number of Ingredient:</p>
+          <p class="mx-2 fs-5 mb-0">គ្រឿងផ្សំសរុប:</p>
           <span class="fw-bold fs-5 mb-0">(20)</span>
         </div>
       </div>
@@ -414,45 +459,94 @@ function deg2rad(deg: number) {
         </form>
       </div>
       <hr />
+
       <!--======================ingredients and how to cook ================================================ -->
       <div class="row mt-4">
         <div class="col-md-7">
           <div class="card">
-            <h3 class="card-header fw-bold text-success">How to Cook?</h3>
-            <div class="card-body">
-              <ol class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <h5 class="fw-bold text-success">Step 1</h5>
-                  <p class="text-dark">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
-                    debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
-                    pariatur porro nam error distinctio molestiae assumenda expedita.
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="fw-bold text-success">Step 2</h5>
-                  <p class="text-dark">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
-                    debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
-                    pariatur porro nam error distinctio molestiae assumenda expedita.
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="fw-bold text-success">Step 3</h5>
-                  <p class="text-dark">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
-                    debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
-                    pariatur porro nam error distinctio molestiae assumenda expedita.
-                  </p>
-                </li>
-              </ol>
+            <h3 class="card-header bg-success fw-bold text-white">ការបញ្ចេញមតិពីអ្នកប្រើប្រាស់</h3>
+            <div class="card-body overflow-y-scroll" style="height: 40vh">
+              <!-- Check if feedbacks array exists and has items -->
+              <div v-if="feedbacks && feedbacks.length > 0" class="style-user">
+                <div
+                  class="d-flex align-items-center mb-3"
+                  v-for="comment in feedbacks"
+                  :key="comment.id"
+                >
+                  <img
+                    :src="`http://127.0.0.1:8000/${comment.profile}`"
+                    alt="Avatar"
+                    class="me-3 rounded-circle"
+                    style="width: 45px; height: 45px; object-fit: cover"
+                  />
+                  <div class="d-flex flex-column justify-content-center position-relative top-4">
+                    <label class="fs-5 fw-bold">{{ comment.name }}</label>
+                    <p class="mb-0">{{ comment.feedback }}</p>
+                    <p class="mb-0">
+                      <span v-for="star in 5" :key="star">
+                        <i v-if="star <= comment.stars_rating" class="fas fa-star text-warning"></i>
+                        <i v-else class="far fa-star text-warning"></i>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="ms-auto position-relative">
+                    <i
+                      class="bi bi-three-dots-vertical fs-5"
+                      @click="toggleDropdown(comment, $event)"
+                    ></i>
+                    <div
+                      v-if="selectedComment === comment"
+                      class="dropdown-menu dropdown-menu-end show"
+                      style="position: absolute; z-index: 1; right: 0"
+                    >
+                      <a class="dropdown-item" href="#" @click.prevent="confirmDelete(comment)"
+                        >លុប</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Show message if no feedbacks are present -->
+              <div v-else class="text-feed">មិនទាន់មាន</div>
+            </div>
+          </div>
+
+          <!-- Delete Confirmation Modal -->
+          <div
+            class="modal fade"
+            id="deleteConfirmModal"
+            tabindex="-1"
+            aria-labelledby="deleteConfirmModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteConfirmModalLabel">លុបមតិជាអចិន្ត្រៃ</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">តើអ្នកចង់លុបមិតិរបស់អ្នកមែនទេ?</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    បោះបង់
+                  </button>
+                  <button type="button" class="btn btn-danger" @click="deleteComment">
+                    លុប
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="col-md-5">
           <div class="card">
-            <div class="card-header bg-success text-white fw-bold text-center">Ingredients</div>
+            <div class="card-header bg-success text-white fw-bold text-center">គ្រឿងផ្សំ</div>
             <div class="card-body">
               <div class="row">
                 <div class="col">
@@ -468,7 +562,7 @@ function deg2rad(deg: number) {
                 </div>
                 <div class="col">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item">5kg</li>
+                    <li class="list-group-item">5គីឡូក្រាម</li>
                   </ul>
                 </div>
               </div>
@@ -476,12 +570,111 @@ function deg2rad(deg: number) {
           </div>
         </div>
       </div>
+
+      <button
+        type="button"
+        class="btn btn-success mt-5"
+        style="width: 58%"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo"
+      >
+        ផ្តល់មតិអីឡូវនេះ
+      </button>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header d-flex justify-between">
+              <h5 class="modal-title" id="exampleModalLabel">សូមផ្តល់មតិអីឡូវនេះ</h5>
+              <div v-if="isLoading" class="spinner"></div>
+            </div>
+            <div class="modal-body">
+              <form @submit.prevent="submitRating">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label"
+                    >តើអ្នករីករាយនិងអាហារទាំងនេះទេ?</label
+                  >
+                  <div class="row">
+                    <div class="col col-lg-2 d-flex">
+                      <div class="rating">
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star5"
+                          name="rating"
+                          value="5"
+                        />
+                        <label for="star5" title="5 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star4"
+                          name="rating"
+                          value="4"
+                        />
+                        <label for="star4" title="4 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star3"
+                          name="rating"
+                          value="3"
+                        />
+                        <label for="star3" title="3 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star2"
+                          name="rating"
+                          value="2"
+                        />
+                        <label for="star2" title="2 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star1"
+                          name="rating"
+                          value="1"
+                        />
+                        <label for="star1" title="1 star"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">ផ្តល់មតិមកពួកយើង</label>
+                  <textarea class="form-control" id="message-text" v-model="feedback"></textarea>
+                </div>
+                <div class="d-flex gap-3">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    បោះបង់
+                  </button>
+                  <button type="submit" :disabled="isLoading" class="btn btn-primary">
+                    ផ្ញើអីឡូវនេះ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <hr />
       <!--======================where can you buy this food ================================================ -->
       <div class="row">
         <div class="col">
           <div>
-            <h3 class="fw-bold m-0 text-success">Where you can buy this food?</h3>
+            <h3 class="fw-bold m-0 text-success">តើអ្នកចង់ទៅទីកន្លែងមួយណា?</h3>
           </div>
           <div>
             <!-- <div class="col"> -->
@@ -489,7 +682,7 @@ function deg2rad(deg: number) {
               <div class="col">
                 <div ref="mapContainer" class="map"></div>
                 <div class="sidebar">
-                  <h3 class="text-success">Restaurant near you</h3>
+                  <h3 class="text-success">ហាងដែលនៅជិតអ្នកបំផុត</h3>
                   <ul v-if="restaurants.length > 0">
                     <li
                       v-for="restaurant in restaurants"
@@ -500,7 +693,7 @@ function deg2rad(deg: number) {
                       {{ restaurant.distance.toFixed(2) }} km
                     </li>
                   </ul>
-                  <p v-else>Restaurants not found.</p>
+                  <p v-else>មិនមានហាងនៅទីនេះទេ</p>
                 </div>
               </div>
               <div class="collapse mt-3" id="addressForm">
@@ -515,7 +708,7 @@ function deg2rad(deg: number) {
                     />
                     <div class="input-group-append">
                       <span class="input-group-text" id="basic-addon1">
-                        <span class="material-symbols-outlined"> search </span>
+                        <span class="material-symbols-outlined"> ស្វែងរក </span>
                       </span>
                     </div>
                   </div>
@@ -530,7 +723,7 @@ function deg2rad(deg: number) {
       </div>
       <div class="row mt-3">
         <div>
-          <h3 class="card-header fw-bold text-success">Other you might love</h3>
+          <h3 class="card-header fw-bold text-success">អាហារដែលមានភាពស្រដៀងគ្នា</h3>
         </div>
         <div class="row d-flex" style="margin-top: 98px">
           <div class="col-3 col-md-3 mb-3">
@@ -549,7 +742,7 @@ function deg2rad(deg: number) {
               <div class="pt-5 mt-4 d-flex justify-content-between">
                 <div class="col">
                   <h4 class="m-2">{{ food.name }}</h4>
-                  <div class="rating position-relative left-2">
+                  <div class="star-rating position-relative left-2">
                     <span
                       v-for="star in 5"
                       :key="star"
@@ -557,18 +750,16 @@ function deg2rad(deg: number) {
                       >★</span
                     >
                   </div>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
+                  <div class="m-2 w-auto text-success rounded" id="category">ប្រភេទអាហារ</div>
                 </div>
                 <div class="col d-flex align-items-end position-relative left-15">
-                  <div class="m-2 btn btn-success">details</div>
+                  <div class="m-2 btn btn-success">មើល</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- </div> -->
-      <!-- </div> -->
     </div>
   </div>
   <FooterView></FooterView>
@@ -649,6 +840,22 @@ function deg2rad(deg: number) {
   transition: transform 0.3s ease;
 }
 
+.style-user {
+  border: none;
+  padding: 10px 0;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.style-user .d-flex {
+  margin-bottom: 1rem;
+}
+
 .zoom-card:hover,
 #bookmard:hover,
 #share:hover,
@@ -657,7 +864,6 @@ function deg2rad(deg: number) {
 #foodImage1:hover,
 #foodImage2:hover,
 .list-group-item:hover {
-  transform: scale(1.05);
   z-index: 10;
 }
 
@@ -671,14 +877,64 @@ function deg2rad(deg: number) {
 }
 
 .sidebar {
-  width: 300px;
+  width: 500px;
 }
 
 .sidebar h3 {
   padding-top: 25px;
   font-weight: 700;
 }
+
+.text-feed {
+  color: #d2d2d269;
+  font-size: 5rem;
+  position:absolute;
+  bottom: 110px;
+  left: 160px;
+  text-align: center; /* Horizontally center text */
+  display: flex; /* Use flexbox to center text vertically */
+  align-items: center;
+  justify-content: center; /* Center text horizontally within the container */
+}
+
 .rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  font-size: 2rem;
+  align-items: center;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  cursor: pointer;
+  color: #d3d3d3; /* Default star color */
+  font-size: 2rem; /* Adjust as needed */
+  padding: 0 0.1rem; /* Adjust spacing as needed */
+}
+
+.rating label::before {
+  content: '★';
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #ffc107; /* Hover star color */
+}
+
+.rating input:checked ~ label {
+  color: #d3d3d3; /* Reset color for subsequent stars */
+}
+
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+  color: #ffc107; /* Selected star color */
+}
+
+.star-rating {
   display: flex;
   align-items: center;
 }
@@ -690,5 +946,72 @@ function deg2rad(deg: number) {
 
 .star.filled {
   color: #f39c12; /* Filled star color */
+}
+
+.spinner {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  color: #cacaca;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+
+.style-user img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+}
+
+.style-user .fa-star,
+.style-user .fa-star-half,
+.style-user .far.fa-star {
+  color: #ffc107;
+}
+
+.style-user label {
+  font-weight: bold;
+}
+
+.style-user .bi-three-dots-vertical {
+  cursor: pointer;
 }
 </style>
