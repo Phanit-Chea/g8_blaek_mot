@@ -97,45 +97,44 @@
           <div class="tab-header text-center">
             <p>បញ្ជីក្រុម</p>
             <div>
-                  <div v-for="user in fetchGroupList" :key="user.id" class="container">
-                   
-                    <div class="container_user" @click="handleUserClick(user)">
-                      <div class="user d-flex justify-content-between">
-                        <div class="c_user d-flex align-items-center">
-                          <img
-                            :src="user.image ? `http://127.0.0.1:8000/${user.image}` : 'default_profile_image_url'"
-                            alt="user" class="rounded-circle" width="50px" height="50px" />
-                          <div class="name d-flex flex-column ms-2">
-                            <span class="text-15px fw-bold">{{ user.name }}</span>
-                            <p class="text-11px mb-0 text-dark" v-if="user.messages && user.messages.description">
-                              {{ user.messages.from_user === currentUserId ? 'You: ' + user.messages.description :
-                                user.messages.description }}
-                            </p>
-                            <p class="text-11px mb-0 text-dark" v-else-if="user.messages && user.messages.video">
-                              {{ user.messages.from_user === currentUserId ? 'You: video' : 'video' }}
-                            </p>
-                            <p class="text-11px mb-0 text-dark" v-else-if="user.messages && user.messages.image">
-                              {{ user.messages.from_user === currentUserId ? 'You: image' : 'image' }}
-                            </p>
-                            <p class="text-11px mb-0 text-dark" v-else>
-                              No recent chats
-                            </p>
-                          </div>
-                        </div>
-                        <div class="c_p d-flex align-items-center justify-content-between align-item-center pr-2">
-                          <p class="text-11px mb-0 text-secondary" style="margin-right: 10px;" v-if="user.latest_chat">
-                            {{ user.latest_chat.created_at.time }}
-                          </p>
-                          <span class="rounded-circle" :class="{
-                            'bg-success': (user.latest_chat && user.latest_chat.active === 0 && user.latest_chat.from_user != currentUserId),
-                            'bg-white': (user.latest_chat && (user.latest_chat.active !== 0 || user.latest_chat.from_user === currentUserId)),
-                          }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
-                          </span>
-                        </div>
+              <div v-for="user in fetchGroupList" :key="user.id" class="container">
+
+                <div class="container_user" @click="handleUserClick(user)">
+                  <div class="user d-flex justify-content-between">
+                    <div class="c_user d-flex align-items-center">
+                      <img :src="user.image ? `http://127.0.0.1:8000/${user.image}` : 'default_profile_image_url'"
+                        alt="user" class="rounded-circle" width="50px" height="50px" />
+                      <div class="name d-flex flex-column ms-2">
+                        <span class="text-15px fw-bold">{{ user.name }}</span>
+                        <p class="text-11px mb-0 text-dark" v-if="user.messages && user.messages.description">
+                          {{ user.messages.from_user === currentUserId ? 'You: ' + user.messages.description :
+                            user.messages.description }}
+                        </p>
+                        <p class="text-11px mb-0 text-dark" v-else-if="user.messages && user.messages.video">
+                          {{ user.messages.from_user === currentUserId ? 'You: video' : 'video' }}
+                        </p>
+                        <p class="text-11px mb-0 text-dark" v-else-if="user.messages && user.messages.image">
+                          {{ user.messages.from_user === currentUserId ? 'You: image' : 'image' }}
+                        </p>
+                        <p class="text-11px mb-0 text-dark" v-else>
+                          No recent chats
+                        </p>
                       </div>
+                    </div>
+                    <div class="c_p d-flex align-items-center justify-content-between align-item-center pr-2">
+                      <p class="text-11px mb-0 text-secondary" style="margin-right: 10px;" v-if="user.latest_chat">
+                        {{ user.latest_chat.created_at.time }}
+                      </p>
+                      <span class="rounded-circle" :class="{
+                        'bg-success': (user.latest_chat && user.latest_chat.active === 0 && user.latest_chat.from_user != currentUserId),
+                        'bg-white': (user.latest_chat && (user.latest_chat.active !== 0 || user.latest_chat.from_user === currentUserId)),
+                      }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
+                      </span>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -144,7 +143,7 @@
     </div>
     <div class="card card-r">
       <div v-if="selectedUser != null" class="full-height" style="height: 100vh;">
-{{selectedUser}}
+        {{ selectedUser }}
         <div class="card-header bg-light d-flex align-items-center p-2 border-bottom"
           style="position: fixed; width: 61.4%; z-index: 1;">
           <div class="d-flex align-items-center">
@@ -426,7 +425,7 @@ export default defineComponent({
     async fetchGroup() {
       const userAuth = useAuthStore();
       const userStore = useUserStore();
- 
+
       try {
         const response = await axiosInstance.get('/group/fetch/messages', {
           headers: {
