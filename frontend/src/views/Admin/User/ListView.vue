@@ -27,10 +27,8 @@
                   </select>
                 </div>
                 <!-- Search Form -->
-                <form @submit.prevent="searchUsers"
-                  class="form-inline d-flex justify-content-end pe-4 w-50 align-items-center">
-                  <input v-model="searchTerm" class="form-control mr-sm-2 w-50 py-2" type="search" placeholder="ស្វែងរក"
-                    aria-label="Search" />
+                <form @submit.prevent="searchUsers" class="form-inline d-flex justify-content-end pe-4 w-50 align-items-center">
+                  <input v-model="searchTerm" class="form-control mr-sm-2 w-50 py-2" type="search" placeholder="ស្វែងរក" aria-label="Search" />
                   <button class="btn bg-primary py-1 px-2" type="submit">
                     <i class="material-icons text-white">search</i>
                   </button>
@@ -53,12 +51,11 @@
                   </tr>
                 </thead>
                 <tbody v-if="filteredUsers.length > 0">
-                  <UserList v-for="user in filteredUsers" :key="user.id" :user="user"
-                    @deleteUser="handleDeleteUser(user.id)" />
+                  <UserList v-for="user in filteredUsers" :key="user.id" :user="user" @deleteUser="handleDeleteUser(user.id)" />
                 </tbody>
                 <tbody v-else>
                   <tr>
-                    <td colspan="8" class="text-center siemreap">គ្មានអ្នកប្រើប្រាស់ដែលផ្គុំជូននូវលទ្ធផលនោះ</td>
+                    <td colspan="8" class="text-center siemreap">គ្មានអ្នកប្រើប្រាស់ឈ្មោះនេះទេ</td>
                   </tr>
                 </tbody>
               </table>
@@ -69,8 +66,6 @@
       </div>
     </div>
   </div>
-
-  
 </template>
 
 <script setup lang="ts">
@@ -144,7 +139,10 @@ const filteredUsers = computed(() => {
     filtered = filtered.filter(user =>
       user.name.toLowerCase().includes(term) ||
       user.email.toLowerCase().includes(term) ||
-      user.address.toLowerCase().includes(term)
+      user.phoneNumber.includes(term) || 
+      user.gender.toLowerCase().includes(term) || 
+      user.address.toLowerCase().includes(term) || 
+      user.profile.toLowerCase().includes(term)
     );
   }
 
@@ -162,6 +160,7 @@ const filteredUsers = computed(() => {
 // Fetch users on component mount
 onMounted(fetchUsers);
 </script>
+
 
 <style scoped>
 .siemreap {
