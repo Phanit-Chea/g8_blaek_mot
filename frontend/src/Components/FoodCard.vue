@@ -9,7 +9,7 @@
             </router-link>
             <div class="card-body d-flex justify-content-between px-0">
               <h4 class="card-title text-dark ">{{food.name}}</h4>
-              <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="btn " style="background-color: #54983c">Detail</router-link>
+              <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="btn " style="background-color: #54983c; height: 40px;">Detail</router-link>
             </div>
           </div>
           

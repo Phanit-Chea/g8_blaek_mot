@@ -7,12 +7,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
             <h1 class="navbar-brand fs-1">ប្រភេទមុខម្ហូប</h1>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#createModal"
-            >
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
               បង្កើតថ្មី
             </button>
           </div>
@@ -32,20 +27,11 @@
                 <td class="text-center">{{ category.description }}</td>
                 <td class="text-center">
                   <div class="btn-group" role="group">
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
-                      @click="openEditModal(category)"
-                    >
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop" @click="openEditModal(category)">
                       កែសម្រួល
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      @click="deleteCategory(category.id)"
-                    >
+                    <button type="button" class="btn btn-danger" @click="deleteCategory(category.id)">
                       លុប
                     </button>
                   </div>
@@ -56,57 +42,29 @@
         </div>
 
         <!-- Modal - Create Category -->
-        <div
-          class="modal fade"
-          id="createModal"
-          tabindex="-1"
-          aria-labelledby="createModalLabel"
-          aria-hidden="true"
-        >
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <form @submit.prevent="createCategory">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="createModalLabel">បង្កើតប្រភេទមុខម្ហូប</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div class="mb-3">
                     <label for="title" class="form-label">ប្រភេទមុខម្ហូប</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="title"
-                      v-model="newCategory.title"
-                      required
-                    />
+                    <input type="text" class="form-control" id="title" v-model="newCategory.title" required />
                   </div>
-             
-         
+
+
                   <div class="mb-3">
                     <label for="image" class="form-label">រូបភាព</label>
-                    <input
-                      type="file"
-                      class="form-control"
-                      id="image"
-                      @change="onFileChange"
-                      required
-                    />
+                    <input type="file" class="form-control" id="image" @change="onFileChange" required />
                   </div>
                   <div class="mb-3">
                     <label for="description" class="form-label">ព័ណ៌មានលំអិត</label>
-                    <textarea
-                      class="form-control"
-                      id="description"
-                      v-model="newCategory.description"
-                      rows="3"
-                      required
-                    ></textarea>
+                    <textarea class="form-control" id="description" v-model="newCategory.description" rows="3"
+                      required></textarea>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -124,45 +82,40 @@
   </div>
 
   <!-- Modal edite-->
-  <div
-    class="modal fade"
-    id="editModal"
-    tabindex="-1"
-    aria-labelledby="editModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <form @submit.prevent="updateCategory" enctype="multipart/form-data">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="title" class="form-label">Category Title:</label>
+              <input type="text" class="form-control" v-model="editCategory.title" id="title" required />
             </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label for="title" class="form-label">Category Title:</label>
-                <input type="text" class="form-control" v-model="editCategory.title" id="title" required />
-              </div>
-           
-              <div class="mb-3">
-                <label for="description" class="form-label">Category Description:</label>
-                <textarea class="form-control" v-model="editCategory.description" id="description" rows="3" required></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="image" class="form-label">Category Image:</label>
-                <input type="file" class="form-control" @change="onFileChange" id="editImageInput" />
-              </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Category Description:</label>
+              <textarea class="form-control" v-model="editCategory.description" id="description" rows="3"
+                required></textarea>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Update Category</button>
+            <div class="mb-3">
+              <label for="image" class="form-label">Category Image:</label>
+              <input type="file" class="form-control" @change="onFileChange" id="editImageInput" />
             </div>
           </div>
-        </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update Category</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import HeaderMenu from '@/Components/HeaderMenu.vue';
 import NavbarAdmin from '@/Components/NavbarAdmin.vue';
@@ -301,15 +254,15 @@ onMounted(() => {
   fetchCategories();
 });
 </script>
-  
+
 <style scoped>
 /* @import 'datatables.net-dt'; */
 .b-action {
   display: flex;
   gap: 15px;
 }
+
 .top-cat {
   background: #000;
 }
 </style>
-  

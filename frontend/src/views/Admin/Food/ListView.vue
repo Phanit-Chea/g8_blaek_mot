@@ -152,15 +152,7 @@ export default {
                 </td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr>
-                <th class="siemreap text-center">ឈ្មោះមុខម្ហូប</th>
-                <th class="siemreap text-center">ប្រភេទ</th>
-                <th class="siemreap text-center">ព័ណ៌មានលំអិត</th>
-                <th class="siemreap text-center">ចំនួនរក្សារទុក</th>
-                <th class="siemreap text-center">សកម្មភាព</th>
-              </tr>
-            </tfoot>
+   
           </table>
         </div>
       </div>

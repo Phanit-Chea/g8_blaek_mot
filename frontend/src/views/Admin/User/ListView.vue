@@ -69,8 +69,6 @@
       </div>
     </div>
   </div>
-
-  
 </template>
 
 <script setup lang="ts">
@@ -158,6 +156,11 @@ const filteredUsers = computed(() => {
 
   return filtered;
 });
+
+// Function to handle search form submission
+const searchUsers = () => {
+ 
+};
 
 // Fetch users on component mount
 onMounted(fetchUsers);
