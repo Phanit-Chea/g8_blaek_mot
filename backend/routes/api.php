@@ -78,6 +78,7 @@ Route::post('/register', [ApiAuthController::class, 'register']);
 ///=============create food=========//
 Route::prefix("folder")->group(function () {
     Route::get('/list', [FolderController::class, 'index'])->name('folder.list')->middleware('auth:sanctum');
+    Route::get('/list/byUser', [FolderController::class, 'listByUser'])->name('folder.list.byuser')->middleware('auth:sanctum');
     Route::post('/create', [FolderController::class, 'store'])->name('folder.create')->middleware('auth:sanctum');
     Route::put('/update/{id}', [FolderController::class, 'update'])->name('folder.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [FolderController::class, 'destroy'])->name('folder.delete')->middleware('auth:sanctum');
