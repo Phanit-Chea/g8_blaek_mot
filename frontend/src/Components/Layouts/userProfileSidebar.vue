@@ -265,14 +265,7 @@ const fetchFolders = async () => {
         'Content-Type': 'application/json'
       }
     })
-<<<<<<< HEAD
       folders.value = response.data.data
-=======
-
-
-    folders.value = response.data.data
-
->>>>>>> storeFood
   } catch (error) {
     console.error('Error fetching folders:', error)
     // alert('An error occurred while fetching folders')
