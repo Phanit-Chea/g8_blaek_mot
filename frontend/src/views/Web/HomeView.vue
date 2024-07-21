@@ -83,7 +83,7 @@ export default {
     async fetchFolder() {
       try {
         const userStore = useUserStore()
-        const response = await axiosInstance.get('/folder/list', {
+        const response = await axiosInstance.get('/folder/list/byUser', {
           headers: {
             Authorization: `Bearer ${userStore.user.remember_token}`,
             'Content-Type': 'application/json'
