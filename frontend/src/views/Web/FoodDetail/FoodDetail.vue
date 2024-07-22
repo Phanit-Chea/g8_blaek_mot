@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import axiosInstance from '@/plugins/axios'
 import NavbarView from '../Navbar/NavbarView.vue'
 import FooterView from '../Footer/FooterView.vue'
@@ -7,38 +7,39 @@ import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../../../stores/auth-store'
 import { useUserStore } from '@/stores/userStore'
 import { Modal } from 'bootstrap'
-
 import axios from 'axios'
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
+import MapboxDirections from '@mapbox/mapbox-gl-directions'
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-
 import { useRoute } from 'vue-router'
 
-const accessToken =
-  'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3RlMW8yZWhzdiJ9.Djy2BP-ysXAcH2mxJItgYg'
+// Constants
+const accessToken = 'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3RlMW8yZWhzdiJ9.Djy2BP-ysXAcH2mxJItgYg'
+
+// Reactive References
 const lat = ref(0)
 const lng = ref(0)
-const mapContainer = ref(null)
+const mapContainer = ref<HTMLElement | null>(null)
 const map = ref<mapboxgl.Map | null>(null)
 const geolocateControl = ref<mapboxgl.GeolocateControl | null>(null)
 const restaurants = ref<any[]>([])
 let restaurantMarkers: mapboxgl.Marker[] = []
 let userMarker: mapboxgl.Marker | null = null
 
-const food = ref({})
+const food = ref<any>({})
 const rating = ref({ stars_rating: 0, feedback: '' })
 const isLoading = ref(false)
+const averageRating = ref(0)
+const feedbacks = ref<any[]>([])
 
+// Composables
 const route = useRoute()
 const userStore = useUserStore()
-const averageRating = ref(0)
-const feedback = ref([])
 
-// ==============fectFoodDeatail=============
+// Fetch Food Detail
 const fetchFoodDetail = async () => {
   try {
     const response = await axiosInstance.get(`/food/show/${route.params.id}`, {
@@ -48,7 +49,6 @@ const fetchFoodDetail = async () => {
       }
     })
     console.log('Food detail response:', response.data)
-
     if (response.data && response.data.id) {
       food.value = response.data
     } else {
@@ -60,54 +60,42 @@ const fetchFoodDetail = async () => {
   }
 }
 
-onMounted(fetchFoodDetail)
-// ==============end fetchFoodDetail=============
-
-// ============Submit Rating============
-
+// Submit Rating
 const submitRating = async () => {
   try {
     if (!food.value || !food.value.id) {
-      console.error('Food ID is undefined or null');
-      return;
+      console.error('Food ID is undefined or null')
+      return
     }
 
-    const user = JSON.parse(localStorage.getItem('user'));
-
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
     const ratingData = {
       stars_rating: rating.value.stars_rating,
-      feedback: feedback.value,
-      user_id: user['user'].id,
+      feedback: rating.value.feedback,
+      user_id: user['user']?.id,
       food_id: food.value.id
-    };
+    }
 
-    // Set the loading state to true
-    isLoading.value = true;
+    isLoading.value = true
 
-    const response = await axiosInstance.post('/ratings/create', ratingData);
-    console.log('Rating submitted successfully:', response.data);
+    const response = await axiosInstance.post('/ratings/create', ratingData)
+    console.log('Rating submitted successfully:', response.data)
 
-    // Reset the form fields
-    rating.value.stars_rating = null;
-    feedback.value = null;
-
-    // Refresh the feedback list
-    await fetchFeedback();
+    rating.value.stars_rating = 0
+    rating.value.feedback = ''
+    await fetchFeedback()
   } catch (error) {
-    console.error('Error submitting rating:', error);
-    alert('Error submitting rating. Please try again later.');
+    console.error('Error submitting rating:', error)
+    alert('Error submitting rating. Please try again later.')
   } finally {
-    // Set the loading state to false
-    isLoading.value = false;
+    isLoading.value = false
     if (!isLoading.value) {
-      window.location.reload();
+      window.location.reload()
     }
   }
-};
-// ==============end submitRating==============
+}
 
-// =============average StaticRange===============
-
+// Fetch Average Rating
 const fetchAverageRating = async () => {
   try {
     const response = await axiosInstance.get(`/ratings/averages/${route.params.id}`)
@@ -117,63 +105,22 @@ const fetchAverageRating = async () => {
     alert('Error fetching average rating. Please try again later.')
   }
 }
-// ===============end averageRating===============
 
-const feedbacks = ref([])
+// Fetch Feedback
 const fetchFeedback = async () => {
   try {
     const response = await axiosInstance.get(`/ratings/list/feedback/${route.params.id}`)
     feedbacks.value = response.data.data
-    console.log('feedbacks', feedbacks.value)
+    console.log('Feedbacks:', feedbacks.value)
   } catch (error) {
-    console.error('Error fetching average rating:', error)
-    alert('Error fetching average rating. Please try again later.')
+    console.error('Error fetching feedback:', error)
+    alert('Error fetching feedback. Please try again later.')
   }
 }
 
-onMounted(() => {
-  feedback.value = null;
-  rating.value.stars_rating = null;
-  fetchFoodDetail()
-  fetchAverageRating()
-  fetchFeedback()
-})
-
-const selectedComment = ref(null)
-
-const toggleDropdown = (comment) => {
-  selectedComment.value = selectedComment.value === comment ? null : comment
-  // Prevent dropdown menu from closing immediately
-  event.stopPropagation()
-}
-
-const confirmDelete = (comment) => {
-  selectedComment.value = comment
-  new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show()
-}
-
-const deleteComment = async () => {
-  if (selectedComment.value) {
-    try {
-      await axiosInstance.delete(`/ratings/feedback/${selectedComment.value.id}`)
-      feedbacks.value = feedbacks.value.filter((f) => f.id !== selectedComment.value.id)
-      const deleteConfirmModal = document.getElementById('deleteConfirmModal')
-      const modalInstance = bootstrap.Modal.getInstance(deleteConfirmModal)
-      if (modalInstance) {
-        modalInstance.hide()
-      }
-      selectedComment.value = null
-    } catch (error) {
-      console.error('Error deleting comment:', error)
-      alert('Error deleting comment. Please try again later.')
-    }
-  }
-}
-
-// ==============MAP==============
-onMounted(async () => {
+// Initialize Map
+const initializeMap = async () => {
   mapboxgl.accessToken = accessToken
-
   map.value = new mapboxgl.Map({
     container: mapContainer.value!,
     style: 'mapbox://styles/mapbox/streets-v11',
@@ -189,16 +136,12 @@ onMounted(async () => {
   })
   map.value.addControl(geolocateControl.value)
 
-  restaurantMarkers = []
-
   const directions = new MapboxDirections({
     accessToken: accessToken,
     unit: 'metric',
     profile: 'mapbox/driving'
   })
   map.value.addControl(directions, 'top-left')
-
-  getLocation()
 
   const geocoder = new MapboxGeocoder({
     accessToken: accessToken,
@@ -218,7 +161,6 @@ onMounted(async () => {
     getRestaurants(coords[1], coords[0])
   })
 
-  // Fetch customer's address from the database
   const customerAddress = await fetchCustomerAddress()
   if (customerAddress) {
     const coords = await geocodeAddress(customerAddress)
@@ -228,9 +170,10 @@ onMounted(async () => {
       getRestaurants(coords[1], coords[0])
     }
   }
-})
+}
 
-async function fetchCustomerAddress() {
+// Fetch Customer Address
+const fetchCustomerAddress = async () => {
   try {
     const response = await axios.get('/api/customer/address')
     return response.data.address
@@ -240,10 +183,9 @@ async function fetchCustomerAddress() {
   }
 }
 
-async function geocodeAddress(address: string) {
-  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-    address
-  )}.json?access_token=${accessToken}`
+// Geocode Address
+const geocodeAddress = async (address: string) => {
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${accessToken}`
   try {
     const response = await axios.get(url)
     if (response.data.features.length > 0) {
@@ -258,7 +200,8 @@ async function geocodeAddress(address: string) {
   }
 }
 
-function getLocation() {
+// Get Location
+const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.watchPosition(
       (position) => {
@@ -279,9 +222,9 @@ function getLocation() {
   }
 }
 
-async function getRestaurants(lat: number, lng: number) {
+// Get Restaurants
+const getRestaurants = async (lat: number, lng: number) => {
   clearMarkers()
-
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/restaurant.json?proximity=${lng},${lat}&access_token=${accessToken}`
   try {
     const response = await axios.get(url)
@@ -306,7 +249,8 @@ async function getRestaurants(lat: number, lng: number) {
   }
 }
 
-function setUserMarker(coords: number[]) {
+// Set User Marker
+const setUserMarker = (coords: number[]) => {
   if (!userMarker) {
     const popup = new mapboxgl.Popup().setHTML('<strong>Your Location</strong>')
     userMarker = new mapboxgl.Marker({ color: 'red', draggable: true })
@@ -324,7 +268,8 @@ function setUserMarker(coords: number[]) {
   }
 }
 
-function addRestaurantMarker(coords: number[], name: string, distance: number) {
+// Add Restaurant Marker
+const addRestaurantMarker = (coords: number[], name: string, distance: number) => {
   const popup = new mapboxgl.Popup().setHTML(
     `<strong>${name}</strong><br>Distance: ${distance.toFixed(2)} km`
   )
@@ -332,12 +277,14 @@ function addRestaurantMarker(coords: number[], name: string, distance: number) {
   restaurantMarkers.push(marker)
 }
 
-function clearMarkers() {
+// Clear Markers
+const clearMarkers = () => {
   restaurantMarkers.forEach((marker) => marker.remove())
   restaurantMarkers = []
 }
 
-function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+// Get Distance
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
   const R = 6371
   const dLat = deg2rad(lat2 - lat1)
   const dLon = deg2rad(lon1 - lon2)
@@ -345,16 +292,61 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-  const distance = R * c
-  return distance
+  return R * c
 }
 
-function deg2rad(deg: number) {
-  return deg * (Math.PI / 180)
+const deg2rad = (deg: number) => deg * (Math.PI / 180)
+
+// Event Handlers
+const toggleDropdown = (comment: any, event: Event) => {
+  selectedComment.value = selectedComment.value === comment ? null : comment
+  event.stopPropagation()
+}
+
+const confirmDelete = (comment: any) => {
+  selectedComment.value = comment
+  new Modal(document.getElementById('deleteConfirmModal')!).show()
+}
+
+const deleteComment = async () => {
+  if (selectedComment.value) {
+    try {
+      await axiosInstance.delete(`/ratings/feedback/${selectedComment.value.id}`)
+      feedbacks.value = feedbacks.value.filter((f: any) => f.id !== selectedComment.value.id)
+      const deleteConfirmModal = document.getElementById('deleteConfirmModal')
+      const modalInstance = Modal.getInstance(deleteConfirmModal!)
+      if (modalInstance) {
+        modalInstance.hide()
+      }
+      selectedComment.value = null
+    } catch (error) {
+      console.error('Error deleting comment:', error)
+      alert('Error deleting comment. Please try again later.')
+    }
+  }
+}
+
+// Lifecycle Hooks
+onMounted(() => {
+  fetchFoodDetail()
+  fetchAverageRating()
+  fetchFeedback()
+  initializeMap()
+})
+
+export default {
+  name: 'food-detail',
+  components: {
+    NavbarView,
+    FooterView,
+    SideBar
+  }
 }
 </script>
 
+
 <template>
+
   <NavbarView></NavbarView>
   <div class="d-flex" style="margin-top: 158px">
     <div class="col-2">
@@ -368,17 +360,21 @@ function deg2rad(deg: number) {
       </div>
 
       <div>
-        <div v-if="food.name">
-          <h1 class="text-success mt-2 mb-3">{{ food.name }}</h1>
-          <p>{{ food.description }}</p>
-        </div>
-        <div v-else>
-          <span class="loader ml-10"></span>
+    <h1 v-if="food.name" class="text-success mt-2 mb-3">{{ food.name }}</h1>
+    <p v-else>Loading...</p>
+  </div>
+      <div class="col col-lg-2 d-flex mt-3 mb-3">
+        <div class="small-ratings d-flex">
+          <i class="fa fa-star rating-color mx-1"></i>
+          <i class="fa fa-star rating-color mx-1"></i>
+          <i class="fa fa-star rating-color mx-1"></i>
+          <i class="fa fa-star mx-1"></i>
+          <i class="fa fa-star mx-1"></i>
         </div>
       </div>
       <!-- {{ userStore }} -->
       <hr />
-      <!-- ===================icon action share ,save,print,========================== -->
+      /* <!-- ===================icon action share ,save,print,========================== --> */
       <div class="mt-3 mb-3">
         <div class="btn btn rounded border border-success mr-2" id="bookmard">
           <span class="material-symbols-outlined"> bookmark_added </span>
@@ -433,6 +429,7 @@ function deg2rad(deg: number) {
           <p class="mx-2 fs-5 mb-0">គ្រឿងផ្សំសរុប:</p>
           <span class="fw-bold fs-5 mb-0">(20)</span>
         </div>
+        
       </div>
       <!--=====================nutrtitions ================================= -->
       <div class="collapse mt-3 m-0" id="nutritions">
@@ -455,6 +452,7 @@ function deg2rad(deg: number) {
                 </ul>
               </div>
             </div>
+            
           </div>
         </form>
       </div>
@@ -551,13 +549,8 @@ function deg2rad(deg: number) {
               <div class="row">
                 <div class="col">
                   <ul class="list-group list-group-flush">
-                    <li
-                      class="list-group-item"
-                      v-for="ingredient in food.ingredients"
-                      :key="ingredient"
-                    >
-                      {{ ingredient }}
-                    </li>
+                    <li class="list-group-item" v-for="ingredient in food.ingredients" :key="ingredient">{{ingredient}}</li>
+                    
                   </ul>
                 </div>
                 <div class="col">

@@ -15,7 +15,16 @@ class Chat extends Model
         'to_user',
         'description',
         'image',
-        'video'
+        'video',
+        'active'
     ];
+    public function sender(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'from_user');
+    }
+    public function receiver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'to_user');
+    }
 
 }

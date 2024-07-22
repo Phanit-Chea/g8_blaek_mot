@@ -1,13 +1,13 @@
+KHOEURN- RATANAK💗, [7/22/2024 12:29 PM]
 <template>
   <nav class="row bg-white p-2 fixed-top">
     <div class="navLeft col-md-auto d-flex align-items-center text-green">
       <router-link to="/">
         <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" width="90%" height="90px" />
       </router-link>
-
     </div>
     <div class="navCenter col-md d-flex align-items-center"
-      style="width:55%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
+      style="width: 55%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
       <div class="input-group w-240">
         <button class="input-group-text border border-success border-end-0">
           <i class="material-icons">search</i>
@@ -20,41 +20,42 @@
         </button>
       </div>
     </div>
-    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <a href="/chat">
-    <i class="bi bi-chat-dots-fill chat m-3">
-      <span 
-        v-if="unreadMessagesCount > 0" 
-        class="position-absolute top-10 start-335 translate-middle badge border border-light rounded-circle bg-danger p-2">
-        <span class="visually-hidden">unread messages</span>
-        {{ unreadMessagesBadge }}
-      </span>
-    </i>
-  </a>
-      <!-- <a href="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
-        <i class="material-icons fs-1">turned_in</i>
-      </a> -->
-
+    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
+      v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'">
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">chat</i>
+      </router-link>
       <router-link to="#"
         class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
         <i class="material-icons fs-1">notifications</i>
       </router-link>
-
+      <router-link to="/admin/dashboard">
+        <button class="btn btn-danger" type="submit">Dashboard</button>
+      </router-link>
+    </div>
+    <div v-else class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
+      <router-link to="/chat"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class='fas fa-comment-dots' style='font-size:40px;'></i>
+        <span class="badge">{{ countUnread }}</span>
+      </router-link>
+      <router-link to="#"
+        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
+        <i class="material-icons fs-1">notifications</i>
+      </router-link>
       <label class="popup">
         <input type="checkbox" />
         <div tabindex="0" class="burger">
-          <div v-if="useAuth.isAuthenticated" class="account ">
-            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
+          <div v-if="useAuth.isAuthenticated" class="account">
+            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="50px" />
           </div>
           <div v-else>
             <i class="material-icons fs-1 text-white">person</i>
           </div>
         </div>
-
         <nav v-if="useAuth.isAuthenticated" class="popup-window">
           <ul>
-
             <li>
               <nav-link>
                 <a href="/user">
@@ -64,6 +65,8 @@
                       <path
                         d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
                       </path>
+
+
                     </svg>
                     <span class="siemreap">ព័ត៍មានផ្ទាល់ខ្លួន</span>
                   </button>
@@ -72,20 +75,19 @@
             </li>
             <li>
               <nav-link>
-                <a href="/logout">
+                <a href="#" @click.prevent="logout">
                   <button>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
-                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
-                      </path>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
                     </svg>
                     <span class="siemreap">ចេញពីគណនី</span>
                   </button>
                 </a>
               </nav-link>
             </li>
-
           </ul>
         </nav>
         <nav v-else class="popup-window">
@@ -94,11 +96,11 @@
               <nav-link>
                 <a href="/login">
                   <button>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
-                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
-                      </path>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
                     </svg>
                     <span class="siemreap">ចូលគណនី</span>
                   </button>
@@ -123,11 +125,9 @@
           </ul>
         </nav>
       </label>
-
     </div>
     <div class="navPages row text-red mt-3">
       <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-
         <router-link to="/"
           class="pagesLink text-green-700 fs-5 text-decoration-none nav-link siemreap">ទំព័រដើម</router-link>
         <router-link to="/category"
@@ -135,43 +135,40 @@
         <router-link to="/aboutUs" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">
           អំពីពួកយើង
         </router-link>
-
       </div>
     </div>
   </nav>
-
 </template>
 
+
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth-store.ts';
-import { useUserStore } from '@/stores/userStore';
+import { useAuthStore } from '@/stores/auth-store.ts'
+import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'vue-router'
 
-const useAuth = useAuthStore();
-const userStore = useUserStore();
+const useAuth = useAuthStore()
+const userStore = useUserStore()
+const router = useRouter()
 
-
+const logout = async () => {
+  try {
+    await useAuth.logout()
+    router.push('/')
+  } catch (error) {
+    console.error('Logout failed:', error)
+  }
+}
 </script>
 
 <style scoped>
 .favoriteIcon,
 .notification,
 .account {
-  transition: transform 0.3s ease, border 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border 0.3s ease;
   border: 2px solid rgba(62, 160, 9, 0.942);
   color: rgba(62, 160, 9, 0.942);
-}
-
-
-.chat {
-  font-size: 3rem;
-  color: #66b64a;
-  cursor: pointer;
-  transition: transform 0.5s;
-}
-
-.chat:hover {
-  transform: scale(1.05) rotate(-5deg);
-  color: #62cd3c;
 }
 
 .login {
@@ -215,7 +212,7 @@ const userStore = useUserStore();
   --nav-shadow-color: rgba(0, 0, 0, 0.2);
   --nav-shadow-width: 0 1px 5px;
   --nav-bg: #eee;
-  --nav-font-family: "Poppins", sans-serif;
+  --nav-font-family: 'Poppins', sans-serif;
   --nav-default-scale: 0.8;
   --nav-active-scale: 1;
   --nav-position-left: -102px;
@@ -240,8 +237,6 @@ const userStore = useUserStore();
   --underline-border-color: #ccc;
   --underline-margin-y: 0.3125em;
 }
-
-
 
 .popup {
   display: inline-block;
@@ -287,6 +282,7 @@ const userStore = useUserStore();
   right: var(--nav-position-right);
   transition: var(--burger-transition);
   margin-top: 10px;
+  margin-left: -20px;
 }
 
 .popup-window legend {
@@ -302,6 +298,7 @@ const userStore = useUserStore();
   padding: 0;
   list-style-type: none;
 }
+
 
 .popup-window ul button {
   outline: none;

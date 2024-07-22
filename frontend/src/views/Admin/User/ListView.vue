@@ -1,5 +1,6 @@
 <template>
-  <div class="container-fluid">
+  <NavbarAdmin></NavbarAdmin>
+  <div class="container-fluid" style="margin-top: 6%;">
     <div class="row flex-nowrap">
       <header-menu />
       <div class="container" style="width: 86.8%">
@@ -54,7 +55,7 @@
                 </tbody>
                 <tbody v-else>
                   <tr>
-                    <td colspan="8" class="text-center siemreap">គ្មានអ្នកប្រើប្រាស់ដែលផ្គុំជូននូវលទ្ធផលនោះ</td>
+                    <td colspan="8" class="text-center siemreap">គ្មានអ្នកប្រើប្រាស់ឈ្មោះនេះទេ</td>
                   </tr>
                 </tbody>
               </table>
@@ -72,6 +73,7 @@ import { ref, onMounted, computed } from 'vue';
 import HeaderMenu from '../../../../src/Components/HeaderMenu.vue';
 import UserList from '../../../../src/Components/UserList.vue';
 import Swal from 'sweetalert2';
+import NavbarAdmin from '@/Components/NavbarAdmin.vue';
 
 // Reference for users, search term, and number range
 const users = ref([]);
@@ -137,7 +139,10 @@ const filteredUsers = computed(() => {
     filtered = filtered.filter(user =>
       user.name.toLowerCase().includes(term) ||
       user.email.toLowerCase().includes(term) ||
-      user.address.toLowerCase().includes(term)
+      user.phoneNumber.includes(term) || 
+      user.gender.toLowerCase().includes(term) || 
+      user.address.toLowerCase().includes(term) || 
+      user.profile.toLowerCase().includes(term)
     );
   }
 
@@ -155,6 +160,7 @@ const filteredUsers = computed(() => {
 // Fetch users on component mount
 onMounted(fetchUsers);
 </script>
+
 
 <style scoped>
 .siemreap {

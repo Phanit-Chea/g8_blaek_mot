@@ -23,9 +23,9 @@ class ChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048', 
-            'video' => ['nullable', 'file', new VideoWithAttributesValidationRule],
+            'description' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpg,png,jpeg,gif|max:2048', // Adjust the file types and size as needed
+            'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240', // Adjust the file types and size as needed
         ];
     }
 }

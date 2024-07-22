@@ -39,7 +39,7 @@
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^2.4.0",
-    "mapbox-gl": "^3.5.1",
+    "mapbox-gl": "^3.5.2",
     "ol": "^9.2.4",
     "pinia": "^2.1.7",
     "pinia-plugin-persist": "^1.0.0",

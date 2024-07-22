@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,42 +13,29 @@ use Illuminate\Queue\SerializesModels;
 class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $mailData;
+    public $user;
+    public $token;
+
     /**
      * Create a new message instance.
      */
-    public function __construct($mailData)
+    public function __construct(User $user, $token)
     {
-        $this->mailData = $mailData;
+        $this->user = $user;
+        $this->token = $token;
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Email Notification',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.sendEmail',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->from(config('mail.from.address'), config('mail.from.name'))
+            ->subject('Link for reset Password')
+            ->view('emails.sendEmail')
+            ->with([
+                'user' => $this->user,
+                'token' => $this->token,
+            ]);
     }
 }

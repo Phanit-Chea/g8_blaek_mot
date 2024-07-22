@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import HeaderMenu from '../../../../src/Components/HeaderMenu.vue'
+import NavbarAdmin from '@/Components/NavbarAdmin.vue';
 </script>
 <template>
-  <div class="container-fluid">
+  <navbar-admin></navbar-admin>
+  <div class="container-fluid" style="margin-top: 6%;">
     <div class="row flex-nowrap">
       <header-menu />
       <!-- Table  -->
