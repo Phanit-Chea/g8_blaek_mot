@@ -325,5 +325,4 @@ class FoodController extends Controller
             'current_date' => $currentDate
         ]);
     }
-
 }

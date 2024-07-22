@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="container">
     <div class="forget-password-card">
       <div class="card-header">
@@ -100,4 +100,8 @@ export default defineComponent({
   color: green;
   text-align: center;
 }
-</style> -->
+.siemreap {
+    font-family: 'Siemreap', cursive;
+    color: green;
+}
+</style>

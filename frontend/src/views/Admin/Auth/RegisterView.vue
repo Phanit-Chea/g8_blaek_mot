@@ -1,62 +1,71 @@
-
 <template>
-    <NavbarView></NavbarView>
+    <!-- <NavbarView></NavbarView> -->
 
 
-    <div class="container d-flex justify-content-center align-items-center mt-40 siemreap">
-        <section class="registerForm">
-            <header class="fw-bold text-success fs-3">បង្កើតគណនីថ្មី</header>
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <section class="registerForm card border-success shadow-sm p-4">
+            <header class="fw-bold text-success fs-3 text-center mb-4 siemreap">បង្កើតគណនីថ្មី</header>
             <form class="form" @submit.prevent="registerAccount">
-                <div class="input-box">
-                    <label>ឈ្មោះ</label>
-                    <input placeholder="សូមបញ្ចូលឈ្មោះរបស់អ្នក" type="text" v-model="form.name">
+                <div class="mb-3">
+                    <label class="form-label siemreap">ឈ្មោះ</label>
+                    <input class="form-control siemreap" placeholder="សូមបញ្ចូលឈ្មោះរបស់អ្នក" type="text"
+                        v-model="form.name" />
                 </div>
-                <div class="input-box">
-                    <label>លេខកូដសម្ងាត់</label>
-                    <input placeholder="សូមបញ្ចូលលេខកូដសម្ងាត់របស់អ្នក" type="password" v-model="form.password">
+                <div class="mb-3">
+                    <label class="form-label siemreap">លេខកូដសម្ងាត់</label>
+                    <input class="form-control" placeholder="សូមបញ្ចូលលេខកូដសម្ងាត់របស់អ្នក" type="password"
+                        v-model="form.password" />
                 </div>
-                <div class="input-box">
-                    <label>បញ្ជាក់លេខកូដសម្ងាត់</label>
-                    <input placeholder="សូមបញ្ជាក់លេខកូដរបស់អ្នក" type="password" v-model="form.confirmPassword">
+                <div class="mb-3">
+                    <label class="form-label siemreap">បញ្ជាក់លេខកូដសម្ងាត់</label>
+                    <input class="form-control" placeholder="សូមបញ្ជាក់លេខកូដរបស់អ្នក" type="password"
+                        v-model="form.confirmPassword" />
                 </div>
-                <div class="column">
-                    <div class="input-box">
-                        <label>អុីមែល</label>
-                        <input placeholder="សូមបញ្ចូលអុីមែលរបស់អ្នក" type="email" v-model="form.email">
+                <div class="row">
+                    <div class="col-md-6 mb-3 siemreap">
+                        <label class="form-label">អុីមែល</label>
+                        <input class="form-control" placeholder="សូមបញ្ចូលអុីមែលរបស់អ្នក" type="email"
+                            v-model="form.email" />
                     </div>
-                    <div class="input-box">
-                        <label>រូបភាពផ្ទាល់ខ្លួន</label>
-                        <input type="file" @change="handleFileUpload">
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="input-box">
-                        <label>លេខទូរស័ព្ទ</label>
-                        <input placeholder="Enter phone number" type="tel" v-model="form.phoneNumber">
-                    </div>
-                    <div class="input-box">
-                        <label>ថ្ងៃខែកំណើត</label>
-                        <input placeholder="Enter birth date" type="date" v-model="form.dateOfBirth">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label siemreap">រូបភាពផ្ទាល់ខ្លួន</label>
+                        <input class="form-control" type="file" @change="handleFileUpload" />
                     </div>
                 </div>
-                <div class="gender-box">
-                    <label>ភេទ</label>
-                    <div class="gender-option">
-                        <div class="gender">
-                            <input name="gender" id="check-female" type="radio" v-model="form.gender" value="female">
-                            <label for="check-female">ស្រី</label>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label siemreap">លេខទូរស័ព្ទ</label>
+                        <input class="form-control" placeholder="Enter phone number" type="tel"
+                            v-model="form.phoneNumber" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label siemreap">ថ្ងៃខែកំណើត</label>
+                        <input class="form-control" placeholder="Enter birth date" type="date"
+                            v-model="form.dateOfBirth" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label siemreap">ភេទ</label>
+                    <div class="d-flex justify-content-start">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" name="gender" id="check-female" type="radio"
+                                v-model="form.gender" value="female" />
+                            <label class="form-check-label" for="check-female siemreap">ស្រី</label>
                         </div>
-                        <div class="gender">
-                            <input name="gender" id="check-male" type="radio" v-model="form.gender" value="male">
-                            <label for="check-male">ប្រុស</label>
+                        <div class="form-check">
+                            <input class="form-check-input" name="gender" id="check-male" type="radio"
+                                v-model="form.gender" value="male" />
+                            <label class="form-check-label" for="check-male siemreap">ប្រុស</label>
                         </div>
                     </div>
                 </div>
-                <div class="input-box address">
-                    <label>អាស័យដ្ធាន</label>
-                    <input placeholder="សូមបញ្ចូលអាស័យដ្ធានរបស់អ្នក" type="text" v-model="form.address">
+                <div class="mb-3">
+                    <label class="form-label siemreap">អាស័យដ្ធាន</label>
+                    <input class="form-control" placeholder="សូមបញ្ចូលអាស័យដ្ធានរបស់អ្នក" type="text"
+                        v-model="form.address" />
                 </div>
-                <button type="submit">បង្កើតអាខោន</button>
+                <button type="submit" class="btn btn-success w-100 siemreap">បង្កើតអាខោន</button>
+                <a href="/login" class="text-success siemreap">ចូលទៅកាន់គណនីរបស់អ្នក</a><br />
             </form>
         </section>
     </div>
@@ -64,7 +73,7 @@
 
 
 
-    <FooterView></FooterView>
+    <!-- <FooterView></FooterView> -->
 </template>
 <script lang="ts">
 import NavbarView from '../../Web/Navbar/NavbarView.vue';
@@ -74,78 +83,79 @@ import { useAuthStore } from '../../../stores/auth-store';
 import { useUserStore } from '../../../stores/userStore';
 
 export default {
-  components: {
-    NavbarView,
-    FooterView,
-  },
-  data() {
-    return {
-      form: {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        dateOfBirth: '',
-        gender: '',
-        phoneNumber: '',
-        profile: '',
-        address: ''
-      }
-    };
-  },
-  methods: {
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-      this.form.profile = file;
+    components: {
+        NavbarView,
+        FooterView,
     },
-    async registerAccount() {
-      const userStore = useUserStore();
-      const authStore = useAuthStore();
+    data() {
+        return {
+            form: {
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                dateOfBirth: '',
+                gender: '',
+                phoneNumber: '',
+                profile: '',
+                address: ''
+            }
+        };
+    },
+    methods: {
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            this.form.profile = file;
+        },
+        async registerAccount() {
+            const userStore = useUserStore();
+            const authStore = useAuthStore();
 
-      const formData = new FormData();
-      formData.append('name', this.form.name);
-      formData.append('email', this.form.email);
-      formData.append('password', this.form.password);
-      formData.append('confirmPassword', this.form.confirmPassword);
-      formData.append('dateOfBirth', this.form.dateOfBirth);
-      formData.append('gender', this.form.gender);
-      formData.append('phoneNumber', this.form.phoneNumber);
-      formData.append('profile', this.form.profile);
-      formData.append('address', this.form.address);
+            const formData = new FormData();
+            formData.append('name', this.form.name);
+            formData.append('email', this.form.email);
+            formData.append('password', this.form.password);
+            formData.append('confirmPassword', this.form.confirmPassword);
+            formData.append('dateOfBirth', this.form.dateOfBirth);
+            formData.append('gender', this.form.gender);
+            formData.append('phoneNumber', this.form.phoneNumber);
+            formData.append('profile', this.form.profile);
+            formData.append('address', this.form.address);
 
-      try {
-        const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/register', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
-        console.log('Registration response:', response.data);
+                console.log('Registration response:', response.data);
 
-        // Assuming the response contains the user data and access token
-        const user = response.data.user;
-        const profileImage = user.profile;
-        const accessToken = response.data.access_token;
-        const isAuthenticated = true;
+                // Assuming the response contains the user data and access token
+                const user = response.data.user;
+                const profileImage = user.profile;
+                const accessToken = response.data.access_token;
+                const isAuthenticated = true;
 
-        console.log('Access token:', accessToken);
+                console.log('Access token:', accessToken);
 
-        // Store the profile image and access token in Pinia
-        authStore.login(profileImage, accessToken,isAuthenticated);
-        userStore.setUser(user);
-        this.$router.push('/');
-      } catch (error) {
-        console.error(error);
-        alert('Registration failed. Please try again.');
-      }
+                // Store the profile image and access token in Pinia
+                authStore.login(profileImage, accessToken, isAuthenticated);
+                userStore.setUser(user);
+                this.$router.push('/');
+            } catch (error) {
+                console.error(error);
+                alert('Registration failed. Please try again.');
+            }
+        }
     }
-  }
 }
 </script>
 
 <style>
 .siemreap {
     font-family: 'Siemreap', cursive;
+    color: green;
 }
 
 .registerForm {

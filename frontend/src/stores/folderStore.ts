@@ -1,7 +1,12 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useFolderStore = defineStore('folder', {
   state: () => ({
-    food:[]
-  })
-})
+    folderId: null,
+  }),
+  actions: {
+    setFolderId(id) {
+      this.folderId = id;
+    },
+  },
+});

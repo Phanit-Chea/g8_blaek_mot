@@ -80,14 +80,19 @@ const routes = [
         component: () => import('@/views/Web/User/Schedule/ListView.vue')
     },
     {
-        path: '/user/folder/:id',
-        name: 'folder-list',
-        component: () => import('../views/Web/User/Folder.vue')
+        path: '/user/folder',
+        name: 'user/folder',
+        component: () => import('@/views/Web/User/Folder.vue')
     },
     {
         path: '/user/edit',
         name: 'user/edit',
         component: () => import('@/views/Web/User/EditProfile.vue')
+    },
+    {
+        path: '/user/store',
+        name: 'user/store',
+        component: () => import('@/views/Web/User/StoreFood.vue')
     }
     ,
     {

@@ -2,15 +2,27 @@
   <navbar-view-vue />
   <div class="container-fluid" style="margin-top: 11.03%">
     <div class="row flex-nowrap">
-      <user-profile-sidebar-vue @folderSelected="onFolderSelected" />
+      <user-profile-sidebar-vue />
       <div class="col py-3">
         <div class="container mx-auto mt-4">
           <div class="row d-flex">
+            <!-- Displaying saves -->
             <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.id">
-              <img :src="`http://127.0.0.1:8000/${save.image}`" class="card-img" alt="..." />
+              <router-link
+                :to="{ name: 'food-detail', params: { id: save.save_food_id } }"
+                class="nav-link"
+              >
+                <img :src="`http://127.0.0.1:8000/${save.image}`" class="card-img" alt="..." />
+              </router-link>
               <div class="card-body d-flex justify-content-between px-0">
                 <h4 class="card-title text-dark">{{ save.name }}</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+                <button
+                  class="btn text-danger"
+                  data-target="#delete"
+                  @click="deleteSavefood(save.save_food_id)"
+                >
+                  <i class="fs-1 align-middle material-icons">bookmark_remove</i>
+                </button>
               </div>
             </div>
           </div>
@@ -24,12 +36,10 @@
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue'
 import NavbarViewVue from '../Navbar/NavbarView.vue'
 import { useUserStore } from '@/stores/userStore.ts'
-import {useAuthStore} from '@/stores/auth-store.ts'
+import { useAuthStore } from '@/stores/auth-store.ts'
 import { useFolderStore } from '@/stores/folderStore'
 import axiosInstance from '@/plugins/axios'
-import { useRoute } from 'vue-router'
-import { constants } from 'buffer'
-const route = useRoute()
+
 export default {
   components: {
     userProfileSidebarVue,
@@ -44,31 +54,54 @@ export default {
   mounted() {
     this.fetchFolder()
   },
+  watch: {
+    folderId(newFolderId) {
+      this.fetchFolder(newFolderId)
+    }
+  },
   methods: {
-    onFolderSelected(folderId) {
-      // alert('Received folderId:', folderId)
-      this.selectedFolderId = folderId
-      this.fetchFolder()
-    },
-    async fetchFolder() {
-      const userStore = useUserStore();
-      const userAuth = useAuthStore();
+    async fetchFolder(folderId) {
+      const userAuth = useAuthStore()
+      const folderStore = useFolderStore() // Access folderStore
+
+      // Get the folder ID from the store or use the passed folderId
+      folderId = folderId || folderStore.folderId
+
       try {
-        const response = await axiosInstance.get(`/save/list/${this.selectedFolderId|8}`, {
+        const response = await axiosInstance.get(`/save/list/${folderId}`, {
           headers: {
             Authorization: `Bearer ${userAuth.accessToken}`,
             'Content-Type': 'application/json'
           }
         })
         this.saves = response.data.data
+        // Optionally handle success
         console.log('Fetched saves:', this.saves)
       } catch (error) {
         console.error('Error fetching saves:', error)
+        // Optionally handle error, e.g., display a message to the user
       }
+    },
+    async deleteSavefood(foodId) {
+      try {
+        const response = await axiosInstance.delete(`/save/delete/${foodId}`)
+        if (response.data.success) {
+          this.fetchFolder()
+        }
+      } catch (error) {
+        console.error('Error deleting food:', error)
+      }
+    }
+  },
+  computed: {
+    folderId() {
+      return useFolderStore().folderId
     }
   }
 }
 </script>
+
+
 
 <style scoped>
 .card {

@@ -28,7 +28,7 @@
         </li>
 
         <li class="nav-item mt-2">
-          <router-link to="" class="nav-link px-0 align-middle mb-4">
+          <router-link to="/user/store" class="nav-link px-0 align-middle mb-4">
             <i class="fs-4 text-white align-middle material-icons">schedule</i>
             <span class="ms-1 d-none d-sm-inline text-white siemreap">បានមើលថ្មីៗ</span>
           </router-link>
@@ -53,16 +53,14 @@
           id="menu"
         >
           <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
-            <router-link
-              :to="{ name: 'folder-list', params: { id: folder.id } }"
-              @click="selectFolder(folder.id)"
+            <div
+              @click="storeFolderId(folder.id)"
               class="link-folder nav-link px-3 align-middle d-flex justify-content-between align-items-center"
             >
-              <div>
-                <i class="fs-4 text-white align-middle material-icons">folder</i>
-                <span class="d-none d-sm-inline text-white siemreap">{{ folder.folder_name }}</span>
-              </div>
-            </router-link>
+              <i class="fs-4 text-white align-middle material-icons">folder</i>
+              <span class="d-none d-sm-inline text-white siemreap">{{ folder.folder_name }}</span>
+            </div>
+
             <a
               class="btn"
               @click.stop="toggleOptions(folder.id)"
@@ -76,7 +74,7 @@
                 <button
                   @click="deleteFolder(folder.id)"
                   class="btn btn-danger btn-sm"
-                  style="width: 70%"
+                  style="margin-right: 5px;"
                 >
                   លុប
                 </button>
@@ -211,6 +209,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/auth-store'
 import { useUserStore } from '../../stores/userStore'
+import { useFolderStore } from '../../stores/folderStore'
 import { METHODS } from 'http'
 
 const useAuth = useAuthStore()
@@ -230,17 +229,16 @@ const toggleOptions = (folderId: number) => {
 
 const deleteFolder = async (folderId: number) => {
   try {
-   const userStore = useUserStore()
-   
+    const userStore = useUserStore()
+
     const response = await axios.delete(`http://127.0.0.1:8000/api/folder/delete/${folderId}`, {
       headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+        Authorization: `Bearer ${userStore.user.remember_token}`,
+        'Content-Type': 'application/json'
+      }
     })
 
     if (response.data.success) {
-      
       folders.value = folders.value.filter((folder) => folder.id !== folderId)
     } else {
       alert('Failed to delete folder')
@@ -260,9 +258,9 @@ const createFolder = async () => {
       { folder_name: folder_name.value },
       {
         headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+          Authorization: `Bearer ${userStore.user.remember_token}`,
+          'Content-Type': 'application/json'
+        }
       }
     )
 
@@ -292,10 +290,9 @@ const renameFolder = async () => {
       { folder_name: renamingFolderName.value },
       {
         headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
-
+          Authorization: `Bearer ${userStore.user.remember_token}`,
+          'Content-Type': 'application/json'
+        }
       }
     )
 
@@ -317,11 +314,11 @@ const renameFolder = async () => {
 const fetchFolders = async () => {
   try {
     const userStore = useUserStore()
-    const response = await axios.get('http://127.0.0.1:8000/api/folder/list', {
-       headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
-          }
+    const response = await axios.get('http://127.0.0.1:8000/api/folder/list/byUser', {
+      headers: {
+        Authorization: `Bearer ${userStore.user.remember_token}`,
+        'Content-Type': 'application/json'
+      }
     })
       folders.value = response.data.data
   } catch (error) {
@@ -334,10 +331,12 @@ onMounted(() => {
   fetchFolders()
 })
 
-const methods = {
-  selectFolder(folderId) {
-    this.$emit('folderSelected', folderId)
-  }
+const storeFolderId = (id: number) => {
+  const folderStore = useFolderStore()
+  folderStore.setFolderId(id)
+  
+  router.push('/user/folder')
+  // alert(`Folder ID stored: ${folderStore.folderId}`)
 }
 </script>
 

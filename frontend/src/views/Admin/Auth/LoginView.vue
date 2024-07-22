@@ -1,38 +1,39 @@
 <template>
   <div class="container">
-    <div class="login-card">
-      <div class="card-header">
-        <div class="log">Login</div>
+    <div class="login-card card border-success mb-3">
+      <div class="card-header " style="background-color: green; ">
+        <h3 class="log text-white​​ siemreap" style="color: white;">ចូលទៅកាន់គណនីរបស់អ្នក</h3>
       </div>
-      <form class="form" @submit.prevent="login">
+      <form class="form card-body" @submit.prevent="login">
         <div class="form-group">
-          <label for="email">Email</label>
-          <input required name="email" id="email" type="text" v-model="formData.email" />
+          <label for="email" class="text-success siemreap">អុីមែល</label>
+          <input required name="email" id="email" type="text" class="form-control" v-model="formData.email" />
         </div>
         <div class="form-group">
-          <label for="password">Password:</label>
-          <div class="password-input-container">
-            <input
-              required
-              name="password"
-              id="password"
-              :type="showPassword ? 'text' : 'password'"
-              v-model="formData.password"
-            />
-            <button type="button" class="toggle-password-btn" @click="togglePassword">
+          <label for="password" class="text-success siemreap">លេខកូដសម្ងាត់:</label>
+          <div class="password-input-container position-relative">
+            <input required name="password" id="password" :type="showPassword ? 'text' : 'password'"
+              class="form-control" v-model="formData.password" />
+            <button type="button"
+              class="toggle-password-btn btn btn-outline-success position-absolute end-0 top-50 translate-middle-y me-2"
+              @click="togglePassword">
               <i class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</i>
             </button>
           </div>
         </div>
         <div class="form-group">
-          <button type="submit" class="submit" :disabled="loading">Sign in</button>
+          <button type="submit" class="btn btn-success w-100 siemreap" :disabled="loading">
+            ចូលទៅគណនី
+          </button>
         </div>
-        <p class="signup-link">
-          No account?
-          <a href="/register">Register your account?</a> <br />
-          <a @click="showForgotPasswordModal" class="forget_password text-primary">Forgot password?</a>
+        <p class="signup-link text-center mt-3 siemreap">
+          មិនមែនគណនីមែនទេ
+          <a href="/register" class="text-success siemreap">បង្កើតគណនីថ្មី៕</a><br />
+          <a @click="showForgotPasswordModal" class="forget_password text-success siemreap">ភ្លេចលេខកូដសម្ងាត់មែនទេ?</a>
         </p>
-        <p v-if="errorMessage" class="error-message text-danger">{{ errorMessage }}</p>
+        <p v-if="errorMessage" class="error-message text-danger text-center mt-2">
+          {{ errorMessage }}
+        </p>
       </form>
     </div>
 
@@ -40,72 +41,44 @@
       <div v-if="showModal" class="modal">
         <div class="modal-content">
           <span class="close" @click="closeModal">&times;</span>
-          <h2 v-if="!showResetForm">Forgot Password</h2>
+          <h2 v-if="!showResetForm" class="siemreap">ភ្លេចលេខកូដសម្ងាត់</h2>
           <h2 v-else>Reset Password</h2>
           <form v-if="!showResetForm" @submit.prevent="sendResetLink">
             <div class="form-group">
-              <label for="reset-email">Email</label>
-              <input
-                required
-                name="reset-email"
-                id="reset-email"
-                type="text"
-                v-model="resetEmail"
-              />
+              <label for="reset-email" class="siemreap">អុីមែល</label>
+              <input required name="reset-email" id="reset-email" type="text" v-model="resetEmail" placeholder="សូមបញ្ចូលគណនីរបស់អ្នក"/>
             </div>
             <div class="form-group">
               <button type="submit" class="submit" :disabled="loading">
-                <span v-if="loading">Sending...</span>
-                <span v-else>Send Link Reset</span>
+                <span v-if="loading" class="siemreap text-light">Sending...</span>
+                <span v-else class="siemreap​">ផ្ញើតំណរភ្ជាប់ដើម្បីផ្លាស់ប្តូរ</span>
               </button>
             </div>
           </form>
           <form v-else @submit.prevent="resetPassword">
             <div class="form-group">
-              <label for="reset-email">Email</label>
-              <input
-                required
-                name="reset-email"
-                id="reset-email"
-                type="text"
-                v-model="resetEmail"
-              />
+              <label for="reset-email" class="siemreap">អុីមែល</label>
+              <input required name="reset-email" id="reset-email" type="text" v-model="resetEmail" />
             </div>
             <div class="form-group">
-              <label for="reset-token">Reset Token</label>
-              <input
-                required
-                name="reset-token"
-                id="reset-token"
-                type="text"
-                v-model="resetToken"
-              />
+              <label for="reset-token" class="siemreap">និទ្ឋេសកូដសម្រាប់កំណត់ឡើងវិញ</label>
+              <input required name="reset-token" id="reset-token" type="text" v-model="resetToken" />
             </div>
             <div class="form-group">
-              <label for="new-password">New Password</label>
+              <label for="new-password" class="siemreap">លេខកូដសម្ងាត់ថ្មី</label>
               <div class="password-input-container">
-                <input
-                  required
-                  name="new-password"
-                  id="new-password"
-                  :type="showNewPassword ? 'text' : 'password'"
-                  v-model="newPassword"
-                />
+                <input required name="new-password" id="new-password" :type="showNewPassword ? 'text' : 'password'"
+                  v-model="newPassword" />
                 <button type="button" class="toggle-password-btn" @click="toggleNewPassword">
                   <i class="material-icons">{{ showNewPassword ? 'visibility_off' : 'visibility' }}</i>
                 </button>
               </div>
             </div>
             <div class="form-group">
-              <label for="confirm-password">Confirm Password</label>
+              <label for="confirm-password" class="siemreap">ទទួលយកលេខកូដសម្ងាត់ថ្មី</label>
               <div class="password-input-container">
-                <input
-                  required
-                  name="confirm-password"
-                  id="confirm-password"
-                  :type="showConfirmPassword ? 'text' : 'password'"
-                  v-model="confirmPassword"
-                />
+                <input required name="confirm-password" id="confirm-password"
+                  :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" />
                 <button type="button" class="toggle-password-btn" @click="toggleConfirmPassword">
                   <i class="material-icons">{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</i>
                 </button>
@@ -113,8 +86,8 @@
             </div>
             <div class="form-group">
               <button type="submit" class="submit" :disabled="loading">
-                <span v-if="loading">Resetting...</span>
-                <span v-else>Reset Password</span>
+                <span v-if="loading" class="siemreap text-light">កំពុងផ្លាស់ប្តូរ...</span>
+                <span v-else class="siemreap text-light">ផ្លាស់ប្តូរលេខកូដគណនី</span>
               </button>
             </div>
           </form>
@@ -313,29 +286,37 @@ input[type='password'] {
   border-radius: 4px;
   box-sizing: border-box;
   transition: 0.5s;
+  font-family: 'Siemreap', cursive;
 }
 
 button[type='submit'] {
   width: 100%;
-  background-color: #333;
+  background-color: green;
   color: white;
   padding: 10px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-family: 'Siemreap', cursive;
 }
 
 button[type='submit']:hover {
   background-color: #ccc;
-  color: black;
+  color: green;
+  font-family: 'Siemreap', cursive;
 }
-.modal-fade-enter-active, .modal-fade-leave-active {
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
   transition: opacity 0.5s;
 }
-.modal-fade-enter, .modal-fade-leave-to {
+
+.modal-fade-enter,
+.modal-fade-leave-to {
   opacity: 0;
 }
+
 .modal {
   display: block;
   position: fixed;
@@ -372,16 +353,20 @@ button[type='submit']:hover {
   text-decoration: none;
   cursor: pointer;
 }
-.forget_password{
+
+.forget_password {
   cursor: pointer;
 }
+
 .password-input-container {
   position: relative;
 }
 
 .password-input-container input {
-  width: calc(100% - 40px); /* Adjust based on the button size */
-  padding-right: 40px; /* Adjust based on the button size */
+  width: calc(100% - 40px);
+  /* Adjust based on the button size */
+  padding-right: 40px;
+  /* Adjust based on the button size */
 }
 
 .toggle-password-btn {
@@ -397,6 +382,39 @@ button[type='submit']:hover {
 
 .toggle-password-btn i {
   font-size: 1.2rem;
-  color: #000; /* Adjust color as needed */
+  color: #000;
+  /* Adjust color as needed */
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  padding-right: 40px;
+  /* Adjust padding to fit the icon */
+  width: 100%;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 10px;
+  /* Adjust to position correctly */
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password-btn i {
+  font-size: 24px;
+  /* Adjust icon size */
+}
+.siemreap {
+    font-family: 'Siemreap', cursive;
+    color: green;
 }
 </style>
