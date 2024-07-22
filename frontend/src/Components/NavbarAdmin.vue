@@ -48,7 +48,7 @@
             <img
               :src="`http://127.0.0.1:8000/${userStore.user.profile}`"
               alt="login"
-              width="45px"
+              width="50px"
             />
           </div>
           <div v-else>
