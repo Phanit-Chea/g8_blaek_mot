@@ -19,5 +19,13 @@ class Chat extends Model
         'active',
         'group_id'
     ];
+    public function sender(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'from_user');
+    }
+    public function receiver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'to_user');
+    }
 
 }

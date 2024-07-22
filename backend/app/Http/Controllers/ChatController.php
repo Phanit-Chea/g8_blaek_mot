@@ -9,12 +9,19 @@ use App\Http\Resources\ChatListResource;
 use App\Http\Resources\ChatResource;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Psr\Log\NullLogger;
+
+use function Laravel\Prompts\select;
+
 
 class ChatController extends Controller
 {
@@ -38,12 +45,14 @@ class ChatController extends Controller
     public function storeUser(ChatRequest $request, int $to_user)
     {
         $from_user = Auth::id();
+    
         if ($from_user === null) {
             return response()->json(['error' => 'User is not authenticated'], 401);
         }
 
         try {
             $imagePath = null;
+    
             if ($request->hasFile('image')) {
                 $img = $request->file('image');
                 $ext = $img->getClientOriginalExtension();
@@ -52,42 +61,35 @@ class ChatController extends Controller
                 $img->move(public_path($profilePath), $imageName);
                 $imagePath = $profilePath . '/' . $imageName;
             }
-
-            $chatData = [
+    
+            $description = $request->input('description');
+            $video = $request->input('video');
+    
+            if (is_null($description) && is_null($imagePath) && is_null($video)) {
+                return response()->json(['error' => 'Cannot create chat without content'], 400);
+            }
+    
+            $chat = Chat::create([
                 'from_user' => $from_user,
                 'to_user' => $to_user,
-                'description' => $request->input('description'),
+                'description' => $description,
                 'image' => $imagePath,
-                'video' => $request->input('video'),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ];
-
-            $chat = Chat::create($chatData);
-
-            $response = [
-                'to_user' => $chat->to_user,
-                'from_user' => $chat->from_user,
-                'description' => $chat->description,
-                'image' => $chat->image,
-                'video' => $chat->video,
-                'created_at' => $chat->created_at,
-                'updated_at' => $chat->updated_at,
-            ];
-
-            return response()->json($response, 201);
+                'video' => $video,
+                'active' =>false,
+                
+            ]);
+    
+            return response()->json(new ChatResource($chat), 201);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    
 
 
 
-    /**
-     * Display the specified resource.
-     */
-    // ChatController.php
-    // ChatController.php
+
+
     public function show($to_user)
     {
         $from_user = Auth::id();

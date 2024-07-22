@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email</title>
+    <title>Welcome to Blaek Mot</title>
 </head>
 <body>
-    <h1>{{ $title }}</h1>
-    <p>{{ $body }}</p>
-    <footer>{{ $footer }}</footer>
+    <h1>Here is your new code!</h1>
+    <a>{{ $token }}</p>
+    <p>Please paste this code to your resode code and create new password.</p>
+    <p>Thank you!!!!</p>
 </body>
 </html>

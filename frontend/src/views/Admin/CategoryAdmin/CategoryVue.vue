@@ -22,14 +22,12 @@
             <thead>
               <tr>
                 <th class="text-center">ប្រភេទមុខម្ហូប</th>
-                <th class="text-center">ប្រភេទ</th>
                 <th class="text-center">ព័ណ៌មានលំអិត</th>
                 <th class="text-center">សកម្មភាព</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="category in categories" :key="category.id">
-                <td class="text-center">{{ category.name }}</td>
                 <td class="text-center">{{ category.title }}</td>
                 <td class="text-center">{{ category.description }}</td>
                 <td class="text-center">
@@ -88,16 +86,8 @@
                       required
                     />
                   </div>
-                  <div class="mb-3">
-                    <label for="name" class="form-label">ឈ្មោះមុខម្ហូប</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="name"
-                      v-model="newCategory.name"
-                      required
-                    />
-                  </div>
+             
+         
                   <div class="mb-3">
                     <label for="image" class="form-label">រូបភាព</label>
                     <input
@@ -153,10 +143,7 @@
                 <label for="title" class="form-label">Category Title:</label>
                 <input type="text" class="form-control" v-model="editCategory.title" id="title" required />
               </div>
-              <div class="mb-3">
-                <label for="name" class="form-label">Category Name:</label>
-                <input type="text" class="form-control" v-model="editCategory.name" id="name" required />
-              </div>
+           
               <div class="mb-3">
                 <label for="description" class="form-label">Category Description:</label>
                 <textarea class="form-control" v-model="editCategory.description" id="description" rows="3" required></textarea>
@@ -186,7 +173,7 @@ import axios from 'axios';
 interface Category {
   id: number;
   title: string;
-  name: string;
+
   description: string;
   image: string;
 }
@@ -196,14 +183,14 @@ const categories = ref<Category[]>([]);
 const newCategory = ref<Category>({
   id: 0,
   title: '',
-  name: '',
+
   description: '',
   image: ''
 });
 const editCategory = ref<Category>({
   id: 0,
   title: '',
-  name: '',
+
   description: '',
   image: ''
 });
@@ -239,7 +226,6 @@ const createCategory = async () => {
   try {
     const formData = new FormData();
     formData.append('title', newCategory.value.title);
-    formData.append('name', newCategory.value.name);
     formData.append('description', newCategory.value.description);
     if (selectedFile) {
       formData.append('image', selectedFile);
@@ -252,7 +238,7 @@ const createCategory = async () => {
     });
 
     categories.value.push(response.data); // Assuming response.data contains the new category object
-    newCategory.value = { id: 0, title: '', name: '', description: '', image: '' }; // Reset newCategory after successful creation
+    newCategory.value = { id: 0, title: '', description: '', image: '' }; // Reset newCategory after successful creation
     fetchCategories(); // Refresh category list
     location.reload();
   } catch (error) {
@@ -265,7 +251,6 @@ const updateCategory = async () => {
   try {
     const formData = new FormData();
     formData.append('title', editCategory.value.title);
-    formData.append('name', editCategory.value.name);
     formData.append('description', editCategory.value.description);
     if (selectedFile) {
       formData.append('image', selectedFile, selectedFile.name);

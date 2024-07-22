@@ -5,10 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UpdateProfileResource;
 use App\Http\Resources\userRegisterResource;
+use App\Mail\PasswordResetSuccess;
+use App\Mail\SendMail;
+use App\Models\PasswordReset;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,7 +38,7 @@ class AuthController extends Controller
         $user = Auth::user();
 
         // Log incoming request data
-        \Log::info('Update profile request received', $request->all());
+        Log::info('Update profile request received', $request->all());
 
         // Validate the request data
         $validatedData = $request->validate([
@@ -61,7 +67,7 @@ class AuthController extends Controller
         $userData = $user->toArray();
         // $userData['remember_token'] = $user->remember_token;
 
-        \Log::info('Profile updated successfully', $userData);
+        Log::info('Profile updated successfully', $userData);
 
         return response()->json([
             'success' => true,
@@ -91,8 +97,9 @@ class AuthController extends Controller
         //
     }
 
-    public function register(Request $request)
+   public function register(Request $request)
     {
+        Log::info('Register request data: ', $request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -100,8 +107,8 @@ class AuthController extends Controller
             'confirmPassword' => 'required|same:password',
             'dateOfBirth' => 'required|date',
             'gender' => 'required|string',
-            'phoneNumber' => 'required|string',
             'address' => 'required|string',
+            'phoneNumber' => 'required|string',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -110,7 +117,7 @@ class AuthController extends Controller
                 'message' => 'Validation errors',
                 'errors' => $validator->errors(),
                 'success' => false
-            ], 422);
+            ], 404);
         }
     
         $img = $request->file('profile');
@@ -127,9 +134,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'dateOfBirth' => $request->dateOfBirth,
             'gender' => $request->gender,
-            'phoneNumber' => $request->phoneNumber,
             'address' => $request->address,
-            'profile' => $profile
+            'profile' => $profile,
+            'phoneNumber' => $request->phoneNumber
         ]);
         $token  = $user->createToken('auth_token')->plainTextToken;
         $user->remember_token = $token;
@@ -138,7 +145,19 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'User created successfully',
             'success' => true,
-            'user' => new userRegisterResource($user)
-        ], 201);
+            'user' => new userRegisterResource($user),
+        ], 200);
+    }
+    //logout
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->currentAccessToken()->delete();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Logout failed. Please try again.'], 404);
+        }
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
     }
 }

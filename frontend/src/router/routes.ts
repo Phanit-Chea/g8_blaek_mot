@@ -1,4 +1,6 @@
 import ChatVue from '@/views/chat/ChatVue.vue'
+import path from 'path';
+import ChatView from '@/views/chat/ChatVue.vue'
 const routes = [
     {
         path: '/admin/dashboard',
@@ -36,8 +38,8 @@ const routes = [
         component: () => import('@/views/Admin/Auth/RegisterView.vue')
     },
     {
-        path: '/resetpassword',
-        name: 'resetpassword',
+        path: '/resetPassword',
+        name: 'resetPassword',
         component: () => import('@/views/Admin/Auth/ResetPasswordView.vue')
     }
 
@@ -73,20 +75,30 @@ const routes = [
         component: () => import('@/views/Web/User/SaveRecipes.vue')
     },
     {
+        path: '/user/schedule',
+        name: 'user/schedule',
+        component: () => import('@/views/Web/User/Schedule/ListView.vue')
+    },
+    {
         path: '/user/folder',
         name: 'user/folder',
-        component: () => import('../views/Web/User/Folder.vue')
+        component: () => import('@/views/Web/User/Folder.vue')
     },
     {
         path: '/user/edit',
         name: 'user/edit',
         component: () => import('@/views/Web/User/EditProfile.vue')
+    },
+    {
+        path: '/user/store',
+        name: 'user/store',
+        component: () => import('@/views/Web/User/StoreFood.vue')
     }
     ,
     {
         path: '/chat',
         name: 'chat',
-        component: ChatVue,
+        component: ChatView,
     },
     {
         path: '/aboutUsUpdateForm',
@@ -138,6 +150,11 @@ const routes = [
         name: 'notFound',
         component: () => import('../views/404notFound/NotFound.vue')
     },
+    {
+        path: '/forgotPassword',
+        name: 'forgotPassword',
+        component:()=>import('@/views/Admin/Auth/FogetPasswordView.vue')
+    }
 
 
 

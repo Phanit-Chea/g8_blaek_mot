@@ -141,6 +141,8 @@
 
       </div>
     </div>
+
+    <!-- Right side: Message input and chat -->
     <div class="card card-r">
       <div v-if="selectedUser != null" class="full-height" style="height: 100vh;">
         {{ selectedUser }}
@@ -345,11 +347,7 @@ export default defineComponent({
 
   data() {
     return {
-      groupData: [] as Array<{
-        name: string,
-
-      }>
-      ,
+      groupData: [] as Array<{ name: string }>,
       groupCreated: false,
       createdGroupName: '',
       listUser: [] as Array<{
@@ -410,10 +408,10 @@ export default defineComponent({
       formData: {
         image: null as File | null,
         video: null as File | null,
-        description: null as string | null,
       },
     };
   },
+
   computed: {
     filteredUsers() {
       return this.listUser.filter(user =>
@@ -421,240 +419,104 @@ export default defineComponent({
       );
     },
   },
+
   methods: {
-    async fetchGroup() {
-      const userAuth = useAuthStore();
-      const userStore = useUserStore();
-
-      try {
-        const response = await axiosInstance.get('/group/fetch/messages', {
-          headers: {
-            Authorization: `Bearer ${userAuth.accessToken}`,
-          },
-        });
-        if (response.status === 200) {
-          this.fetchGroupList = response.data; // Ensure listUser is reactive if using Composition API
-          console.log('Fetched group list:', this.fetchGroupList);
-          this.currentUserId = userStore.user.id
-        }
-      } catch (error) {
-        console.error('Failed to fetch user list:', error);
-      }
-    },
-
-
     async fetchUsers() {
-      const userAuth = useAuthStore();
-      const userStore = useUserStore();
-      const chatStore = useChatStore();
-
       try {
-        const response = await axiosInstance.get('/chat/allUser/Chat', {
-          headers: {
-            Authorization: `Bearer ${userAuth.accessToken}`,
-          },
-        });
-
-        if (response.status === 200) {
-          this.listUser = response.data;
-          console.log('Fetched user list:', this.listUser);
-
-
-          if (userStore.user && userStore.user.id) {
-            this.currentUserId = userStore.user.id;
-          } else {
-            console.error('Current user ID is not available in userStore.');
-          }
-        } else {
-          console.error('Failed to fetch user list:', response.statusText);
-        }
+        const response = await axiosInstance.get('/userList');
+        this.listUser = response.data.users;
       } catch (error) {
-        console.error('Failed to fetch user list:', error);
+        console.error('Failed to fetch users:', error);
       }
     },
-    async fetchChats(receiverId) {
+
+    async fetchGroups() {
       try {
-        const userAuth = useAuthStore();
-        const userStore = useUserStore();
-
-        const response = await axiosInstance.get(`/chat/list/chat/${receiverId}`, {
-          headers: {
-            Authorization: `Bearer ${userAuth.accessToken}`,
-          },
-        });
-
-        if (response.status === 200) {
-          this.allChats = response.data.allChats;
-          console.log('Fetched chats:', this.allChats);
-          this.currentUserId = userStore.user.id;
-          console.log('Current user ID:', this.currentUserId);
-        } else {
-          console.error('Failed to fetch chats - Status:', response.status);
-        }
+        const response = await axiosInstance.get('/groupList');
+        this.fetchGroupList = response.data.groups;
       } catch (error) {
-        console.error('Error fetching chats:', error);
+        console.error('Failed to fetch groups:', error);
       }
     },
-    async handleUserClick(user) {
+
+    handleUserClick(user) {
       this.selectedUser = user;
-      console.log(this.selectedUser);
+      this.fetchChats(user.id);
+    },
 
+    async fetchChats(userId) {
       try {
-        const chatId = this.selectedUser.latest_chat.id; // Ensure chatId is set correctly
-        const response = await axiosInstance.post(`/chats/${chatId}/update-active`, {
-          active: 1,
-        });
-
-        this.fetchUsers();
-        console.log('Chat updated:', response.data);
-
-        // Call fetchChats with selectedUser.id
-        this.fetchChats(this.selectedUser.id);
-        this.fetchUnreadChats();
+        const response = await axiosInstance.get(`/chats/${userId}`);
+        this.allChats = response.data.chats;
       } catch (error) {
-        console.error('Error updating chat:', error);
+        console.error('Failed to fetch chats:', error);
       }
-    }
-    ,
+    },
 
-    openFileInput() {
-      const input = this.$refs.fileInput as HTMLInputElement;
-      if (input) {
-        input.click();
-      }
-    },
-    handleFileUpload() {
-      const input = this.$refs.fileInput as HTMLInputElement;
-      if (input.files && input.files.length > 0) {
-        const file = input.files[0];
-        this.formData.image = file;
-        console.log(this.formData.image);
-      }
-    },
     async sendMessage() {
-      const userStore = useUserStore();
-      const userAuth = useAuthStore();
+      if (!this.description.trim()) return;
 
-      if (!this.selectedUser) {
-        alert('No user selected.');
-        return;
-      }
-
-      const to_user = this.selectedUser.id;
-      const formData = new FormData();
-      formData.append('description', this.description);
-
+      const payload = {
+        description: this.description,
+        to_user: this.selectedUser.id,
+      };
 
       if (this.formData.image) {
+        const formData = new FormData();
         formData.append('image', this.formData.image);
-      }
-      if (this.formData.video) {
-        formData.append('video', this.formData.video);
-      }
-      try {
-        const response = await axiosInstance.post(`/chat/create/${to_user}`, formData, {
-          headers: {
-            Authorization: `Bearer ${userAuth.accessToken}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        Object.keys(payload).forEach(key => formData.append(key, payload[key]));
 
-        console.log('Message sent successfully', response.data);
-        this.userAccountSender = response.data;
-        this.description = '';
-        this.formData.image = null;
-        this.formData.video = null;
-        this.currentUserId = userStore.user.id;
-
-
-        this.fetchChats(this.selectedUser.id);
-      } catch (error) {
-        console.error('Message sending failed:', error);
-        alert('Message sending failed. Please try again.');
+        await this.sendChat(formData);
+      } else {
+        await this.sendChat(payload);
       }
 
-
-    }
-    ,
-    async createGroup() {
-      const userStore = useUserStore();
-      const userAuth = useAuthStore();
-
-      const formData = new FormData();
-      formData.append('name', this.form.name);
-      try {
-        const response = await axiosInstance.post('/group/create', formData, {
-          headers: {
-            Authorization: `Bearer ${userAuth.accessToken}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        if (response.status === 201) {
-          console.log('Group created successfully:', response.data);
-          this.createdGroupName = this.form.name;
-          this.groupCreated = true;
-          Swal.fire({
-            title: 'Group Created Successfully!',
-            text: 'Do you want to add users to your group?',
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Handle the action for adding users
-              console.log('Add users to group');
-            } else {
-              // Handle the action when no is selected
-              console.log('No users added');
-            }
-          });
-          this.fetchUsers();
-        }
-      }
-      catch (error) {
-        console.error(error);
-        alert('Registration failed. Please try again.');
-        console.log(this.form.name);
-
-      }
-
-
-
-
+      this.description = '';
+      this.formData.image = null;
+      this.fetchChats(this.selectedUser.id);
     },
-    async fetchUnreadChats() {
 
-      const userAuth = useAuthStore();
+    async sendChat(data) {
+      try {
+        await axiosInstance.post('/sendMessage', data);
+      } catch (error) {
+        console.error('Failed to send message:', error);
+      }
+    },
+
+    openFileInput() {
+      this.$refs.fileInput.click();
+    },
+
+    handleFileUpload(event) {
+      this.formData.image = event.target.files[0];
+    },
+
+    async createGroup() {
+      if (!this.form.name.trim()) return;
 
       try {
-        const response = await axiosInstance.get('/chat/count/unread', {
-          headers: {
-            Authorization: `Bearer ${userAuth.accessToken}`,
-          },
-        });
-
-        if (response.status === 200) {
-          // Assuming the response data contains an array of objects with total_chats property
-          this.countUnread = response.data.reduce((acc, chat) => acc + chat.total_chats, 0);
-          console.log(this.countUnread);
-        }
+        const response = await axiosInstance.post('/createGroup', { name: this.form.name });
+        this.groupCreated = true;
+        this.createdGroupName = response.data.group.name;
+        this.resetForm();
       } catch (error) {
-        console.error('Error fetching unread chats:', error);
+        console.error('Failed to create group:', error);
       }
-    }
-    // closeChat() {
-    //   this.selectedUser = null;
-    // },
+    },
+
+    resetForm() {
+      this.groupCreated = false;
+      this.createdGroupName = '';
+      this.form.name = '';
+    },
   },
+
   mounted() {
     this.fetchUsers();
-    this.fetchUnreadChats();
-    this.fetchGroup();
+    this.fetchGroups();
   },
 });
-
 </script>
 
 
@@ -720,6 +582,7 @@ export default defineComponent({
 }
 
 .container {
+  margin-top: 20%;
   padding: 20px;
   gap: 20px;
 }
@@ -736,6 +599,10 @@ export default defineComponent({
 
 .card-l {
   width: 50%;
+}
+
+.c-body {
+  padding: 20px;
 }
 
 .card-r {
@@ -776,8 +643,8 @@ export default defineComponent({
   color: #62cd3c;
 }
 
-.c-body {
-  height: 10vh;
+.container {
+  margin-top: 10%;
 }
 
 .container_user {
@@ -890,7 +757,6 @@ export default defineComponent({
   margin-left: -15px;
   width: auto;
 }
-
 
 /* Modal pop up  */
 .modal-header {

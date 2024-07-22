@@ -19,9 +19,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->text('video')->nullable();
-            $table->boolean('active')->default('false')->change();
+            $table->timestampsTz();
             DB::statement("SET time_zone = '+07:00'");
-            $table->timestamps();
         });
     }
 
