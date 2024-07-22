@@ -2,7 +2,7 @@
   <div class="col-auto col-md-2 col-xl-2 px-sm-0 px-0">
     <div
       class="d-flex flex-column align-items-center align-items-sm-start px-3 pdark min-vh-100 position-fixed sidebar"
-      style="background-color: #54983c; width: 200px"
+      style="background-color: #54983c; width: auto"
     >
       <ul
         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"

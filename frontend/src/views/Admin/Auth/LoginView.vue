@@ -125,10 +125,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import axios from 'axios'
-import { useAuthStore } from '../../../stores/auth-store'
-import { useUserStore } from '../../../stores/userStore'
+import { defineComponent, ref } from 'vue';
+import axiosInstance from '@/plugins/axios';
+import { useAuthStore } from '../../../stores/auth-store';
+import { useUserStore } from '../../../stores/userStore';
 
 export default defineComponent({
   data() {
@@ -148,117 +148,121 @@ export default defineComponent({
       showPassword: false,
       showNewPassword: false,
       showConfirmPassword: false,
-    }
+    };
   },
   methods: {
     togglePassword() {
-      this.showPassword = !this.showPassword
+      this.showPassword = !this.showPassword;
     },
     toggleNewPassword() {
-      this.showNewPassword = !this.showNewPassword
+      this.showNewPassword = !this.showNewPassword;
     },
     toggleConfirmPassword() {
-      this.showConfirmPassword = !this.showConfirmPassword
+      this.showConfirmPassword = !this.showConfirmPassword;
     },
     async login() {
-      const useAuth = useAuthStore()
-      const userStore = useUserStore()
+      const useAuth = useAuthStore();
+      const userStore = useUserStore();
 
       if (!this.formData.email || !this.formData.password) {
-        this.errorMessage = 'Please enter both email and password.'
-        return
+        this.errorMessage = 'Please enter both email and password.';
+        return;
       }
 
-      this.loading = true
+      this.loading = true;
 
       try {
-        const response = await axios.post('http://127.0.0.1:8000/api/login', {
+        const response = await axiosInstance.post('/login', {
           email: this.formData.email,
           password: this.formData.password
-        })
+        });
 
-        const profileImage = response.data.user.profile
-        const remember_token = response.data.user.remember_token
-        const isAuthenticated = true
-        useAuth.login(profileImage, remember_token, isAuthenticated)
-        userStore.setUser(response.data.user)
+        const { profile, remember_token } = response.data.user;
+        const isAuthenticated = true;
 
-        // Store token in localStorage if necessary
-        localStorage.setItem('token', remember_token)
+        useAuth.login(profile, remember_token, isAuthenticated);
+        userStore.setUser(response.data.user);
+
+        // Store token in localStorage
+        localStorage.setItem('token', remember_token);
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${remember_token}`;
 
         if (this.formData.email === 'admin@gmail.com' && this.formData.password === 'password') {
-          this.$router.push('/admin/dashboard')
+          this.$router.push('/admin/dashboard');
         } else {
-          this.$router.push('/')
+          this.$router.push('/');
         }
-        this.formData.email = ''
-        this.formData.password = ''
-        this.errorMessage = ''
+
+        this.formData.email = '';
+        this.formData.password = '';
+        this.errorMessage = '';
       } catch (error) {
         if (error.response) {
-          this.errorMessage = error.response.data.message
+          this.errorMessage = error.response.data.message;
         } else {
-          this.errorMessage = error.message
+          this.errorMessage = error.message;
         }
-        console.error('Login failed:', this.errorMessage)
+        console.error('Login failed:', this.errorMessage);
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
     showForgotPasswordModal() {
-      this.showModal = true
-      this.showResetForm = false
+      this.showModal = true;
+      this.showResetForm = false;
     },
     closeModal() {
-      this.showModal = false
-      this.resetEmail = ''
-      this.resetToken = ''
-      this.newPassword = ''
-      this.confirmPassword = ''
-      this.errorMessage = ''
+      this.showModal = false;
+      this.resetEmail = '';
+      this.resetToken = '';
+      this.newPassword = '';
+      this.confirmPassword = '';
+      this.errorMessage = '';
     },
     async sendResetLink() {
-      this.loading = true
+      this.loading = true;
       try {
-        await axios.post('http://127.0.0.1:8000/api/forgotPassword', {
+        await axiosInstance.post('/forgotPassword', {
           email: this.resetEmail
-        })
-        this.showResetForm = true
+        });
+        this.showResetForm = true;
       } catch (error) {
-        alert('Error sending reset link. Please check your email again.')
+        alert('Error sending reset link. Please check your email again.');
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
     async resetPassword() {
       if (this.newPassword !== this.confirmPassword) {
-        alert('Passwords do not match.')
-        return
+        alert('Passwords do not match.');
+        return;
       }
 
-      this.loading = true
+      this.loading = true;
 
       try {
-        await axios.post('http://127.0.0.1:8000/api/resetPassword', {
+        await axiosInstance.post('/resetPassword', {
           email: this.resetEmail,
           token: this.resetToken,
           password: this.newPassword,
           password_confirmation: this.confirmPassword
-        })
-        this.closeModal()
+        });
+        this.closeModal();
       } catch (error) {
         if (error.response) {
-          alert(error.response.data.message)
+          alert(error.response.data.message);
         } else {
-          alert('Error resetting password. Please try again.')
+          alert('Error resetting password. Please try again.');
         }
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     }
   }
-})
+});
 </script>
+
+
 
 
 <style scoped>

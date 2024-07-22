@@ -11,11 +11,11 @@
             <div class="container py-2">
               <div class="row">
                 <div class="col-lg-4">
-                  <div class="card mb-4 shadow rounded py-5">
+                  <div class="card mb-4 shadow rounded py-5 ml-2">
                     <div class="card-body text-center">
                       <img :src="`http://127.0.0.1:8000/${user.user.profile}`" alt="avatar"
                         class="rounded-circle img-fluid border border-success border-3"
-                        style="width: 170px; height:170px" />
+                        style="width: 150px; height:150px" />
                       <h4 class="text-muted my-3 text-success">{{ user.user.name }}</h4>
                       <p class="text-muted mb-1">{{ user.user.email }}</p>
                     </div>

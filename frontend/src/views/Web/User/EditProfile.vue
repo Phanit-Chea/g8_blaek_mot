@@ -4,13 +4,13 @@
     <div class="registration-form bg-white shadow" style="width: 65%; border-radius: 20px">
       <form @submit.prevent="updateProfile" class="d-flex justify-content-between" enctype="multipart/form-data">
         <div class="card w-50" style="background-color: #66b64a">
-          <div class="card p-4" style="background-color: #66b64a">
+          <div class="card p-2" style="background-color: #66b64a">
             <div>
               <div class="card-body">
                 <div class="">
                   <img :src="previewImage || '../assets/default-avatar.png'" @click="selectImage" alt="avatar"
                     class="rounded-circle img-fluid border border-5  border-white"
-                    style="width: 130px; height: 130px; margin-left:16%" />
+                    style="width: 130px; height: 130px; margin-left:20%" />
                 </div>
                 <div class="d-flex mt-4">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">person</i>
@@ -19,7 +19,7 @@
 
                 <div class="d-flex mt-3">
                   <i class="fs-4 text-dark mb-0 align-middle material-icons">mail</i>
-                  <p class="text-white ms-2 mb-0">{{ userStore.user.email }}</p>
+                  <p class="email text-white ms-2 mb-0">{{ userStore.user.email }}</p>
                 </div>
 
                 <div class="d-flex mt-3">
@@ -93,9 +93,7 @@ import { useUserStore } from '@/stores/userStore';
 import axiosInstance from '@/plugins/axios';
 import Swal from 'sweetalert2';
 
-
 const userStore = useUserStore();
-
 
 const profileImageUrl = ref(`http://127.0.0.1:8000/${userStore.user.profile}`);
 const previewImage = ref(profileImageUrl.value);
@@ -139,8 +137,6 @@ const pickFile = (e: Event) => {
   }
 };
 
-
-
 const updateProfile = async () => {
   try {
     const formData = new FormData();
@@ -156,7 +152,6 @@ const updateProfile = async () => {
 
     const token = userStore.user.remember_token;
 
-
     const headers = {
       'Content-Type': 'multipart/form-data',
       'Authorization': `Bearer ${token}`
@@ -164,8 +159,7 @@ const updateProfile = async () => {
 
     console.log('Headers being sent:', headers);
 
-
-    const response = await axiosInstance.post('/updateProfile', formData, { headers });
+    const response = await axiosInstance.post('/auth/updateProfile', formData, { headers });
 
     console.log('Response received:', response);
 
@@ -174,14 +168,12 @@ const updateProfile = async () => {
 
       success.value = true;
 
-
       Swal.fire({
         icon: 'success',
         title: 'Profile Updated',
         text: 'Your profile has been updated successfully!',
         confirmButtonText: 'OK'
       });
-
 
       userStore.setUser(response.data.data);
     } else {
@@ -199,9 +191,6 @@ const updateProfile = async () => {
     });
   }
 };
-
-
-
 
 </script>
 <style>
@@ -234,5 +223,8 @@ const updateProfile = async () => {
 
 .file-input {
   display: none;
+}
+.email{
+  width: 200px;
 }
 </style>
