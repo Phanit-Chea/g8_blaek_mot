@@ -90,4 +90,17 @@ class FolderController extends Controller
         return response()->json(['success' => true, 'message' => 'Folder deleted successfully']);
    
     }
+
+    public function listByUser()
+    {
+        $user = Auth::id();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $folders = Folder::where('user_id', $user)->get();
+
+        return response()->json(['success' => true, 'data' => $folders], 200);
+    }
 }

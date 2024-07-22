@@ -15,7 +15,7 @@
               />
               <div class="card-body d-flex justify-content-between px-0">
                 <h4 class="card-title text-dark">{{ food.name }}</h4>
-                <a href="#" class="btn" style="background-color: #54983c">Detail</a>
+                
               </div>
             </div>
           </div>
