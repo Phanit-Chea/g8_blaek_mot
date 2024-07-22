@@ -235,8 +235,7 @@ class FoodController extends Controller
         $currentSeason = Season::getCurrentSeason();
 
         // Get the current Monday of the week
-        $currentDate = date('Y-m-d');
-        $startOfWeek = date('Y-m-d', strtotime('this Sunday', strtotime($currentDate)));
+        $currentDate = date('Y-m-d', strtotime('last Sunday'));
 
         // Filter out dishes with unwanted food names and separate soup dishes
         foreach ($dishes as $dish) {
@@ -257,7 +256,7 @@ class FoodController extends Controller
         }
 
         // Use a combination of user ID and current date as a seed for randomness
-        $seed = $userId ^ strtotime($startOfWeek);
+        $seed = $userId ^ strtotime($currentDate);
         mt_srand($seed); // Seed the random number generator
 
         $days = 7; // Number of days in a week
