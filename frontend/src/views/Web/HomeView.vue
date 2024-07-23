@@ -1,9 +1,7 @@
 <script>
-import NavbarView from '@/views/Web/Navbar/NavbarView.vue'
-import FooterView from '@/views/Web/Footer/FooterView.vue'
-import { useUserStore } from '@/stores/userStore'
-import { useFoodStore } from '@/stores/storeFood'
-import axiosInstance from '@/plugins/axios'
+import NavbarView from '@/views/Web/Navbar/NavbarView.vue';
+import FooterView from '@/views/Web/Footer/FooterView.vue';
+import axiosInstance from '@/plugins/axios';
 
 export default {
   name: 'HomePage',
@@ -15,118 +13,58 @@ export default {
     return {
       foods: [],
       randomFoods: [],
-      storeFood: [],
-      folders: [],
-      saves: [],
-      categoryID: 1,
+      categoryID: null,
       selectedRandomNumber: 6,
-      selectedFoodId: null,
-      selectedFolderId: null
-    }
+    };
   },
   watch: {
-    categoryID(newValue) {
-      this.fetchRandomfood()
+    categoryID() {
+      this.fetchRandomfood();
     },
-    selectedRandomNumber(newValue) {
-      this.fetchRandomfood()
+    selectedRandomNumber() {
+      this.fetchRandomfood();
     }
   },
   mounted() {
-    this.fetchFood()
-    this.fetchRandomfood()
-    this.fetchFolder()
-    $('#modal').modal('toggle')
+    this.fetchFood();
+    this.fetchRandomfood();
   },
   methods: {
-    async storeFoodId(id) {
-      try {
-        const userStore = useUserStore()
-        const foodStore = useFoodStore()
-        const response = await axiosInstance.post(
-          `/storeFood/store/${id}`,
-          { food_id: id },
-          {
-            headers: {
-              Authorization: `Bearer ${userStore.user.remember_token}`,
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        
-      } catch (error) {
-        console.error('Error storing food:', error)
-        
-      } // Debugging
-    },
     async fetchFood() {
       try {
-        const response = await axiosInstance.get('/food/list')
+        const response = await axiosInstance.get('/food/list');
         if (response.data.success) {
-          this.foods = response.data.data
+          this.foods = response.data.data;
+          this.fetchAverageRatings();
         }
       } catch (error) {
-        console.error('Error fetching foods:', error)
+        console.error('Error fetching foods:', error);
       }
     },
     async fetchRandomfood() {
       try {
         const response = await axiosInstance.get(
           `/food/random/${this.categoryID}?count=${this.selectedRandomNumber}`
-        )
-        this.randomFoods = response.data.suitable_food
-        console.log(this.randomFoods)
+        );
+        this.randomFoods = response.data.suitable_food;
       } catch (error) {
-        console.error('Error fetching random food:', error)
+        console.error('Error fetching random food:', error);
       }
     },
-    async fetchFolder() {
+    async fetchAverageRatings() {
       try {
-        const userStore = useUserStore()
-        const response = await axiosInstance.get('/folder/list/byUser', {
-          headers: {
-            Authorization: `Bearer ${userStore.user.remember_token}`,
-            'Content-Type': 'application/json'
+        const promises = this.foods.map(async (food) => {
+          const response = await axiosInstance.get(`/ratings/averages/${food.id}`);
+          if (response.data && response.data.average_rating !== undefined) {
+            food.averageRating = response.data.average_rating;
+          } else {
+            food.averageRating = 0;
           }
-        })
-        this.folders = response.data.data
+        });
+        await Promise.all(promises);
       } catch (error) {
-        console.error('Error fetching folders:', error)
+        console.error('Error fetching average ratings:', error);
       }
-    },
-    hideModal() {
-      $('#modal').modal('hide')
-      $('body').removeClass('modal-open')
-      $('.modal-backdrop').remove()
-      $('body').css('overflow', 'auto')
-    },
-    async saveFood() {
-      try {
-        const userStore = useUserStore()
-        const response = await axiosInstance.post(
-          `/save/create/${this.selectedFoodId}`,
-          {
-            folder_id: this.selectedFolderId
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${userStore.user.remember_token}`,
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        if (response.data.success) {
-          this.$router.push('/user/save')
-          this.selectedFoodId = null
-          this.selectedFolderId = null
-          this.hideModal()
-        }
-      } catch (error) {
-        console.error('Error saving food:', error)
-      }
-    },
-    selectFood(foodID) {
-      this.selectedFoodId = foodID
     }
   }
 }
@@ -140,13 +78,12 @@ export default {
       <div class="container">
         <div class="row gy-4 justify-content-center justify-content-lg-between">
           <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h1 data-aos="fade-up">ស្វាគមន៍មកកាន់<br />ប្លែកមាត់</h1>
+            <h1 data-aos="fade-up">Blaek Mouth<br />Food Welcome</h1>
             <p data-aos="fade-up" data-aos-delay="100">
-              តើអ្នកកំពុងស្វែងរកវិធីមួយដើម្បីចំណេញពេលវេលា និងធ្វើម្ហូបឱ្យកាន់តែលឿន និងងាយស្រួល? នៅ
-              ប្លែកមាត់, យើងមានដំណោះស្រាយសម្រាប់អ្នក!
+              We are team of talented designers making websites with Bootstrap
             </p>
             <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="#book-a-table" class="btn-get-started">View Detail</a>
+              <a href="#book-a-table" class="btn-get-started">Booka a Table</a>
               <a
                 href="https://www.youtube.com/watch?v=LXb3EKWsInQ"
                 class="glightbox btn-watch-video d-flex align-items-center"
@@ -170,23 +107,25 @@ export default {
     <section class="news section-padding">
       <div class="container">
         <div class="row">
-          <h2 class="text-center mb-lg-5 mb-4">អាហារ &amp;​ បង្អែម</h2>
+          <h2 class="text-center mb-lg-5 mb-4">News &amp; Foods</h2>
 
           <div class="col-lg-6 col-md-6 col-12">
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
                 <img
-                  src="../../assets/ContainerImages/fryFish.png"
+                  src="../../assets/CategoryImages/dessert.png"
                   class="img-fluid news-image"
                   alt=""
                 />
               </a>
 
               <div class="news-text-info news-text-info-large">
-                <span class="category-tag bg-danger">details</span>
+                <span class="category-tag bg-danger">Featured</span>
 
                 <h5 class="news-title mt-2">
-                  <a href="news-detail.html" class="news-title-link">ត្រីចៀនបែបអុឺរ៉ុប</a>
+                  <a href="news-detail.html" class="news-title-link"
+                    >Healthy Lifestyle and happy living tips</a
+                  >
                 </h5>
               </div>
             </div>
@@ -203,10 +142,10 @@ export default {
               </a>
 
               <div class="news-text-info news-text-info-large">
-                <span class="category-tag bg-danger">លម្អិត</span>
+                <span class="category-tag bg-danger">Featured</span>
 
                 <h5 class="news-title mt-2">
-                  <a href="news-detail.html" class="news-title-link">បង្អែម</a>
+                  <a href="news-detail.html" class="news-title-link">How to make a healthy meal</a>
                 </h5>
               </div>
             </div>
@@ -215,20 +154,19 @@ export default {
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
                 <img
-                  src="../../assets/ContainerImages/noodle.png"
+                  src="../../assets/CategoryImages/lunch.png"
                   class="img-fluid news-image"
                   alt=""
-                  :style="{ width: '397.1px', height: '264.73px' }"
                 />
               </a>
 
               <div class="news-text-info">
-                <span class="category-tag me-3 bg-info">លម្អិត</span>
+                <span class="category-tag me-3 bg-info">Meeting</span>
 
-                <strong>អាហារសម្រន់</strong>
+                <strong>30 April 2022</strong>
 
                 <h5 class="news-title mt-2">
-                  <a href="news-detail.html" class="news-title-link">មីឆាសាច់គោ</a>
+                  <a href="news-detail.html" class="news-title-link">Making a healthy salad</a>
                 </h5>
               </div>
             </div>
@@ -237,20 +175,19 @@ export default {
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
                 <img
-                  src="../../assets/ContainerImages/salmon.png"
+                  src="../../assets/CategoryImages/lunch.png"
                   class="img-fluid news-image"
                   alt=""
-                  :style="{ width: '397.1px', height: '264.73px' }"
                 />
               </a>
 
               <div class="news-text-info">
-                <span class="category-tag me-3 bg-info">លម្អិត</span>
+                <span class="category-tag me-3 bg-info">Meeting</span>
 
-                <strong>អាហារថាមពល</strong>
+                <strong>30 April 2022</strong>
 
                 <h5 class="news-title mt-2">
-                  <a href="news-detail.html" class="news-title-link">ត្រីសាម៉ុនd</a>
+                  <a href="news-detail.html" class="news-title-link">Making a healthy salad</a>
                 </h5>
               </div>
             </div>
@@ -259,17 +196,16 @@ export default {
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
                 <img
-                  src="../../assets/ContainerImages/beefSoup.png"
+                  src="../../assets/CategoryImages/lunch.png"
                   class="img-fluid news-image"
                   alt=""
-                  :style="{ width: '397.1px', height: '264.73px' }"
                 />
               </a>
 
               <div class="news-text-info">
-                <span class="category-tag me-3 bg-info">លម្អិត</span>
+                <span class="category-tag me-3 bg-info">Meeting</span>
 
-                <strong></strong>
+                <strong>30 April 2022</strong>
 
                 <h5 class="news-title mt-2">
                   <a href="news-detail.html" class="news-title-link">Making a healthy salad</a>
@@ -279,21 +215,13 @@ export default {
           </div>
         </div>
       </div>
-      <a href="/chat"
-        ><i class="bi bi-chat-dots-fill chat"
-          ><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
-            ><span class="visually-hidden">unread messages</span></span
-          ></i
-        ></a
-      >
     </section>
 
     <section id="menu" class="menu section">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>មុីនុយសម្រាប់ថ្ងៃនេះ</h2>
-        <p><span>អាហារគួរជាទី</span> <span class="description-title">ចាប់អារម្មណ័</span></p>
+        <h2>Menu Today</h2>
+        <p><span>Today Food</span> <span class="description-title">Recomment</span></p>
       </div>
       <!-- End Section Title -->
 
@@ -305,12 +233,25 @@ export default {
         >
           <li class="nav-item">
             <a
-              class="nav-link show"
+              class="nav-link active show"
+              data-bs-toggle="tab"
+              data-bs-target="#menu-starters"
+              v-on:click="categoryID = 4"
+            >
+              <h4>Starters</h4>
+            </a>
+          </li>
+          <!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="#"
               data-bs-toggle="tab"
               data-bs-target="#menu-breakfast"
               v-on:click="categoryID = 1"
             >
-              <h4>អាហារពេលព្រឹក</h4>
+              <h4>Breakfast</h4>
             </a>
           </li>
           <li class="nav-item">
@@ -321,7 +262,7 @@ export default {
               data-bs-target="#menu-lunch"
               v-on:click="categoryID = 2"
             >
-              <h4>អាហារថ្ងៃត្រង់</h4>
+              <h4>Lunch</h4>
             </a>
           </li>
           <!-- End tab nav item -->
@@ -333,20 +274,9 @@ export default {
               data-bs-target="#menu-dinner"
               v-on:click="categoryID = 3"
             >
-              <h4>អាហារពេលល្ងាច</h4>
+              <h4>Dinner</h4>
             </a>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              data-bs-toggle="tab"
-              data-bs-target="#menu-starters"
-              v-on:click="categoryID = 4"
-            >
-              <h4>បង្អែម</h4>
-            </a>
-          </li>
-          <!-- End tab nav item -->
           <li class="nav-item">
             <select
               id="category"
@@ -367,10 +297,10 @@ export default {
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
-          <div class="tab-pane fade" id="menu-starters">
+          <div class="tab-pane fade active show" id="menu-starters">
             <div class="tab-header text-center">
-              <p>មុីនុយ</p>
-              <h3>បង្អែម</h3>
+              <p>Menu</p>
+              <h3>Starters</h3>
             </div>
 
             <div class="row gy-5">
@@ -395,8 +325,8 @@ export default {
 
           <div class="tab-pane fade" id="menu-breakfast">
             <div class="tab-header text-center">
-              <p>មុីនុយ</p>
-              <h3>អាហារពេលព្រឹក</h3>
+              <p>Menu</p>
+              <h3>Breakfast</h3>
             </div>
 
             <div class="row gy-5">
@@ -408,7 +338,6 @@ export default {
                     :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                    :style="{ width: '420px', height: '207.82px' }"
                 /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
@@ -420,8 +349,8 @@ export default {
 
           <div class="tab-pane fade" id="menu-lunch">
             <div class="tab-header text-center">
-              <p>មុីនុយ</p>
-              <h3>អាហាពេលថ្ងៃ</h3>
+              <p>Menu</p>
+              <h3>Lunch</h3>
             </div>
 
             <div class="row gy-5">
@@ -433,7 +362,6 @@ export default {
                     :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                    :style="{ width: '420px', height: '207.82px' }"
                 /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
@@ -444,8 +372,8 @@ export default {
 
           <div class="tab-pane fade" id="menu-dinner">
             <div class="tab-header text-center">
-              <p>មុីនុយ</p>
-              <h3>អាហារពេលល្ងាច</h3>
+              <p>Menu</p>
+              <h3>Dinner</h3>
             </div>
 
             <div class="row gy-5">
@@ -457,7 +385,6 @@ export default {
                     :src="`http://127.0.0.1:8000/${food.image}`"
                     class="menu-img img-fluid"
                     alt=""
-                    :style="{ width: '420px', height: '207.82px' }"
                 /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
@@ -471,64 +398,49 @@ export default {
     </section>
 
     <section class="menu section-padding">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="text-center mb-lg-5 mb-4">ម្ហូបដ៏ពេញនិយមនៅរដូវកាលនេះ</h2>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="text-center mb-lg-5 mb-4">Popular Food This Month</h2>
+        </div>
 
-          <!-- First Menu Item____________________________________________________________________ -->
-          <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
-            <div class="menu-thumb">
+        <!-- Food Items -->
+        <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
+          <div class="menu-thumb">
+            <div class="menu-image-wrap">
               <router-link
                 :to="{ name: 'food-detail', params: { id: food.id } }"
                 class="menu-image-wrap"
               >
                 <img
                   :src="`http://127.0.0.1:8000/${food.image}`"
-                  class="img-fluid menu-image btn"
+                  class="img-fluid menu-image"
                   alt="Food image"
-                  :style="{ width: '397.1px', height: '223.37px' }"
-                  @click="storeFoodId(food.id)"
                 />
-                <!-- <span class="menu-tag">Breakfast</span> ________________________-->
               </router-link>
-              <div class="menu-info d-flex flex-wrap justify-content-between align-items-center">
-                <h4 class="mb-0">{{ food.name }}</h4>
-                
-                <button
-                  class="bg-white text-dark cursor-pointer border-0 open-button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  :value="food.id"
-                  @click="selectFood(food.id)"
-                >
-                  <i class="fs-1 save align-middle material-icons">bookmark</i>
-                </button>
-                <div class="d-flex flex-wrap justify-content-between align-items-center w-100 mt-2">
-                  <div class="d-flex">
-                    <h6 class="reviews-text mb-0 mt-2 me-3">4.3/5</h6>
-                    <div class="rating">
-                      <input value="5" name="rating1" id="star1-5" type="radio" />
-                      <label for="star1-5"></label>
-                      <input value="4" name="rating1" id="star1-4" type="radio" />
-                      <label for="star1-4"></label>
-                      <input value="3" name="rating1" id="star1-3" type="radio" />
-                      <label for="star1-3"></label>
-                      <input value="2" name="rating1" id="star1-2" type="radio" />
-                      <label for="star1-2"></label>
-                      <input value="1" name="rating1" id="star1-1" type="radio" />
-                      <label for="star1-1"></label>
-                    </div>
-                  </div>
-                  <p class="reviews-text mb-0 me-3">102 Reviews</p>
+            </div>
+            <div class="menu-info d-flex flex-wrap align-items-center">
+              <h4 class="mb-0">{{ food.name }}</h4>
+              <span class="price-tag bg-white shadow-lg ms-4 text-success cursor-pointer">
+                <small>Add</small>+
+              </span>
+              <div class="d-flex flex-wrap align-items-center w-100 mt-2">
+                <h6 class="reviews-text mb-0 me-3">{{ food.averageRating || 0 }}/5</h6>
+                <div class="rating">
+                  <span
+                    v-for="star in 5"
+                    :key="star"
+                    :class="['star', { 'filled': star <= food.averageRating }]"
+                  >★</span>
                 </div>
+                <p class="reviews-text mb-0 ms-4">102 Reviews</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
     <!-- Why Us Section -->
     <section id="why-us" class="why-us section light-background">
@@ -536,13 +448,15 @@ export default {
         <div class="row gy-4">
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="why-box" style="height: 50vh">
-              <h3>ហេតុអ្វីបានជាអ្នកទាំងអស់គ្នាគួរតែចូលរួមជាមួយ​ ប្លែកមាត់?</h3>
+              <h3>Why Choose Blaek Mouth</h3>
               <p class="text-light">
-                បញ្ជីមុខម្ហូបអស្ចារ្យ ការណែនាំលម្អិត​​​​​​​​​​​​ ចំណេញពេលវេលា​​​ សមាជិកភាពគ្រួសារ
-                ការណែនាំផ្ទាល់ខ្លួន
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel
+                necessitatibus optio ad corporis.
               </p>
               <div class="text-center">
-                <a href="/aboutUs" class="more-btn"
+                <a href="#" class="more-btn"
                   ><span>Learn More</span> <i class="bi bi-chevron-right"></i
                 ></a>
               </div>
@@ -555,9 +469,10 @@ export default {
               <div class="col-xl-4">
                 <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                   <i class="bi bi-clipboard-data"></i>
-                  <h4>បញ្ជីមុខម្ហូបអស្ចារ្យ</h4>
+                  <h4>Corporis voluptates officia eiusmod</h4>
                   <p>
-                    យើងមានបញ្ជីមុខម្ហូបស្រឡះដែលអាចជួយអ្នករកឃើញអាហារច្រើនដែលអ្នកអាចធ្វើបានក្នុងរយៈពេលខ្លី។
+                    Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut
+                    aliquip
                   </p>
                 </div>
               </div>
@@ -566,10 +481,10 @@ export default {
               <div class="col-xl-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                   <i class="bi bi-gem"></i>
-                  <h4>ការណែនាំលម្អិត</h4>
+                  <h4>Ullamco laboris ladore lore pan</h4>
                   <p>
-                    មុខម្ហូបនីមួយៗមានការណែនាំជាដំណាក់កាលលម្អិត រួមជាមួយនឹងរូបភាពគុណភាពខ្ពស់
-                    និងវីដេអូនាំមើល ដើម្បីធានាថាអ្នកអាចធ្វើម្ហូបបានដោយងាយស្រួល និងដោយទំនុកចិត្ត។
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt
                   </p>
                 </div>
               </div>
@@ -578,10 +493,9 @@ export default {
               <div class="col-xl-4" data-aos="fade-up" data-aos-delay="400">
                 <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                   <i class="bi bi-inboxes"></i>
-                  <h4>ចំណេញពេលវេលា</h4>
+                  <h4>Labore consequatur incidid dolore</h4>
                   <p>
-                    វិធីសាស្រ្តងាយស្រួល និងឆាប់រហ័សរបស់យើង នឹងជួយអ្នកធ្វើម្ហូបបានយ៉ាងឆាប់រហ័ស
-                    ដោយមិនប៉ះពាល់ដល់រសជាតិ និងគុណភាព។
+                    Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere
                   </p>
                 </div>
               </div>
@@ -591,14 +505,15 @@ export default {
         </div>
       </div>
     </section>
+
     <!-- /Why Us Section -->
 
     <section id="book-a-table" class="book-a-table section">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>ចូលរួមជាមួយពួកយើងអីឡូវនេះ</h2>
+        <h2>Contact us now</h2>
         <p>
-          <span>ទំនាក់ទំ​នង</span> <span class="description-title">មកកាន់ពួកយើង<br /></span>
+          <span>Contact</span> <span class="description-title">Us With This Form<br /></span>
         </p>
       </div>
       <!-- End Section Title -->
@@ -624,7 +539,7 @@ export default {
                       name="name"
                       class="form-control"
                       id="name"
-                      placeholder="ឈ្មោះ"
+                      placeholder="Your Name"
                       required
                     />
                   </div>
@@ -634,7 +549,7 @@ export default {
                       class="form-control"
                       name="email"
                       id="email"
-                      placeholder="អុីមែល"
+                      placeholder="Your Email"
                       required
                     />
                   </div>
@@ -644,7 +559,7 @@ export default {
                       class="form-control"
                       name="phone"
                       id="phone"
-                      placeholder="លេខទូរស៍ព្ទ"
+                      placeholder="Your Phone"
                       required
                     />
                   </div>
@@ -654,20 +569,27 @@ export default {
                       name="date"
                       class="form-control"
                       id="date"
-                      placeholder="ថ្ងៃ ទី ខែ"
+                      placeholder="Date"
                       required
                     />
                   </div>
-                  <!-- <div class="col-lg-4 col-md-6">
-                    <input type="time" name="time" class="form-control" id="time" placeholder="" required />
-                  </div> -->
+                  <div class="col-lg-4 col-md-6">
+                    <input
+                      type="time"
+                      name="time"
+                      class="form-control"
+                      id="time"
+                      placeholder="Time"
+                      required
+                    />
+                  </div>
                   <div class="col-lg-4 col-md-6">
                     <input
                       type="text"
                       class="form-control"
                       name="address"
                       id="people"
-                      placeholder="អាស័យដ្ធាន"
+                      placeholder="Enter Address"
                       required
                     />
                   </div>
@@ -678,7 +600,7 @@ export default {
                     class="form-control"
                     name="message"
                     rows="5"
-                    placeholder="សារ"
+                    placeholder="Message"
                   ></textarea>
                 </div>
 
@@ -689,7 +611,7 @@ export default {
                     Your booking request was sent. We will call back or send an Email to confirm
                     your reservation. Thank you!
                   </div>
-                  <button type="submit">ទំនាក់ទំ​នងអីឡូវនេះ</button>
+                  <button type="submit">Contact Now</button>
                 </div>
               </form>
             </div>
@@ -699,84 +621,8 @@ export default {
       </div>
     </section>
     <!-- /Book A Table Section -->
-    <!-- Popup form -->
-    <div>
-      <div id="myForm" v-if="formVisible" style="display: none">
-        <!-- Form content goes here -->
-        <form action="" class="form-container">
-          <h1>Login</h1>
-
-          <label for="email"><b>អុីមែល</b></label>
-          <input type="text" placeholder="Enter Email" name="email" required />
-
-          <label for="psw"><b>លេខកូដសម្ងាត់</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required />
-
-          <button type="submit" class="btn">ចូលគណនី</button>
-          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-        </form>
-      </div>
-    </div>
   </div>
-
-  <!-- Popup form -->
-  <div
-    class="modal fade rounded"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog rounded">
-      <div class="modal-content rounded">
-        <div class="div0">
-          <div class="div2 pt-4 px-4">
-            <div class="px-3">
-              <h3 class="text-dark siemreap" id="exampleModalLabel">រក្សាទុកម្ហូប</h3>
-            </div>
-            <div class="modal-body">
-              <form @submit.prevent="saveFood()">
-                <div class="form-group">
-                  <label class="text-dark siemreap">ជ្រើសរើសថតឯកសារ</label>
-                  <select
-                    id="category"
-                    class="form-control form-select-sm text-center"
-                    v-model="selectedFolderId"
-                  >
-                    <option class="siemreap" value="" selected>ជ្រើសរើសថតឯកសារ</option>
-                    <option
-                      class="siemreap"
-                      v-for="folder in folders"
-                      :key="folder.id"
-                      :value="folder.id"
-                    >
-                      {{ folder.folder_name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="px-3 d-flex justify-content-end mt-3">
-                  <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
-                    បោះបង់
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn ms-2 text-white text-bold siemreap"
-                    style="background-color: #238400"
-                  >
-                    រក្សាទុក
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <FooterView></FooterView>
-
-  <!-- Button trigger modal -->
 </template>
 
 
@@ -797,21 +643,6 @@ export default {
 .responsive-img {
   width: 100%;
   height: 50vh;
-}
-
-.chat {
-  font-size: 3rem;
-  position: fixed;
-  bottom: 20px;
-  right: 40px;
-  color: #66b64a;
-  cursor: pointer;
-  transition: transform 0.5s;
-}
-
-.chat:hover {
-  transform: scale(1.05) rotate(-5deg);
-  color: #62cd3c;
 }
 
 .cardFooter {
@@ -838,97 +669,21 @@ export default {
   color: #66b64a;
 }
 
-.popup-form {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
 .siemreap {
   font-family: 'Siemreap', cursive;
 }
 
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
+.rating {
+  display: flex;
+  align-items: center;
 }
 
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+.star {
+  font-size: 1.5em;
+  color: #d3d3d3; /* Default star color */
 }
 
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
-
-.modal-default-button {
-  float: right;
-}
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-.modal-enter-from {
-  opacity: 0;
-}
-
-.modal-leave-to {
-  opacity: 0;
-}
-
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-.save {
-  color: #4caf50;
-  /* Green */
-}
-
-.save:hover {
-  cursor: pointer;
-
-  text-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50;
+.star.filled {
+  color: #f39c12; /* Filled star color */
 }
 </style>
