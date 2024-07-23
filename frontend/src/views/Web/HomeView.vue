@@ -250,7 +250,7 @@ export default {
                 <strong>អាហារថាមពល</strong>
 
                 <h5 class="news-title mt-2">
-                  <a href="news-detail.html" class="news-title-link">ត្រីសាម៉ុនd</a>
+                  <a href="news-detail.html" class="news-title-link">ត្រីសាម៉ុន</a>
                 </h5>
               </div>
             </div>
@@ -259,7 +259,7 @@ export default {
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
                 <img
-                  src="../../assets/ContainerImages/beefSoup.png"
+                  src="../../assets/ContainerImages/dessert.png"
                   class="img-fluid news-image"
                   alt=""
                   :style="{ width: '397.1px', height: '264.73px' }"
@@ -269,10 +269,10 @@ export default {
               <div class="news-text-info">
                 <span class="category-tag me-3 bg-info">លម្អិត</span>
 
-                <strong></strong>
+                <strong>បង្អែម</strong>
 
                 <h5 class="news-title mt-2">
-                  <a href="news-detail.html" class="news-title-link">Making a healthy salad</a>
+                  <a href="news-detail.html" class="news-title-link">បង្អែមផ្លែឈើ</a>
                 </h5>
               </div>
             </div>
