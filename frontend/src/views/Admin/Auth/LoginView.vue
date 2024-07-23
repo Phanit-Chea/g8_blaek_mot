@@ -46,7 +46,8 @@
           <form v-if="!showResetForm" @submit.prevent="sendResetLink">
             <div class="form-group">
               <label for="reset-email" class="siemreap">អុីមែល</label>
-              <input required name="reset-email" id="reset-email" type="text" v-model="resetEmail" placeholder="សូមបញ្ចូលគណនីរបស់អ្នក"/>
+              <input required name="reset-email" id="reset-email" type="text" v-model="resetEmail"
+                placeholder="សូមបញ្ចូលគណនីរបស់អ្នក" />
             </div>
             <div class="form-group">
               <button type="submit" class="submit" :disabled="loading">
@@ -158,14 +159,13 @@ export default defineComponent({
 
         // Store token in localStorage
         localStorage.setItem('token', remember_token);
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${remember_token}`;
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${ remember_token }`;
 
         if (this.formData.email === 'admin@gmail.com' && this.formData.password === 'password') {
           this.$router.push('/admin/dashboard');
         } else {
           this.$router.push('/');
         }
-
         this.formData.email = '';
         this.formData.password = '';
         this.errorMessage = '';
@@ -413,8 +413,9 @@ button[type='submit']:hover {
   font-size: 24px;
   /* Adjust icon size */
 }
+
 .siemreap {
-    font-family: 'Siemreap', cursive;
-    color: green;
+  font-family: 'Siemreap', cursive;
+  color: green;
 }
 </style>
