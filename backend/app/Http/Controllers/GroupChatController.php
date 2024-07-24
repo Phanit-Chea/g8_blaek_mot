@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\GroupUser;
 use App\Models\Message;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class GroupChatController extends Controller
 {
@@ -16,6 +21,7 @@ class GroupChatController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
         $imagePath = null;
         if ($request->hasFile('image')) {
             $img = $request->file('image');
@@ -26,7 +32,22 @@ class GroupChatController extends Controller
             $imagePath = $profilePath . '/' . $imageName;
         }
 
-        $group = Group::create(['name' => $request->name,'image'=>$imagePath]);
+        // Create the group
+        $group = Group::create([
+            'name' => $request->name,
+            'image' => $imagePath
+        ]);
+
+        // Add the authenticated user to the group
+        $userId = Auth::id(); // Get the authenticated user ID
+
+        // Ensure userId is available and valid
+        if ($userId) {
+            GroupUser::create([
+                'group_id' => $group->id,
+                'user_id' => $userId
+            ]);
+        }
 
         return response()->json($group, 201);
     }
@@ -100,5 +121,40 @@ class GroupChatController extends Controller
         });
 
         return response()->json($sortedGroups->values(), 200);
+    }
+
+    public function listUserGroups()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        if (!$user) {
+            Log::warning('Unauthorized access attempt');
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $userId = $user->id;
+
+        // Fetch groups that the user is a member of
+        $userGroups = DB::table('group_user')
+            ->join('groups', 'group_user.group_id', '=', 'groups.id')
+            ->where('group_user.user_id', $userId)
+            ->select('groups.id', 'groups.name', 'groups.description', 'groups.created_at')
+            ->get();
+
+        // Optionally, you can format the data as needed
+        $formattedGroups = $userGroups->map(function ($group) {
+            return [
+                'id' => $group->id,
+                'name' => $group->name,
+                'description' => $group->description,
+                'created_at' => [
+                    'date' => Carbon::parse($group->created_at)->format('d-m-Y'),
+                    'time' => Carbon::parse($group->created_at)->format('H:i'),
+                ],
+            ];
+        });
+
+        return response()->json(['success' => true, 'data' => $formattedGroups], 200);
     }
 }
