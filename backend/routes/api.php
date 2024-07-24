@@ -154,11 +154,13 @@ Route::post('/aboutUsSlide/create', [AboutUsSlideController::class, 'createSlide
 Route::get('/imageSlide/lists', [AboutUsSlideController::class, 'index'])->name('aboutus.imageSlide');
 //==========CountStars===============//
 Route::prefix('ratings')->group(function () {
-    Route::post('/', [RatingController::class, 'store']);
+    Route::post('/create', [RatingController::class, 'store']);
     Route::get('averages/{foodId}', [RatingController::class, 'calculateAverageRating']);
     Route::get('count-users/{foodId}', [RatingController::class, 'countUsersRatedFood']);
+    Route::get('/list', [RatingController::class, 'index']);
+    Route::get('/list/feedback/{foodId}', [RatingController::class, 'show']);
+    Route::delete('/feedback/{id}', [RatingController::class, 'destroy']); // Delete comment
 });
-
 
 Route::post('/logout', [ApiAuthController::class, 'logout']);
 Route::get('/user', [ApiAuthController::class, 'index']);
