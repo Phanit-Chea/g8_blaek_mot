@@ -1,68 +1,312 @@
-<script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
+import { useAuthStore } from '@/stores/authStore'
 import axiosInstance from '@/plugins/axios'
 import NavbarView from '../Navbar/NavbarView.vue'
 import FooterView from '../Footer/FooterView.vue'
 import SideBar from '@/Components/Layouts/SideBar.vue'
+import { Modal } from 'bootstrap'
 
-export default {
-  name: 'food-detail',
-  props: ['id'],
-  components: {
-    NavbarView,
-    FooterView,
-    SideBar
-  },
-  data() {
-    return {
-      food: {}
-    };
-  },
-  async created() {
-    await this.fetchFoodDetail();
-  },
-  methods: {
-    async fetchFoodDetail() {
-      try {
-        const response = await axiosInstance.get(`/food/show/${this.$route.params.id}`);
-        this.food = response.data;
-      } catch (error) {
-        console.error('Error fetching food details:', error);
-        alert(error);
+import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
+
+const accessToken =
+  'pk.eyJ1IjoidmVhc25hY2h1b24iLCJhIjoiY2x5Z3ZlZHZ4MGZyYzJub3RlMW8yZWhzdiJ9.Djy2BP-ysXAcH2mxJItgYg'
+mapboxgl.accessToken = accessToken
+
+const lat = ref(0)
+const lng = ref(0)
+const mapContainer = ref<HTMLElement | null>(null)
+const map = ref<mapboxgl.Map | null>(null)
+const geolocateControl = ref<mapboxgl.GeolocateControl | null>(null)
+const restaurants = ref<any[]>([])
+let restaurantMarkers: mapboxgl.Marker[] = []
+let userMarker: mapboxgl.Marker | null = null
+
+const food = ref<any>({})
+const rating = ref({ stars_rating: 0, feedback: '' })
+const isLoading = ref(false)
+const showAlert = ref(false);
+
+const route = useRoute()
+const userStore = useUserStore()
+const averageRating = ref(0)
+const feedbacks = ref<any[]>([])
+const feedback = ref('')
+const selectedComment = ref<any>(null)
+
+const props = defineProps<{ id: string }>()
+
+const fetchFoodDetail = async () => {
+  try {
+    const response = await axiosInstance.get(`/food/show/${route.params.id}`, {
+      headers: {
+        Authorization: `Bearer ${userStore.accessToken}`,
+        'Content-Type': 'application/json'
       }
+    })
+    if (response.data && response.data.id) {
+      food.value = response.data
+    } else {
+      console.error('Food ID not found in API response')
+    }
+  } catch (error) {
+    console.error('Error fetching food details:', error)
+    alert('Error fetching food details. Please try again later.')
+  }
+}
+
+// Submit rating
+const submitRating = async () => {
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
+
+    const ratingData = {
+      stars_rating: rating.value.stars_rating,
+      feedback: feedback.value,
+      user_id: user.user.id,
+      food_id: food.value.id
+    }
+
+    isLoading.value = true
+    const response = await axiosInstance.post('/ratings/create', ratingData, {
+      headers: {
+        Authorization: `Bearer ${userStore.user.remember_token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+  } catch (error) {
+    console.error('Error submitting rating:', error)
+    alert('Error submitting rating. Please try again later.')
+  } finally {
+    isLoading.value = false
+    window.location.reload()
+  }
+}
+
+// Fetch average rating
+const fetchAverageRating = async () => {
+  try {
+    const response = await axiosInstance.get(`/ratings/averages/${route.params.id}`, {
+      headers: {
+        Authorization: `Bearer ${userStore.accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    averageRating.value = response.data.average_rating
+  } catch (error) {
+    console.error('Error fetching average rating:', error)
+    alert('Error fetching average rating. Please try again later.')
+  }
+}
+
+// Fetch feedback
+const fetchFeedback = async () => {
+  try {
+    const response = await axiosInstance.get(`/ratings/list/feedback/${route.params.id}`)
+
+    // Assign the feedbacks based on the actual structure of the response
+    feedbacks.value = response.data.average_rating
+  } catch (error) {
+    console.error('Error fetching feedback:', error)
+    alert('Error fetching feedback. Please try again later.')
+  }
+}
+
+// Toggle dropdown
+const toggleDropdown = (comment: any, event: Event) => {
+  selectedComment.value = selectedComment.value === comment ? null : comment
+  event.stopPropagation()
+}
+
+// Confirm delete
+const confirmDelete = (comment: any) => {
+  selectedComment.value = comment
+  new Modal(document.getElementById('deleteConfirmModal')!).show()
+}
+
+// Delete comment
+const deleteComment = async () => {
+  if (selectedComment.value) {
+    try {
+      await axiosInstance.delete(`/ratings/feedback/${selectedComment.value.id}`)
+      feedbacks.value = feedbacks.value.filter((f) => f.id !== selectedComment.value.id)
+      const deleteConfirmModal = document.getElementById('deleteConfirmModal')!
+      const modalInstance = Modal.getInstance(deleteConfirmModal)
+      modalInstance?.hide()
+      selectedComment.value = null
+    } catch (error) {
+      console.error('Error deleting comment:', error)
+      alert('Error deleting comment. Please try again later.')
     }
   }
-};
+}
 
+const getLocation = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(
+      (position) => {
+        lat.value = position.coords.latitude
+        lng.value = position.coords.longitude
+        setUserMarker([lng.value, lat.value])
+        map.value?.setCenter([lng.value, lat.value])
+        map.value?.setZoom(13)
+        getRestaurants(lat.value, lng.value)
+      },
+      (error) => {
+        console.error('Geolocation error:', error)
+      },
+      { enableHighAccuracy: true }
+    )
+  } else {
+    console.error('Geolocation is not supported by this browser.')
+  }
+}
+
+// Get restaurants
+const getRestaurants = async (lat: number, lng: number) => {
+  clearMarkers()
+
+  const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/restaurant.json?proximity=${lng},${lat}&access_token=${accessToken}`
+  try {
+    const response = await axiosInstance.get(url)
+    restaurants.value = response.data.features
+      .map((feature: any) => {
+        const coords = feature.geometry.coordinates
+        const distance = getDistance(lat, lng, coords[1], coords[0])
+        return {
+          id: feature.id,
+          text: feature.text,
+          coords: coords,
+          distance: distance
+        }
+      })
+      .filter((restaurant: any) => restaurant.distance <= 2)
+
+    restaurants.value.forEach((restaurant: any) => {
+      addRestaurantMarker(restaurant.coords, restaurant.text, restaurant.distance)
+    })
+  } catch (error) {
+    console.error('Error fetching restaurants:', error)
+  }
+}
+
+// Set user marker
+const setUserMarker = (coords: number[]) => {
+  if (!userMarker) {
+    const popup = new mapboxgl.Popup().setHTML('<strong>Your Location</strong>')
+    userMarker = new mapboxgl.Marker({ color: 'red', draggable: true })
+      .setLngLat(coords)
+      .setPopup(popup)
+      .addTo(map.value!)
+      .on('dragend', (event) => {
+        const newCoords = event.target.getLngLat()
+        lat.value = newCoords.lat
+        lng.value = newCoords.lng
+        getRestaurants(newCoords.lat, newCoords.lng)
+      })
+  } else {
+    userMarker.setLngLat(coords)
+  }
+}
+
+// Add restaurant marker
+const addRestaurantMarker = (coords: number[], name: string, distance: number) => {
+  const popup = new mapboxgl.Popup().setHTML(
+    `<strong>${name}</strong><br>Distance: ${distance.toFixed(2)} km`
+  )
+  const marker = new mapboxgl.Marker().setLngLat(coords).setPopup(popup).addTo(map.value!)
+  restaurantMarkers.push(marker)
+}
+
+// Clear markers
+const clearMarkers = () => {
+  restaurantMarkers.forEach((marker) => marker.remove())
+  restaurantMarkers = []
+}
+
+// Calculate distance
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371
+  const dLat = deg2rad(lat2 - lat1)
+  const dLon = deg2rad(lon1 - lon2)
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  const distance = R * c
+  return distance
+}
+
+// Convert degrees to radians
+const deg2rad = (deg: number) => {
+  return deg * (Math.PI / 180)
+}
+
+onMounted(async () => {
+  await fetchFoodDetail()
+  await fetchFeedback()
+  await fetchAverageRating()
+
+  map.value = new mapboxgl.Map({
+    container: mapContainer.value!,
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [104.991, 12.5657],
+    zoom: 13
+  })
+
+  map.value.addControl(new mapboxgl.NavigationControl())
+
+  geolocateControl.value = new mapboxgl.GeolocateControl({
+    positionOptions: { enableHighAccuracy: true },
+    trackUserLocation: true,
+    showAccuracyCircle: true,
+    showUserHeading: true
+  })
+
+  map.value.addControl(geolocateControl.value)
+
+  geolocateControl.value.on('geolocate', (e) => {
+    lat.value = e.coords.latitude
+    lng.value = e.coords.longitude
+    map.value?.setCenter([lng.value, lat.value])
+    map.value?.setZoom(13)
+    setUserMarker([lng.value, lat.value])
+    getRestaurants(lat.value, lng.value)
+  })
+
+  getLocation()
+})
 </script>
 <template>
-
   <NavbarView></NavbarView>
-  <div class="d-flex" style="margin-top: 156px">
-    <div class="col-0">
+  <div class="d-flex" style="margin-top: 158px">
+    
+    <div class="col-2">
       <SideBar style="width: 240px; height: 100%" />
     </div>
     <div class="col-10">
       <div class="d-flex align-center pt-2">
-        <a href="" class="list-unstyled text-decoration-none text-danger">Back to list</a>
+        <a href="" class="list-unstyled text-decoration-none text-danger">ត្រឡប់ក្រោយ</a>
         <span class="material-symbols-outlined fs-3 text-danger"> keyboard_arrow_right </span>
-        <a href="" class="list-unstyled text-decoration-none text-danger">food name</a>
+        <a href="" class="list-unstyled text-decoration-none text-danger">ឈ្មោះអាហារ</a>
       </div>
 
       <div>
-    <h1 v-if="food.name" class="text-success mt-2 mb-3">{{ food.name }}</h1>
-    <p v-else>Loading...</p>
-  </div>
-      <div class="col col-lg-2 d-flex mt-3 mb-3">
-        <div class="small-ratings d-flex">
-          <i class="fa fa-star rating-color mx-1"></i>
-          <i class="fa fa-star rating-color mx-1"></i>
-          <i class="fa fa-star rating-color mx-1"></i>
-          <i class="fa fa-star mx-1"></i>
-          <i class="fa fa-star mx-1"></i>
+        <div v-if="food.name">
+          <h1 class="text-success mt-2 mb-3">{{ food.name }}</h1>
+        </div>
+        <div v-else>
+          <span class="loader ml-10"></span>
         </div>
       </div>
+      <!-- {{ userStore }} -->
       <hr />
-      <!-- ===================icon action share ,save,print,========================== -->
       <div class="mt-3 mb-3">
         <div class="btn btn rounded border border-success mr-2" id="bookmard">
           <span class="material-symbols-outlined"> bookmark_added </span>
@@ -77,7 +321,6 @@ export default {
           <span class="material-symbols-outlined"> share </span>
         </div>
       </div>
-      <!--======================video and image of food ===========================-->
       <div class="jumbotron jumbotron-fluid p-0 m-0 d-flex">
         <div class="col-8">
           <iframe
@@ -96,7 +339,6 @@ export default {
           </div>
         </div>
       </div>
-      <!--=====================spending time,nutritions,ingredients =================-->
 
       <div class="row d-flex justify-content-evenly text-white mt-3 m-0">
         <div
@@ -105,8 +347,8 @@ export default {
           style="width: 380px; height: 100px"
         >
           <span class="material-symbols-outlined mt-1"> timer </span>
-          <p class="mx-2 fs-5 mb-0">ពេលវេលាត្រូវចំណាយ:</p>
-          <span class="fw-bold fs-5 mb-0">{{food.cooking_time}}</span>
+          <p class="mx-2 fs-5 mb-0">រយះពេល:</p>
+          <span class="fw-bold fs-5 mb-0">{{ food.cooking_time }}</span>
         </div>
         <div
           class="d-flex align-items-center justify-content-center rounded"
@@ -114,12 +356,10 @@ export default {
           style="width: 380px; height: 100px"
         >
           <span class="material-symbols-outlined mt-1"> grocery </span>
-          <p class="mx-2 fs-5 mb-0">ចំនួនគ្រឿងផ្សំគោល:</p>
+          <p class="mx-2 fs-5 mb-0">គ្រឿងផ្សំសរុប:</p>
           <span class="fw-bold fs-5 mb-0">(20)</span>
         </div>
-        
       </div>
-      <!--=====================nutrtitions ================================= -->
       <div class="collapse mt-3 m-0" id="nutritions">
         <form>
           <div class="input-group mb-3">
@@ -140,56 +380,103 @@ export default {
                 </ul>
               </div>
             </div>
-            
           </div>
         </form>
       </div>
       <hr />
-      <!--======================ingredients and how to cook ================================================ -->
+
       <div class="row mt-4">
         <div class="col-md-7">
           <div class="card">
-            <h3 class="card-header fw-bold text-success">របៀបធ្វើ{{ food.name }}</h3>
-            <div class="card-body">
-              <ol class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <h5 class="fw-bold text-success">ជំហានទី១</h5>
-                  <p class="text-dark">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
-                    debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
-                    pariatur porro nam error distinctio molestiae assumenda expedita.
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="fw-bold text-success">ជំហានទី២</h5>
-                  <p class="text-dark">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
-                    debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
-                    pariatur porro nam error distinctio molestiae assumenda expedita.
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="fw-bold text-success">ជំហានទី៣</h5>
-                  <p class="text-dark">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
-                    debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
-                    pariatur porro nam error distinctio molestiae assumenda expedita.
-                  </p>
-                </li>
-              </ol>
+            <h3 class="card-header bg-success fw-bold text-white">ការបញ្ចេញមតិពីអ្នកប្រើប្រាស់</h3>
+            <div class="card-body overflow-y-scroll" style="height: 40vh">
+              <div v-if="feedbacks && feedbacks.length > 0" class="style-user">
+                <div
+                  class="d-flex align-items-center mb-3"
+                  v-for="comment in feedbacks"
+                  :key="comment.id"
+                >
+                  <img
+                    :src="`http://127.0.0.1:8000/${comment.profile}`"
+                    alt="Avatar"
+                    class="me-3 rounded-circle"
+                    style="width: 45px; height: 45px; object-fit: cover"
+                  />
+                  <div class="d-flex flex-column justify-content-center position-relative top-4">
+                    <label class="fs-5 fw-bold">{{ comment.name }}</label>
+                    <p class="mb-0">{{ comment.feedback }}</p>
+                    <p class="mb-0">
+                      <span v-for="star in 5" :key="star">
+                        <i v-if="star <= comment.stars_rating" class="fas fa-star text-warning"></i>
+                        <i v-else class="far fa-star text-warning"></i>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="ms-auto position-relative">
+                    <i
+                      class="bi bi-three-dots-vertical fs-5"
+                      @click="toggleDropdown(comment, $event)"
+                    ></i>
+                    <div
+                      v-if="selectedComment === comment"
+                      class="dropdown-menu dropdown-menu-end show"
+                      style="position: absolute; z-index: 1; right: 0"
+                    >
+                      <a class="dropdown-item" href="#" @click.prevent="confirmDelete(comment)"
+                        >លុប</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="text-feed">មិនទាន់មាន</div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade"
+            id="deleteConfirmModal"
+            tabindex="-1"
+            aria-labelledby="deleteConfirmModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteConfirmModalLabel">លុបមតិជាអចិន្ត្រៃ</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">តើអ្នកចង់លុបមិតិរបស់អ្នកមែនទេ?</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    បោះបង់
+                  </button>
+                  <button type="button" class="btn btn-danger" @click="deleteComment">លុប</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="col-md-5">
           <div class="card">
-            <div class="card-header bg-success text-white fw-bold text-center">គ្រឿងផ្សំគោល</div>
+            <div class="card-header bg-success text-white fw-bold text-center">គ្រឿងផ្សំ</div>
             <div class="card-body">
               <div class="row">
                 <div class="col">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item" v-for="ingredient in food.ingredients" :key="ingredient">{{ingredient}}</li>
-                    
+                    <li
+                      class="list-group-item"
+                      v-for="ingredient in food.ingredients"
+                      :key="ingredient"
+                    >
+                      {{ ingredient }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -197,8 +484,105 @@ export default {
           </div>
         </div>
       </div>
+
+      <button
+        type="button"
+        class="btn btn-success mt-5"
+        style="width: 58%"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo"
+      >
+        ផ្តល់មតិអីឡូវនេះ
+      </button>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header d-flex justify-between">
+              <h5 class="modal-title" id="exampleModalLabel">សូមផ្តល់មតិអីឡូវនេះ</h5>
+              <div v-if="isLoading" class="spinner"></div>
+            </div>
+            <div class="modal-body">
+              <form @submit.prevent="submitRating">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label"
+                    >តើអ្នករីករាយនិងអាហារទាំងនេះទេ?</label
+                  >
+                  <div class="row">
+                    <div class="col col-lg-2 d-flex">
+                      <div class="rating">
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star5"
+                          name="rating"
+                          value="5"
+                        />
+                        <label for="star5" title="5 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star4"
+                          name="rating"
+                          value="4"
+                        />
+                        <label for="star4" title="4 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star3"
+                          name="rating"
+                          value="3"
+                        />
+                        <label for="star3" title="3 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star2"
+                          name="rating"
+                          value="2"
+                        />
+                        <label for="star2" title="2 stars"></label>
+
+                        <input
+                          v-model="rating.stars_rating"
+                          type="radio"
+                          id="star1"
+                          name="rating"
+                          value="1"
+                        />
+                        <label for="star1" title="1 star"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">ផ្តល់មតិមកពួកយើង</label>
+                  <textarea class="form-control" id="message-text" v-model="feedback"></textarea>
+                </div>
+                <div class="d-flex gap-3">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    បោះបង់
+                  </button>
+                  <button type="submit" :disabled="isLoading" class="btn btn-primary">
+                    ផ្ញើអីឡូវនេះ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <hr />
-      <!--======================where can you buy this food ================================================ -->
       <div class="row">
         <div class="col">
           <div>
@@ -208,17 +592,21 @@ export default {
             <!-- <div class="col"> -->
             <div class="mt-3">
               <div class="col">
-                <button
-                  class="btn btn-dark d-flex align-items-center"
-                  type="button"
-                  data-toggle="collapse"
-                  data-target="#addressForm"
-                  aria-expanded="false"
-                  aria-controls="addressForm"
-                >
-                  បញ្ចូលទីតាំងរបស់អ្នក
-                  <span class="material-symbols-outlined ms-2">location_on</span>
-                </button>
+                <div ref="mapContainer" class="map"></div>
+                <div class="sidebar">
+                  <h3 class="text-success">ហាងដែលនៅជិតអ្នកបំផុត</h3>
+                  <ul v-if="restaurants.length > 0">
+                    <li
+                      v-for="restaurant in restaurants"
+                      :key="restaurant.id"
+                      @click="drawPathToRestaurant(restaurant)"
+                    >
+                      <strong>{{ restaurant.text }}</strong> -
+                      {{ restaurant.distance.toFixed(2) }} km
+                    </li>
+                  </ul>
+                  <p v-else>មិនមានហាងនៅទីនេះទេ</p>
+                </div>
               </div>
               <div class="collapse mt-3" id="addressForm">
                 <form>
@@ -232,7 +620,7 @@ export default {
                     />
                     <div class="input-group-append">
                       <span class="input-group-text" id="basic-addon1">
-                        <span class="material-symbols-outlined"> search </span>
+                        <span class="material-symbols-outlined"> ស្វែងរក </span>
                       </span>
                     </div>
                   </div>
@@ -257,7 +645,7 @@ export default {
                 style="z-index: 1; top: -85px"
               >
                 <img
-                  src="../../../assets/FoodDetail/image.png"
+                  :src="`http://127.0.0.1:8000/${food.image}`"
                   alt=""
                   class="img-fluid rounded-circle"
                 />
@@ -265,119 +653,25 @@ export default {
 
               <div class="pt-5 mt-4 d-flex justify-content-between">
                 <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
+                  <h4 class="m-2">{{ food.name }}</h4>
+                  <div class="star-rating position-relative left-2">
+                    <span
+                      v-for="star in 5"
+                      :key="star"
+                      :class="['star', { filled: star <= averageRating }]"
+                      >★</span
+                    >
                   </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
+                  <div class="m-2 w-auto text-success rounded" id="category">ប្រភេទអាហារ</div>
                 </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">លម្អិត</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-md-3 mb-3">
-            <div class="card position-relative d-flex card1 zoom-card">
-              <div
-                class="border border-3 border-success rounded-circle w-50 position-absolute start-50 translate-middle-x"
-                style="z-index: 1; top: -85px"
-              >
-                <img
-                  src="../../../assets/FoodDetail/image.png"
-                  alt=""
-                  class="img-fluid rounded-circle"
-                />
-              </div>
-
-              <div class="pt-5 mt-4 d-flex justify-content-between">
-                <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                  </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
-                </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">លម្អិត</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-md-3 mb-3">
-            <div class="card position-relative d-flex card1 zoom-card">
-              <div
-                class="border border-3 border-success rounded-circle w-50 position-absolute start-50 translate-middle-x"
-                style="z-index: 1; top: -85px"
-              >
-                <img
-                  src="../../../assets/FoodDetail/image.png"
-                  alt=""
-                  class="img-fluid rounded-circle"
-                />
-              </div>
-
-              <div class="pt-5 mt-4 d-flex justify-content-between">
-                <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                  </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
-                </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">លម្អិត</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-md-3 mb-3">
-            <div class="card position-relative d-flex card1 zoom-card">
-              <div
-                class="border border-3 border-success rounded-circle w-50 position-absolute start-50 translate-middle-x"
-                style="z-index: 1; top: -85px"
-              >
-                <img
-                  src="../../../assets/FoodDetail/image.png"
-                  alt=""
-                  class="img-fluid rounded-circle"
-                />
-              </div>
-
-              <div class="pt-5 mt-4 d-flex justify-content-between">
-                <div class="col">
-                  <div class="small-ratings d-flex m-2">
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star rating-color mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                    <i class="fa fa-star mx-1"></i>
-                  </div>
-                  <h4 class="m-2">food name</h4>
-                  <div class="m-2 w-auto text-success rounded" id="category">category</div>
-                </div>
-                <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">លម្អិត</div>
+                <div class="col d-flex align-items-end position-relative left-15">
+                  <div class="m-2 btn btn-success">មើល</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- </div> -->
-      <!-- </div> -->
     </div>
   </div>
   <FooterView style="width: 88%; margin-left: 12.5%;"></FooterView>
@@ -458,6 +752,22 @@ export default {
   transition: transform 0.3s ease;
 }
 
+.style-user {
+  border: none;
+  padding: 10px 0;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.style-user .d-flex {
+  margin-bottom: 1rem;
+}
+
 .zoom-card:hover,
 #bookmard:hover,
 #share:hover,
@@ -466,7 +776,154 @@ export default {
 #foodImage1:hover,
 #foodImage2:hover,
 .list-group-item:hover {
-  transform: scale(1.05);
   z-index: 10;
+}
+
+.map-container {
+  display: flex;
+}
+
+.map {
+  flex: 1;
+  height: 400px; /* Adjust height as needed */
+}
+
+.sidebar {
+  width: 500px;
+}
+
+.sidebar h3 {
+  padding-top: 25px;
+  font-weight: 700;
+}
+
+.text-feed {
+  color: #d2d2d269;
+  font-size: 5rem;
+  position: absolute;
+  bottom: 110px;
+  left: 160px;
+  text-align: center; /* Horizontally center text */
+  display: flex; /* Use flexbox to center text vertically */
+  align-items: center;
+  justify-content: center; /* Center text horizontally within the container */
+}
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  font-size: 2rem;
+  align-items: center;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  cursor: pointer;
+  color: #d3d3d3; /* Default star color */
+  font-size: 2rem; /* Adjust as needed */
+  padding: 0 0.1rem; /* Adjust spacing as needed */
+}
+
+.rating label::before {
+  content: '★';
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #ffc107; /* Hover star color */
+}
+
+.rating input:checked ~ label {
+  color: #d3d3d3; /* Reset color for subsequent stars */
+}
+
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+  color: #ffc107; /* Selected star color */
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  font-size: 1.5em;
+  color: #d3d3d3; /* Default star color */
+}
+
+.star.filled {
+  color: #f39c12; /* Filled star color */
+}
+
+.spinner {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  color: #cacaca;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+
+.style-user img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+}
+
+.style-user .fa-star,
+.style-user .fa-star-half,
+.style-user .far.fa-star {
+  color: #ffc107;
+}
+
+.style-user label {
+  font-weight: bold;
+}
+
+.style-user .bi-three-dots-vertical {
+  cursor: pointer;
 }
 </style>
