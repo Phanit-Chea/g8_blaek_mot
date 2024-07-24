@@ -6,8 +6,8 @@
 
       <div class="col py-3">
         <div class="container mx-auto mt-4">
-          <div class="row d-flex">
-            <div class="card ms-4" v-for="food in storeFood" :key="food.id" style="width: 22.5%">
+          <div class="row d-flex" style="margin-left: 10%;">
+            <div class="card ms-4" v-for="food in storeFood" :key="food.id" style="width: 30%">
               <img
                 :src="`http://127.0.0.1:8000/${food.image}`"
                 class="card-img"

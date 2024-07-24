@@ -5,9 +5,9 @@
   <div class="container-fluid" style="padding-top:9.73%; margin-top: 17px;">
     <div class="row flex-nowrap">
       <user-profile-sidebar-vue />
-      <div class="col py-5">
+      <div class="col py-5 profile">
         <div class="container mx-auto mt-4">
-          <div style="background-color: #eee">
+          <div style="background-color: #eee;">
             <div class="container py-2">
               <div class="row">
                 <div class="col-lg-4">
@@ -84,8 +84,6 @@
         </div>
       </div>
     </div>
-   
-    <!-- {{user}} -->
   </div>
 </template>
 
@@ -94,7 +92,6 @@ import NavbarView from '../Navbar/NavbarView.vue';
 import userProfileSidebarVue from '../../../Components/Layouts/userProfileSidebar.vue';
 import { useUserStore } from '@/stores/userStore';
 
-// Load the user store
 const user = useUserStore();
 
 // Components are automatically registered when imported in <script setup>

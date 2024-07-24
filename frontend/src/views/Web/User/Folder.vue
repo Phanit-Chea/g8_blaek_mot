@@ -5,9 +5,9 @@
       <user-profile-sidebar-vue />
       <div class="col py-3">
         <div class="container mx-auto mt-4">
-          <div class="row d-flex">
+          <div class="row d-flex" style="margin-left: 15%;">
             <!-- Displaying saves -->
-            <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.id">
+            <div class="card ms-4" style="width: 30%" v-for="save in saves" :key="save.id">
               <router-link
                 :to="{ name: 'food-detail', params: { id: save.save_food_id } }"
                 class="nav-link"

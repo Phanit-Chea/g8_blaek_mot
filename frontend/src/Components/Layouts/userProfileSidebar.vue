@@ -46,7 +46,9 @@
           </a>
         </li>
 
-        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
+        <ul
+          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
+          id="menu" style="height:120px;flex-direction: column; flex-wrap: nowrap; overflow-y: scroll;">
           <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
             <div
               @click="storeFolderId(folder.id)"
@@ -64,7 +66,7 @@
             >
               <i class="bi bi-three-dots-vertical"></i>
             </a>
-            <div v-show="folder.id === showOptionsFor" class="card card-body mt-1 small-card">
+            <div v-show="folder.id === showOptionsFor" class="card card-body mt-1 small-card" style="display: flex; width: 100px;">
               <div>
                 <!-- Delete Button with Material Icon -->
                 <button
@@ -265,7 +267,7 @@ const createFolder = async () => {
     if (response.data.success) {
       folders.value.push(response.data.folder)
       folder_name.value = ''
-      hideModal('#exampleModal') // Hide modal after successful creation
+      hideModal('rounded') // Hide modal after successful creation
     } else {
       alert('Failed to create folder')
     }
@@ -349,8 +351,8 @@ const hideModal = (modalId: string) => {
 }
 </script>
 
-
 <style scoped>
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 .card-body {
   background-color: #f8f9fa;
   border-radius: 0.25rem;
@@ -364,10 +366,6 @@ const hideModal = (modalId: string) => {
 .btn-link:hover {
   text-decoration: underline;
 }
-</style>
-<style scoped>
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
 /* Style the dropdown toggle button */
 .nav-link.dropdown-toggle {
   font-size: 16px;
@@ -496,14 +494,4 @@ const hideModal = (modalId: string) => {
   font-size: 0.875rem;
   /* Smaller font size */
 }
-
-.btn-link {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.btn-link:hover {
-  text-decoration: underline;
-}
-
 </style>

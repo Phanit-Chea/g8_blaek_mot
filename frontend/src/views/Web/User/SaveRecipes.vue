@@ -5,8 +5,8 @@
       <user-profile-sidebar-vue />
       <div class="col py-3">
         <div class="container mx-auto mt-4">
-          <div class="row d-flex">
-            <div class="card ms-4" style="width: 22.5%" v-for="save in saves" :key="save.save_food_id">
+          <div class="row d-flex" style="display: flex; flex-wrap: wrap;margin-left: 10%;;">
+            <div class="card ms-4" style="width: 30%;" v-for="save in saves" :key="save.save_food_id">
               <router-link :to="{ name: 'food-detail', params: { id: save.save_food_id } }" class="nav-link">
 
               <img :src="`http://127.0.0.1:8000/${save.image}`" class="card-img" alt="..." />
