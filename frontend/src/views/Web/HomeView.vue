@@ -53,10 +53,10 @@ export default {
             }
           }
         )
-        
+
       } catch (error) {
         console.error('Error storing food:', error)
-        
+
       } // Debugging
     },
     async fetchFood() {
@@ -134,33 +134,37 @@ export default {
 
 <template>
   <NavbarView></NavbarView>
-  <div class="contain-home" style="padding-top: 120px">
+  <div class="contain-home" style="padding-top: 75px">
     <!-- Hero Section -->
-    <section id="hero" class="hero section light-background">
+    <section id="hero" class="hero section light-background" >
       <div class="container">
         <div class="row gy-4 justify-content-center justify-content-lg-between">
-          <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h1 data-aos="fade-up">ស្វាគមន៍មកកាន់<br />ប្លែកមាត់</h1>
-            <p data-aos="fade-up" data-aos-delay="100">
-              តើអ្នកកំពុងស្វែងរកវិធីមួយដើម្បីចំណេញពេលវេលា និងធ្វើម្ហូបឱ្យកាន់តែលឿន និងងាយស្រួល? នៅ
-              ប្លែកមាត់, យើងមានដំណោះស្រាយសម្រាប់អ្នក!
-            </p>
-            <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="#book-a-table" class="btn-get-started">View Detail</a>
-              <a
-                href="https://www.youtube.com/watch?v=LXb3EKWsInQ"
-                class="glightbox btn-watch-video d-flex align-items-center"
-                ><i class="bi bi-play-circle"></i><span>Watch Video</span></a
-              >
+          <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column ">
+            <div class="text-center">
+              <h2 class="d-inline-block position-relative"
+                style="font-size: 3rem; color: red; margin: 0;font-family: 'Siemreap', cursive; font-weight: bold;margin-right: 200px;">
+                សូមស្វាគមន៏
+              </h2>
+              <h2 class="d-inline-block position-relative"
+                style="font-size: 3rem; color: green; margin: 0;font-family: 'Siemreap', cursive; font-weight: bold; margin-top: 10px;">
+                មកកាន់ប្លែកមាត់
+              </h2>
             </div>
+
+
+            <div class="text-center" style="font-family: 'Siemreap', cursive;margin-top: 40px;">
+              <p class="display-5 fw-bold mb-3 " style="line-height: 1.8;">
+                តើអ្នកកំពុងស្វែងរកវិធីមួយដើម្បីចំណេញពេលវេលា និងធ្វើម្ហូបឱ្យកាន់តែលឿ ន និងងាយស្រួល?
+                នៅ <span class="fw-bold" style="color: green">ប្លែកមាត់</span>, យើងមានដំណោះស្រាយសម្រាប់អ្នក!
+                មិនត្រឹមតែធ្វើម្ហូបឱ្យលឿនទេ, ប៉ុន្តែរបៀបធ្វើម្ហូបនិងការប្រើប្រាស់គ្រឿងផ្សំក៏ងាយស្រួលផងដែរ។
+                ក្រឡេកមើលឥឡូវនេះហើយសាកល្បងការចំណេញពេលវេលា និងព្យាយាមធ្វើម្ហូបឱ្យស្រួលជាងមុន!
+              </p>
+            </div>
+
           </div>
           <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
-            <img
-              src="../../assets/CategoryImages/mirk.jpg"
-              class="img-fluid animated"
-              alt=""
-              style="max-width: 50rem; position: relative; left: -150px"
-            />
+            <img src="../../assets/CategoryImages/mirk.jpg" class="img-fluid animated" alt=""
+              style="max-width: 50rem; position: relative; left: -150px" />
           </div>
         </div>
       </div>
@@ -175,11 +179,7 @@ export default {
           <div class="col-lg-6 col-md-6 col-12">
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
-                <img
-                  src="../../assets/ContainerImages/fryFish.png"
-                  class="img-fluid news-image"
-                  alt=""
-                />
+                <img src="../../assets/ContainerImages/fryFish.png" class="img-fluid news-image" alt="" />
               </a>
 
               <div class="news-text-info news-text-info-large">
@@ -195,11 +195,7 @@ export default {
           <div class="col-lg-6 col-md-6 col-12">
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
-                <img
-                  src="../../assets/CategoryImages/dessert.png"
-                  class="img-fluid news-image"
-                  alt=""
-                />
+                <img src="../../assets/CategoryImages/dessert.png" class="img-fluid news-image" alt="" />
               </a>
 
               <div class="news-text-info news-text-info-large">
@@ -214,12 +210,8 @@ export default {
           <div class="col-lg-4 col-md-6 col-12">
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
-                <img
-                  src="../../assets/ContainerImages/noodle.png"
-                  class="img-fluid news-image"
-                  alt=""
-                  :style="{ width: '397.1px', height: '264.73px' }"
-                />
+                <img src="../../assets/ContainerImages/noodle.png" class="img-fluid news-image" alt=""
+                  :style="{ width: '397.1px', height: '264.73px' }" />
               </a>
 
               <div class="news-text-info">
@@ -236,12 +228,8 @@ export default {
           <div class="col-lg-4 col-md-6 col-12">
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
-                <img
-                  src="../../assets/ContainerImages/salmon.png"
-                  class="img-fluid news-image"
-                  alt=""
-                  :style="{ width: '397.1px', height: '264.73px' }"
-                />
+                <img src="../../assets/ContainerImages/salmon.png" class="img-fluid news-image" alt=""
+                  :style="{ width: '397.1px', height: '264.73px' }" />
               </a>
 
               <div class="news-text-info">
@@ -258,12 +246,8 @@ export default {
           <div class="col-lg-4 col-md-6 col-12">
             <div class="news-thumb mb-4">
               <a href="news-detail.html">
-                <img
-                  src="../../assets/ContainerImages/beefSoup.png"
-                  class="img-fluid news-image"
-                  alt=""
-                  :style="{ width: '397.1px', height: '264.73px' }"
-                />
+                <img src="../../assets/ContainerImages/beefSoup.png" class="img-fluid news-image" alt=""
+                  :style="{ width: '397.1px', height: '264.73px' }" />
               </a>
 
               <div class="news-text-info">
@@ -279,14 +263,9 @@ export default {
           </div>
         </div>
       </div>
-      <a href="/chat"
-        ><i class="bi bi-chat-dots-fill chat"
-          ><span
-            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"
-            ><span class="visually-hidden">unread messages</span></span
-          ></i
-        ></a
-      >
+      <a href="/chat"><i class="bi bi-chat-dots-fill chat"><span
+            class="position-absolute top-5 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
+              class="visually-hidden">unread messages</span></span></i></a>
     </section>
 
     <section id="menu" class="menu section">
@@ -298,61 +277,33 @@ export default {
       <!-- End Section Title -->
 
       <div class="container">
-        <ul
-          class="nav nav-link d-flex justify-content-center"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
+        <ul class="nav nav-link d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
           <li class="nav-item">
-            <a
-              class="nav-link show"
-              data-bs-toggle="tab"
-              data-bs-target="#menu-breakfast"
-              v-on:click="categoryID = 1"
-            >
+            <a class="nav-link show" data-bs-toggle="tab" data-bs-target="#menu-breakfast" v-on:click="categoryID = 1">
               <h4>អាហារពេលព្រឹក</h4>
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-bs-toggle="tab"
-              data-bs-target="#menu-lunch"
-              v-on:click="categoryID = 2"
-            >
+            <a class="nav-link" href="#" data-bs-toggle="tab" data-bs-target="#menu-lunch" v-on:click="categoryID = 2">
               <h4>អាហារថ្ងៃត្រង់</h4>
             </a>
           </li>
           <!-- End tab nav item -->
 
           <li class="nav-item">
-            <a
-              class="nav-link"
-              data-bs-toggle="tab"
-              data-bs-target="#menu-dinner"
-              v-on:click="categoryID = 3"
-            >
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner" v-on:click="categoryID = 3">
               <h4>អាហារពេលល្ងាច</h4>
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              data-bs-toggle="tab"
-              data-bs-target="#menu-starters"
-              v-on:click="categoryID = 4"
-            >
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-starters" v-on:click="categoryID = 4">
               <h4>បង្អែម</h4>
             </a>
           </li>
           <!-- End tab nav item -->
           <li class="nav-item">
-            <select
-              id="category"
-              class="mt-2 form-control form-select-sm text-center"
-              v-model.number="selectedRandomNumber"
-            >
+            <select id="category" class="mt-2 form-control form-select-sm text-center"
+              v-model.number="selectedRandomNumber">
               <option class="siemreap" value="6" selected>ចំនួនម្ហូប</option>
               <option class="siemreap" value="1">១</option>
               <option class="siemreap" value="2">២</option>
@@ -375,14 +326,8 @@ export default {
 
             <div class="row gy-5">
               <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
-                <router-link
-                  :to="{ name: 'food-detail', params: { id: food.id } }"
-                  class="glightbox"
-                  ><img
-                    :src="`http://127.0.0.1:8000/${food.image}`"
-                    class="menu-img img-fluid"
-                    alt=""
-                /></router-link>
+                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"><img
+                    :src="`http://127.0.0.1:8000/${food.image}`" class="menu-img img-fluid" alt="" /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
@@ -401,15 +346,9 @@ export default {
 
             <div class="row gy-5">
               <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
-                <router-link
-                  :to="{ name: 'food-detail', params: { id: food.id } }"
-                  class="glightbox"
-                  ><img
-                    :src="`http://127.0.0.1:8000/${food.image}`"
-                    class="menu-img img-fluid"
-                    alt=""
-                    :style="{ width: '420px', height: '207.82px' }"
-                /></router-link>
+                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"><img
+                    :src="`http://127.0.0.1:8000/${food.image}`" class="menu-img img-fluid" alt=""
+                    :style="{ width: '420px', height: '207.82px' }" /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
@@ -426,15 +365,9 @@ export default {
 
             <div class="row gy-5">
               <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
-                <router-link
-                  :to="{ name: 'food-detail', params: { id: food.id } }"
-                  class="glightbox"
-                  ><img
-                    :src="`http://127.0.0.1:8000/${food.image}`"
-                    class="menu-img img-fluid"
-                    alt=""
-                    :style="{ width: '420px', height: '207.82px' }"
-                /></router-link>
+                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"><img
+                    :src="`http://127.0.0.1:8000/${food.image}`" class="menu-img img-fluid" alt=""
+                    :style="{ width: '420px', height: '207.82px' }" /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
@@ -450,15 +383,9 @@ export default {
 
             <div class="row gy-5">
               <div class="col-lg-4 menu-item" v-for="food in randomFoods" :key="food.id">
-                <router-link
-                  :to="{ name: 'food-detail', params: { id: food.id } }"
-                  class="glightbox"
-                  ><img
-                    :src="`http://127.0.0.1:8000/${food.image}`"
-                    class="menu-img img-fluid"
-                    alt=""
-                    :style="{ width: '420px', height: '207.82px' }"
-                /></router-link>
+                <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="glightbox"><img
+                    :src="`http://127.0.0.1:8000/${food.image}`" class="menu-img img-fluid" alt=""
+                    :style="{ width: '420px', height: '207.82px' }" /></router-link>
                 <h4>{{ food.name }}</h4>
                 <p class="ingredients">Lorem, deren, trataro, filede, nerada</p>
               </div>
@@ -480,29 +407,16 @@ export default {
           <!-- First Menu Item____________________________________________________________________ -->
           <div class="col-lg-4 col-md-6 col-12" v-for="food in foods" :key="food.id">
             <div class="menu-thumb">
-              <router-link
-                :to="{ name: 'food-detail', params: { id: food.id } }"
-                class="menu-image-wrap"
-              >
-                <img
-                  :src="`http://127.0.0.1:8000/${food.image}`"
-                  class="img-fluid menu-image btn"
-                  alt="Food image"
-                  :style="{ width: '397.1px', height: '223.37px' }"
-                  @click="storeFoodId(food.id)"
-                />
+              <router-link :to="{ name: 'food-detail', params: { id: food.id } }" class="menu-image-wrap">
+                <img :src="`http://127.0.0.1:8000/${food.image}`" class="img-fluid menu-image btn" alt="Food image"
+                  :style="{ width: '397.1px', height: '223.37px' }" @click="storeFoodId(food.id)" />
                 <!-- <span class="menu-tag">Breakfast</span> ________________________-->
               </router-link>
               <div class="menu-info d-flex flex-wrap justify-content-between align-items-center">
                 <h4 class="mb-0">{{ food.name }}</h4>
-                
-                <button
-                  class="bg-white text-dark cursor-pointer border-0 open-button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  :value="food.id"
-                  @click="selectFood(food.id)"
-                >
+
+                <button class="bg-white text-dark cursor-pointer border-0 open-button" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal" :value="food.id" @click="selectFood(food.id)">
                   <i class="fs-1 save align-middle material-icons">bookmark</i>
                 </button>
                 <div class="d-flex flex-wrap justify-content-between align-items-center w-100 mt-2">
@@ -542,9 +456,7 @@ export default {
                 ការណែនាំផ្ទាល់ខ្លួន
               </p>
               <div class="text-center">
-                <a href="/aboutUs" class="more-btn"
-                  ><span>Learn More</span> <i class="bi bi-chevron-right"></i
-                ></a>
+                <a href="/aboutUs" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
               </div>
             </div>
           </div>
@@ -606,80 +518,33 @@ export default {
         <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
           <div class="contain-img d-flex justify-between">
             <img src="../../assets/ContainerImages/buggur.png" style="width: 500px" alt="" />
-            <div
-              class="col-lg-8 d-flex align-items-center reservation-form-bg"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <form
-                action="forms/book-a-table.php"
-                method="post"
-                role="form"
-                class="php-email-form"
-              >
+            <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
+              <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form">
                 <div class="row gy-4">
                   <div class="col-lg-4 col-md-6">
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="name"
-                      placeholder="ឈ្មោះ"
-                      required
-                    />
+                    <input type="text" name="name" class="form-control" id="name" placeholder="ឈ្មោះ" required />
                   </div>
                   <div class="col-lg-4 col-md-6">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="អុីមែល"
-                      required
-                    />
+                    <input type="email" class="form-control" name="email" id="email" placeholder="អុីមែល" required />
                   </div>
                   <div class="col-lg-4 col-md-6">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="phone"
-                      id="phone"
-                      placeholder="លេខទូរស៍ព្ទ"
-                      required
-                    />
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="លេខទូរស៍ព្ទ"
+                      required />
                   </div>
                   <div class="col-lg-4 col-md-6">
-                    <input
-                      type="date"
-                      name="date"
-                      class="form-control"
-                      id="date"
-                      placeholder="ថ្ងៃ ទី ខែ"
-                      required
-                    />
+                    <input type="date" name="date" class="form-control" id="date" placeholder="ថ្ងៃ ទី ខែ" required />
                   </div>
                   <!-- <div class="col-lg-4 col-md-6">
                     <input type="time" name="time" class="form-control" id="time" placeholder="" required />
                   </div> -->
                   <div class="col-lg-4 col-md-6">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="address"
-                      id="people"
-                      placeholder="អាស័យដ្ធាន"
-                      required
-                    />
+                    <input type="text" class="form-control" name="address" id="people" placeholder="អាស័យដ្ធាន"
+                      required />
                   </div>
                 </div>
 
                 <div class="form-group mt-3">
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="សារ"
-                  ></textarea>
+                  <textarea class="form-control" name="message" rows="5" placeholder="សារ"></textarea>
                 </div>
 
                 <div class="text-center mt-3">
@@ -720,13 +585,8 @@ export default {
   </div>
 
   <!-- Popup form -->
-  <div
-    class="modal fade rounded"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade rounded" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog rounded">
       <div class="modal-content rounded">
         <div class="div0">
@@ -738,18 +598,9 @@ export default {
               <form @submit.prevent="saveFood()">
                 <div class="form-group">
                   <label class="text-dark siemreap">ជ្រើសរើសថតឯកសារ</label>
-                  <select
-                    id="category"
-                    class="form-control form-select-sm text-center"
-                    v-model="selectedFolderId"
-                  >
+                  <select id="category" class="form-control form-select-sm text-center" v-model="selectedFolderId">
                     <option class="siemreap" value="" selected>ជ្រើសរើសថតឯកសារ</option>
-                    <option
-                      class="siemreap"
-                      v-for="folder in folders"
-                      :key="folder.id"
-                      :value="folder.id"
-                    >
+                    <option class="siemreap" v-for="folder in folders" :key="folder.id" :value="folder.id">
                       {{ folder.folder_name }}
                     </option>
                   </select>
@@ -758,11 +609,8 @@ export default {
                   <button type="button" class="btn btn-danger siemreap" data-bs-dismiss="modal">
                     បោះបង់
                   </button>
-                  <button
-                    type="submit"
-                    class="btn ms-2 text-white text-bold siemreap"
-                    style="background-color: #238400"
-                  >
+                  <button type="submit" class="btn ms-2 text-white text-bold siemreap"
+                    style="background-color: #238400">
                     រក្សាទុក
                   </button>
                 </div>
@@ -832,7 +680,7 @@ export default {
   width: 40%;
 }
 
-.cardFooterRight > i {
+.cardFooterRight>i {
   display: flex;
   margin-right: 3%;
   color: #66b64a;

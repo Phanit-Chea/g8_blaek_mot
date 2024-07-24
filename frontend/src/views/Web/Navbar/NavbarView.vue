@@ -1,150 +1,132 @@
 <template>
-  <nav class="row bg-white p-2 fixed-top">
-    <div class="navLeft col-md-auto d-flex align-items-center text-green">
-      <router-link to="/">
-        <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" width="90%" height="90px" />
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <div class="container-fluid">
+      <router-link to="/" class="navbar-brand">
+        <img src="../../../assets/ContainerImages/logo.png" alt="homeImage" height="50px" />
       </router-link>
-    </div>
-    <div class="navCenter col-md d-flex align-items-center"
-      style="width:45%; margin-left: 3%; margin-top: 10px; margin-bottom: 10px">
-      <div class="input-group w-240">
-        <button class="input-group-text border border-success border-end-0">
-          <i class="material-icons">search</i>
-        </button>
-        <input type="text" class="form-control p-2 border border-success border-end-0 shadow-none"
-          placeholder="What would you like to eat?" aria-label="Search" />
-        <button class="text-light input-group-text border border-success border-start-0"
-          style="background-color: rgba(62, 160, 9, 0.942); width: 90px; justify-content: center">
-          Search
-        </button>
-      </div>
-    </div>
-    <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
-      v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'">
-     
-      <router-link to="/chat"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
-        <i class='fas fa-comment-dots' style='font-size:40px;'></i>
-        <span class="badge">{{ countUnread }}</span>
-      </router-link>
-      <div class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2"
-        v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'">
-        <router-link to="/chat"
-          class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
-          <i class='fas fa-comment-dots' style='font-size:40px;'></i>
-          <span class="badge">{{ countUnread }}</span>
-        </router-link>
-        <router-link to="#"
-          class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
-          <i class="material-icons fs-1">notifications</i>
-          <span class="badge">99+</span>
-        </router-link>
-        <router-link to="/admin/dashboard">
-          <button class="btn btn-danger" type="submit">Dashboard</button>
-        </router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link to="/" class="nav-link text-success fs-5">ទំព័រដើម</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/category" class="nav-link text-success fs-5">ប្រភេទអាហារ</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/aboutUs" class="nav-link text-success fs-5">អំពីពួកយើង</router-link>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2 border-success" type="search" placeholder="ស្វែករកមុខម្ហូបដែលអ្នកចង់ធ្វើនៅទីនេះ?"
+            aria-label="Search">
+          <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        <div class="d-flex align-items-center ms-3">
+          <router-link v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'" to="/chatPage"
+            class="me-3 text-success">
+            <i class="fas fa-comment-dots fs-2"></i>
+            <span class="badge bg-danger">{{ countUnread }}</span>
+          </router-link>
+          <router-link v-if="useAuth.isAuthenticated && userStore.user.email == 'admin@gmail.com'" to="/admin/dashboard"
+            class="btn btn-danger">
+            Dashboard
+          </router-link>
+          <div v-else class="d-flex align-items-center">
+            <router-link to="/chatPage" class="me-3 text-success">
+              <i class="fas fa-comment-dots fs-2"></i>
+              <span v-if="countUnread >= 0" class="badge bg-danger">{{ countUnread }}</span>
+            </router-link>
+            <!-- <router-link to="#" class="me-3 text-success">
+              <i class="material-icons fs-2">notifications</i>
+            </router-link> -->
+          </div>
+        </div>
+        <label class="popup">
+          <input type="checkbox" />
+          <div tabindex="0" class="burger">
+            <div v-if="useAuth.isAuthenticated" class="account">
+              <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
+            </div>
+            <div v-else>
+              <i class="material-icons fs-3 text-white">person</i>
+            </div>
+          </div>
+          <nav v-if="useAuth.isAuthenticated" class="popup-window">
+            <ul>
+              <li>
+                <nav-link>
+                  <a href="/user">
+                    <button>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.2" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
+                        </path>
+                      </svg>
+                      <span class="siemreap">ព័ត៍មានផ្ទាល់ខ្លួន</span>
+                    </button>
+                  </a>
+                </nav-link>
+              </li>
+              <li>
+                <nav-link>
+                  <a href="#" @click.prevent="logout">
+                    <button>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                      </svg>
+                      <span class="siemreap">ចេញពីគណនី</span>
+                    </button>
+                  </a>
+                </nav-link>
+              </li>
+            </ul>
+          </nav>
+          <nav v-else class="popup-window">
+            <ul>
+              <li>
+                <nav-link>
+                  <a href="/login">
+                    <button>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                      </svg>
+                      <span class="siemreap">ចូលគណនី</span>
+                    </button>
+                  </a>
+                </nav-link>
+              </li>
+              <li>
+                <nav-link>
+                  <a href="/register">
+                    <button>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                        stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M2.598 9h-1.055c1.482-4.638 5.83-8 10.957-8 6.347 0 11.5 5.153 11.5 11.5s-5.153 11.5-11.5 11.5c-5.127 0-9.475-3.362-10.957-8h1.055c1.443 4.076 5.334 7 9.902 7 5.795 0 10.5-4.705 10.5-10.5s-4.705-10.5-10.5-10.5c-4.568 0-8.459 2.923-9.902 7zm12.228 3l-4.604-3.747.666-.753 6.112 5-6.101 5-.679-.737 4.608-3.763h-14.828v-1h14.826z">
+                        </path>
+                      </svg>
+                      <span class="siemreap">បង្កើតគណនីថ្មី</span>
+                    </button>
+                  </a>
+                </nav-link>
+              </li>
+            </ul>
+          </nav>
+        </label>
       </div>
     </div>
 
-    <div v-else class="navRight col-md d-flex justify-content-end align-items-center gap-4 m-2">
-      <a href="#"
-        class="favoriteIcon me-3 rounded-circle d-flex p-0.5 justify-content-center align-items-center bg-white text-decoration-none">
-        <i class="material-icons fs-1">turned_in</i>
-      </a>
-      <router-link to="#"
-        class="notification me-3 rounded-circle d-flex p-1 justify-content-center align-items-center bg-white text-decoration-none">
-        <i class="material-icons fs-1">notifications</i>
-      </router-link>
-      <label class="popup">
-        <input type="checkbox" />
-        <div tabindex="0" class="burger">
-          <div v-if="useAuth.isAuthenticated" class="account">
-            <img :src="`http://127.0.0.1:8000/${userStore.user.profile}`" alt="login" width="45px" />
-          </div>
-          <div v-else>
-            <i class="material-icons fs-1 text-white">person</i>
-          </div>
-        </div>
-        <nav v-if="useAuth.isAuthenticated" class="popup-window">
-          <ul>
-            <li>
-              <nav-link>
-                <a href="/user">
-                  <button>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
-                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z">
-                      </path>
-                    </svg>
-                    <span class="siemreap">ព័ត៍មានផ្ទាល់ខ្លួន</span>
-                  </button>
-                </a>
-              </nav-link>
-            </li>
-            <li>
-              <nav-link>
-                <a href="#" @click.prevent="logout">
-                  <button>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                      <polyline points="16 17 21 12 16 7"></polyline>
-                      <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    <span class="siemreap">ចេញពីគណនី</span>
-                  </button>
-                </a>
-              </nav-link>
-            </li>
-          </ul>
-        </nav>
-        <nav v-else class="popup-window">
-          <ul>
-            <li>
-              <nav-link>
-                <a href="/login">
-                  <button>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                      <polyline points="16 17 21 12 16 7"></polyline>
-                      <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    <span class="siemreap">ចូលគណនី</span>
-                  </button>
-                </a>
-              </nav-link>
-            </li>
-            <li>
-              <nav-link>
-                <a href="/register">
-                  <button>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
-                      stroke-linecap="round" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M2.598 9h-1.055c1.482-4.638 5.83-8 10.957-8 6.347 0 11.5 5.153 11.5 11.5s-5.153 11.5-11.5 11.5c-5.127 0-9.475-3.362-10.957-8h1.055c1.443 4.076 5.334 7 9.902 7 5.795 0 10.5-4.705 10.5-10.5s-4.705-10.5-10.5-10.5c-4.568 0-8.459 2.923-9.902 7zm12.228 3l-4.604-3.747.666-.753 6.112 5-6.101 5-.679-.737 4.608-3.763h-14.828v-1h14.826z">
-                      </path>
-                    </svg>
-                    <span class="siemreap">បង្កើតគណនីថ្មី</span>
-                  </button>
-                </a>
-              </nav-link>
-            </li>
-          </ul>
-        </nav>
-      </label>
-    </div>
-    <div class="navPages row text-red mt-3">
-      <div class="pages col d-flex" style="gap: 20px; margin-left: 20px">
-        <router-link to="/"
-          class="pagesLink text-green-700 fs-5 text-decoration-none nav-link siemreap">ទំព័រដើម</router-link>
-        <router-link to="/category"
-          class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">ប្រភេទអាហារ</router-link>
-        <router-link to="/aboutUs" class="pagesLink text-green-700 fs-5 text-decoration-none nav-link">
-          អំពីពួកយើង
-        </router-link>
-      </div>
-    </div>
   </nav>
 </template>
 
@@ -201,13 +183,13 @@ const logout = async () => {
 /* The design is inspired from Galahhad*/
 
 .popup {
-  --burger-line-width: 1.125em;
-  --burger-line-height: 0.125em;
+  --burger-line-width: 1em;
+  --burger-line-height: 0.60em;
   --burger-offset: 0.625em;
   --burger-bg: green;
   --burger-color: #333;
   --burger-line-border-radius: 0.1875em;
-  --burger-diameter: 3.125em;
+  --burger-diameter: 2.5em;
   --burger-btn-border-radius: calc(var(--burger-diameter) / 2);
   --burger-line-transition: 0.3s;
   --burger-transition: all 0.1s ease-in-out;
@@ -398,12 +380,11 @@ const logout = async () => {
 
 .notification .badge {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 5px 5px;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
   border-radius: 50%;
-  background: red;
-  color: white;
-  text-align: center;
+  padding: 0.5em;
+  font-size: 0.75em;
 }
 </style>

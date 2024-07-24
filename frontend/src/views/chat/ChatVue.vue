@@ -10,20 +10,7 @@
             <input class="form-control" id="search" placeholder="Search" type="text" />
           </div>
 
-          <button class="button" data-bs-toggle="modal" data-bs-target="#renameModal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20" fill="none"
-              class="svg-icon">
-              <g stroke-width="1.5" stroke-linecap="round" stroke="#de8a2a">
-                <circle r="7.5" cy="10" cx="10"></circle>
-                <path d="m9.99998 7.5v5"></path>
-                <path d="m7.5 9.99998h5"></path>
-              </g>
-            </svg>
-
-            <span class="label">Add</span>
-
-
-          </button>
+          
         </div>
       </div>
 
@@ -34,18 +21,13 @@
             <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters"
               style="display: flex; justify-content: start; align-items: center; margin-left: -70px;">
               <h6 class="d-flex align-item-center">សារ</h6>
-              <span style="position:relative; left: 5px; bottom: 6px; " class="bg bg-success text-white">{{ countUnread }}</span>
+              <span style="position:relative; left: 5px; bottom: 6px; " class="bg bg-success text-white">{{ countUnread
+                }}</span>
             </a>
           </li>
           <!-- End tab nav item -->
 
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast"
-              style="display: flex; justify-content: center;align-items: center">
-              <h6 class="d-flex align-item-center">ក្រុម</h6>
-              <!-- <span style="position:relative; left: 5px; bottom: 6px; " class="bg bg-success text-white">2</span> -->
-            </a>
-          </li>
+         
         </ul>
         <div class="tab-content " data-aos="fade-up" data-aos-delay="10">
           <div class="tab-pane fade active show" id="menu-starters">
@@ -83,7 +65,7 @@
                           </p>
                           <span class="rounded-circle" :class="{
                             'bg-success': (user.latest_chat && user.latest_chat.active === 0 && user.latest_chat.from_user != currentUserId),
-                            'bg-white': (user.latest_chat && (user.latest_chat.active !== 0 || user.latest_chat.from_user === currentUserId)),
+                            'bg-white': (user.latest_chat && ((user.latest_chat.active === 1) || (user.latest_chat.active === 0 && user.latest_chat.from_user === currentUserId)))
                           }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
                           </span>
                         </div>
@@ -135,7 +117,7 @@
                       </p>
                       <span class="rounded-circle" :class="{
                         'bg-success': (user.latest_chat && user.latest_chat.active === 0 && user.latest_chat.from_user != currentUserId),
-                        'bg-white': (user.latest_chat && (user.latest_chat.active !== 0 || user.latest_chat.from_user === currentUserId)),
+                        'bg-white': (user.latest_chat && ((user.latest_chat.active === 1) || (user.latest_chat.active === 0 && user.latest_chat.from_user === currentUserId)))
                       }" style="font-size: 13px; color: white; padding: 0.3rem; text-align: center;">
                       </span>
                     </div>
@@ -166,7 +148,7 @@
         <div class="card-body " style="height: 40vh; overflow-y: auto; margin-top: 18px; margin-bottom: 60px;">
 
           <div v-for="chat in allChats" :key="chat">
-
+{{chat}}
             <div v-if="chat.group_id">
               <div v-if="chat.group_id && chat.from_user_id !== currentUserId" class="d-flex align-items-start mb-1">
                 <img :src="`http://127.0.0.1:8000/${chat.user.profile}`" alt="user" class="rounded-circle me-2"
@@ -197,10 +179,7 @@
                 </div>
               </div>
             </div>
-
-
             <div v-if="chat.from_user">
-
               <div v-if="chat.from_user.id != currentUserId" class="d-flex align-items-start mb-1">
                 <img :src="`http://127.0.0.1:8000/${chat.from_user.profile}`" alt="user" class="rounded-circle me-2"
                   width="30px" height="30px" />
@@ -239,7 +218,7 @@
             <input type="file" ref="fileInput" style="display: none;" @change="handleFileUpload">
             <div class="input-icons position-relative flex-grow-1 mx-3">
               <input class="form-control ps-4" id="search" placeholder="Message" type="text"
-                v-model="formData.description" />
+                v-model="form.description" />
             </div>
             <form @submit.prevent="sendMessage">
               <button type="submit" class="btn btn-link p-0">
@@ -380,6 +359,7 @@ import { useUserStore } from '@/stores/userStore';
 import { useChatStore } from '@/stores/chatStore';
 import Swal from 'sweetalert2';
 
+
 export default defineComponent({
   components: {
     NavbarView,
@@ -390,6 +370,7 @@ export default defineComponent({
       groupData: [] as Array<{ name: string }>,
       groupCreated: false,
       createdGroupName: '',
+      fetchChatsInterval: null,
       listUser: [] as Array<{
         id: number;
         name: string;
@@ -441,12 +422,10 @@ export default defineComponent({
         image: string | null;
         video: string | null;
       } | null,
-      form: {
-        name: '',
-      },
+
       description: '',
       searchQuery: '',
-      formData: {
+      form: {
         image: null as File | null,
         video: null as File | null,
         description: null as File | null,
@@ -491,6 +470,8 @@ export default defineComponent({
 
   methods: {
     async fetchUsers() {
+      const userStore = useUserStore();
+      this.currentUserId = userStore.user.id;
       try {
         const response = await axiosInstance.get('/chat/users/chatList');
         this.listUser = response.data.data;
@@ -515,6 +496,7 @@ export default defineComponent({
       this.fetchChats(user.id);
       const chatId = user.latest_chat.id;
       const userActive = user.latest_chat.active;
+      
 
       console.log(chatId);
 
@@ -526,6 +508,7 @@ export default defineComponent({
 
         console.log(response.data);
         this.fetchUsers();
+        this.fetchUnread();
       } catch (error) {
 
         console.error('Error updating chat active status:', error);
@@ -565,19 +548,22 @@ export default defineComponent({
     },
     async sendMessage() {
       const userAuth = useAuthStore();
+      const userStore = useUserStore();
       const formData = new FormData();
-      const userStore = useStoreStore();
 
       if (this.selectedUser.user) {
         const to_user = this.selectedUser.user.id;
-        if (this.formData.description) {
-          formData.append('description', this.formData.description);
+
+        // Append form data if present
+        if (this.form.description) {
+          formData.append('description', this.form.description);
         }
         if (this.form.image) {
-          formData.append('image', this.formData.image);
+          formData.append('image', this.form.image);
+          
         }
         if (this.form.video) {
-          formData.append('video', this.formData.video);
+          formData.append('video', this.form.video);
         }
 
         try {
@@ -586,25 +572,36 @@ export default defineComponent({
               Authorization: `Bearer ${userAuth.acccessToken}`
             }
           });
+
+          // Clear form data
           this.form.description = '';
+          this.form.image = null;
+          this.form.video = null;
+
+          // Fetch updated chats
           this.fetchChats();
           this.currentUserId = userStore.user.id;
+          this.fetchUsers();
+          this.fetchGroups();
 
           console.log(response);
         } catch (error) {
           console.error(error);
         }
       }
+
       if (this.selectedUser.group) {
         const to_group = this.selectedUser.group.id;
-        if (this.formData.description) {
-          formData.append('description', this.formData.description);
+
+        // Append form data if present
+        if (this.form.description) {
+          formData.append('description', this.form.description);
         }
         if (this.form.image) {
-          formData.append('image', this.formData.image);
+          formData.append('image', this.form.image);
         }
         if (this.form.video) {
-          formData.append('video', this.formData.video);
+          formData.append('video', this.form.video);
         }
 
         try {
@@ -613,8 +610,17 @@ export default defineComponent({
               Authorization: `Bearer ${userAuth.acccessToken}`
             }
           });
+
+        
+
           this.form.description = '';
+          this.form.image = null;
+          this.form.video = null;
+
+          // Fetch updated chats
           this.fetchChats();
+      
+          this.fetchGroups();
           this.currentUserId = userStore.user.id;
 
           console.log(response);
@@ -622,11 +628,6 @@ export default defineComponent({
           console.error(error);
         }
       }
-
-
-
-
-
     }
     ,
     openFileInput() {
@@ -634,7 +635,7 @@ export default defineComponent({
     },
 
     handleFileUpload(event) {
-      this.formData.image = event.target.files[0];
+      this.form.image = event.target.files[0];
     },
 
     async createGroup() {
@@ -676,11 +677,17 @@ export default defineComponent({
   },
 
   mounted() {
+
     this.fetchUsers();
     this.fetchGroups();
     this.fetchChats();
     this.fetchUnread();
+    this.fetchChatsInterval = setInterval(this.fetchChats, 60000);
+
   },
+  beforeUnmount() {
+    clearInterval(this.fetchChatsInterval);
+  }
 });
 </script>
 

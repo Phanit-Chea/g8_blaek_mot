@@ -3,6 +3,7 @@ import './assets/css/main.css'
 import './assets/css/bootstrap-icons.css'
 import './assets/css/bootstrap.min.css'
 import './assets/css/tooplate-crispy-kitchen.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 

@@ -121,11 +121,6 @@ const routes = [
         component: () => import('@/views/Admin/Food/ListView.vue')
     },
     {
-        path: '/admin/partnership',
-        name: '/admin/partnership',
-        component: () => import('@/views/Admin/Partnership/ListView.vue')
-    },
-    {
         path: '/admin/setting',
         name: '/admin/setting',
         component: () => import('@/views/Admin/Setting/ListView.vue')
@@ -159,7 +154,14 @@ const routes = [
         path: '/chatPage',
         name: 'chatPage',
         component:()=>import('@/views/chat/ChatVue.vue')
-    }
+    },
+    {
+        path: '/chatAdmin',
+        name: 'chatAdmin',
+        component:()=>import('../views/Admin/Chat/ChatView.vue')
+    },
+
+
 
 
 
