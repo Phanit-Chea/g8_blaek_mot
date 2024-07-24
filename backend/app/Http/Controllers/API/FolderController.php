@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\folder;
+use App\Models\Folder; // Ensure the model is correctly named and imported
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +16,9 @@ class FolderController extends Controller
      */
     public function index()
     {
-        $user = folder::all();
-        return response()->json(['success' => true, 'data' => $user], 200);
+        $folders = Folder::all(); // Fetch all folders
+        return response()->json(['success' => true, 'data' => $folders], 200);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -32,7 +31,7 @@ class FolderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 402);
+            return response()->json(['errors' => $validator->errors()], 422); // Changed to 422 for validation errors
         }
 
         $user = $request->user();
@@ -46,38 +45,44 @@ class FolderController extends Controller
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
 
-        $folder = new folder();
+        $folder = new Folder();
         $folder->user_id = $user->id;
         $folder->folder_name = $request->folder_name;
         $folder->save();
 
         return response()->json(['success' => true, 'message' => 'Folder created successfully', 'folder' => $folder], 201);
     }
-  
-
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $folder = folder::store($request, $id);
-        return response()->json(
-            [
+        $folder = Folder::find($id);
+
+        if (!$folder || $folder->user_id !== $request->user()->id) {
+            return response()->json(['error' => 'Folder not found or unauthorized'], 404);
+        }
+
+        $folder->update($request->all()); // You might want to specify which fields to update
+        return response()->json([
             'success' => true, 
-            'message' => 'folder was updated successfully'
+            'message' => 'Folder was updated successfully'
         ], 200);    
     }
-
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
-        $folder = folder::where('user_id', $user->id)
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $folder = Folder::where('user_id', $user->id)
             ->where('id', $id)
             ->first();
 
@@ -88,18 +93,17 @@ class FolderController extends Controller
         $folder->delete();
 
         return response()->json(['success' => true, 'message' => 'Folder deleted successfully']);
-   
     }
 
     public function listByUser()
     {
-        $user = Auth::id();
+        $userId = Auth::id();
 
-        if (!$user) {
+        if (!$userId) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
 
-        $folders = Folder::where('user_id', $user)->get();
+        $folders = Folder::where('user_id', $userId)->get();
 
         return response()->json(['success' => true, 'data' => $folders], 200);
     }
