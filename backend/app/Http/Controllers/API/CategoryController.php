@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        // $categories = ShowCategoryResource::collection($categories);
+    
         return response(['success' => true, 'data' => $categories], 200);
     }
 
@@ -37,9 +37,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        // $category = Category::find($id);
-        // $category = new ShowCategoryResource($category);
-        // return ["success" => true, "data" => $category];
+  
 
         $category = Category::find($id);
         $category = new ShowCategoryResource($category);
@@ -56,9 +54,9 @@ class CategoryController extends Controller
     
         $category->description = $request->input('description');
 
-        // Handle the image upload if present
+
         if ($request->hasFile('image')) {
-            // Delete the old image if it exists
+    
             if ($category->image) {
                 Storage::delete('public/CategoryImage/' . $category->image);
             }

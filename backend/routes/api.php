@@ -5,6 +5,7 @@ use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\RatingController;
