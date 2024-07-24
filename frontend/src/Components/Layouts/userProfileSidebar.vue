@@ -34,24 +34,19 @@
           </router-link>
         </li>
         <li>
-          <i class="fs-5 material-icons"
-            ><span class="folder ms-1 d-none d-sm-inline text-white siemreap"
-              >ថតឯកសាររបស់អ្នក</span
-            ></i
-          >
+          <i class="fs-5 material-icons">
+            <span class="folder ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសាររបស់អ្នក</span>
+          </i>
         </li>
 
         <li data-bs-toggle="modal" data-bs-target="#exampleModal">
           <a href="#" class="link-folder nav-link align-middle px-3 mt-3">
             <i class="fs-4 text-white align-middle material-icons">add</i>
-            <span class="ms-1 d-none d-sm-inline text-white siemreap">ថតឯកសារថ្មី</span>
+            <span class="ms-1 d-none d-sm-inline text-white siemreap">បង្កើតថតឯកសារថ្មី</span>
           </a>
         </li>
 
-        <ul
-          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1"
-          id="menu"
-        >
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start ms-1" id="menu">
           <li v-for="folder in folders" :key="folder.id" class="nav-item" style="display: flex">
             <div
               @click="storeFolderId(folder.id)"
@@ -71,20 +66,23 @@
             </a>
             <div v-show="folder.id === showOptionsFor" class="card card-body mt-1 small-card">
               <div>
+                <!-- Delete Button with Material Icon -->
                 <button
                   @click="deleteFolder(folder.id)"
                   class="btn btn-danger btn-sm"
-                  style="margin-right: 5px;"
+                  style="margin-right: 2px"
                 >
-                  លុប
+                  <i class="material-icons" style="font-size: 12px">delete</i>
                 </button>
+
+                <!-- Rename Button with Material Icon -->
                 <button
                   @click="showRenameForm(folder)"
                   class="btn btn-primary btn-sm"
                   data-bs-toggle="modal"
                   data-bs-target="#renameModal"
                 >
-                  កែសម្រួល
+                  <i class="material-icons" style="font-size: 12px">edit</i>
                 </button>
               </div>
             </div>
@@ -267,6 +265,7 @@ const createFolder = async () => {
     if (response.data.success) {
       folders.value.push(response.data.folder)
       folder_name.value = ''
+      hideModal('#exampleModal') // Hide modal after successful creation
     } else {
       alert('Failed to create folder')
     }
@@ -302,6 +301,7 @@ const renameFolder = async () => {
         folder.folder_name = renamingFolderName.value
       }
       renamingFolderId.value = null
+      hideModal('#renameModal') // Hide modal after successful renaming
     } else {
       alert('Failed to rename folder')
     }
@@ -320,7 +320,7 @@ const fetchFolders = async () => {
         'Content-Type': 'application/json'
       }
     })
-      folders.value = response.data.data
+    folders.value = response.data.data
   } catch (error) {
     console.error('Error fetching folders:', error)
     // alert('An error occurred while fetching folders')
@@ -334,11 +334,21 @@ onMounted(() => {
 const storeFolderId = (id: number) => {
   const folderStore = useFolderStore()
   folderStore.setFolderId(id)
-  
+
   router.push('/user/folder')
   // alert(`Folder ID stored: ${folderStore.folderId}`)
 }
+
+// Function to hide modal
+const hideModal = (modalId: string) => {
+  const modal = document.querySelector(modalId) as HTMLElement
+  if (modal) {
+    const modalInstance = bootstrap.Modal.getInstance(modal)
+    modalInstance?.hide()
+  }
+}
 </script>
+
 
 <style scoped>
 .card-body {
@@ -495,4 +505,5 @@ const storeFolderId = (id: number) => {
 .btn-link:hover {
   text-decoration: underline;
 }
+
 </style>

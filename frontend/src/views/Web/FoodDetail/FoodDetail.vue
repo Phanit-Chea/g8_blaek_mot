@@ -37,8 +37,8 @@ export default {
 <template>
 
   <NavbarView></NavbarView>
-  <div class="d-flex" style="margin-top: 158px">
-    <div class="col-2">
+  <div class="d-flex" style="margin-top: 156px">
+    <div class="col-0">
       <SideBar style="width: 240px; height: 100%" />
     </div>
     <div class="col-10">
@@ -89,10 +89,10 @@ export default {
 
         <div class="col-4">
           <div class="card mb-3" id="foodImage1">
-            <img src="../../../assets/FoodDetail/image.png" alt="" width="100%" height="195px" />
+            <img src="../../../assets/FoodDetail/សម្លកកូរ.png" alt="" width="100%" height="195px" />
           </div>
           <div class="card" id="foodImage2">
-            <img src="../../../assets/FoodDetail/image.png" alt="" width="100%" height="195px" />
+            <img src="../../../assets/FoodDetail/គ្រឿងសម្លកកូរ.png" alt="" width="100%" height="195px" />
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@ export default {
           style="width: 380px; height: 100px"
         >
           <span class="material-symbols-outlined mt-1"> timer </span>
-          <p class="mx-2 fs-5 mb-0">Time Spending:</p>
+          <p class="mx-2 fs-5 mb-0">ពេលវេលាត្រូវចំណាយ:</p>
           <span class="fw-bold fs-5 mb-0">{{food.cooking_time}}</span>
         </div>
         <div
@@ -114,7 +114,7 @@ export default {
           style="width: 380px; height: 100px"
         >
           <span class="material-symbols-outlined mt-1"> grocery </span>
-          <p class="mx-2 fs-5 mb-0">Number of Ingredient:</p>
+          <p class="mx-2 fs-5 mb-0">ចំនួនគ្រឿងផ្សំគោល:</p>
           <span class="fw-bold fs-5 mb-0">(20)</span>
         </div>
         
@@ -149,11 +149,11 @@ export default {
       <div class="row mt-4">
         <div class="col-md-7">
           <div class="card">
-            <h3 class="card-header fw-bold text-success">How to Cook?</h3>
+            <h3 class="card-header fw-bold text-success">របៀបធ្វើ{{ food.name }}</h3>
             <div class="card-body">
               <ol class="list-group list-group-flush">
                 <li class="list-group-item">
-                  <h5 class="fw-bold text-success">Step 1</h5>
+                  <h5 class="fw-bold text-success">ជំហានទី១</h5>
                   <p class="text-dark">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
                     debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
@@ -161,7 +161,7 @@ export default {
                   </p>
                 </li>
                 <li class="list-group-item">
-                  <h5 class="fw-bold text-success">Step 2</h5>
+                  <h5 class="fw-bold text-success">ជំហានទី២</h5>
                   <p class="text-dark">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
                     debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
@@ -169,7 +169,7 @@ export default {
                   </p>
                 </li>
                 <li class="list-group-item">
-                  <h5 class="fw-bold text-success">Step 3</h5>
+                  <h5 class="fw-bold text-success">ជំហានទី៣</h5>
                   <p class="text-dark">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus fuga
                     debitis officiis assumenda vel mollitia ut ex facilis! Voluptate totam quia ex
@@ -183,18 +183,12 @@ export default {
 
         <div class="col-md-5">
           <div class="card">
-            <div class="card-header bg-success text-white fw-bold text-center">Ingredients</div>
+            <div class="card-header bg-success text-white fw-bold text-center">គ្រឿងផ្សំគោល</div>
             <div class="card-body">
               <div class="row">
                 <div class="col">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item" v-for="ingredient in food.ingredients" :key="ingredient">{{ingredient}}</li>
-                    
-                  </ul>
-                </div>
-                <div class="col">
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">5kg</li>
                     
                   </ul>
                 </div>
@@ -208,7 +202,7 @@ export default {
       <div class="row">
         <div class="col">
           <div>
-            <h3 class="fw-bold m-0 text-success">Where you can buy this food?</h3>
+            <h3 class="fw-bold m-0 text-success">ទីកន្លែងដែលអ្នកអាចទៅទិញ{{ food.name }}</h3>
           </div>
           <div>
             <!-- <div class="col"> -->
@@ -222,7 +216,7 @@ export default {
                   aria-expanded="false"
                   aria-controls="addressForm"
                 >
-                  Give us your address
+                  បញ្ចូលទីតាំងរបស់អ្នក
                   <span class="material-symbols-outlined ms-2">location_on</span>
                 </button>
               </div>
@@ -253,7 +247,7 @@ export default {
       </div>
       <div class="row mt-3">
         <div>
-          <h3 class="card-header fw-bold text-success">Other you might love</h3>
+          <h3 class="card-header fw-bold text-success">មុខម្ហូបផ្សេងៗដែលអ្នកប្រហែលជាចូលចិត្តក្រៅពី{{food.name}}</h3>
         </div>
         <div class="row d-flex" style="margin-top: 98px">
           <div class="col-3 col-md-3 mb-3">
@@ -282,7 +276,7 @@ export default {
                   <div class="m-2 w-auto text-success rounded" id="category">category</div>
                 </div>
                 <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
+                  <div class="m-2 btn btn-success">លម្អិត</div>
                 </div>
               </div>
             </div>
@@ -313,7 +307,7 @@ export default {
                   <div class="m-2 w-auto text-success rounded" id="category">category</div>
                 </div>
                 <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
+                  <div class="m-2 btn btn-success">លម្អិត</div>
                 </div>
               </div>
             </div>
@@ -344,7 +338,7 @@ export default {
                   <div class="m-2 w-auto text-success rounded" id="category">category</div>
                 </div>
                 <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
+                  <div class="m-2 btn btn-success">លម្អិត</div>
                 </div>
               </div>
             </div>
@@ -375,7 +369,7 @@ export default {
                   <div class="m-2 w-auto text-success rounded" id="category">category</div>
                 </div>
                 <div class="col d-flex align-items-end">
-                  <div class="m-2 btn btn-success">details</div>
+                  <div class="m-2 btn btn-success">លម្អិត</div>
                 </div>
               </div>
             </div>
@@ -386,7 +380,7 @@ export default {
       <!-- </div> -->
     </div>
   </div>
-  <FooterView></FooterView>
+  <FooterView style="width: 88%; margin-left: 12.5%;"></FooterView>
 </template>
 
 
