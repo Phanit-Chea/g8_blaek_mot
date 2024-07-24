@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 
-export const chatStore = defineStore({
+export const useChatStore = defineStore({
   id: 'chat',
   state: () => ({
-    active: false, // Initial state for active status
+    active: false,
   }),
   actions: {
-    setActive(activeStatus: boolean) {
+    setActive(activeStatus) {
       this.active = activeStatus;
     },
     clearActive() {
-      this.active = false; // Reset active status
+      this.active = false;
     },
   },
   persist: {
@@ -18,7 +18,7 @@ export const chatStore = defineStore({
     strategies: [
       {
         key: 'chat-active',
-        storage: localStorage, // Store active status in localStorage
+        storage: localStorage,
       },
     ],
   },

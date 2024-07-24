@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AboutUsSlideController;
 use App\Http\Controllers\Admin\UserController;
@@ -6,20 +7,20 @@ use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\ChatController;
-use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ChatController as ControllersChatController;
+
 use App\Models\Rating;
 use App\Http\Controllers\Api\StoreFoodController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SaveFoodController;
-
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\GroupChatController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,19 +94,56 @@ Route::prefix("food")->group(function () {
     Route::delete('/delete/{id}', [FoodController::class, 'destroy'])->name('food.delete');
     Route::get('bycategory/{id}', [FoodController::class, 'listFoodByCategory'])->name('food.listfoodbycategory');
     Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
+    Route::get('/categories/food-count', [FoodController::class, 'categoryFoodCountsJson']);
+});
+
+// Category related routes
+Route::prefix('category')->group(function () {
+    Route::post('/create', [APICategoryController::class, 'store'])->middleware('auth:sanctum')->name('category.create');
+    Route::get('/list', [APICategoryController::class, 'index'])->name('category.list');
+    Route::get('/show/{id}', [APICategoryController::class, 'show'])->name('category.show');
+    Route::post('/update/{id}', [APICategoryController::class, 'update'])->name('category.update');
+    Route::delete('/delete/{id}', [APICategoryController::class, 'destroy'])->name('category.destroy');
+});
+
+// Food related routes
+Route::prefix('food')->group(function () {
+    Route::post('/create', [FoodController::class, 'store'])->middleware('auth:sanctum')->name('food.create');
+    Route::get('/list', [FoodController::class, 'index'])->name('food.list');
+    Route::get('/show/{id}', [FoodController::class, 'show'])->name('food.show');
+    Route::post('/update/{id}', [FoodController::class, 'update'])->name('food.update');
+    Route::delete('/delete/{id}', [FoodController::class, 'destroy'])->name('food.delete');
+    Route::get('bycategory/{id}', [FoodController::class, 'listFoodByCategory'])->name('food.listfoodbycategory');
+    Route::get('/random/{categoryID}', [FoodController::class, 'getRandomFood'])->name('food.random');
     Route::get('/weekly/random', [FoodController::class, 'getWeeklyRandomFood'])->name('food.weekly.random')->middleware('auth:sanctum');
-   
 });
 
 
 // Chat related routes
 Route::prefix('chat')->group(function () {
-    Route::post('/create/{to_user}', [ChatController::class, 'store'])->name('chat.create')->middleware('auth:sanctum');
+    Route::post('/create/{to_user}', [ChatController::class, 'storeUser'])->middleware('auth:sanctum')->name('chat.create');
     Route::get('/list', [ChatController::class, 'index'])->name('chat.list');
     Route::get('/{to_user}', [ChatController::class, 'show'])->name('chat.show')->middleware('auth:sanctum');
     Route::put('/update/{id}', [ChatController::class, 'update'])->name('chat.update')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [ChatController::class, 'destroy'])->name('chat.destroy')->middleware('auth:sanctum');
+
+    Route::middleware('auth:sanctum')->get('/users/except-me', [ChatController::class, 'index']);
+    Route::middleware('auth:sanctum')->get('/users/chatList', [ChatController::class, 'listChat']);
+    Route::middleware('auth:sanctum')->get('/allUser/Chat/{userId}', [ChatController::class, 'getChatMessages']);
+    Route::middleware('auth:sanctum')->get('/count/unread', [ChatController::class, 'countUnreadMessages']);
 });
+// group chat 
+Route::prefix('group')->group(function () {
+    Route::middleware('auth:sanctum')->post('/create', [GroupChatController::class, 'createGroup'])->name('group.create');
+    Route::middleware('auth:sanctum')->post('/{group_id}/addUser', [GroupChatController::class, 'addUsersToGroup'])->name('user.addUser');
+    Route::middleware('auth:sanctum')->post('/{group_id}/messages', [GroupChatController::class, 'sendMessage'])->name('user.sendMessage');
+    Route::middleware('auth:sanctum')->get('/{groupId}/messages', [MessageController::class, 'getChatMessages'])->name('user.getMessages');
+    Route::middleware('auth:sanctum')->get('/fetch/listGroup', [MessageController::class, 'getGroupsWithLatestMessages']);
+});
+
+
+// update active chat 
+Route::post('/chats/{id}/update-active', [ChatController::class, 'updateActive']);
 
 // About us related routes
 Route::post('/aboutus/update', [AboutUsController::class, 'updateAboutUs'])->name('aboutus.update');
@@ -133,4 +171,3 @@ Route::prefix('storeFood')->group(function () {
     Route::post('/store/{id}', [StoreFoodController::class, 'store'])->name('storeFood.store')->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [StoreFoodController::class, 'destroy'])->name('storeFood.delete')->middleware('auth:sanctum');
 });
-

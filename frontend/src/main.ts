@@ -22,6 +22,8 @@ import { configure } from 'vee-validate'
 import 'leaflet/dist/leaflet.css'; 
 import piniaPersist from 'pinia-plugin-persistedstate';
 
+
+
 // import DataTable from 'datatables.net-vue3';
 // import DataTablesCore from 'datatables.net';
 

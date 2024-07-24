@@ -154,6 +154,11 @@ const routes = [
         path: '/forgotPassword',
         name: 'forgotPassword',
         component:()=>import('@/views/Admin/Auth/FogetPasswordView.vue')
+    },
+    {
+        path: '/chatPage',
+        name: 'chatPage',
+        component:()=>import('@/views/chat/ChatVue.vue')
     }
 
 
