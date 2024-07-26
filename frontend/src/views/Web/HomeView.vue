@@ -147,7 +147,7 @@ export default {
     <section class="news section-padding">
       <div class="container">
         <div class="row">
-          <h2 class="text-center mb-lg-5 mb-4">អាហារ &amp;​ បង្អែម</h2>
+          <h2 class="text-center mb-lg-5 mb-4">អាហារ &amp;បង្អែម</h2>
 
           <div class="col-lg-6 col-md-6 col-12">
             <div class="news-thumb mb-4">
@@ -747,4 +747,99 @@ export default {
 
   text-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50;
 }
+
+/* //=======tablet=========// */
+@media screen and (max-width: 768px){
+  .col-lg-5 >img{
+    height: 50vh;
+    width: 100%;
+    margin-left: 150px;
+  }
+  .col-lg-5>h1{
+    font-size: 40px;
+   
+  }
+ 
+  .d-flex>a{
+    margin-top: 50px;
+    width: 200px;
+    font-size: 18px;
+    text-align: center;
+    
+  }
+  .row>h2{
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  .news{
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  .d-flex>.glightbox{
+    margin-top: 100px;
+  }
+  .menu>h4{
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  .col-lg-5>.d-flex{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+
+  }
+  .col-lg-5>h1{
+    font-size: 40px;
+    text-align: center;
+
+  }
+  .row>.col-xl-4{
+    flex-direction: column;
+
+  }
+  /* //======smartphone============// */
+  @media screen and (max-width: 428px){
+    .container>p{
+     font-size: 25px;
+    } 
+  }
+  .col-lg-5>h1{
+    font-size: 25px;
+
+  }
+  .why-box>h3{
+    font-size: 25px;
+  }
+  .contain-img>img{
+
+    width: 50px;
+    height: 40vh;
+    display: flex;
+    margin-left:-20px; 
+  
+    
+
+  }
+  .d-flex>a{
+    margin-bottom: -30px;
+    margin-top: -20px;
+    font-size: 15px;
+    text-align: center;
+  }
+.contain-img>.col-lg-4{
+  margin-top: -30px;
+
+}
+#book-a-table{
+  margin-top: -80px;
+
+}
+
+}
+
 </style>

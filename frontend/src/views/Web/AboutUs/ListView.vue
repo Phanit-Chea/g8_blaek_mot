@@ -102,4 +102,18 @@ export default {
   color: #54983c;
   border-bottom: 2px solid #54983c;
 }
+@media screen and (max-width: 428px){
+  /* For mobile screens */
+ .w-50>h4{
+  /* background: chartreuse; */
+  font-size: 30px !important;
+  
+ 
+}
+.w-50>h1{
+  /* background: chartreuse; */
+  font-size: 40px !important;
+  
+}
+}
 </style>

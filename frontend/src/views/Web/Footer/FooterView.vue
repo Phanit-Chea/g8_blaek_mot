@@ -103,4 +103,48 @@ export default {
   p{
     color: white;
   }
+  @media screen and (max-width: 428px){
+    .container>img {
+      height:50vh;
+       width: 900px;
+     
+      
+
+    } 
+    .text-light{
+       font-size:70px;
+      
+      
+     
+    }
+    .container>.col-md {
+      
+       font-size: 12px;
+       margin-bottom: 10px;
+       margin-top: 10px;
+       text-align: center;
+     }
+     .pt-3>img{
+       height: 8vh;
+       width: 90px;
+       margin-top: -50px;
+      
+     }
+     .col-md>.form-control  {
+       width: 80%;
+       margin-bottom: 20px;
+       font-size: 15px;
+       text-align: center;
+       display: flex;
+       margin-left: 40px;
+      
+     
+
+    
+      
+     }
+    }
+
+  
+  
 </style>
